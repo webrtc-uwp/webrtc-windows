@@ -1,11 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webrtc-utility", "..\..\projects\msvc\webrtc-utility\webrtc-utility.csproj", "{C0BE91DB-A313-4D82-A2B9-9F562AE69A10}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "webrtc_winrt_api", "..\..\projects\msvc\webrtc_winrt_api.Universal\webrtc_winrt_api.vcxproj", "{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0BE91DB-A313-4D82-A2B9-9F562AE69A10} = {C0BE91DB-A313-4D82-A2B9-9F562AE69A10}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "webrtc_winrt_api_win10_x64", "..\..\projects\msvc\webrtc_winrt_api_win10_x64.vcxproj", "{413C7B2E-BFE3-A86A-E4B7-DDC89250C2AA}"
 	ProjectSection(ProjectDependencies) = postProject
