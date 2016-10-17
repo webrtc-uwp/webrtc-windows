@@ -9,7 +9,7 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#include "webrtc/build/WinRT_gyp/Api/Marshalling.h"
+#include "Marshalling.h"
 #include <map>
 
 #include "webrtc/p2p/base/candidate.h"

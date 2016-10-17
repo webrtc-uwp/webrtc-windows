@@ -11,7 +11,7 @@
 #include <ppltasks.h>
 #include <vector>
 
-#include "webrtc/build/WinRT_gyp/Api/GlobalObserver.h"
+#include "GlobalObserver.h"
 #include "PeerConnectionInterface.h"
 #include "Marshalling.h"
 #include "Media.h"

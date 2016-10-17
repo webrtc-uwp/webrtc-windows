@@ -14,7 +14,6 @@
     <ClCompile Include="..\..\..\wrapper\MediaSourceHelper.cc" />
     <ClCompile Include="..\..\..\wrapper\PeerConnectionInterface.cc" />
     <ClCompile Include="..\..\..\wrapper\RTMediaStreamSource.cc" />
-    <ClCompile Include="..\..\..\wrapper\SwapChainPanelSource.cc" />
     <ClCompile Include="..\..\..\wrapper\WebRtcMediaSource.cc" />
     <ClCompile Include="..\..\..\wrapper\WebRtcMediaStream.cc" />
   </ItemGroup>
@@ -28,7 +27,6 @@
     <ClInclude Include="..\..\..\wrapper\PeerConnectionInterface.h" />
     <ClInclude Include="..\..\..\wrapper\RTCStatsReport.h" />
     <ClInclude Include="..\..\..\wrapper\RTMediaStreamSource.h" />
-    <ClInclude Include="..\..\..\wrapper\SwapChainPanelSource.h" />
     <ClInclude Include="..\..\..\wrapper\WebRtcMediaSource.h" />
     <ClInclude Include="..\..\..\wrapper\WebRtcMediaStream.h" />
   </ItemGroup>
