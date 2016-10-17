@@ -311,7 +311,8 @@
 	  <Optimization>MaxSpeed</Optimization>
 	  <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PreprocessorDefinitions>V8_DEPRECATION_WARNINGS;CLD_VERSION=2;NOMINMAX;WIN32;_WIN32_WINNT=0x0A00;WINVER=0x0A00;_WINDOWS;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_SECURE_ATL;_HAS_EXCEPTIONS=0;_WINSOCK_DEPRECATED_NO_WARNINGS;CHROMIUM_BUILD;CR_CLANG_REVISION=261368-1;USE_AURA=1;USE_DEFAULT_RENDER_THEME=1;USE_LIBJPEG_TURBO=1;ENABLE_WEBRTC=1;ENABLE_MEDIA_ROUTER=1;ENABLE_PEPPER_CDMS;ENABLE_CONFIGURATION_POLICY;ENABLE_NOTIFICATIONS;ENABLE_TOPCHROME_MD=1;FIELDTRIAL_TESTING_ENABLED;NO_TCMALLOC;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;NTDDI_VERSION=0x0A000000;_USING_V110_SDK71_;WINRT;_HAS_EXCEPTIONS=1;__WINCRYPT_H__;WINAPI_FAMILY=WINAPI_FAMILY_APP;WIN10;ENABLE_TASK_MANAGER=1;ENABLE_EXTENSIONS=1;ENABLE_PDF=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PLUGINS=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_AUTOFILL_DIALOG=1;ENABLE_PRINTING=1;ENABLE_BASIC_PRINTING=1;ENABLE_PRINT_PREVIEW=1;ENABLE_SPELLCHECK=1;ENABLE_CAPTIVE_PORTAL_DETECTION=1;ENABLE_APP_LIST=1;ENABLE_SETTINGS_APP=1;ENABLE_SUPERVISED_USERS=1;ENABLE_MDNS=1;ENABLE_SERVICE_DISCOVERY=1;V8_USE_EXTERNAL_STARTUP_DATA;FULL_SAFE_BROWSING;SAFE_BROWSING_CSD;SAFE_BROWSING_DB_LOCAL;EXPAT_RELATIVE_PATH;WEBRTC_WIN;WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE;_WINRT_DLL;USE_LIBPCI=1;USE_OPENSSL=1;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;NDEBUG;NVALGRIND;DYNAMIC_ANNOTATIONS_ENABLED=0;WINRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary><RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
 	  <RuntimeTypeInfo>false</RuntimeTypeInfo>
 	  <StringPooling>true</StringPooling>
 	  <TreatWarningAsError>true</TreatWarningAsError>
@@ -322,7 +323,8 @@
     </Lib>
     <Link>
 	  <AdditionalDependencies>ws2_32.lib;dxguid.lib;WindowsApp.lib;kernel32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;user32.lib;uuid.lib;odbc32.lib;odbccp32.lib;credui.lib;netapi32.lib;webrtc.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib						;crypt32.lib;iphlpapi.lib;secur32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-	  <AdditionalOptions>/WINMD /maxilksize:0x7ff00000 %(AdditionalOptions)</AdditionalOptions><FixedBaseAddress>false</FixedBaseAddress>
+      <AdditionalOptions>/WINMD /maxilksize:0x7ff00000 %(AdditionalOptions)</AdditionalOptions>
+      <FixedBaseAddress>false</FixedBaseAddress>
 	  <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
 	  <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -489,7 +491,6 @@
     <ClCompile Include="..\..\..\wrapper\MediaSourceHelper.cc" />
     <ClCompile Include="..\..\..\wrapper\PeerConnectionInterface.cc" />
     <ClCompile Include="..\..\..\wrapper\RTMediaStreamSource.cc" />
-    <ClCompile Include="..\..\..\wrapper\SwapChainPanelSource.cc" />
     <ClCompile Include="..\..\..\wrapper\WebRtcMediaSource.cc" />
     <ClCompile Include="..\..\..\wrapper\WebRtcMediaStream.cc" />
   </ItemGroup>
@@ -503,7 +504,6 @@
     <ClInclude Include="..\..\..\wrapper\PeerConnectionInterface.h" />
     <ClInclude Include="..\..\..\wrapper\RTCStatsReport.h" />
     <ClInclude Include="..\..\..\wrapper\RTMediaStreamSource.h" />
-    <ClInclude Include="..\..\..\wrapper\SwapChainPanelSource.h" />
     <ClInclude Include="..\..\..\wrapper\WebRtcMediaSource.h" />
     <ClInclude Include="..\..\..\wrapper\WebRtcMediaStream.h" />
   </ItemGroup>
