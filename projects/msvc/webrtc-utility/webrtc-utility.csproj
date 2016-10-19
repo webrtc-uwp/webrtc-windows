@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C0BE91DB-A313-4D82-A2B9-9F562AE69A10}</ProjectGuid>
+    <ProjectGuid>{DAF22D9F-BA40-4FD5-A392-1995EB07E566}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>webrtc_utility</RootNamespace>
