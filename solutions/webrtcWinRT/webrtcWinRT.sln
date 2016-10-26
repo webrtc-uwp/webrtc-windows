@@ -12,7 +12,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "webrtc_winrt_api", "..\..\p
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{61AB7485-B7E2-4D1F-8A38-BCB027FC1C10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerConnectionClientWebRTC", "..\..\..\..\common\windows\samples\PeerCC\projects\PeerConnectionClientWebRTC\PeerConnectionClientWebRTC.csproj", "{A2EA7350-EE59-42C5-9323-C942B058B217}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerConnectionClient.WebRtc", "..\..\..\..\common\windows\samples\PeerCC\projects\PeerConnectionClientWebRTC\PeerConnectionClient.WebRtc.csproj", "{A2EA7350-EE59-42C5-9323-C942B058B217}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
