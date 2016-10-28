@@ -148,19 +148,9 @@
     </PostBuildEvent>
   </PropertyGroup>
   <Target Name="BeforeClean">
-    <Message Text="Cleaning webrtc libs" Importance="high" />
-    <RemoveDir Directories="$(SolutionDir)..\webrtc\xplatform\webrtc\build_win10_x86\Debug" Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'" />
-    <RemoveDir Directories="$(SolutionDir)..\webrtc\xplatform\webrtc\build_win10_x86\Release" Condition="'$(Configuration)|$(Platform)' == 'Release|x86'" />
-    <RemoveDir Directories="$(SolutionDir)..\webrtc\xplatform\webrtc\WEBRTC_BUILD\Debug\X86" Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'" />
-    <RemoveDir Directories="$(SolutionDir)..\webrtc\xplatform\webrtc\WEBRTC_BUILD\Release\X86" Condition="'$(Configuration)|$(Platform)' == 'Release|x86'" />
-    <RemoveDir Directories="$(SolutionDir)..\webrtc\xplatform\webrtc\build_win10_x64\Debug" Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" />
-    <RemoveDir Directories="$(SolutionDir)..\webrtc\xplatform\webrtc\build_win10_x64\Release" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" />
-    <RemoveDir Directories="$(SolutionDir)..\webrtc\xplatform\webrtc\WEBRTC_BUILD\Debug\X64" Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" />
-    <RemoveDir Directories="$(SolutionDir)..\webrtc\xplatform\webrtc\WEBRTC_BUILD\Release\X64" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" />
-    <RemoveDir Directories="$(SolutionDir)..\webrtc\xplatform\webrtc\build_win10_arm\Debug" Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'" />
-    <RemoveDir Directories="$(SolutionDir)..\webrtc\xplatform\webrtc\build_win10_arm\Release" Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'" />
-    <RemoveDir Directories="$(SolutionDir)..\webrtc\xplatform\webrtc\WEBRTC_BUILD\Debug\ARM" Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'" />
-    <RemoveDir Directories="$(SolutionDir)..\webrtc\xplatform\webrtc\WEBRTC_BUILD\Release\ARM" Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'" />
+    <Message Text="Cleaning webrtc libs $(SolutionDir)..\..\..\xplatform\webrtc\build_win10_$(Platform)\webrtc\$(Configuration)" Importance="high" />
+    <RemoveDir Directories="$(SolutionDir)..\..\..\xplatform\webrtc\build_win10_$(Platform)\webrtc\$(Configuration)"/>
+	<RemoveDir Directories="$(SolutionDir)..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\$(Platform)"/>
   </Target>
   <Target Name="BeforeBuild">
     <Message Text="Building webrtc projects. This will take awhile." Importance="high" />
