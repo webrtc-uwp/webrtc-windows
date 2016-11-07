@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <WebRtc-Platform Condition="'$(Platform)' == 'Win32'">x86</WebRtc-Platform>
+    <WebRtc-Platform Condition="'$(Platform)' != 'Win32'">$(Platform)</WebRtc-Platform>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetPlatformIdentifier)' == 'UAP'">
+      <Reference Include="$(MSBuildThisFileDirectory)..\..\lib\uap10.0\webrtc_winrt_api.winmd">
+        <Implementation>WebRtc</Implementation>
+      </Reference>
+      <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(WebRtc-Platform)\native\webrtc_winrt_api.dll" />
+  </ItemGroup>
+</Project>
