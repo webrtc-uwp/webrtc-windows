@@ -5,26 +5,26 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "webrtc_winrt_api", "..\projects\msvc\webrtc_winrt_api.Universal\webrtc_winrt_api.vcxproj", "{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{A10FF871-2D32-4A4B-98A1-B37EC6DBA5C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "org.WebRtc", "org.WebRtc", "{40E6C799-C816-451F-A4B5-52F8FFE6CD12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
-		Release|Any CPU = Release|Any CPU
 		Release|ARM = Release|ARM
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Debug|ARM.ActiveCfg = Debug|ARM
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Debug|ARM.Build.0 = Debug|ARM
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Debug|x64.ActiveCfg = Debug|x64
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Debug|x64.Build.0 = Debug|x64
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Debug|x86.ActiveCfg = Debug|Win32
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Debug|x86.Build.0 = Debug|Win32
-		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Release|Any CPU.ActiveCfg = Release|Win32
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Release|ARM.ActiveCfg = Release|ARM
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Release|ARM.Build.0 = Release|ARM
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Release|x64.ActiveCfg = Release|x64
@@ -34,5 +34,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF} = {40E6C799-C816-451F-A4B5-52F8FFE6CD12}
+		{40E6C799-C816-451F-A4B5-52F8FFE6CD12} = {A10FF871-2D32-4A4B-98A1-B37EC6DBA5C5}
 	EndGlobalSection
 EndGlobal
