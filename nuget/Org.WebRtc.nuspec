@@ -10,10 +10,10 @@
 		<summary>Built as a productionn ready reference to the Object RTC specification (originally designed in the W3C WebRtc Community Group), WebRtc Lib is a secure, fast and highly performant developer toolkit enabling real-time voice calling, video chat and data functionality (file transfer etc.) for mobile, desktop and web. If you are integrating real-time voice, video or data into your mobile or web app and want WebRtc and WebRTC compatibility, WebRtc Lib is the solution for you.</summary>
     </metadata>
     <files>
-        <file src="lib\uap10.0\webrtc_winrt_api.winmd" target="lib\uap10.0\webrtc_winrt_api.winmd" />
-        <file src="runtimes\win10-x86\native\webrtc_winrt_api.dll" target="runtimes\win10-x86\native\webrtc_winrt_api.dll" />
-        <file src="runtimes\win10-x64\native\webrtc_winrt_api.dll" target="runtimes\win10-x64\native\webrtc_winrt_api.dll" />
-        <file src="runtimes\win10-arm\native\webrtc_winrt_api.dll" target="runtimes\win10-arm\native\webrtc_winrt_api.dll" />
-        <file src="build\native\webrtc_winrt_api.targets" target="build\native\webrtc_winrt_api.targets" />
+        <file src="lib\uap10.0\Org.WebRtc.winmd" target="lib\uap10.0\Org.WebRtc.winmd" />
+        <file src="runtimes\win10-x86\native\Org.WebRtc.dll" target="runtimes\win10-x86\native\Org.WebRtc.dll" />
+        <file src="runtimes\win10-x64\native\Org.WebRtc.dll" target="runtimes\win10-x64\native\Org.WebRtc.dll" />
+        <file src="runtimes\win10-arm\native\Org.WebRtc.dll" target="runtimes\win10-arm\native\Org.WebRtc.dll" />
+        <file src="build\native\Org.WebRtc.targets" target="build\native\Org.WebRtc.targets" />
     </files>
 </package>

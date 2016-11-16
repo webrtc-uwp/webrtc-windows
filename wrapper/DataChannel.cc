@@ -9,102 +9,105 @@
 
 #include <vector>
 
-#include "DataChannel.h"
+#include "webrtc/build/WinRT_gyp/Api/DataChannel.h"
 #include "Marshalling.h"
 
-using webrtc_winrt_api_internal::ToCx;
+using Org::WebRtc::Internal::ToCx;
 
-namespace webrtc_winrt_api {
+namespace Org {
+	namespace WebRtc {
 
-RTCDataChannel::RTCDataChannel(
-  rtc::scoped_refptr<webrtc::DataChannelInterface> impl)
-  : _impl(impl) {
-}
+		RTCDataChannel::RTCDataChannel(
+			rtc::scoped_refptr<webrtc::DataChannelInterface> impl)
+			: _impl(impl) {
+		}
 
-rtc::scoped_refptr<webrtc::DataChannelInterface> RTCDataChannel::GetImpl() {
-  return _impl;
-}
+		rtc::scoped_refptr<webrtc::DataChannelInterface> RTCDataChannel::GetImpl() {
+			return _impl;
+		}
 
-String^ RTCDataChannel::Label::get() {
-  return ToCx(_impl->label());
-}
+		String^ RTCDataChannel::Label::get() {
+			return ToCx(_impl->label());
+		}
 
-bool RTCDataChannel::Ordered::get() {
-  return _impl->ordered();
-}
+		bool RTCDataChannel::Ordered::get() {
+			return _impl->ordered();
+		}
 
-IBox<uint16>^ RTCDataChannel::MaxPacketLifeTime::get() {
-  return _impl->maxRetransmitTime() != -1
-    ? _impl->maxRetransmitTime()
-    : (IBox<uint16>^)nullptr;
-}
+		IBox<uint16>^ RTCDataChannel::MaxPacketLifeTime::get() {
+			return _impl->maxRetransmitTime() != -1
+				? _impl->maxRetransmitTime()
+				: (IBox<uint16>^)nullptr;
+		}
 
-IBox<uint16>^ RTCDataChannel::MaxRetransmits::get() {
-  return _impl->maxRetransmits() != -1
-    ? _impl->maxRetransmits()
-    : (IBox<uint16>^)nullptr;
-}
+		IBox<uint16>^ RTCDataChannel::MaxRetransmits::get() {
+			return _impl->maxRetransmits() != -1
+				? _impl->maxRetransmits()
+				: (IBox<uint16>^)nullptr;
+		}
 
-String^ RTCDataChannel::Protocol::get() {
-  return ToCx(_impl->protocol());
-}
+		String^ RTCDataChannel::Protocol::get() {
+			return ToCx(_impl->protocol());
+		}
 
-bool RTCDataChannel::Negotiated::get() {
-  return _impl->negotiated();
-}
+		bool RTCDataChannel::Negotiated::get() {
+			return _impl->negotiated();
+		}
 
-uint16 RTCDataChannel::Id::get() {
-  return _impl->id();
-}
+		uint16 RTCDataChannel::Id::get() {
+			return _impl->id();
+		}
 
-void RTCDataChannel::Close() {
-  _impl->Close();
-}
+		void RTCDataChannel::Close() {
+			_impl->Close();
+		}
 
-RTCDataChannelState RTCDataChannel::ReadyState::get() {
-  RTCDataChannelState state;
-  ToCx(_impl->state(), &state);
-  return state;
-}
+		RTCDataChannelState RTCDataChannel::ReadyState::get() {
+			RTCDataChannelState state;
+			ToCx(_impl->state(), &state);
+			return state;
+		}
 
-StringDataChannelMessage::StringDataChannelMessage(String^ data) {
-  StringData = data;
-}
+		StringDataChannelMessage::StringDataChannelMessage(String^ data) {
+			StringData = data;
+		}
 
-BinaryDataChannelMessage::BinaryDataChannelMessage(IVector<byte>^ data) {
-  BinaryData = data;
-}
+		BinaryDataChannelMessage::BinaryDataChannelMessage(IVector<byte>^ data) {
+			BinaryData = data;
+		}
 
-unsigned int RTCDataChannel::BufferedAmount::get() {
-  return _impl->buffered_amount();
-}
+		unsigned int RTCDataChannel::BufferedAmount::get() {
+			return _impl->buffered_amount();
+		}
 
-void RTCDataChannel::Send(IDataChannelMessage^ message) {
-  if (message->DataType == RTCDataChannelMessageType::String) {
-    StringDataChannelMessage^ stringMessage =
-        (StringDataChannelMessage^)message;
+		void RTCDataChannel::Send(IDataChannelMessage^ message) {
+			if (message->DataType == RTCDataChannelMessageType::String) {
+				StringDataChannelMessage^ stringMessage =
+					(StringDataChannelMessage^)message;
 
-    webrtc::DataBuffer buffer(rtc::ToUtf8(stringMessage->StringData->Data()));
-    _impl->Send(buffer);
-  } else if (message->DataType == RTCDataChannelMessageType::Binary) {
-    BinaryDataChannelMessage^ binaryMessage =
-        (BinaryDataChannelMessage^)message;
+				webrtc::DataBuffer buffer(rtc::ToUtf8(stringMessage->StringData->Data()));
+				_impl->Send(buffer);
+			}
+			else if (message->DataType == RTCDataChannelMessageType::Binary) {
+				BinaryDataChannelMessage^ binaryMessage =
+					(BinaryDataChannelMessage^)message;
 
-    std::vector<byte> binaryDataVector;
-    binaryDataVector.reserve(binaryMessage->BinaryData->Size);
+				std::vector<byte> binaryDataVector;
+				binaryDataVector.reserve(binaryMessage->BinaryData->Size);
 
-    // convert IVector to std::vector
-    webrtc_winrt_api_internal::FromCx(binaryMessage->BinaryData,
-        &binaryDataVector);
+				// convert IVector to std::vector
+				Org::WebRtc::Internal::FromCx(binaryMessage->BinaryData,
+					&binaryDataVector);
 
-    byte* byteArr = (&binaryDataVector[0]);
-    const rtc::Buffer rtcBuffer(byteArr, binaryDataVector.size());
-    webrtc::DataBuffer buffer(rtcBuffer, true);
+				byte* byteArr = (&binaryDataVector[0]);
+				const rtc::Buffer rtcBuffer(byteArr, binaryDataVector.size());
+				webrtc::DataBuffer buffer(rtcBuffer, true);
 
-    _impl->Send(buffer);
-  } else {
-    LOG(LS_ERROR) << "Tried to send data channel message of unknown data type";
-  }
-}
-
-}  // namespace webrtc_winrt_api
+				_impl->Send(buffer);
+			}
+			else {
+				LOG(LS_ERROR) << "Tried to send data channel message of unknown data type";
+			}
+		}
+	}
+}  // namespace Org.WebRtc

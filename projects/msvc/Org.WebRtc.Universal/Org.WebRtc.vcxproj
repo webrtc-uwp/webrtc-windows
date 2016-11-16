@@ -29,7 +29,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{32a4abd8-eb1c-4198-b261-425e6caddbef}</ProjectGuid>
     <Keyword>WindowsRuntimeComponent</Keyword>
-    <RootNamespace>webrtc_winrt_api</RootNamespace>
+    <RootNamespace>Org.WebRtc</RootNamespace>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
@@ -165,7 +165,7 @@
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <WindowsMetadataFile>$(OutDir)webrtc_winrt_api.winmd</WindowsMetadataFile>
+      <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
@@ -213,7 +213,7 @@
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <WindowsMetadataFile>$(OutDir)webrtc_winrt_api.winmd</WindowsMetadataFile>
+      <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
@@ -254,7 +254,7 @@
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Console</SubSystem>
-      <WindowsMetadataFile>$(OutDir)webrtc_winrt_api.winmd</WindowsMetadataFile>
+      <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
@@ -302,7 +302,7 @@
       <Profile>true</Profile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Console</SubSystem>
-      <WindowsMetadataFile>$(OutDir)webrtc_winrt_api.winmd</WindowsMetadataFile>
+      <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
@@ -348,7 +348,7 @@
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
-      <WindowsMetadataFile>$(OutDir)webrtc_winrt_api.winmd</WindowsMetadataFile>
+      <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
@@ -398,7 +398,7 @@
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
-      <WindowsMetadataFile>$(OutDir)webrtc_winrt_api.winmd</WindowsMetadataFile>
+      <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
