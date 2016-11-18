@@ -9,7 +9,7 @@
 
 #include <vector>
 
-#include "webrtc/build/WinRT_gyp/Api/DataChannel.h"
+#include "DataChannel.h"
 #include "Marshalling.h"
 
 using Org::WebRtc::Internal::ToCx;

@@ -7,7 +7,7 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#include "webrtc/build/WinRT_gyp/Api/Media.h"
+#include "Media.h"
 #include <stdio.h>
 #include <ppltasks.h>
 #include <mfapi.h>

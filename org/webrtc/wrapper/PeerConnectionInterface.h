@@ -20,7 +20,7 @@
 #include "GlobalObserver.h"
 #include "DataChannel.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
-#include "webrtc/build/WinRT_gyp/Api/RTCStatsReport.h"
+#include "RTCStatsReport.h"
 
 using Platform::String;
 using Platform::IBox;

@@ -52,6 +52,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterBox.Communication", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{1E952E90-393C-442A-81D2-166D5C137BDD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WebRtc.Stats.Observer", "..\projects\msvc\WebRtc.Stats.Observer.Universal\WebRtc.Stats.Observer.vcxproj", "{8F6CC751-235C-50C4-5D46-F577A04AADF2}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\common\windows\samples\ChatterBox\ChatterBox.Communication.Shared\ChatterBox.Communication.Shared.projitems*{6b237d83-603c-42af-aabe-9a8013ef1805}*SharedItemsImports = 4
@@ -205,6 +207,18 @@ Global
 		{724446B9-496E-4B7A-B944-0F79ECDE77F0}.Release|x64.Build.0 = Release|x64
 		{724446B9-496E-4B7A-B944-0F79ECDE77F0}.Release|x86.ActiveCfg = Release|x86
 		{724446B9-496E-4B7A-B944-0F79ECDE77F0}.Release|x86.Build.0 = Release|x86
+		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Debug|ARM.ActiveCfg = Debug|ARM
+		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Debug|ARM.Build.0 = Debug|ARM
+		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Debug|x64.ActiveCfg = Debug|x64
+		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Debug|x64.Build.0 = Debug|x64
+		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Debug|x86.ActiveCfg = Debug|Win32
+		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Debug|x86.Build.0 = Debug|Win32
+		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Release|ARM.ActiveCfg = Release|ARM
+		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Release|ARM.Build.0 = Release|ARM
+		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Release|x64.ActiveCfg = Release|x64
+		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Release|x64.Build.0 = Release|x64
+		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Release|x86.ActiveCfg = Release|Win32
+		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -230,5 +244,6 @@ Global
 		{7FBA9AC3-A3E4-4C99-9C3B-F1C76BF2FF59} = {1E952E90-393C-442A-81D2-166D5C137BDD}
 		{724446B9-496E-4B7A-B944-0F79ECDE77F0} = {1E952E90-393C-442A-81D2-166D5C137BDD}
 		{1E952E90-393C-442A-81D2-166D5C137BDD} = {B628A547-5936-4BBC-8E4D-86B4F2D5A015}
+		{8F6CC751-235C-50C4-5D46-F577A04AADF2} = {A247AD4E-D83A-40C1-8BB6-6B72F3A1EE5C}
 	EndGlobalSection
 EndGlobal

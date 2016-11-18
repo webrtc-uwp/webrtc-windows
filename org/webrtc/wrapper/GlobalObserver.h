@@ -16,7 +16,7 @@
 #include "webrtc/api/peerconnectioninterface.h"
 #include "webrtc/base/event.h"
 #include "webrtc/base/scoped_ref_ptr.h"
-#include "webrtc/build/WinRT_gyp/stats/webrtc_stats_observer.h"
+#include "../stats/webrtc_stats_observer.h"
 
 namespace Org {
 	namespace WebRtc {

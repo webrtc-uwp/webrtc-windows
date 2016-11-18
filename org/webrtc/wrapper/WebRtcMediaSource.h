@@ -11,7 +11,7 @@
 #define WEBRTC_BUILD_WINRT_GYP_API_WEBRTCMEDIASOURCE_H_
 
 #include <wrl.h>
-#include <WebRtcMediaStream.h>
+#include "WebRtcMediaStream.h"
 #include <mfapi.h>
 #include <mfidl.h>
 #include <windows.media.h>
