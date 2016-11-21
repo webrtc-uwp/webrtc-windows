@@ -74,7 +74,7 @@ namespace Org {
 			/// <summary>
 			/// Get or sets a clock rate in cycles per second.
 			/// </summary>
-			property int Clockrate {
+			property int ClockRate {
 				int get() {
 					return _clockrate;
 				}
