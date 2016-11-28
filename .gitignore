@@ -257,3 +257,8 @@ paket-files/
 .idea/
 *.sln.iml
 *.bak
+
+# Eventing
+projects/msvc/WebRtc.Stats.Observer.Universal/etw_providers.h
+projects/msvc/WebRtc.Stats.Observer.Universal/etw_providers.rc
+projects/msvc/WebRtc.Stats.Observer.Universal/etw_providersTEMP.BIN
