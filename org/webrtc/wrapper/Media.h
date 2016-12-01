@@ -408,6 +408,37 @@ namespace Org {
 			property bool videoEnabled;
 		};
 
+		ref class RawVideoSource;
+
+		class RawVideoStream : public webrtc::VideoRendererInterface {
+			public:
+				RawVideoStream(RawVideoSource^ videoSource);
+				virtual void RenderFrame(const cricket::VideoFrame* frame);
+			private:
+				RawVideoSource^ _videoSource;
+		};
+
+		/// <summary>
+		/// Source of raw video samples.
+		/// </summary>
+		public ref class RawVideoSource sealed {
+			internal:
+				RawVideoSource(MediaVideoTrack^ track);
+				void RawVideoFrame(uint32 width, uint32 height,
+					const Platform::Array<uint8>^ yPlane, uint32 yPitch,
+					const Platform::Array<uint8>^ vPlane, uint32 vPitch,
+					const Platform::Array<uint8>^ uPlane, uint32 uPitch);
+			public:
+				/// <summary>
+				/// Raw video frame has been received.
+				/// </summary>
+				event RawVideoSourceDelegate^ OnRawVideoFrame;
+				virtual ~RawVideoSource();
+			private:
+				rtc::scoped_ptr<RawVideoStream> _videoStream;
+				MediaVideoTrack^ _track;
+		};
+
 		/// <summary>
 		/// Defines methods for accessing local media devices, like microphones
 		/// and video cameras, and creating multimedia streams.
@@ -470,6 +501,14 @@ namespace Org {
 			/// <returns>A media source.</returns>
 			IMediaSource^ CreateMediaSource(
 				MediaVideoTrack^ track, String^ id);
+
+			/// <summary>
+			/// Creates an <see cref="RawVideoSource"/> for a video track.
+			/// </summary>
+			/// <param name="track">Video track to create a <see cref="RawVideoSource"/>
+			/// from</param>
+			/// <returns>Raw video source.</returns>
+			RawVideoSource^ CreateRawVideoSource(MediaVideoTrack^ track);
 
 			/// <summary>
 			/// Retrieves system devices that can be used for audio capturing.
