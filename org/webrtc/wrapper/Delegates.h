@@ -17,6 +17,15 @@ namespace Org {
 		/// </summary>
 		public delegate void EventDelegate();
 
+		/// <summary>
+		/// Delegate for receiving video frames from RawVideoSource.
+		/// </summary>
+		public delegate void RawVideoSourceDelegate(
+			uint32, uint32,
+			const Platform::Array<uint8>^, uint32,
+			const Platform::Array<uint8>^, uint32,
+			const Platform::Array<uint8>^, uint32);
+
 		// ------------------
 		ref class RTCPeerConnectionIceEvent;
 		/// <summary>

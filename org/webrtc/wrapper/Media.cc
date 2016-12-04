@@ -277,6 +277,39 @@ namespace Org {
 			return ret;
 		}
 
+		// = RawVideoStream =============================================================
+
+		RawVideoStream::RawVideoStream(RawVideoSource^ videoSource) :
+			_videoSource(videoSource) {
+		}
+
+		void RawVideoStream::RenderFrame(const cricket::VideoFrame* frame) {
+			_videoSource->RawVideoFrame(
+				frame->GetWidth(), frame->GetHeight(),
+				Platform::ArrayReference<uint8>((uint8*)frame->GetYPlane(), frame->GetYPitch() * frame->GetHeight()), frame->GetYPitch(),
+				Platform::ArrayReference<uint8>((uint8*)frame->GetUPlane(), frame->GetUPitch() * frame->GetChromaHeight()), frame->GetUPitch(),
+				Platform::ArrayReference<uint8>((uint8*)frame->GetVPlane(), frame->GetVPitch() * frame->GetChromaHeight()), frame->GetVPitch());
+		}
+
+		// = RawVideoSource =============================================================
+
+		RawVideoSource::RawVideoSource(MediaVideoTrack^ track) :
+			_videoStream(new RawVideoStream(this)),
+			_track(track) {
+			_track->SetRenderer(_videoStream.get());
+		}
+
+		void RawVideoSource::RawVideoFrame(uint32 width, uint32 height,
+			const Platform::Array<uint8>^ yPlane, uint32 yPitch,
+			const Platform::Array<uint8>^ vPlane, uint32 vPitch,
+			const Platform::Array<uint8>^ uPlane, uint32 uPitch) {
+			OnRawVideoFrame(width, height, yPlane, yPitch, vPlane, vPitch, uPlane, uPitch);
+		}
+
+		RawVideoSource::~RawVideoSource() {
+			_track->UnsetRenderer(_videoStream.get());
+		}
+
 		// = Media ===================================================================
 
 		const char kAudioLabel[] = "audio_label_%llx";
@@ -493,6 +526,10 @@ namespace Org {
 				IMediaSource^ source = reinterpret_cast<IMediaSource^>(comSource.Get());
 				return source;
 			});
+		}
+
+		RawVideoSource^ Media::CreateRawVideoSource(MediaVideoTrack^ track) {
+			return ref new RawVideoSource(track);
 		}
 
 		IVector<MediaDevice^>^ Media::GetVideoCaptureDevices() {
