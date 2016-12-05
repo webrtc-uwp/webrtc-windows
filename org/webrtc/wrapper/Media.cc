@@ -285,10 +285,10 @@ namespace Org {
 
 		void RawVideoStream::RenderFrame(const cricket::VideoFrame* frame) {
 			_videoSource->RawVideoFrame(
-				frame->GetWidth(), frame->GetHeight(),
-				Platform::ArrayReference<uint8>((uint8*)frame->GetYPlane(), frame->GetYPitch() * frame->GetHeight()), frame->GetYPitch(),
-				Platform::ArrayReference<uint8>((uint8*)frame->GetUPlane(), frame->GetUPitch() * frame->GetChromaHeight()), frame->GetUPitch(),
-				Platform::ArrayReference<uint8>((uint8*)frame->GetVPlane(), frame->GetVPitch() * frame->GetChromaHeight()), frame->GetVPitch());
+				(uint32)frame->GetWidth(), (uint32)frame->GetHeight(),
+				Platform::ArrayReference<uint8>((uint8*)frame->GetYPlane(), (unsigned int)(frame->GetYPitch() * frame->GetHeight())), frame->GetYPitch(),
+				Platform::ArrayReference<uint8>((uint8*)frame->GetUPlane(), (unsigned int)(frame->GetUPitch() * frame->GetChromaHeight())), frame->GetUPitch(),
+				Platform::ArrayReference<uint8>((uint8*)frame->GetVPlane(), (unsigned int)(frame->GetVPitch() * frame->GetChromaHeight())), frame->GetVPitch());
 		}
 
 		// = RawVideoSource =============================================================
