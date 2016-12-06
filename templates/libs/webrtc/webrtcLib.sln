@@ -59,17 +59,17 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libjpeg_win10_x64", "third_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsrtp_win10_x64", "third_party\libsrtp\libsrtp_win10_x64.vcxproj", "{93E646F2-2FC0-1118-5155-307E114E02E5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_avx2_win10_x64", "third_party\libvpx_new\libvpx_intrinsics_avx2_win10_x64.vcxproj", "{E01E960A-3FFD-4AD0-160C-FEF7B806A0CA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_avx2_win10_x64", "third_party\libvpx\libvpx_intrinsics_avx2_win10_x64.vcxproj", "{E01E960A-3FFD-4AD0-160C-FEF7B806A0CA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_mmx_win10_x64", "third_party\libvpx_new\libvpx_intrinsics_mmx_win10_x64.vcxproj", "{CBA1364B-7576-2F5C-5A35-0A73078503C0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_mmx_win10_x64", "third_party\libvpx\libvpx_intrinsics_mmx_win10_x64.vcxproj", "{CBA1364B-7576-2F5C-5A35-0A73078503C0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_sse2_win10_x64", "third_party\libvpx_new\libvpx_intrinsics_sse2_win10_x64.vcxproj", "{2957A876-EB0A-84C4-3940-34D32093D469}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_sse2_win10_x64", "third_party\libvpx\libvpx_intrinsics_sse2_win10_x64.vcxproj", "{2957A876-EB0A-84C4-3940-34D32093D469}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_sse4_1_win10_x64", "third_party\libvpx_new\libvpx_intrinsics_sse4_1_win10_x64.vcxproj", "{6B279830-A4E0-10A5-67D6-A679F0252C65}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_sse4_1_win10_x64", "third_party\libvpx\libvpx_intrinsics_sse4_1_win10_x64.vcxproj", "{6B279830-A4E0-10A5-67D6-A679F0252C65}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_ssse3_win10_x64", "third_party\libvpx_new\libvpx_intrinsics_ssse3_win10_x64.vcxproj", "{13AD2B29-5AD3-4DD1-EE84-416CBA05C71B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_ssse3_win10_x64", "third_party\libvpx\libvpx_intrinsics_ssse3_win10_x64.vcxproj", "{13AD2B29-5AD3-4DD1-EE84-416CBA05C71B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_new_win10_x64", "third_party\libvpx_new\libvpx_new_win10_x64.vcxproj", "{307968D2-F1F0-4741-F5D5-A41362C935BD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_win10_x64", "third_party\libvpx\libvpx_win10_x64.vcxproj", "{307968D2-F1F0-4741-F5D5-A41362C935BD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libyuv_win10_x64", "third_party\libyuv\libyuv_win10_x64.vcxproj", "{9ABB899F-8515-74DF-7ADC-5DD4D8BCEF4D}"
 EndProject
@@ -245,7 +245,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libjpeg_win10_arm", "third_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsrtp_win10_arm", "third_party\libsrtp\libsrtp_win10_arm.vcxproj", "{29C9C326-EA1B-CFE9-BF90-7C1D6B4B9B6F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_new_win10_arm", "third_party\libvpx_new\libvpx_new_win10_arm.vcxproj", "{86379849-051B-1FA0-C622-08E65D2F89C9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_win10_arm", "third_party\libvpx\libvpx_win10_arm.vcxproj", "{86379849-051B-1FA0-C622-08E65D2F89C9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libyuv_win10_arm", "third_party\libyuv\libyuv_win10_arm.vcxproj", "{B59B0F79-BAB1-36E8-D038-1FC1F162301C}"
 EndProject
@@ -259,7 +259,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libjpeg_win10_x86", "third_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsrtp_win10_x86", "third_party\libsrtp\libsrtp_win10_x86.vcxproj", "{26546A16-1A3E-D89D-C29F-77F7CA1A8C4E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_new_win10_x86", "third_party\libvpx_new\libvpx_new_win10_x86.vcxproj", "{AFE6963F-5FC0-35DE-9DDA-53708A42DD19}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_win10_x86", "third_party\libvpx\libvpx_win10_x86.vcxproj", "{AFE6963F-5FC0-35DE-9DDA-53708A42DD19}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libyuv_win10_x86", "third_party\libyuv\libyuv_win10_x86.vcxproj", "{E2C2F025-6299-71CE-B160-339987D245E9}"
 EndProject
@@ -521,15 +521,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "g722_win10_x86", "webrtc\mo
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ilbc_win10_x86", "webrtc\modules\ilbc_win10_x86.vcxproj", "{538ED9C3-3171-C37F-1D33-3CD637C75365}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_avx2_win10_x86", "third_party\libvpx_new\libvpx_intrinsics_avx2_win10_x86.vcxproj", "{1DE8E852-4F6A-C5D0-8734-11531F8F2DB3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_avx2_win10_x86", "third_party\libvpx\libvpx_intrinsics_avx2_win10_x86.vcxproj", "{1DE8E852-4F6A-C5D0-8734-11531F8F2DB3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_mmx_win10_x86", "third_party\libvpx_new\libvpx_intrinsics_mmx_win10_x86.vcxproj", "{91386991-A9C7-C870-835E-95FD45980881}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_mmx_win10_x86", "third_party\libvpx\libvpx_intrinsics_mmx_win10_x86.vcxproj", "{91386991-A9C7-C870-835E-95FD45980881}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_sse2_win10_x86", "third_party\libvpx_new\libvpx_intrinsics_sse2_win10_x86.vcxproj", "{3CD06ACC-B7A3-7724-593B-80CA04448E25}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_sse2_win10_x86", "third_party\libvpx\libvpx_intrinsics_sse2_win10_x86.vcxproj", "{3CD06ACC-B7A3-7724-593B-80CA04448E25}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_sse4_1_win10_x86", "third_party\libvpx_new\libvpx_intrinsics_sse4_1_win10_x86.vcxproj", "{3A3A5853-938A-E13F-AC48-27C20F30AE6E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_sse4_1_win10_x86", "third_party\libvpx\libvpx_intrinsics_sse4_1_win10_x86.vcxproj", "{3A3A5853-938A-E13F-AC48-27C20F30AE6E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_ssse3_win10_x86", "third_party\libvpx_new\libvpx_intrinsics_ssse3_win10_x86.vcxproj", "{9EB8123B-BD0F-171E-4131-6EA4454BE0D6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_ssse3_win10_x86", "third_party\libvpx\libvpx_intrinsics_ssse3_win10_x86.vcxproj", "{9EB8123B-BD0F-171E-4131-6EA4454BE0D6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "openmax_dl_armv7_win10_arm", "third_party\openmax_dl\dl\openmax_dl_armv7_win10_arm.vcxproj", "{BBB9C181-FCE8-3F56-2642-77964B61648A}"
 EndProject
@@ -549,11 +549,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "congestion_controller_win10
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "h264_winrt", "h264_winrt", "{9FAABAC1-A3F5-496B-86F6-1AAEDCDCEF3A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_avx_win10_x64", "third_party\libvpx_new\libvpx_intrinsics_avx_win10_x64.vcxproj", "{1D0FCFC9-0584-AE17-4CE7-CCF74782E7F2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_avx_win10_x64", "third_party\libvpx\libvpx_intrinsics_avx_win10_x64.vcxproj", "{1D0FCFC9-0584-AE17-4CE7-CCF74782E7F2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "h264_winrt", "h264_winrt", "{EA14CC6C-4738-456B-8761-EBA380280F08}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_avx_win10_x86", "third_party\libvpx_new\libvpx_intrinsics_avx_win10_x86.vcxproj", "{44170027-01EF-D69F-ADE8-55DBCD7D3F7E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_avx_win10_x86", "third_party\libvpx\libvpx_intrinsics_avx_win10_x86.vcxproj", "{44170027-01EF-D69F-ADE8-55DBCD7D3F7E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "webrtc_h264_winrt_win10_arm", "third_party\h264_winrt\webrtc_h264_winrt_win10_arm.vcxproj", "{E52ED252-EB46-A8D6-EB7D-9DC386ECE437}"
 EndProject
