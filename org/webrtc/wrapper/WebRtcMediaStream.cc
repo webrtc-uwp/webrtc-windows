@@ -230,8 +230,8 @@ namespace Org {
 				RETURN_ON_FAIL(MFCreateSample(&spSample));
 
 				// Make sure the destination buffer in even. Crop one pixel if odd.
-				unsigned int destWidth = (unsigned int)(frame->GetWidth() & (~((size_t)1)));
-				unsigned int destHeight = (unsigned int)(frame->GetHeight() & (~((size_t)1)));
+				unsigned int destWidth = (unsigned int)(frame->width() & (~((size_t)1)));
+				unsigned int destHeight = (unsigned int)(frame->height() & (~((size_t)1)));
 				// Make sure the buffers are the right size
 				{
 					unsigned int width, height;
@@ -239,7 +239,7 @@ namespace Org {
 						_mediaType.Get(), MF_MT_FRAME_SIZE, &width, &height));
 					if (destWidth != width || destHeight != height) {
 						RETURN_ON_FAIL(CreateMediaType(destWidth, destHeight,
-							(unsigned int)frame->GetVideoRotation(), &_mediaType,
+							(unsigned int)frame->rotation(), &_mediaType,
 							_isH264));
 						ResetMediaBuffers();
 					}
@@ -269,9 +269,9 @@ namespace Org {
 
 				// Convert to NV12
 				uint8* uvDest = destRawData + (pitch * destHeight);
-				libyuv::I420ToNV12(frame->GetYPlane(), frame->GetYPitch(),
-					frame->GetUPlane(), frame->GetUPitch(),
-					frame->GetVPlane(), frame->GetVPitch(),
+				libyuv::I420ToNV12(frame->video_frame_buffer()->DataY(), frame->video_frame_buffer()->StrideY(),
+					frame->video_frame_buffer()->DataU(), frame->video_frame_buffer()->StrideU(),
+					frame->video_frame_buffer()->DataV(), frame->video_frame_buffer()->StrideV(),
 					reinterpret_cast<uint8*>(destRawData), pitch,
 					uvDest, pitch,
 					static_cast<int>(destWidth),
