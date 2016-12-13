@@ -454,7 +454,7 @@ namespace Org {
 
 											void FromCx(
 												Org::WebRtc::RTCIceCandidate^ inObj,
-												rtc::scoped_ptr<webrtc::IceCandidateInterface>* outObj) {
+												std::unique_ptr<webrtc::IceCandidateInterface>* outObj) {
 												outObj->reset(webrtc::CreateIceCandidate(
 													FromCx(inObj->SdpMid),
 													inObj->SdpMLineIndex,
@@ -495,7 +495,7 @@ namespace Org {
 
 											void FromCx(
 												Org::WebRtc::RTCSessionDescription^ inObj,
-												rtc::scoped_ptr<webrtc::SessionDescriptionInterface>* outObj) {
+												std::unique_ptr<webrtc::SessionDescriptionInterface>* outObj) {
 												outObj->reset(webrtc::CreateSessionDescription(
 													FromCx(inObj->Type->Value),
 													FromCx(inObj->Sdp), nullptr));

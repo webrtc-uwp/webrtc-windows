@@ -13,7 +13,6 @@
 #include "Media.h"
 #include "MediaSourceHelper.h"
 #include "webrtc/api/mediastreaminterface.h"
-#include "webrtc/system_wrappers/include/tick_util.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 
 using Windows::Media::Core::MediaStreamSource;
@@ -106,10 +105,10 @@ namespace Org {
 				// Keep a weak reference here.
 				// Its _mediaStreamSource that keeps a reference to this object.
 				WeakReference _mediaStreamSource;
-				rtc::scoped_ptr<RTCRenderer> _rtcRenderer;
-				rtc::scoped_ptr<webrtc::CriticalSectionWrapper> _lock;
+				std::unique_ptr<RTCRenderer> _rtcRenderer;
+				std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
 
-				rtc::scoped_ptr<MediaSourceHelper> _helper;
+				std::unique_ptr<MediaSourceHelper> _helper;
 
 				ThreadPoolTimer^ _progressTimer;
 				void ProgressTimerElapsedExecute(ThreadPoolTimer^ source);

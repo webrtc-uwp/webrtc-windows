@@ -326,7 +326,7 @@ namespace Org {
 			_videoCaptureDeviceChanged(true),
 			_audioCaptureDeviceChanged(true),
 			_audioPlayoutDeviceChanged(true) {
-			_dev_manager = rtc::scoped_ptr<cricket::DeviceManagerInterface>
+			_dev_manager = std::unique_ptr<cricket::DeviceManagerInterface>
 				(cricket::DeviceManagerFactory::Create());
 
 			if (!_dev_manager->Init()) {

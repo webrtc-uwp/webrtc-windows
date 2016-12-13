@@ -102,7 +102,7 @@ namespace Org {
 			// ==========================
 			void FromCx(
 				Org::WebRtc::RTCIceCandidate^ inObj,
-				rtc::scoped_ptr<webrtc::IceCandidateInterface>* outObj);
+				std::unique_ptr<webrtc::IceCandidateInterface>* outObj);
 			void ToCx(
 				webrtc::IceCandidateInterface const& inObj,
 				Org::WebRtc::RTCIceCandidate^* outObj);
@@ -117,7 +117,7 @@ namespace Org {
 			// ==========================
 			void FromCx(
 				Org::WebRtc::RTCSessionDescription^ inObj,
-				rtc::scoped_ptr<webrtc::SessionDescriptionInterface>* outObj);
+				std::unique_ptr<webrtc::SessionDescriptionInterface>* outObj);
 			void ToCx(
 				const webrtc::SessionDescriptionInterface* inObj,
 				Org::WebRtc::RTCSessionDescription^* outObj);

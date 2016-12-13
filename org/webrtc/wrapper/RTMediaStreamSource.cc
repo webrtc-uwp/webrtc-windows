@@ -40,7 +40,7 @@ namespace Org {
 				auto streamState = ref new RTMediaStreamSource(track, isH264);
 				streamState->_id = id;
 				streamState->_idUtf8 = rtc::ToUtf8(streamState->_id->Data());
-				streamState->_rtcRenderer = rtc::scoped_ptr<RTCRenderer>(
+				streamState->_rtcRenderer = std::unique_ptr<RTCRenderer>(
 					new RTCRenderer(streamState));
 				track->SetRenderer(streamState->_rtcRenderer.get());
 				VideoEncodingProperties^ videoProperties;

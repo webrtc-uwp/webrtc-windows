@@ -30,7 +30,7 @@
 #include "webrtc/api/test/fakeconstraints.h"
 #include "webrtc/pc/channelmanager.h"
 #include "webrtc/system_wrappers/include/utf_util_win.h"
-#include "webrtc/system_wrappers/include/tick_util.h"
+//#include "webrtc/system_wrappers/include/tick_util.h"
 #include "webrtc/base/timeutils.h"
 #include "third_party/h264_winrt/h264_winrt_factory.h"
 #include "webrtc/base/trace_event.h"
@@ -89,7 +89,7 @@ namespace Org {
 						message.data(), message.size(), nullptr, nullptr);
 				}
 
-				rtc::scoped_ptr<rtc::FileStream> fileStream_;
+				std::unique_ptr<rtc::FileStream> fileStream_;
 			};
 
 			static bool isInitialized = false;
@@ -99,8 +99,8 @@ namespace Org {
 			// The worker thread for webrtc.
 			rtc::Thread gThread;
 			rtc::TraceLog gTraceLog;
-			rtc::scoped_ptr<rtc::LoggingServer> gLoggingServer;
-			rtc::scoped_ptr<FileLogSink> gLoggingFile;
+			std::unique_ptr<rtc::LoggingServer> gLoggingServer;
+			std::unique_ptr<FileLogSink> gLoggingFile;
 			// Default resolution. If no preferred video capture format is specified,
 			// this is the resolution we will use.
 			cricket::VideoFormat gPreferredVideoCaptureFormat = cricket::VideoFormat(640, 480,
@@ -290,7 +290,7 @@ namespace Org {
 				// The callback is kept for the lifetime of the RTCPeerConnection.
 				_setSdpObservers.push_back(observer);
 
-				rtc::scoped_ptr<webrtc::SessionDescriptionInterface> nativeDescription;
+				std::unique_ptr<webrtc::SessionDescriptionInterface> nativeDescription;
 				FromCx(description, &nativeDescription);
 
 				_impl->SetLocalDescription(observer, nativeDescription.release());
@@ -314,7 +314,7 @@ namespace Org {
 				// The callback is kept for the lifetime of the RTCPeerConnection.
 				_setSdpObservers.push_back(observer);
 
-				rtc::scoped_ptr<webrtc::SessionDescriptionInterface> nativeDescription;
+				std::unique_ptr<webrtc::SessionDescriptionInterface> nativeDescription;
 				FromCx(description, &nativeDescription);
 
 				_impl->SetRemoteDescription(observer, nativeDescription.release());
@@ -442,7 +442,7 @@ namespace Org {
 						return;
 					}
 
-					rtc::scoped_ptr<webrtc::IceCandidateInterface> nativeCandidate;
+					std::unique_ptr<webrtc::IceCandidateInterface> nativeCandidate;
 					FromCx(candidate, &nativeCandidate);
 					_impl->AddIceCandidate(nativeCandidate.get());
 				});
@@ -726,7 +726,7 @@ namespace Org {
 
 			// setup logging to network
 			rtc::SocketAddress sa(INADDR_ANY, 47003);
-			globals::gLoggingServer = rtc::scoped_ptr<rtc::LoggingServer>(
+			globals::gLoggingServer = std::unique_ptr<rtc::LoggingServer>(
 				new rtc::LoggingServer());
 			globals::gLoggingServer->Listen(sa, static_cast<rtc::LoggingSeverity>(level));
 
@@ -734,7 +734,7 @@ namespace Org {
 			rtc::FileStream* fileStream = new rtc::FileStream();
 			fileStream->Open(globals::OutputPath() + globals::logFileName, "wb", NULL);
 			fileStream->DisableBuffering();
-			globals::gLoggingFile = rtc::scoped_ptr<globals::FileLogSink>(
+			globals::gLoggingFile = std::unique_ptr<globals::FileLogSink>(
 				new globals::FileLogSink(fileStream));
 			rtc::LogMessage::AddLogToStream(globals::gLoggingFile.get(),
 				static_cast<rtc::LoggingSeverity>(level));

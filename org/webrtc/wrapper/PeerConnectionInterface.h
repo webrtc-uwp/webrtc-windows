@@ -14,7 +14,6 @@
 #include <collection.h>
 #include <vector>
 #include "webrtc/api/peerconnectioninterface.h"
-#include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/scopedptrcollection.h"
 #include "webrtc/base/logging.h"
 #include "GlobalObserver.h"
@@ -728,11 +727,11 @@ namespace Org {
 
 		private:
 			~RTCPeerConnection();
-			rtc::scoped_refptr<webrtc::PeerConnectionInterface> _impl;
+			std::unique_ptr<webrtc::PeerConnectionInterface> _impl;
 			// This lock protects _impl.
-			rtc::scoped_ptr<webrtc::CriticalSectionWrapper> _lock;
+			std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
 
-			rtc::scoped_ptr<GlobalObserver> _observer;
+			std::unique_ptr<GlobalObserver> _observer;
 
 			typedef std::vector<rtc::scoped_refptr<CreateSdpObserver>> CreateSdpObservers;
 			typedef std::vector<rtc::scoped_refptr<SetSdpObserver>> SetSdpObservers;

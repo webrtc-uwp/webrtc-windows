@@ -76,7 +76,7 @@ class WebRTCStatsObserver : public StatsObserver, public rtc::MessageHandler {
   static const int kInterval;
   rtc::scoped_refptr<webrtc::PeerConnectionInterface> pci_;
 
-  rtc::scoped_ptr<CriticalSectionWrapper> crit_sect_;
+	std::unique_ptr<CriticalSectionWrapper> crit_sect_;
   Status status_;
   WebRTCStatsObserverWinRT* webrtc_stats_observer_winrt_;
   bool etw_stats_enabled_;
@@ -88,7 +88,7 @@ class WebRTCStatsObserver : public StatsObserver, public rtc::MessageHandler {
   bool rtc_stats_to_remote_host_enabled_;
   std::string stats_network_destination_hostname_;
   int stats_network_destination_port_;
-  rtc::scoped_ptr<WebRTCStatsNetworkSender> network_sender_;
+  std::unique_ptr<WebRTCStatsNetworkSender> network_sender_;
 };
 
 class WebRTCStatsObserverWinRT {

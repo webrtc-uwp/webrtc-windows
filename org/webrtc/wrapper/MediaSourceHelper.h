@@ -12,7 +12,7 @@
 
 #include "Media.h"
 #include "webrtc/api/mediastreaminterface.h"
-#include "webrtc/system_wrappers/include/tick_util.h"
+//#include "webrtc/system_wrappers/include/tick_util.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 
 using Microsoft::WRL::ComPtr;
@@ -57,11 +57,11 @@ namespace Org {
 
 				void SetStartTimeNow();
 				void QueueFrame(cricket::VideoFrame* frame);
-				rtc::scoped_ptr<SampleData> DequeueFrame();
+				std::unique_ptr<SampleData> DequeueFrame();
 				bool HasFrames();
 
 			private:
-				rtc::scoped_ptr<webrtc::CriticalSectionWrapper> _lock;
+				std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
 				std::list<cricket::VideoFrame*> _frames;
 				bool _isFirstFrame;
 				LONGLONG _startTime;
@@ -77,8 +77,8 @@ namespace Org {
 				// In degrees.  In practice it can only be 0, 90, 180 or 270.
 				int _lastRotation;
 
-				rtc::scoped_ptr<SampleData> DequeueH264Frame();
-				rtc::scoped_ptr<SampleData> DequeueI420Frame();
+				std::unique_ptr<SampleData> DequeueH264Frame();
+				std::unique_ptr<SampleData> DequeueI420Frame();
 
 
 				// Gets the next timestamp using the clock.
@@ -94,12 +94,12 @@ namespace Org {
 				void UpdateFrameRate();
 				// State related to calculating FPS.
 				int _frameCounter;
-				webrtc::TickTime _lastTimeFPSCalculated;
+				int64_t _lastTimeFPSCalculated;
 
 				// Are the frames H264 encoded.
 				bool _isH264;
 
-				webrtc::TickTime _startTickTime;
+				int64_t _startTickTime;
 			};
 		}
 	}

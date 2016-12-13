@@ -15,7 +15,6 @@
 #include <vector>
 #include "webrtc/api/mediastreaminterface.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
-#include "webrtc/base/scoped_ptr.h"
 #include "Media.h"
 #include "MediaSourceHelper.h"
 
@@ -68,7 +67,7 @@ namespace Org {
 				STDMETHOD(Shutdown)();
 				STDMETHOD(SetD3DManager)(ComPtr<IMFDXGIDeviceManager> manager);
 
-				rtc::scoped_ptr<webrtc::CriticalSectionWrapper> _lock;
+				std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
 
 			private:
 				ComPtr<IMFMediaEventQueue> _eventQueue;
@@ -84,7 +83,7 @@ namespace Org {
 
 				HRESULT ReplyToSampleRequest();
 
-				rtc::scoped_ptr<MediaSourceHelper> _helper;
+				std::unique_ptr<MediaSourceHelper> _helper;
 
 				ComPtr<IMFMediaType> _mediaType;
 				ComPtr<IMFDXGIDeviceManager> _deviceManager;

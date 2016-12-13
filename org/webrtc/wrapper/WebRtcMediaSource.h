@@ -17,7 +17,6 @@
 #include <windows.media.h>
 #include <windows.media.core.h>
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
-#include "webrtc/base/scoped_ptr.h"
 #include "Media.h"
 
 interface IFrameSource;
@@ -79,7 +78,7 @@ namespace Org {
 				IFACEMETHOD(IsRateSupported)(BOOL fThin, float flRate, float *pflNearestSupportedRate);
 
 			private:
-				rtc::scoped_ptr<webrtc::CriticalSectionWrapper> _lock;
+				std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
 				ComPtr<IMFMediaEventQueue> _eventQueue;
 				ComPtr<WebRtcMediaStream> _stream;
 				ComPtr<IMFPresentationDescriptor> _presDescriptor;
