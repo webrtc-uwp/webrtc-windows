@@ -225,7 +225,7 @@ namespace Org {
 					return;
 				}
 				InterlockedIncrement(&stream->_frameBeingQueued);
-				auto frameCopy = frame->Copy();
+				auto frameCopy = frame->video_frame_buffer()->NativeToI420Buffer();
 				// Do the processing async because there's a risk of a deadlock otherwise.
 				Concurrency::create_async([this, frameCopy, stream] {
 					stream->ProcessReceivedFrame(frameCopy);

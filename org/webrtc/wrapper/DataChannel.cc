@@ -100,7 +100,7 @@ namespace Org {
 					&binaryDataVector);
 
 				byte* byteArr = (&binaryDataVector[0]);
-				const rtc::Buffer rtcBuffer(byteArr, binaryDataVector.size());
+				const rtc::CopyOnWriteBuffer rtcBuffer(byteArr, binaryDataVector.size());
 				webrtc::DataBuffer buffer(rtcBuffer, true);
 
 				_impl->Send(buffer);

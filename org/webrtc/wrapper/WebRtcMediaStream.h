@@ -34,7 +34,7 @@ namespace Org {
 				public RuntimeClass<RuntimeClassFlags<RuntimeClassType::WinRtClassicComMix>,
 				IMFMediaStream, IMFMediaEventGenerator,
 				IMFGetService>,
-				public webrtc::VideoRendererInterface {
+				public rtc::VideoSinkInterface<cricket::VideoFrame> {
 				InspectableClass(L"WebRtcMediaStream", BaseTrust)
 			public:
 				WebRtcMediaStream();
@@ -43,6 +43,9 @@ namespace Org {
 					WebRtcMediaSource* source,
 					Org::WebRtc::MediaVideoTrack^ track,
 					String^ id);
+				void OnFrame(const cricket::VideoFrame& frame) override {
+					RenderFrame(&frame);
+				}
 
 
 				// IMFMediaEventGenerator

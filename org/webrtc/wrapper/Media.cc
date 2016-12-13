@@ -98,15 +98,17 @@ namespace Org {
 		}
 
 		void MediaVideoTrack::Stop() {
-			_impl->GetSource()->Stop();
+			//TODO check
+			//_impl->GetSource()->Stop();
+			_impl->GetSource()->Suspend();
 		}
 
-		void MediaVideoTrack::SetRenderer(webrtc::VideoRendererInterface* renderer) {
-			_impl->AddRenderer(renderer);
+		void MediaVideoTrack::SetRenderer(rtc::VideoSinkInterface<cricket::VideoFrame>* renderer) {
+			_impl->AddOrUpdateSink(renderer, rtc::VideoSinkWants());
 		}
 
-		void MediaVideoTrack::UnsetRenderer(webrtc::VideoRendererInterface* renderer) {
-			_impl->RemoveRenderer(renderer);
+		void MediaVideoTrack::UnsetRenderer(rtc::VideoSinkInterface<cricket::VideoFrame>* renderer) {
+			_impl->RemoveSink(renderer);
 		}
 
 		// = MediaAudioTrack =========================================================

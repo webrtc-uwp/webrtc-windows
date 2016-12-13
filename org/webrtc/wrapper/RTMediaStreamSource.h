@@ -77,13 +77,16 @@ namespace Org {
 				static MediaStreamSource^ CreateMediaSource(
 					MediaVideoTrack^ track, uint32 frameRate, String^ id);
 			private:
-				class RTCRenderer : public webrtc::VideoRendererInterface {
+				class RTCRenderer : public rtc::VideoSinkInterface<cricket::VideoFrame> {
 				public:
 					explicit RTCRenderer(RTMediaStreamSource^ streamSource);
 					virtual ~RTCRenderer();
 					virtual void SetSize(uint32 width, uint32 height, uint32 reserved);
 					virtual void RenderFrame(const cricket::VideoFrame *frame);
 					virtual bool CanApplyRotation() { return true; }
+					void OnFrame(const cricket::VideoFrame& frame) override {
+						RenderFrame(&frame);
+					}
 				private:
 					// This object is owned by RTMediaStreamSource
 					// so _streamSource must be a weak reference

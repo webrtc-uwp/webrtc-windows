@@ -93,8 +93,8 @@ namespace Org {
 			/// </summary>
 			virtual void Stop();
 		internal:
-			void SetRenderer(webrtc::VideoRendererInterface* renderer);
-			void UnsetRenderer(webrtc::VideoRendererInterface* renderer);
+			void SetRenderer(rtc::VideoSinkInterface<cricket::VideoFrame>* renderer);
+			void UnsetRenderer(rtc::VideoSinkInterface<cricket::VideoFrame>* renderer);
 		private:
 			rtc::scoped_refptr<webrtc::VideoTrackInterface> _impl;
 		};
@@ -408,10 +408,13 @@ namespace Org {
 
 		ref class RawVideoSource;
 
-		class RawVideoStream : public webrtc::VideoRendererInterface {
+		class RawVideoStream :  public rtc::VideoSinkInterface<cricket::VideoFrame> {
 			public:
 				RawVideoStream(RawVideoSource^ videoSource);
 				virtual void RenderFrame(const cricket::VideoFrame* frame);
+				void OnFrame(const cricket::VideoFrame& frame) override {
+					RenderFrame(&frame);
+				}
 			private:
 				RawVideoSource^ _videoSource;
 		};
