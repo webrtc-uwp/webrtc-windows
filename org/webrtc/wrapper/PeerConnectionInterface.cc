@@ -30,7 +30,6 @@
 #include "webrtc/api/test/fakeconstraints.h"
 #include "webrtc/pc/channelmanager.h"
 #include "webrtc/system_wrappers/include/utf_util_win.h"
-//#include "webrtc/system_wrappers/include/tick_util.h"
 #include "webrtc/base/timeutils.h"
 #include "third_party/h264_winrt/h264_winrt_factory.h"
 #include "webrtc/base/trace_event.h"
@@ -761,7 +760,7 @@ namespace Org {
 		IVector<CodecInfo^>^ WebRTC::GetAudioCodecs() {
 			auto ret = ref new Vector<CodecInfo^>();
 			globals::RunOnGlobalThread<void>([ret] {
-				const std::vector<cricket::AudioCodec>& codecs = globals::gPeerConnectionFactory->GetMediaEngine()->audio_codecs();
+				const std::vector<cricket::AudioCodec>& codecs = globals::gPeerConnectionFactory->GetMediaEngine()->audio_recv_codecs();
 				for (auto it = codecs.begin(); it != codecs.end(); ++it) {
 					ret->Append(ref new CodecInfo(it->id, it->clockrate, ToCx(it->name)));
 				}

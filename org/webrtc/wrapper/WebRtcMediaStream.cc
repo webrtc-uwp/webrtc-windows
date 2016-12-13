@@ -16,7 +16,7 @@
 #include <functional>
 #include "webrtc/media/base/videoframe.h"
 #include "RTMediaStreamSource.h"
-#include "webrtc/api/videosourceinterface.h"
+#include "webrtc/media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
 
 using Microsoft::WRL::MakeAndInitialize;

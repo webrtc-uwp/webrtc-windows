@@ -19,7 +19,7 @@
 #include "RTMediaStreamSource.h"
 #include "WebRtcMediaSource.h"
 #include "webrtc/base/logging.h"
-#include "webrtc/api/videosourceinterface.h"
+#include "webrtc/media/base/videosourceinterface.h"
 #include "webrtc/pc/channelmanager.h"
 #include "webrtc/media/base/mediaengine.h"
 #include "webrtc/api/test/fakeconstraints.h"
@@ -284,11 +284,7 @@ namespace Org {
 		}
 
 		void RawVideoStream::RenderFrame(const cricket::VideoFrame* frame) {
-			_videoSource->RawVideoFrame(
-				(uint32)frame->GetWidth(), (uint32)frame->GetHeight(),
-				Platform::ArrayReference<uint8>((uint8*)frame->GetYPlane(), (unsigned int)(frame->GetYPitch() * frame->GetHeight())), frame->GetYPitch(),
-				Platform::ArrayReference<uint8>((uint8*)frame->GetUPlane(), (unsigned int)(frame->GetUPitch() * frame->GetChromaHeight())), frame->GetUPitch(),
-				Platform::ArrayReference<uint8>((uint8*)frame->GetVPlane(), (unsigned int)(frame->GetVPitch() * frame->GetChromaHeight())), frame->GetVPitch());
+			_videoSource->RawVideoFrame((uint32)frame->width(),(uint32)frame->height(),Platform::ArrayReference<uint8>((uint8*)frame->video_frame_buffer()->DataY(), (unsigned int)(frame->video_frame_buffer()->StrideY() * frame->height())),frame->video_frame_buffer()->StrideY(),Platform::ArrayReference<uint8>((uint8*)frame->video_frame_buffer()->DataU(), (unsigned int)(frame->video_frame_buffer()->StrideU() * ((frame->height() + 1) / 2))),frame->video_frame_buffer()->StrideU(),Platform::ArrayReference<uint8>((uint8*)frame->video_frame_buffer()->DataV(), (unsigned int)(frame->video_frame_buffer()->StrideV() * ((frame->height() + 1) / 2))), frame->video_frame_buffer()->StrideV());
 		}
 
 		// = RawVideoSource =============================================================
@@ -320,13 +316,13 @@ namespace Org {
 
 		Media::Media() :
 			_selectedAudioCapturerDevice(
-				cricket::DeviceManagerInterface::kDefaultDeviceName, 0),
+				cricket::WinRTDeviceManager::kDefaultDeviceName, 0),
 			_selectedAudioPlayoutDevice(
-				cricket::DeviceManagerInterface::kDefaultDeviceName, 0),
+				cricket::WinRTDeviceManager::kDefaultDeviceName, 0),
 			_videoCaptureDeviceChanged(true),
 			_audioCaptureDeviceChanged(true),
 			_audioPlayoutDeviceChanged(true) {
-			_dev_manager = std::unique_ptr<cricket::DeviceManagerInterface>
+			_dev_manager = std::unique_ptr<cricket::WinRTDeviceManager>
 				(cricket::DeviceManagerFactory::Create());
 
 			if (!_dev_manager->Init()) {
@@ -383,7 +379,7 @@ namespace Org {
 								<< "VoEHardware API not available.";
 						}
 						else {
-							if (_selectedAudioCapturerDevice.name != cricket::DeviceManagerInterface::kDefaultDeviceName) {
+							if (_selectedAudioCapturerDevice.name != cricket::WinRTDeviceManager::kDefaultDeviceName) {
 								// Selected audio playout device is not the default device.
 								audioCaptureDeviceIndex = GetAudioCaptureDeviceIndex(voiceEngineHardware,
 									_selectedAudioCapturerDevice.name, _selectedAudioCapturerDevice.id);
@@ -396,7 +392,7 @@ namespace Org {
 										<< " not found, using default device";
 								}
 							}
-							if (_selectedAudioPlayoutDevice.name != cricket::DeviceManagerInterface::kDefaultDeviceName) {
+							if (_selectedAudioPlayoutDevice.name != cricket::WinRTDeviceManager::kDefaultDeviceName) {
 								// Selected audio playout device is not the default device.
 								audioPlayoutDeviceIndex = GetAudioPlayoutDeviceIndex(voiceEngineHardware,
 									_selectedAudioPlayoutDevice.name, _selectedAudioPlayoutDevice.id);
@@ -659,7 +655,7 @@ namespace Org {
 		bool Media::SelectAudioCaptureDevice(MediaDevice^ device) {
 			webrtc::CriticalSectionScoped cs(&g_audioCapturerDevicesLock);
 			_selectedAudioCapturerDevice = cricket::Device(
-				cricket::DeviceManagerInterface::kDefaultDeviceName, 0);
+				cricket::WinRTDeviceManager::kDefaultDeviceName, 0);
 			if (device == nullptr) {
 				// Default audio capture device will be used.
 				return true;
@@ -677,7 +673,7 @@ namespace Org {
 		bool Media::SelectAudioPlayoutDevice(MediaDevice^ device) {
 			webrtc::CriticalSectionScoped cs(&g_audioCapturerDevicesLock);
 			_selectedAudioPlayoutDevice = cricket::Device(
-				cricket::DeviceManagerInterface::kDefaultDeviceName, 0);
+				cricket::WinRTDeviceManager::kDefaultDeviceName, 0);
 			if (device == nullptr) {
 				// Default audio playout device will be used.
 				return true;

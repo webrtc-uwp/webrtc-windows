@@ -727,7 +727,7 @@ namespace Org {
 
 		private:
 			~RTCPeerConnection();
-			std::unique_ptr<webrtc::PeerConnectionInterface> _impl;
+			rtc::scoped_refptr<webrtc::PeerConnectionInterface> _impl;
 			// This lock protects _impl.
 			std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
 

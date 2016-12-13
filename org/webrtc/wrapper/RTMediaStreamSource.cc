@@ -11,7 +11,7 @@
 #include <ppltasks.h>
 #include <mfidl.h>
 #include "webrtc/media/base/videoframe.h"
-#include "webrtc/api/videosourceinterface.h"
+#include "webrtc/media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 #include "webrtc/common_video/video_common_winrt.h"
@@ -305,7 +305,7 @@ namespace Org {
 				}
 				ComPtr<IMFMediaBuffer> mediaBuffer;
 				hr = MFCreate2DMediaBuffer(
-					(DWORD)frame->GetWidth(), (DWORD)frame->GetHeight(),
+					(DWORD)frame->width(), (DWORD)frame->height(),
 					cricket::FOURCC_NV12, FALSE,
 					mediaBuffer.GetAddressOf());
 				if (FAILED(hr)) {
@@ -331,14 +331,14 @@ namespace Org {
 				try {
 					frame->MakeExclusive();
 					// Convert to NV12
-					uint8* uvDest = destRawData + (pitch * frame->GetHeight());
-					libyuv::I420ToNV12(frame->GetYPlane(), frame->GetYPitch(),
-						frame->GetUPlane(), frame->GetUPitch(),
-						frame->GetVPlane(), frame->GetVPitch(),
+					uint8* uvDest = destRawData + (pitch * frame->height());
+					libyuv::I420ToNV12(frame->video_frame_buffer()->DataY(), frame->video_frame_buffer()->StrideY(),
+						frame->video_frame_buffer()->DataU(), frame->video_frame_buffer()->StrideU(),
+						frame->video_frame_buffer()->DataV(), frame->video_frame_buffer()->StrideV(),
 						reinterpret_cast<uint8*>(destRawData), pitch,
 						uvDest, pitch,
-						static_cast<int>(frame->GetWidth()),
-						static_cast<int>(frame->GetHeight()));
+						static_cast<int>(frame->width()),
+						static_cast<int>(frame->height()));
 				}
 				catch (...) {
 					LOG(LS_ERROR) << "Exception caught in RTMediaStreamSource::ConvertFrame()";

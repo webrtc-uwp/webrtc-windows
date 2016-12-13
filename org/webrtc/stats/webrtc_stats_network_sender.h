@@ -12,7 +12,6 @@
 #include <string>
 #include "webrtc/api/statstypes.h"
 #include "webrtc/base/sigslot.h"
-#include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/scoped_ref_ptr.h"
 
 namespace rtc {

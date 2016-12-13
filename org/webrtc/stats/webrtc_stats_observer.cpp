@@ -307,7 +307,7 @@ void WebRTCStatsObserver::PollStats() {
       status_ = kStopped;
       return;
     }
-    rtc::Thread::Current()->PostDelayed(kInterval, this, MSG_POLL_STATS);
+    rtc::Thread::Current()->PostDelayed(RTC_FROM_HERE, kInterval, this, MSG_POLL_STATS);
   }
 }
 void WebRTCStatsObserver::EvaluatePollNecessity() {

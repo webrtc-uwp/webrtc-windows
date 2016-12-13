@@ -11,7 +11,7 @@
 #include <ppltasks.h>
 #include <mfidl.h>
 #include "webrtc/media/base/videoframe.h"
-#include "webrtc/api/videosourceinterface.h"
+#include "webrtc/media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 #include "webrtc/base/timing.h"
@@ -75,7 +75,7 @@ namespace Org {
 
 				if (_isH264) {
 					// Check it is really a H.264 frame, the codec might have been switched within the call, in this case just ignore frames
-					if (frame->GetNativeHandle() != nullptr) {
+					if (frame->video_frame_buffer()->native_handle() != nullptr) {
 						// For H264 we keep all frames since they are encoded.
 						_frames.push_back(frame);
 					}
@@ -86,7 +86,7 @@ namespace Org {
 				}
 				else {
 					// Check it is not H.264 frame, the codec might have been switched within the call, in this case just ignore frames
-					if (frame->GetNativeHandle() == nullptr) {
+					if (frame->video_frame_buffer()->native_handle() == nullptr) {
 						// For I420 frame, keep only the latest.
 						for (auto oldFrame : _frames) {
 							delete oldFrame;
@@ -165,7 +165,7 @@ namespace Org {
 
 				// Get the IMFSample in the frame.
 				{
-					IMFSample* tmp = (IMFSample*)frame->GetNativeHandle();
+					IMFSample* tmp = (IMFSample*)frame->video_frame_buffer()->native_handle();
 					if (tmp != nullptr) {
 						tmp->AddRef();
 						data->sample.Attach(tmp);
@@ -250,7 +250,7 @@ namespace Org {
 				// Go through the frames in reverse order (from newest to oldest) and look
 				// for an IDR frame.
 				for (auto it = frames.rbegin(); it != frames.rend(); ++it) {
-					IMFSample* pSample = (IMFSample*)(*it)->GetNativeHandle();
+					IMFSample* pSample = (IMFSample*)(*it)->video_frame_buffer()->native_handle();
 					if (pSample == nullptr) {
 						continue;  // I don't expect this will ever happen.
 					}
@@ -320,7 +320,7 @@ namespace Org {
 			}
 
 			void MediaSourceHelper::CheckForAttributeChanges(cricket::VideoFrame* frame, SampleData* data) {
-				SIZE currentSize = { (LONG)frame->GetWidth(), (LONG)frame->GetHeight() };
+				SIZE currentSize = { (LONG)frame->width(), (LONG)frame->height() };
 				if (_lastSize.cx != currentSize.cx || _lastSize.cy != currentSize.cy) {
 					data->sizeHasChanged = true;
 					data->size = currentSize;
@@ -328,7 +328,7 @@ namespace Org {
 				}
 
 				// Update rotation property
-				int currentRotation = (int)frame->GetVideoRotation();
+				int currentRotation = (int)frame->rotation();
 
 				// If the rotation has changed
 				if (_lastRotation == -1 || _lastRotation != currentRotation) {
