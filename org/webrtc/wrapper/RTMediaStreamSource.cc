@@ -35,7 +35,7 @@ namespace Org {
 			MediaStreamSource^ RTMediaStreamSource::CreateMediaSource(
 				MediaVideoTrack^ track, uint32 frameRate, String^ id) {
 
-				bool isH264 = track->GetImpl()->GetSource()->IsH264Source();
+				bool isH264 = false;//TODO Check track->GetImpl()->GetSource()->IsH264Source();
 
 				auto streamState = ref new RTMediaStreamSource(track, isH264);
 				streamState->_id = id;
@@ -219,7 +219,8 @@ namespace Org {
 
 			void RTMediaStreamSource::RTCRenderer::RenderFrame(
 				const cricket::VideoFrame *frame) {
-				auto stream = _streamSource.Resolve<RTMediaStreamSource>();
+				//TODO Check
+				/*auto stream = _streamSource.Resolve<RTMediaStreamSource>();
 				if (stream == nullptr) {
 					LOG(LS_WARNING) << "RTCRenderer::RenderFrame: associated stream is null";
 					return;
@@ -230,7 +231,7 @@ namespace Org {
 				Concurrency::create_async([this, frameCopy, stream] {
 					stream->ProcessReceivedFrame(frameCopy);
 					InterlockedDecrement(&stream->_frameBeingQueued);
-				});
+				});*/
 			}
 
 			void RTMediaStreamSource::ProgressTimerElapsedExecute(ThreadPoolTimer^ source) {
@@ -329,7 +330,8 @@ namespace Org {
 					return E_FAIL;
 				}
 				try {
-					frame->MakeExclusive();
+					//TODO Check
+					//frame->MakeExclusive();
 					// Convert to NV12
 					uint8* uvDest = destRawData + (pitch * frame->height());
 					libyuv::I420ToNV12(frame->video_frame_buffer()->DataY(), frame->video_frame_buffer()->StrideY(),

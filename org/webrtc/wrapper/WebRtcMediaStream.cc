@@ -81,7 +81,7 @@ namespace Org {
 				_track = track;
 				_id = id;
 
-				_isH264 = track->GetImpl()->GetSource()->IsH264Source();
+				_isH264 = false;//TODO Check  track->GetImpl()->GetSource()->IsH264Source();
 
 				// Create the helper with the callback functions.
 				_helper.reset(new MediaSourceHelper(_isH264,
@@ -179,6 +179,8 @@ namespace Org {
 
 			void WebRtcMediaStream::RenderFrame(
 				const cricket::VideoFrame *frame) {
+				//TODO Check
+				/*
 				auto frameCopy = frame->video_frame_buffer()->NativeToI420Buffer();
 				InterlockedIncrement(&_frameBeingQueued);
 				// Do the processing async because there's a risk of a deadlock otherwise.
@@ -192,6 +194,7 @@ namespace Org {
 					}
 					InterlockedDecrement(&_frameBeingQueued);
 				});
+				*/
 			}
 
 			HRESULT WebRtcMediaStream::CreateMediaType(
