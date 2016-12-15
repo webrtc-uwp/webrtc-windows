@@ -656,6 +656,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "level_indicator_win10_x64",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "level_indicator_win10_arm", "webrtc\voice_engine\level_indicator_win10_arm.vcxproj", "{152F33FF-73FC-1A37-1E6F-668DB900F16F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "video_processing_neon_win10_arm", "webrtc\modules\video_processing_neon_win10_arm.vcxproj", "{44EFCCD2-60BC-634D-5565-467A6B593856}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -3580,6 +3582,18 @@ Global
 		{152F33FF-73FC-1A37-1E6F-668DB900F16F}.Release|Win32.ActiveCfg = Release|Win32
 		{152F33FF-73FC-1A37-1E6F-668DB900F16F}.Release|x64.ActiveCfg = Release|Win32
 		{152F33FF-73FC-1A37-1E6F-668DB900F16F}.Release|x86.ActiveCfg = Release|Win32
+		{44EFCCD2-60BC-634D-5565-467A6B593856}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{44EFCCD2-60BC-634D-5565-467A6B593856}.Debug|ARM.ActiveCfg = Debug|ARM
+		{44EFCCD2-60BC-634D-5565-467A6B593856}.Debug|ARM.Build.0 = Debug|ARM
+		{44EFCCD2-60BC-634D-5565-467A6B593856}.Debug|Win32.ActiveCfg = Debug|Win32
+		{44EFCCD2-60BC-634D-5565-467A6B593856}.Debug|x64.ActiveCfg = Debug|Win32
+		{44EFCCD2-60BC-634D-5565-467A6B593856}.Debug|x86.ActiveCfg = Debug|Win32
+		{44EFCCD2-60BC-634D-5565-467A6B593856}.Release|Any CPU.ActiveCfg = Release|Win32
+		{44EFCCD2-60BC-634D-5565-467A6B593856}.Release|ARM.ActiveCfg = Release|ARM
+		{44EFCCD2-60BC-634D-5565-467A6B593856}.Release|ARM.Build.0 = Release|ARM
+		{44EFCCD2-60BC-634D-5565-467A6B593856}.Release|Win32.ActiveCfg = Release|Win32
+		{44EFCCD2-60BC-634D-5565-467A6B593856}.Release|x64.ActiveCfg = Release|Win32
+		{44EFCCD2-60BC-634D-5565-467A6B593856}.Release|x86.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -3907,5 +3921,6 @@ Global
 		{C145FA47-FE4C-DBAB-9FD8-56E2AC793F2B} = {E879AF9E-87F9-4CB0-97D9-BB466864DE02}
 		{4B1A811C-ABBE-11CB-1F25-548483B88D02} = {A4C519C5-3A99-4DC5-9866-FBE1D1E2FE71}
 		{152F33FF-73FC-1A37-1E6F-668DB900F16F} = {F624687E-4E88-46F4-938A-D1CD8C0004D6}
+		{44EFCCD2-60BC-634D-5565-467A6B593856} = {629002FB-2585-4C9C-8B60-7D50699BF71A}
 	EndGlobalSection
 EndGlobal
