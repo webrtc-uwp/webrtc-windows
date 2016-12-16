@@ -179,9 +179,9 @@ namespace Org {
 
 			void WebRtcMediaStream::RenderFrame(
 				const cricket::VideoFrame *frame) {
-				//TODO Check
-				/*
-				auto frameCopy = frame->video_frame_buffer()->NativeToI420Buffer();
+				auto frameCopy = new cricket::WebRtcVideoFrame(
+					frame->video_frame_buffer(), frame->rotation(),
+					frame->timestamp_us());
 				InterlockedIncrement(&_frameBeingQueued);
 				// Do the processing async because there's a risk of a deadlock otherwise.
 				Concurrency::create_async([this, frameCopy] {
@@ -194,7 +194,6 @@ namespace Org {
 					}
 					InterlockedDecrement(&_frameBeingQueued);
 				});
-				*/
 			}
 
 			HRESULT WebRtcMediaStream::CreateMediaType(
