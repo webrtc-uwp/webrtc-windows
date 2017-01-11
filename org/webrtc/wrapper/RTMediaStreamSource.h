@@ -61,7 +61,7 @@ namespace Org {
 		};
 	}
 }  // namespace Org.WebRtc
-
+/*
 namespace Org {
 	namespace WebRtc {
 		namespace Internal {
@@ -133,5 +133,5 @@ namespace Org {
 		}
 	}
 }  // namespace Org.WebRtc.Internal
-
+*/
 #endif  // WEBRTC_BUILD_WINRT_GYP_API_RTMEDIASTREAMSOURCE_H_

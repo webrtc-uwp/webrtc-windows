@@ -27,7 +27,7 @@ using Windows::Media::MediaProperties::VideoEncodingProperties;
 using Windows::Media::MediaProperties::MediaEncodingSubtypes;
 using Windows::System::Threading::TimerElapsedHandler;
 using Windows::System::Threading::ThreadPoolTimer;
-
+/*
 namespace Org {
 	namespace WebRtc {
 		namespace Internal {
@@ -219,19 +219,7 @@ namespace Org {
 
 			void RTMediaStreamSource::RTCRenderer::RenderFrame(
 				const cricket::VideoFrame *frame) {
-				//TODO Check
-				/*auto stream = _streamSource.Resolve<RTMediaStreamSource>();
-				if (stream == nullptr) {
-					LOG(LS_WARNING) << "RTCRenderer::RenderFrame: associated stream is null";
-					return;
-				}
-				InterlockedIncrement(&stream->_frameBeingQueued);
-				auto frameCopy = frame->video_frame_buffer()->NativeToI420Buffer();
-				// Do the processing async because there's a risk of a deadlock otherwise.
-				Concurrency::create_async([this, frameCopy, stream] {
-					stream->ProcessReceivedFrame(frameCopy);
-					InterlockedDecrement(&stream->_frameBeingQueued);
-				});*/
+
 			}
 
 			void RTMediaStreamSource::ProgressTimerElapsedExecute(ThreadPoolTimer^ source) {
@@ -421,7 +409,7 @@ namespace Org {
 		}
 	}
 }  // namespace Org.WebRtc.Internal
-
+*/
 
 void Org::WebRtc::FrameCounterHelper::FireEvent(String^ id,
   Platform::String^ str) {

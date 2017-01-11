@@ -56,7 +56,7 @@ namespace Org {
 				_frameBufferIndex(0), _frameReady(0), _frameCount(0),
 				_lock(webrtc::CriticalSectionWrapper::CreateCriticalSection()),
 				_gpuVideoBuffer(false),
-				_frameBeingQueued(0), _started(false) {
+				_frameBeingQueued(0), _started(false),_isShutdown(false) {
 				_mediaBuffers.resize(BufferCount);
 			}
 
@@ -374,18 +374,22 @@ namespace Org {
 			STDMETHODIMP WebRtcMediaStream::Shutdown() {
 				webrtc::CriticalSectionScoped csLock(_lock.get());
 
-				_track->UnsetRenderer(this);
-				if (_eventQueue != nullptr) {
-					_eventQueue->Shutdown();
+				if (!_isShutdown)
+				{
+					_track->UnsetRenderer(this);
+					if (_eventQueue != nullptr) {
+						_eventQueue->Shutdown();
+					}
+					_track = nullptr;
+					_deviceManager = nullptr;
+					_eventQueue = nullptr;
+
+					_helper.reset();
+
+					_isShutdown = true;
 				}
-
-				_deviceManager = nullptr;
-				_eventQueue = nullptr;
-
-				_helper.reset();
 				return S_OK;
 			}
-
 			STDMETHODIMP WebRtcMediaStream::SetD3DManager(
 				ComPtr<IMFDXGIDeviceManager> manager) {
 				webrtc::CriticalSectionScoped csLock(_lock.get());

@@ -106,6 +106,7 @@ namespace Org {
 				bool _gpuVideoBuffer;
 				bool _isH264;
 				bool _started;
+				bool _isShutdown;
 			};
 		}
 	}

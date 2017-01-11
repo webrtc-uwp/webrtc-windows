@@ -23,6 +23,7 @@ namespace Org {
 			}
 
 			WebRtcMediaSource::~WebRtcMediaSource() {
+				_stream = nullptr;
 			}
 
 			HRESULT WebRtcMediaSource::CreateMediaSource(
