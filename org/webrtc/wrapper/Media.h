@@ -28,6 +28,8 @@ using Windows::Devices::Enumeration::DeviceWatcher;
 using Windows::Devices::Enumeration::DeviceInformation;
 using Windows::Devices::Enumeration::DeviceInformationUpdate;
 
+#define THROW_WEBRTC_NULL_REFERENCE_EXCEPTION(exceptionMessage) { if (exceptionMessage) { throw ref new Platform::NullReferenceException(exceptionMessage); } else {throw ref new Platform::NullReferenceException(); } }
+
 namespace Org {
 	namespace WebRtc {
 
@@ -212,11 +214,6 @@ namespace Org {
 			property String^ Id { String^ get(); }
 
 			/// <summary>
-			/// Stops and releases resources of all tracks within this stream.
-			/// </summary>
-			void Stop();
-
-			/// <summary>
 			/// This attribute is true if the <see cref="MediaStream"/> has at least
 			/// one <see cref="IMediaStreamTrack"/>
 			/// that has not ended, and false otherwise.
@@ -225,9 +222,6 @@ namespace Org {
 		private:
 			~MediaStream();
 			rtc::scoped_refptr<webrtc::MediaStreamInterface> _impl;
-			IVector<IMediaStreamTrack^>^ _mediaTracks;
-			IVector<MediaVideoTrack^>^ _videoTracks;
-			IVector<MediaAudioTrack^>^ _audioTracks;
 		};
 
 		/// <summary>

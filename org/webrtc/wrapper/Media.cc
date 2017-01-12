@@ -67,30 +67,47 @@ namespace Org {
 
 		MediaVideoTrack::~MediaVideoTrack() {
 			_impl = nullptr;
-			//_impl->Release();
 		}
 
 		String^ MediaVideoTrack::Kind::get() {
+			if (_impl == nullptr)
+				THROW_WEBRTC_NULL_REFERENCE_EXCEPTION("Invalid video track object");
+
 			return ToCx(_impl->kind());
 		}
 
 		String^ MediaVideoTrack::Id::get() {
+			if (_impl == nullptr)
+				THROW_WEBRTC_NULL_REFERENCE_EXCEPTION("Invalid video track object");
+
 			return ToCx(_impl->id());
 		}
 
 		bool MediaVideoTrack::Enabled::get() {
+			if (_impl == nullptr)
+				return false;
+
 			return _impl->enabled();
 		}
 
 		void MediaVideoTrack::Enabled::set(bool value) {
-			_impl->set_enabled(value);
+			if (_impl == nullptr)
+				THROW_WEBRTC_NULL_REFERENCE_EXCEPTION("Invalid video track object");
+
+				_impl->set_enabled(value);
 		}
 
 		bool MediaVideoTrack::Suspended::get() {
+			if (_impl == nullptr)
+				return false;
+
 			return _impl->GetSource()->IsSuspended();
 		}
 
 		void MediaVideoTrack::Suspended::set(bool value) {
+			if (_impl == nullptr)
+				THROW_WEBRTC_NULL_REFERENCE_EXCEPTION("Invalid video track object");
+
 			if (value) {
 				_impl->GetSource()->Suspend();
 			}
@@ -100,16 +117,20 @@ namespace Org {
 		}
 
 		void MediaVideoTrack::Stop() {
-			//TODO check
-			//_impl->GetSource()->Stop();
-			_impl->GetSource()->Suspend();
+			_impl = nullptr;
 		}
 
 		void MediaVideoTrack::SetRenderer(rtc::VideoSinkInterface<cricket::VideoFrame>* renderer) {
+			if (_impl == nullptr)
+				THROW_WEBRTC_NULL_REFERENCE_EXCEPTION("Invalid video track object");
+
 			_impl->AddOrUpdateSink(renderer, rtc::VideoSinkWants());
 		}
 
 		void MediaVideoTrack::UnsetRenderer(rtc::VideoSinkInterface<cricket::VideoFrame>* renderer) {
+			if (_impl == nullptr)
+				THROW_WEBRTC_NULL_REFERENCE_EXCEPTION("Invalid video track object");
+
 			_impl->RemoveSink(renderer);
 		}
 
@@ -121,53 +142,47 @@ namespace Org {
 		}
 
 		String^ MediaAudioTrack::Kind::get() {
+			if (_impl == nullptr)
+				THROW_WEBRTC_NULL_REFERENCE_EXCEPTION("Invalid audio track object");
+
 			return ToCx(_impl->kind());
 		}
 
 		String^ MediaAudioTrack::Id::get() {
+			if (_impl == nullptr)
+				THROW_WEBRTC_NULL_REFERENCE_EXCEPTION("Invalid audio track object");
+
 			return ToCx(_impl->id());
 		}
 
 		bool MediaAudioTrack::Enabled::get() {
+			if (_impl == nullptr)
+				return false;
+
 			return _impl->enabled();
 		}
 
 		void MediaAudioTrack::Enabled::set(bool value) {
+			if (_impl == nullptr)
+				THROW_WEBRTC_NULL_REFERENCE_EXCEPTION("Invalid audio track object");
+
 			_impl->set_enabled(value);
 		}
 
 		void MediaAudioTrack::Stop() {
+			_impl = nullptr;
 		}
 
 		// = MediaStream =============================================================
 
 		MediaStream::MediaStream(rtc::scoped_refptr<webrtc::MediaStreamInterface> impl)
 			: _impl(impl) {
-			_mediaTracks = ref new Vector<IMediaStreamTrack^>();
-			_videoTracks = ref new Vector<MediaVideoTrack^>();
-			_audioTracks = ref new Vector<MediaAudioTrack^>();
 
-			for (auto track : _impl->GetAudioTracks()) {
-				MediaAudioTrack^ mediaTrack = ref new MediaAudioTrack(track);
-				_audioTracks->Append(mediaTrack);
-				_mediaTracks->Append(mediaTrack);
-			}
-
-			for (auto track : _impl->GetVideoTracks()) {
-				MediaVideoTrack^ mediaTrack = ref new MediaVideoTrack(track);
-				_videoTracks->Append(mediaTrack);
-				_mediaTracks->Append(mediaTrack);
-			}
-
-			
 		}
 
 		MediaStream::~MediaStream() {
 			LOG(LS_INFO) << "MediaStream::~MediaStream";
-			_mediaTracks->Clear();
-			_videoTracks->Clear();
-			_audioTracks->Clear();
-			//_mediaTracks = nullptr;
+
 		}
 
 		rtc::scoped_refptr<webrtc::MediaStreamInterface> MediaStream::GetImpl() {
@@ -177,7 +192,7 @@ namespace Org {
 		IVector<MediaAudioTrack^>^ MediaStream::GetAudioTracks() {
 			if (_impl == nullptr)
 				return nullptr;
-			return _audioTracks;
+
 			auto ret = ref new Vector<MediaAudioTrack^>();
 			for (auto track : _impl->GetAudioTracks()) {
 				ret->Append(ref new MediaAudioTrack(track));
@@ -194,7 +209,7 @@ namespace Org {
 		IVector<MediaVideoTrack^>^ MediaStream::GetVideoTracks() {
 			if (_impl == nullptr)
 				return nullptr;
-			return _videoTracks;
+
 			auto ret = ref new Vector<MediaVideoTrack^>();
 			for (auto track : _impl->GetVideoTracks()) {
 				ret->Append(ref new MediaVideoTrack(track));
@@ -205,7 +220,7 @@ namespace Org {
 		IVector<IMediaStreamTrack^>^ MediaStream::GetTracks() {
 			if (_impl == nullptr)
 				return nullptr;
-			return _mediaTracks;
+
 			auto ret = ref new Vector<IMediaStreamTrack^>();
 			for (auto track : _impl->GetAudioTracks()) {
 				ret->Append(ref new MediaAudioTrack(track));
@@ -240,18 +255,18 @@ namespace Org {
 			if (_impl == nullptr)
 				return;
 
-			_mediaTracks->Append(track);
+
 
 			std::string kind = FromCx(track->Kind);
 			if (kind == "audio") {
 				auto audioTrack = static_cast<MediaAudioTrack^>(track);
 				_impl->AddTrack(audioTrack->GetImpl());
-				_audioTracks->Append(audioTrack);
+
 			}
 			else if (kind == "video") {
 				auto videoTrack = static_cast<MediaVideoTrack^>(track);
 				_impl->AddTrack(videoTrack->GetImpl());
-				_videoTracks->Append(videoTrack);
+
 			}
 			else {
 				throw "Unknown track kind";
@@ -261,44 +276,18 @@ namespace Org {
 		void MediaStream::RemoveTrack(IMediaStreamTrack^ track) {
 			if (_impl == nullptr)
 				return;
-			unsigned int index = 0;
+
 			std::string kind = FromCx(track->Kind);
 			if (kind == "audio") {
 				auto audioTrack = static_cast<MediaAudioTrack^>(track);
 				_impl->RemoveTrack(audioTrack->GetImpl());
-
-				bool found = _audioTracks->IndexOf(audioTrack, &index);
-				if (found)
-					_audioTracks->RemoveAt(index);
 			}
 			else if (kind == "video") {
 				auto videoTrack = static_cast<MediaVideoTrack^>(track);
 				_impl->RemoveTrack(videoTrack->GetImpl());
-
-				bool found = _videoTracks->IndexOf(videoTrack, &index);
-				if (found)
-					_videoTracks->RemoveAt(index);
 			}
 			else {
 				throw "Unknown track kind";
-			}
-		}
-
-		void MediaStream::Stop() {
-
-			if (_impl != nullptr) {
-
-				auto tracks = GetTracks();
-
-				if (tracks != nullptr) {
-
-					for (auto aTrack : tracks) {
-
-						aTrack->Stop();
-					}
-				}
-
-				_impl = nullptr;
 			}
 		}
 
