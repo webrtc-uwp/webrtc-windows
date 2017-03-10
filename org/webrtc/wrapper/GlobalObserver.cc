@@ -189,8 +189,9 @@ namespace Org {
 				webrtc::PeerConnectionInterface::IceConnectionState new_state) {
 				if (new_state == webrtc::PeerConnectionInterface::kIceConnectionConnected) {
 					if (!_stats_observer.get()) {
+						auto temp_impl = _pc->_impl;
 						_stats_observer =
-							new rtc::RefCountedObject<webrtc::WebRTCStatsObserver>(_pc->_impl);
+							new rtc::RefCountedObject<webrtc::WebRTCStatsObserver>(temp_impl);
 					}
 					_stats_observer->ToggleETWStats(_etwStatsEnabled);
 					_stats_observer->ToggleConnectionHealthStats(
