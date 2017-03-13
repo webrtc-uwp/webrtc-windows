@@ -7,7 +7,7 @@
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetPlatformIdentifier)' == 'UAP'">
       <Reference Include="$(MSBuildThisFileDirectory)..\..\lib\uap10.0\Org.WebRtc.winmd">
-        <Implementation>WebRtc</Implementation>
+        <Implementation>Org.WebRtc.dll</Implementation>
       </Reference>
       <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(WebRtc-Platform)\native\Org.WebRtc.dll" />
   </ItemGroup>
