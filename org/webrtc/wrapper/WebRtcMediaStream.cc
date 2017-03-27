@@ -72,19 +72,18 @@ namespace Org {
 			}
 
 			HRESULT WebRtcMediaStream::RuntimeClassInitialize(
-				WebRtcMediaSource* source, MediaVideoTrack^ track, String^ id) {
+				WebRtcMediaSource* source, String^ id, VideoFrameType frameType) {
 				webrtc::CriticalSectionScoped csLock(_lock.get());
 				if (_eventQueue != nullptr)
 					return S_OK;
 
 				_source = source;
-				_track = track;
 				_id = id;
-
-				_isH264 = false;//TODO Check  track->GetImpl()->GetSource()->IsH264Source();
+				_frameType = frameType;
 
 				// Create the helper with the callback functions.
-				_helper.reset(new MediaSourceHelper(_isH264,
+				_helper.reset(new MediaSourceHelper(
+					frameType,
 					[this](cricket::VideoFrame* frame, IMFSample** sample) -> HRESULT {
 					return MakeSampleCallback(frame, sample);
 				},
@@ -92,17 +91,17 @@ namespace Org {
 					return FpsCallback(fps);
 				}));
 
-				RETURN_ON_FAIL(CreateMediaType(64, 64, 0, &_mediaType, _isH264));
+				DWORD streamIdentifier = _frameType != FrameTypeH264 ? 0 : 1;
+				RETURN_ON_FAIL(CreateMediaType(64, 64, 0, _frameType == FrameTypeH264, &_mediaType));
 				RETURN_ON_FAIL(MFCreateEventQueue(&_eventQueue));
-				RETURN_ON_FAIL(MFCreateStreamDescriptor(1, 1, _mediaType.GetAddressOf(), &_streamDescriptor));
+				RETURN_ON_FAIL(MFCreateStreamDescriptor(streamIdentifier, 1, _mediaType.GetAddressOf(), &_streamDescriptor));
 				ComPtr<IMFMediaTypeHandler> mediaTypeHandler;
 				RETURN_ON_FAIL(_streamDescriptor->GetMediaTypeHandler(&mediaTypeHandler));
 				RETURN_ON_FAIL(mediaTypeHandler->SetCurrentMediaType(_mediaType.Get()));
 
-				track->SetRenderer(this);
-				if (_isH264) {
+				if (_frameType == FrameTypeH264)
 					webrtc::vcm::globalRequestKeyFrame = true;
-				}
+
 				return S_OK;
 			}
 
@@ -198,7 +197,7 @@ namespace Org {
 
 			HRESULT WebRtcMediaStream::CreateMediaType(
 				unsigned int width, unsigned int height,
-				unsigned int rotation, IMFMediaType** ppType, bool isH264) {
+				unsigned int rotation, bool isH264, IMFMediaType** ppType) {
 				// Create media type
 				// Make sure the dimensions are even
 				width &= ~((unsigned int)1);
@@ -209,8 +208,7 @@ namespace Org {
 
 				if (isH264) {
 					RETURN_ON_FAIL(mediaType->SetGUID(MF_MT_SUBTYPE, MFVideoFormat_H264));
-				}
-				else {
+				} else {
 					RETURN_ON_FAIL(mediaType->SetGUID(MF_MT_SUBTYPE, MFVideoFormat_NV12));
 					RETURN_ON_FAIL(mediaType->SetUINT32(MF_MT_FIXED_SIZE_SAMPLES, TRUE));
 					RETURN_ON_FAIL(mediaType->SetUINT32(MF_MT_ALL_SAMPLES_INDEPENDENT, TRUE));
@@ -241,8 +239,7 @@ namespace Org {
 						_mediaType.Get(), MF_MT_FRAME_SIZE, &width, &height));
 					if (destWidth != width || destHeight != height) {
 						RETURN_ON_FAIL(CreateMediaType(destWidth, destHeight,
-							(unsigned int)frame->rotation(), &_mediaType,
-							_isH264));
+							(unsigned int)frame->rotation(), false, &_mediaType));
 						ResetMediaBuffers();
 					}
 				}
@@ -310,8 +307,7 @@ namespace Org {
 					if (sampleData->sizeHasChanged) {
 						width = sampleData->size.cx;
 						height = sampleData->size.cy;
-					}
-					else {
+					} else {
 						RETURN_ON_FAIL(MFGetAttributeSize(
 							_mediaType.Get(), MF_MT_FRAME_SIZE, &width, &height));
 					}
@@ -319,17 +315,16 @@ namespace Org {
 					unsigned int rotation;
 					if (sampleData->rotationHasChanged) {
 						rotation = sampleData->rotation;
-					}
-					else {
+					} else {
 						RETURN_ON_FAIL(_mediaType->GetUINT32(MF_MT_VIDEO_ROTATION, &rotation));
 					}
 
-					if (_isH264)
+					if (_frameType == FrameTypeH264)
 						OutputDebugString((L"Frame format changed: "
 							+ width.ToString() + L"x" + height.ToString()
 							+ " rotation:" + rotation.ToString() + L"\r\n")->Data());
 
-					CreateMediaType(width, height, rotation, &_mediaType, _isH264);
+					CreateMediaType(width, height, rotation, _frameType == FrameTypeH264, &_mediaType);
 					_eventQueue->QueueEventParamUnk(MEStreamFormatChanged,
 						GUID_NULL, S_OK, _mediaType.Get());
 					ResetMediaBuffers();
@@ -376,11 +371,9 @@ namespace Org {
 
 				if (!_isShutdown)
 				{
-					_track->UnsetRenderer(this);
 					if (_eventQueue != nullptr) {
 						_eventQueue->Shutdown();
 					}
-					_track = nullptr;
 					_deviceManager = nullptr;
 					_eventQueue = nullptr;
 
@@ -390,6 +383,7 @@ namespace Org {
 				}
 				return S_OK;
 			}
+
 			STDMETHODIMP WebRtcMediaStream::SetD3DManager(
 				ComPtr<IMFDXGIDeviceManager> manager) {
 				webrtc::CriticalSectionScoped csLock(_lock.get());
@@ -406,8 +400,7 @@ namespace Org {
 					(unsigned int)D3D_FEATURE_LEVEL_11_1) {
 					_gpuVideoBuffer = true;
 					OutputDebugString(L"DirectX 11.1 or greater detected, using GPU video render buffers\r\n");
-				}
-				else {
+				} else {
 					_gpuVideoBuffer = false;
 					OutputDebugString(L"GPU video render buffers are NOT supported\r\n");
 				}
@@ -460,8 +453,7 @@ namespace Org {
 						RETURN_ON_FAIL(MFCreateDXGISurfaceBuffer(__uuidof(ID3D11Texture2D),
 							frameTexture.Get(), 0, FALSE, &buffer));
 					}
-				}
-				else {
+				} else {
 					for (auto&& buffer : _mediaBuffers) {
 						MFCreate2DMediaBuffer(
 							width, height,

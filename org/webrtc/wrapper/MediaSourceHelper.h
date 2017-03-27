@@ -38,6 +38,11 @@ namespace Org {
 	namespace WebRtc {
 		namespace Internal {
 
+			enum VideoFrameType {
+				FrameTypeI420,
+				FrameTypeH264
+			};
+
 			struct SampleData {
 				SampleData();
 				ComPtr<IMFSample> sample;
@@ -50,7 +55,8 @@ namespace Org {
 
 			class MediaSourceHelper {
 			public:
-				MediaSourceHelper(bool isH264,
+				MediaSourceHelper(
+					VideoFrameType frameType,
 					std::function<HRESULT(cricket::VideoFrame* frame, IMFSample** sample)> mkSample,
 					std::function<void(int)> fpsCallback);
 				~MediaSourceHelper();
@@ -63,6 +69,7 @@ namespace Org {
 			private:
 				std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
 				std::list<cricket::VideoFrame*> _frames;
+				VideoFrameType _frameType;
 				bool _isFirstFrame;
 				LONGLONG _startTime;
 				// One peculiarity, the timestamp of a sample should be slightly
@@ -83,7 +90,7 @@ namespace Org {
 
 				// Gets the next timestamp using the clock.
 				// Guarantees no duplicate timestamps.
-				LONGLONG GetNextSampleTimeHns(LONGLONG frameRenderTime);
+				LONGLONG GetNextSampleTimeHns(LONGLONG frameRenderTime, bool isH264);
 
 				void CheckForAttributeChanges(cricket::VideoFrame* frame, SampleData* data);
 
@@ -95,9 +102,6 @@ namespace Org {
 				// State related to calculating FPS.
 				int _frameCounter;
 				int64_t _lastTimeFPSCalculated;
-
-				// Are the frames H264 encoded.
-				bool _isH264;
 
 				int64_t _startTickTime;
 			};

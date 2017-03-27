@@ -44,17 +44,18 @@ namespace Org {
 				, rotation(-1) {
 			}
 
-			MediaSourceHelper::MediaSourceHelper(bool isH264,
+			MediaSourceHelper::MediaSourceHelper(
+				VideoFrameType frameType,
 				std::function<HRESULT(cricket::VideoFrame* frame, IMFSample** sample)> mkSample,
 				std::function<void(int)> fpsCallback)
 				: _mkSample(mkSample)
 				, _fpsCallback(fpsCallback)
+				, _frameType(frameType)
 				, _isFirstFrame(true)
 				, _futureOffsetMs(45)
 				, _lastSampleTime(0)
 				, _lastSize({ 0, 0 })
 				, _lastRotation(-1)
-				, _isH264(isH264)
 				, _frameCounter(0)
 				, _startTime(0)
 				, _lastTimeFPSCalculated(rtc::TimeMillis())
@@ -73,18 +74,16 @@ namespace Org {
 			void MediaSourceHelper::QueueFrame(cricket::VideoFrame* frame) {
 				webrtc::CriticalSectionScoped csLock(_lock.get());
 
-				if (_isH264) {
+				if (_frameType == FrameTypeH264) {
 					// Check it is really a H.264 frame, the codec might have been switched within the call, in this case just ignore frames
 					if (frame->video_frame_buffer()->native_handle() != nullptr) {
 						// For H264 we keep all frames since they are encoded.
 						_frames.push_back(frame);
-					}
-					else {
+					} else {
 						// Delete the frame, it's not the expected codec
 						delete frame;
 					}
-				}
-				else {
+				} else {
 					// Check it is not H.264 frame, the codec might have been switched within the call, in this case just ignore frames
 					if (frame->video_frame_buffer()->native_handle() == nullptr) {
 						// For I420 frame, keep only the latest.
@@ -93,8 +92,7 @@ namespace Org {
 						}
 						_frames.clear();
 						_frames.push_back(frame);
-					}
-					else {
+					} else {
 						// Delete the frame, it's not the expected codec
 						delete frame;
 					}
@@ -109,10 +107,9 @@ namespace Org {
 				}
 
 				std::unique_ptr<SampleData> data;
-				if (_isH264) {
+				if (_frameType == FrameTypeH264) {
 					data = DequeueH264Frame();
-				}
-				else {
+				} else {
 					data = DequeueI420Frame();
 				}
 
@@ -121,20 +118,17 @@ namespace Org {
 					_isFirstFrame = false;
 					Org::WebRtc::FirstFrameRenderHelper::FireEvent(
 						rtc::Timing::WallTimeNow() * rtc::kNumMillisecsPerSec);
-					LONGLONG frameTime = GetNextSampleTimeHns(data->renderTime);
+					LONGLONG frameTime = GetNextSampleTimeHns(data->renderTime, _frameType == FrameTypeH264);
 					data->sample->SetSampleTime(frameTime);
-				}
-				else {
-
-					LONGLONG frameTime = GetNextSampleTimeHns(data->renderTime);
+				} else {
+					LONGLONG frameTime = GetNextSampleTimeHns(data->renderTime, _frameType == FrameTypeH264);
 
 					data->sample->SetSampleTime(frameTime);
 
 					// Set the duration property
-					if (_isH264) {
+					if (_frameType == FrameTypeH264) {
 						data->sample->SetSampleDuration(frameTime - _lastSampleTime);
-					}
-					else {
+					} else {
 						LONGLONG duration = (LONGLONG)((1.0 / 30) * 1000 * 1000 * 10);
 						data->sample->SetSampleDuration(duration);
 					}
@@ -228,8 +222,7 @@ namespace Org {
 					int prefixLengthFound = 0;
 					if (ptr[0] == 0x00 && ptr[1] == 0x00 && ptr[2] == 0x00 && ptr[3] == 0x01) {
 						prefixLengthFound = 4;
-					}
-					else if (ptr[0] == 0x00 && ptr[1] == 0x00 && ptr[2] == 0x01) {
+					} else if (ptr[0] == 0x00 && ptr[1] == 0x00 && ptr[2] == 0x01) {
 						prefixLengthFound = 3;
 					}
 
@@ -279,20 +272,18 @@ namespace Org {
 			void MediaSourceHelper::SetStartTimeNow() {
 				webrtc::CriticalSectionScoped csLock(_lock.get());
 				_startTickTime = rtc::TimeMillis();
-				if (_isH264) {
-					if (!DropFramesToIDR(_frames)) {
-						// Flush all frames then.
-						while (!_frames.empty()) {
-							std::unique_ptr<cricket::VideoFrame> frame(_frames.front());
-							_frames.pop_front();
-						}
+				if (!DropFramesToIDR(_frames)) {
+					// Flush all frames then.
+					while (!_frames.empty()) {
+						std::unique_ptr<cricket::VideoFrame> frame(_frames.front());
+						_frames.pop_front();
 					}
 				}
 			}
 
 #define USE_WALL_CLOCK
-			LONGLONG MediaSourceHelper::GetNextSampleTimeHns(LONGLONG frameRenderTime) {
-				if (_isH264) {
+			LONGLONG MediaSourceHelper::GetNextSampleTimeHns(LONGLONG frameRenderTime, bool isH264) {
+				if (isH264) {
 #ifdef USE_WALL_CLOCK
 					if (_startTickTime == 0) {
 						_startTickTime = rtc::TimeMillis();
@@ -312,15 +303,17 @@ namespace Org {
 #endif
 
 					return frameTime;
-				}
-				else {
+				} else {
 					// Non-encoded samples seem to work best with a zero timestamp.
 					return 0;
 				}
 			}
 
 			void MediaSourceHelper::CheckForAttributeChanges(cricket::VideoFrame* frame, SampleData* data) {
+
+				// Update size property
 				SIZE currentSize = { (LONG)frame->width(), (LONG)frame->height() };
+				// If the size has changed
 				if (_lastSize.cx != currentSize.cx || _lastSize.cy != currentSize.cy) {
 					data->sizeHasChanged = true;
 					data->size = currentSize;
@@ -329,14 +322,12 @@ namespace Org {
 
 				// Update rotation property
 				int currentRotation = (int)frame->rotation();
-
 				// If the rotation has changed
 				if (_lastRotation == -1 || _lastRotation != currentRotation) {
 					data->rotationHasChanged = true;
 					data->rotation = currentRotation;
 					_lastRotation = currentRotation;
 				}
-
 			}
 
 			// Called whenever a new sample is sent for rendering.

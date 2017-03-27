@@ -17,13 +17,41 @@ namespace Org {
 
 #define RETURN_ON_FAIL(code) { HRESULT hr = code; if (FAILED(hr)) {OutputDebugString(L"Failed\r\n"); return hr;} }
 
+			WebRtcMediaSource::WebRtcVideoSink::WebRtcVideoSink(
+				VideoFrameType frameType,
+				ComPtr<WebRtcMediaStream> i420Stream,
+				ComPtr<WebRtcMediaStream> h264Stream,
+				WebRtcVideoSinkObserver *videoSinkObserver) :
+				_i420Stream(i420Stream),
+				_h264Stream(h264Stream),
+				_videoSinkObserver(videoSinkObserver),
+				_frameType(frameType) {
+			}
+
+			void WebRtcMediaSource::WebRtcVideoSink::OnFrame(const cricket::VideoFrame& frame) {
+				if (frame.video_frame_buffer()->native_handle() == nullptr) {
+					if (_frameType == FrameTypeH264) {
+						_videoSinkObserver->OnVideoFormatChanged(FrameTypeI420);
+						_frameType = FrameTypeI420;
+					}
+					_i420Stream->RenderFrame(&frame);
+				} else {
+					if (_frameType == FrameTypeI420) {
+						_videoSinkObserver->OnVideoFormatChanged(FrameTypeH264);
+						_frameType = FrameTypeH264;
+					}
+					_h264Stream->RenderFrame(&frame);
+				}
+			}
+
 			WebRtcMediaSource::WebRtcMediaSource() :
-				_rateControlThin(FALSE), _rate(1.0f), _started(false),
+				_i420FirstStart(true),
+				_h264FirstStart(true),
 				_lock(webrtc::CriticalSectionWrapper::CreateCriticalSection()) {
 			}
 
 			WebRtcMediaSource::~WebRtcMediaSource() {
-				_stream = nullptr;
+				_webRtcVideoSink.reset();
 			}
 
 			HRESULT WebRtcMediaSource::CreateMediaSource(
@@ -48,16 +76,66 @@ namespace Org {
 
 				RETURN_ON_FAIL(MFCreateEventQueue(&_eventQueue));
 
-				// For now only allow one stream
 				RETURN_ON_FAIL(MakeAndInitialize<WebRtcMediaStream>(
-					&_stream, this, track, id));
-				ComPtr<IMFStreamDescriptor> streamDescriptor;
-				RETURN_ON_FAIL(_stream->GetStreamDescriptor(&streamDescriptor));
+					&_i420Stream, this, id, FrameTypeI420));
+				RETURN_ON_FAIL(MakeAndInitialize<WebRtcMediaStream>(
+					&_h264Stream, this, id, FrameTypeH264));
+
+				if (!track->GetImpl()->GetSource()->IsH264Source())
+					_selectedStream = 0;
+				else
+					_selectedStream = 1;
+
+				_webRtcVideoSink.reset(new WebRtcVideoSink(
+				_selectedStream == 0 ? FrameTypeI420 : FrameTypeH264,
+				_i420Stream, _h264Stream, this));
+				_track = track;
+				_track->SetRenderer(_webRtcVideoSink.get());
+
+				ComPtr<IMFStreamDescriptor> i420StreamDescriptor;
+				ComPtr<IMFStreamDescriptor> h264streamDescriptor;
+				RETURN_ON_FAIL(_i420Stream->GetStreamDescriptor(&i420StreamDescriptor));
+				RETURN_ON_FAIL(_h264Stream->GetStreamDescriptor(&h264streamDescriptor));
+				IMFStreamDescriptor *streamDescriptors[2];
+				streamDescriptors[0] = *i420StreamDescriptor.GetAddressOf();
+				streamDescriptors[1] = *h264streamDescriptor.GetAddressOf();
 				RETURN_ON_FAIL(MFCreatePresentationDescriptor(
-					1, streamDescriptor.GetAddressOf(), &_presDescriptor));
-				RETURN_ON_FAIL(_presDescriptor->SelectStream(0));
+					2, streamDescriptors, &_presDescriptor));
+        
+				RETURN_ON_FAIL(_presDescriptor->SelectStream(_selectedStream));
 
 				return S_OK;
+			}
+
+			// WebRtcVideoSinkObserver
+			void WebRtcMediaSource::OnVideoFormatChanged(VideoFrameType frameType) {
+				// The MediaElement rendering component doesn't support video format
+				// changes on the fly (I420<->H264). This case is not handled for now.
+				return;
+				webrtc::CriticalSectionScoped csLock(_lock.get());
+				if (frameType == FrameTypeI420) {
+					_selectedStream = 0;
+					if (_presDescriptor != nullptr) {
+						Stop();
+						_presDescriptor->SelectStream(0);
+						_presDescriptor->DeselectStream(1);
+						PROPVARIANT startPosition;
+						PropVariantInit(&startPosition);
+						startPosition.scode = VT_EMPTY;
+						Start(_presDescriptor.Get(), NULL, &startPosition);
+					}
+				} else if (frameType == FrameTypeH264) {
+					_selectedStream = 1;
+					if (_presDescriptor != nullptr) {
+						Stop();
+						_presDescriptor->SelectStream(1);
+						_presDescriptor->DeselectStream(0);
+						PROPVARIANT startPosition;
+						PropVariantInit(&startPosition);
+						startPosition.scode = VT_EMPTY;
+						Start(_presDescriptor.Get(), NULL, &startPosition);
+					}
+				}
 			}
 
 			// IMFMediaEventGenerator
@@ -127,18 +205,30 @@ namespace Org {
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
-				if (!_started) {
+				if (_selectedStream == 0 && _i420FirstStart) {
 					ComPtr<IUnknown> unk;
-					_stream.As(&unk);
+					_i420Stream.As(&unk);
 					RETURN_ON_FAIL(_eventQueue->QueueEventParamUnk(
 						MENewStream, GUID_NULL, S_OK, unk.Get()));
+					_i420FirstStart = false;
 				}
-				// Start stream
-				RETURN_ON_FAIL(_stream->Start(pPresentationDescriptor,
-					pguidTimeFormat, pvarStartPosition));
+				if (_selectedStream == 1 && _h264FirstStart) {
+					ComPtr<IUnknown> unk;
+					_h264Stream.As(&unk);
+					RETURN_ON_FAIL(_eventQueue->QueueEventParamUnk(
+						MENewStream, GUID_NULL, S_OK, unk.Get()));
+					_h264FirstStart = false;
+				}
+				if (_selectedStream == 0) {
+					RETURN_ON_FAIL(_i420Stream->Start(pPresentationDescriptor,
+						pguidTimeFormat, pvarStartPosition));
+				}
+				if (_selectedStream == 1) {
+					RETURN_ON_FAIL(_h264Stream->Start(pPresentationDescriptor,
+						pguidTimeFormat, pvarStartPosition));
+				}
 				RETURN_ON_FAIL(QueueEvent(MESourceStarted,
-					GUID_NULL, S_OK, pvarStartPosition));
-				_started = true;
+				GUID_NULL, S_OK, pvarStartPosition));
 				return S_OK;
 			}
 
@@ -148,7 +238,10 @@ namespace Org {
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
-				RETURN_ON_FAIL(_stream->Stop());
+				if (_selectedStream == 0)
+					RETURN_ON_FAIL(_i420Stream->Stop());
+				if (_selectedStream == 1)
+					RETURN_ON_FAIL(_h264Stream->Stop());
 				RETURN_ON_FAIL(QueueEvent(MESourceStopped, GUID_NULL, S_OK, nullptr));
 				return S_OK;
 			}
@@ -164,12 +257,18 @@ namespace Org {
 					_eventQueue->Shutdown();
 				}
 
-				RETURN_ON_FAIL(_stream->Shutdown());
+				_track->UnsetRenderer(_webRtcVideoSink.get());
+
+				RETURN_ON_FAIL(_i420Stream->Shutdown());
+				RETURN_ON_FAIL(_h264Stream->Shutdown());
 
 				_presDescriptor = nullptr;
 				_deviceManager = nullptr;
+				_track = nullptr;
 				_eventQueue = nullptr;
-				_stream.Reset();
+				_webRtcVideoSink.reset();
+				_i420Stream.Reset();
+				_h264Stream.Reset();
 				return S_OK;
 			}
 
@@ -193,7 +292,7 @@ namespace Org {
 					IID_IMFDXGIDeviceManager,
 					reinterpret_cast<void**>(_deviceManager.ReleaseAndGetAddressOf())));
 
-				RETURN_ON_FAIL(_stream->SetD3DManager(_deviceManager));
+				RETURN_ON_FAIL(_i420Stream->SetD3DManager(_deviceManager));
 
 				return S_OK;
 			}

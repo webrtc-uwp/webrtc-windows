@@ -30,15 +30,35 @@ namespace Org {
 	namespace WebRtc {
 		namespace Internal {
 
+			class WebRtcVideoSinkObserver {
+			public:
+				virtual void OnVideoFormatChanged(VideoFrameType frameType) = 0;
+			};
+
 			class WebRtcMediaSource :
 				public RuntimeClass<RuntimeClassFlags<RuntimeClassType::WinRtClassicComMix>,
-				IMFMediaSourceEx, IMFMediaSource, IMFMediaEventGenerator,
-				IMFGetService,
-				IMFRateControl,
-				IMFRateSupport,
-				ABI::Windows::Media::Core::IMediaSource, IInspectable> {
+					IMFMediaSourceEx, IMFMediaSource, IMFMediaEventGenerator,
+					IMFGetService,
+					IMFRateControl,
+					IMFRateSupport,
+					ABI::Windows::Media::Core::IMediaSource, IInspectable>,
+				public WebRtcVideoSinkObserver {
 				InspectableClass(L"WebRtcMediaSource", BaseTrust)
 			public:
+				class WebRtcVideoSink : public rtc::VideoSinkInterface<cricket::VideoFrame> {
+				public:
+					WebRtcVideoSink(VideoFrameType frameType, 
+						ComPtr<WebRtcMediaStream> i420Stream,
+						ComPtr<WebRtcMediaStream> h264Stream,
+						WebRtcVideoSinkObserver *videoSinkObserver);
+					virtual void OnFrame(const cricket::VideoFrame& frame) override;
+				private:
+					VideoFrameType _frameType;
+					ComPtr<WebRtcMediaStream> _i420Stream;
+					ComPtr<WebRtcMediaStream> _h264Stream;
+					WebRtcVideoSinkObserver *_videoSinkObserver;
+				};
+
 				static HRESULT CreateMediaSource(
 					ABI::Windows::Media::Core::IMediaSource** source,
 					Org::WebRtc::MediaVideoTrack^ track, String^ id);
@@ -46,6 +66,9 @@ namespace Org {
 				WebRtcMediaSource();
 				virtual ~WebRtcMediaSource();
 				HRESULT RuntimeClassInitialize(Org::WebRtc::MediaVideoTrack^ track, String^ id);
+
+				// WebRtcVideoSinkObserver
+				virtual void OnVideoFormatChanged(VideoFrameType frameType) override;
 
 				// IMFMediaEventGenerator
 				IFACEMETHOD(GetEvent)(DWORD dwFlags, IMFMediaEvent **ppEvent);
@@ -79,13 +102,16 @@ namespace Org {
 
 			private:
 				std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
+				std::unique_ptr<WebRtcVideoSink> _webRtcVideoSink;
+				Org::WebRtc::MediaVideoTrack^ _track;
+				ComPtr<WebRtcMediaStream> _i420Stream;
+				ComPtr<WebRtcMediaStream> _h264Stream;
 				ComPtr<IMFMediaEventQueue> _eventQueue;
-				ComPtr<WebRtcMediaStream> _stream;
 				ComPtr<IMFPresentationDescriptor> _presDescriptor;
 				ComPtr<IMFDXGIDeviceManager> _deviceManager;
-				BOOL _rateControlThin;
-				float _rate;
-				bool _started;
+				bool _i420FirstStart;
+				bool _h264FirstStart;
+				int _selectedStream;
 			};
 		}
 	}

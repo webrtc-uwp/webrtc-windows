@@ -33,20 +33,15 @@ namespace Org {
 			class WebRtcMediaStream :
 				public RuntimeClass<RuntimeClassFlags<RuntimeClassType::WinRtClassicComMix>,
 				IMFMediaStream, IMFMediaEventGenerator,
-				IMFGetService>,
-				public rtc::VideoSinkInterface<cricket::VideoFrame> {
+				IMFGetService> {
 				InspectableClass(L"WebRtcMediaStream", BaseTrust)
 			public:
 				WebRtcMediaStream();
 				virtual ~WebRtcMediaStream();
 				HRESULT RuntimeClassInitialize(
 					WebRtcMediaSource* source,
-					Org::WebRtc::MediaVideoTrack^ track,
-					String^ id);
-				void OnFrame(const cricket::VideoFrame& frame) override {
-					RenderFrame(&frame);
-				}
-
+					String^ id,
+					VideoFrameType frameType);
 
 				// IMFMediaEventGenerator
 				IFACEMETHOD(GetEvent)(DWORD dwFlags, IMFMediaEvent **ppEvent);
@@ -61,7 +56,7 @@ namespace Org {
 				// IMFGetService
 				IFACEMETHOD(GetService)(REFGUID guidService, REFIID riid, LPVOID *ppvObject);
 
-				// VideoRendererInterface
+				// rtc::VideoSinkInterface<cricket::VideoFrame>
 				virtual void RenderFrame(const cricket::VideoFrame *frame);
 
 				STDMETHOD(Start)(IMFPresentationDescriptor *pPresentationDescriptor,
@@ -70,17 +65,17 @@ namespace Org {
 				STDMETHOD(Shutdown)();
 				STDMETHOD(SetD3DManager)(ComPtr<IMFDXGIDeviceManager> manager);
 
+			private:
 				std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
 
-			private:
 				ComPtr<IMFMediaEventQueue> _eventQueue;
 
 				WebRtcMediaSource* _source;
-				Org::WebRtc::MediaVideoTrack^ _track;
 				String^ _id;
+				VideoFrameType _frameType;
 
 				static HRESULT CreateMediaType(unsigned int width, unsigned int height,
-					unsigned int rotation, IMFMediaType** ppType, bool isH264);
+					unsigned int rotation, bool isH264, IMFMediaType** ppType);
 				HRESULT MakeSampleCallback(const cricket::VideoFrame* frame, IMFSample** sample);
 				void FpsCallback(int fps);
 
@@ -104,7 +99,6 @@ namespace Org {
 				int _frameBufferIndex;
 
 				bool _gpuVideoBuffer;
-				bool _isH264;
 				bool _started;
 				bool _isShutdown;
 			};
