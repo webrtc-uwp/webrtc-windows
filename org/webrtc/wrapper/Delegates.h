@@ -26,6 +26,12 @@ namespace Org {
 			const Platform::Array<uint8>^, uint32,
 			const Platform::Array<uint8>^, uint32);
 
+		/// <summary>
+		/// Delegate for receiving video frames from EncodedVideoSource.
+		/// </summary>
+		public delegate void EncodedVideoSourceDelegate(
+			uint32, uint32, const Platform::Array<uint8>^);
+
 		// ------------------
 		ref class RTCPeerConnectionIceEvent;
 		/// <summary>

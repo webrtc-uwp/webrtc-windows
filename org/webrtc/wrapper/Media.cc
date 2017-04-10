@@ -315,7 +315,16 @@ namespace Org {
 		}
 
 		void RawVideoStream::RenderFrame(const cricket::VideoFrame* frame) {
-			_videoSource->RawVideoFrame((uint32)frame->width(),(uint32)frame->height(),Platform::ArrayReference<uint8>((uint8*)frame->video_frame_buffer()->DataY(), (unsigned int)(frame->video_frame_buffer()->StrideY() * frame->height())),frame->video_frame_buffer()->StrideY(),Platform::ArrayReference<uint8>((uint8*)frame->video_frame_buffer()->DataU(), (unsigned int)(frame->video_frame_buffer()->StrideU() * ((frame->height() + 1) / 2))),frame->video_frame_buffer()->StrideU(),Platform::ArrayReference<uint8>((uint8*)frame->video_frame_buffer()->DataV(), (unsigned int)(frame->video_frame_buffer()->StrideV() * ((frame->height() + 1) / 2))), frame->video_frame_buffer()->StrideV());
+			_videoSource->RawVideoFrame((uint32)frame->width(), (uint32)frame->height(),
+				Platform::ArrayReference<uint8>((uint8*)frame->video_frame_buffer()->DataY(),
+				(unsigned int)(frame->video_frame_buffer()->StrideY() * frame->height())),
+				frame->video_frame_buffer()->StrideY(),
+				Platform::ArrayReference<uint8>((uint8*)frame->video_frame_buffer()->DataU(),
+				(unsigned int)(frame->video_frame_buffer()->StrideU() * ((frame->height() + 1) / 2))),
+				frame->video_frame_buffer()->StrideU(),
+				Platform::ArrayReference<uint8>((uint8*)frame->video_frame_buffer()->DataV(),
+				(unsigned int)(frame->video_frame_buffer()->StrideV() * ((frame->height() + 1) / 2))),
+				frame->video_frame_buffer()->StrideV());
 		}
 
 		// = RawVideoSource =============================================================
@@ -335,6 +344,52 @@ namespace Org {
 
 		RawVideoSource::~RawVideoSource() {
 			_track->UnsetRenderer(_videoStream.get());
+		}
+
+		// = EncodedVideoStream =============================================================
+
+		EncodedVideoStream::EncodedVideoStream(EncodedVideoSource^ videoSource) :
+			_videoSource(videoSource) {
+		}
+
+		void EncodedVideoStream::RenderFrame(const cricket::VideoFrame* frame) {
+			ComPtr<IMFSample> pSample = (IMFSample*)frame->video_frame_buffer()->native_handle();
+			if (pSample == nullptr)
+				return;
+			ComPtr<IMFMediaBuffer> pBuffer;
+			if (FAILED(pSample->GetBufferByIndex(0, &pBuffer))) {
+				LOG(LS_ERROR) << "Failed to retrieve buffer.";
+				return;
+			}
+			BYTE* pBytes;
+			DWORD maxLength, curLength;
+			if (FAILED(pBuffer->Lock(&pBytes, &maxLength, &curLength))) {
+				LOG(LS_ERROR) << "Failed to lock buffer.";
+				return;
+			}
+			_videoSource->EncodedVideoFrame((uint32)frame->width(), (uint32)frame->height(),
+			Platform::ArrayReference<uint8>((uint8*)pBytes, curLength));
+			if (FAILED(pBuffer->Unlock())) {
+				LOG(LS_ERROR) << "Failed to unlock buffer";
+				return;
+			}
+		}
+
+		// = EncodedVideoSource =============================================================
+
+		EncodedVideoSource::EncodedVideoSource(MediaVideoTrack^ track) :
+		_videoStream(new EncodedVideoStream(this)),
+		_track(track) {
+		_track->SetRenderer(_videoStream.get());
+		}
+
+		void EncodedVideoSource::EncodedVideoFrame(uint32 width, uint32 height,
+		const Platform::Array<uint8>^ frameData) {
+		OnEncodedVideoFrame(width, height, frameData);
+		}
+
+		EncodedVideoSource::~EncodedVideoSource() {
+		_track->UnsetRenderer(_videoStream.get());
 		}
 
 		// = Media ===================================================================
@@ -563,6 +618,10 @@ namespace Org {
 
 		RawVideoSource^ Media::CreateRawVideoSource(MediaVideoTrack^ track) {
 			return ref new RawVideoSource(track);
+		}
+
+		EncodedVideoSource^ Media::CreateEncodedVideoSource(MediaVideoTrack^ track) {
+			return ref new EncodedVideoSource(track);
 		}
 
 		IVector<MediaDevice^>^ Media::GetVideoCaptureDevices() {
