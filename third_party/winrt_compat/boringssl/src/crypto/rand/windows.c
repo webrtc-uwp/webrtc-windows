@@ -23,5 +23,5 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "winrt_compat_win.h"
-#include "../boringssl/src/crypto/rand/windows.c"
+#include "../../../../winrt_compat_win.h"
+#include "../../../../../boringssl/src/crypto/rand/windows.c"
