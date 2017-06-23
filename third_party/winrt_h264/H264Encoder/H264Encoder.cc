@@ -26,7 +26,7 @@
 
 #include "H264StreamSink.h"
 #include "H264MediaSink.h"
-#include "Utils/Utils.h"
+#include "../Utils/Utils.h"
 #include "webrtc/modules/video_coding/include/video_codec_interface.h"
 #include "webrtc/base/timeutils.h"
 #include "libyuv/convert.h"
@@ -70,7 +70,7 @@ int H264WinRTEncoderImpl::InitEncode(const VideoCodec* inst,
   currentHeight_ = inst->height;
   currentBitrateBps_ = inst->targetBitrate > 0 ? inst->targetBitrate * 1024 : currentWidth_ * currentHeight_ * 2.0;
   currentFps_ = inst->maxFramerate;
-  quality_scaler_.Init(inst->qpMax / 2, 64, false, 0, currentWidth_, currentHeight_);
+  //quality_scaler_.Init(inst->qpMax / 2, 64, false, 0, currentWidth_, currentHeight_);
   return InitEncoderWithSettings(inst);
 }
 
@@ -114,7 +114,7 @@ int H264WinRTEncoderImpl::InitEncoderWithSettings(const VideoCodec* inst) {
   ON_SUCCEEDED(MFSetAttributeRatio(mediaTypeIn.Get(),
     MF_MT_FRAME_RATE, currentFps_, 1));
 
-  quality_scaler_.ReportFramerate(currentFps_);
+  //quality_scaler_.ReportFramerate(currentFps_);
 
   // Create the media sink
   ON_SUCCEEDED(Microsoft::WRL::MakeAndInitialize<H264MediaSink>(&mediaSink_));
@@ -202,11 +202,12 @@ ComPtr<IMFSample> H264WinRTEncoderImpl::FromVideoFrame(const VideoFrame& frame) 
   ComPtr<IMFAttributes> sampleAttributes;
   ON_SUCCEEDED(sample.As(&sampleAttributes));
 
-  quality_scaler_.OnEncodeFrame(frame.width(), frame.height());
+  //quality_scaler_.OnEncodeFrame(frame.width(), frame.height());
 #ifdef DYNAMIC_SCALING
-  rtc::scoped_refptr<VideoFrameBuffer> frameBuffer = quality_scaler_.GetScaledBuffer(frame.video_frame_buffer());
+  rtc::scoped_refptr<VideoFrameBuffer> frameBuffer = frame.video_frame_buffer();
+    //quality_scaler_.GetScaledBuffer(frame.video_frame_buffer());
 #else
-  rtc::scoped_refptr<VideoFrameBuffer> frameBuffer = frame.video_frame_buffer;
+  rtc::scoped_refptr<VideoFrameBuffer> frameBuffer = frame.video_frame_buffer();
 #endif
 
   if (SUCCEEDED(hr)) {
@@ -333,7 +334,7 @@ int H264WinRTEncoderImpl::Encode(
   {
     webrtc::CriticalSectionScoped csLock(_lock.get());
     if (_sampleAttributeQueue.size() > 2) {
-      quality_scaler_.ReportDroppedFrame();
+      //quality_scaler_.ReportDroppedFrame();
       return WEBRTC_VIDEO_CODEC_OK;
     }
     sample = FromVideoFrame(frame);
@@ -450,7 +451,7 @@ void H264WinRTEncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
       _h264Parser.ParseBitstream(sendBuffer.data(), sendBuffer.size());
       int lastQp;
       if (_h264Parser.GetLastSliceQp(&lastQp)) {
-        quality_scaler_.ReportQP(lastQp);
+        //quality_scaler_.ReportQP(lastQp);
       }
 
       LONGLONG sampleTimestamp;
@@ -463,8 +464,8 @@ void H264WinRTEncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
         encodedImage.capture_time_ms_ = frameAttributes.captureRenderTime;
         encodedImage._encodedWidth = frameAttributes.frameWidth;
         encodedImage._encodedHeight = frameAttributes.frameHeight;
-        encodedImage.adapt_reason_.quality_resolution_downscales =
-          quality_scaler_.downscale_shift();
+        //encodedImage.adapt_reason_.quality_resolution_downscales =
+        //  quality_scaler_.downscale_shift();
       }
       else {
         // No point in confusing the callback with a frame that doesn't
@@ -473,7 +474,7 @@ void H264WinRTEncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
       }
 
       if (encodedCompleteCallback_ != nullptr) {
-        encodedCompleteCallback_->Encoded(
+        encodedCompleteCallback_->OnEncodedImage(
           encodedImage, codecSpecificInfo_, &fragmentationHeader);
       }
     }
@@ -520,7 +521,7 @@ int H264WinRTEncoderImpl::SetRates(
     fpsUpdated = true;
   }
 #endif
-  quality_scaler_.ReportFramerate(new_framerate);
+  //quality_scaler_.ReportFramerate(new_framerate);
 
   if (bitrateUpdated || fpsUpdated) {
     if ((rtc::TimeMillis() - lastTimeSettingsChanged_) < 15000) {
@@ -545,7 +546,7 @@ void H264WinRTEncoderImpl::OnDroppedFrame(uint32_t timestamp) {
   ComPtr<IMFSinkWriter> tempSinkWriter;
   {
     webrtc::CriticalSectionScoped csLock(_lock.get());
-    quality_scaler_.ReportDroppedFrame();
+    //quality_scaler_.ReportDroppedFrame();
     timestampHns = ((timestamp - startTime_) / 90) * 1000 * 10;
     lastFrameDropped_ = true;
     tempSinkWriter = sinkWriter_;

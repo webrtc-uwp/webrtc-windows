@@ -16,7 +16,7 @@
 #include <Mfreadwrite.h>
 #include <mferror.h>
 #include <wrl.h>
-#include "Utils/SampleAttributeQueue.h"
+#include "../Utils/SampleAttributeQueue.h"
 #include "webrtc/video_decoder.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 

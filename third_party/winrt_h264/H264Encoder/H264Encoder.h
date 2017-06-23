@@ -18,11 +18,11 @@
 #include <vector>
 #include "H264MediaSink.h"
 #include "IH264EncodingCallback.h"
-#include "Utils/SampleAttributeQueue.h"
+#include "../Utils/SampleAttributeQueue.h"
 #include "webrtc/video_encoder.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 #include "webrtc/modules/video_coding/utility/quality_scaler.h"
-#include "webrtc/modules/video_coding/utility/h264_bitstream_parser.h"
+#include "webrtc/common_video/h264/h264_bitstream_parser.h"
 
 #pragma comment(lib, "mfreadwrite")
 #pragma comment(lib, "mfplat")
@@ -48,7 +48,7 @@ class H264WinRTEncoderImpl : public VideoEncoder, public IH264EncodingCallback {
     const std::vector<FrameType>* frame_types) override;
   int SetChannelParameters(uint32_t packet_loss, int64_t rtt) override;
   int SetRates(uint32_t new_bitrate_kbit, uint32_t frame_rate) override;
-  void OnDroppedFrame(uint32_t timestamp) override;
+  void OnDroppedFrame(uint32_t timestamp);
   const char* ImplementationName() const override;
 
   // === IH264EncodingCallback overrides ===
@@ -92,7 +92,7 @@ class H264WinRTEncoderImpl : public VideoEncoder, public IH264EncodingCallback {
 
   // Used to dynamically scale down the frames
   // in response to QP and dropped frames stats.
-  QualityScaler quality_scaler_;
+  //QualityScaler quality_scaler_;
   // Used to parse QP values out of the samples.
   H264BitstreamParser _h264Parser;
   // Caching the codec received in InitEncode().
