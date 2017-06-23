@@ -15,8 +15,8 @@
 #include <Mferror.h>
 #include <list>
 
-#include "Utils/Async.h"
-#include "Utils/CritSec.h"
+#include "../Utils/Async.h"
+#include "../Utils/CritSec.h"
 #include "IH264EncodingCallback.h"
 
 using Microsoft::WRL::ComPtr;

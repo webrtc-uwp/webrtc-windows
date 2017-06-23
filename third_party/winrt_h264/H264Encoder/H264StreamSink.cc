@@ -13,7 +13,7 @@
 #include <Windows.h>
 #include <mfapi.h>
 #include <mfidl.h>
-#include "Utils/Utils.h"
+#include "../Utils/Utils.h"
 #include "webrtc/base/logging.h"
 
 namespace webrtc {

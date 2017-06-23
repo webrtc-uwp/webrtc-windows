@@ -20,10 +20,11 @@
 #include <mfreadwrite.h>
 #include <wrl\implements.h>
 #include <iomanip>
-#include "Utils/Utils.h"
+#include "../Utils/Utils.h"
 #include "libyuv/convert.h"
 #include "webrtc/base/logging.h"
 #include "webrtc/base/checks.h"
+#include "webrtc/common_video/include/video_frame_buffer.h"
 #include "webrtc/modules/video_coding/include/video_codec_interface.h"
 
 #pragma comment(lib, "mfreadwrite")

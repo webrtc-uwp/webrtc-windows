@@ -18,7 +18,7 @@
 #include <windows.media.mediaproperties.h>
 #include <wrl.h>
 
-#include "Utils/CritSec.h"
+#include "../Utils/CritSec.h"
 #include "IH264EncodingCallback.h"
 #include "H264StreamSink.h"
 
