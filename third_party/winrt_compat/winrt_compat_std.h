@@ -28,6 +28,8 @@
 #define getenv(xVarname) winrtGetEnv(xVarname)
 #define getcwd(xBuf, xSize) winrtGetCwd(xBuf,xSize)
 
+#include <stddef.h>
+
 #ifdef __cplusplus
   extern "C" {
 #endif /* __cplusplus */
