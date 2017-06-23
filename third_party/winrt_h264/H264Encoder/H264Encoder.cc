@@ -8,7 +8,7 @@
 *  be found in the AUTHORS file in the root of the source tree.
 */
 
-#include "third_party/h264_winrt/H264Encoder/H264Encoder.h"
+#include "third_party/winrt_h264/H264Encoder/H264Encoder.h"
 
 #include <Windows.h>
 #include <stdlib.h>

@@ -9,9 +9,9 @@
 */
 
 #include <vector>
-#include "third_party/h264_winrt/h264_winrt_factory.h"
-#include "third_party/h264_winrt/H264Encoder/H264Encoder.h"
-#include "third_party/h264_winrt/H264Decoder/H264Decoder.h"
+#include "third_party/winrt_h264/h264_winrt_factory.h"
+#include "third_party/winrt_h264/H264Encoder/H264Encoder.h"
+#include "third_party/winrt_h264/H264Decoder/H264Decoder.h"
 #include "webrtc/media/engine/webrtcvideoencoderfactory.h"
 #include "webrtc/media/engine/webrtcvideodecoderfactory.h"
 

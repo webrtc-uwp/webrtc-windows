@@ -1,5 +1,5 @@
 /*
-* This source is for use with injected /FI cl.exe header for winrt project.
+* This source is for use with injecting into webrtc/base build for the winrt project.
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
@@ -23,42 +23,5 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "winrt_compat_std.h"
-#include "winrt_compat_internal.h"
-
-#include <Windows.h>
-
-static char *winrtInternalGetCwd(char *buf, size_t size)
-{
-  auto current = Windows::Storage::ApplicationData::Current;
-  if (!current) return (char *)NULL;
-
-  auto localFolder = current->LocalFolder;
-  if (!localFolder) return (char *)NULL;
-
-  auto folder = localFolder->Path;
-  if (!folder) return (char *)NULL;
-
-  WinRT::StringConvertToUTF8 str(folder);
-  return str.result(buf, size);
-}
-
-#ifdef __cplusplus
-  extern "C" {
-#endif /* __cplusplus */
-
-char *winrtGetCwd(char *buf, size_t size)
-{
-  return winrtInternalGetCwd(buf, size);
-}
-
-char *winrtGetEnv(
-   const char *varname   
-)
-{
-  return NULL;
-}
-
-#ifdef __cplusplus
-  }
-#endif /* __cplusplus */
+#include "../../../winrt_compat_win.h"
+#include "../../../../../webrtc/base/socketadapters.cc"

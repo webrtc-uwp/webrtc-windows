@@ -2,20 +2,6 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-#config("usrsctp_config") {
-#  include_dirs = [
-#    "usrsctplib/usrsctplib",
-#    "usrsctplib/usrsctplib/netinet",
-#  ]
-#}
-
-#config("usrsctp_warnings") {
-#  if (is_clang) {
-#    # atomic_init in user_atomic.h is a static function in a header.
-#    cflags = [ "-Wno-unused-function" ]
-#  }
-#}
-
 static_library("winrt_h264") {
   sources = [
     "h264_winrt_factory.cc",
@@ -43,51 +29,4 @@ static_library("winrt_h264") {
     "//webrtc/system_wrappers:system_wrappers",
   ]
 
-#  defines = [
-#    "SCTP_PROCESS_LEVEL_LOCKS",
-#    "SCTP_SIMPLE_ALLOCATOR",
-#    "SCTP_USE_OPENSSL_SHA1",
-#    "__Userspace__",
-#
-#    # "SCTP_DEBUG", # Uncomment for SCTP debugging.
-#  ]
-#
-#  configs -= [ "//build/config/compiler:chromium_code" ]
-#  configs += [
-#    "//build/config/compiler:no_chromium_code",
-#
-#    # These must be after no_chromium_code for warning flags to be ordered
-#    # correctly.
-#    "//build/config/compiler:no_incompatible_pointer_warnings",
-#    ":usrsctp_warnings",
-#  ]
-#
-#  public_configs = [ ":usrsctp_config" ]
-#
-#  cflags = [
-#    "-UINET",
-#    "-UINET6",
-#  ]
-#
-#  if (is_linux || is_android) {
-#    defines += [
-#      "__Userspace_os_Linux",
-#      "_GNU_SOURCE",
-#    ]
-#  } else if (is_mac || is_ios) {
-#    defines += [
-#      "HAVE_SA_LEN",
-#      "HAVE_SCONN_LEN",
-#      "__APPLE_USE_RFC_2292",
-#      "__Userspace_os_Darwin",
-#    ]
-#    cflags += [ "-U__APPLE__" ]
-#  }
-#
-#  if (is_win) {
-#    defines += [ "__Userspace_os_Windows" ]
-#  } else {
-#    defines += [ "NON_WINDOWS_DEFINE" ]
-#  }
-#
 }

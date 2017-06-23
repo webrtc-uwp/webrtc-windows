@@ -27,11 +27,45 @@
 
 #include <windows.h>
 
-#define CreateFileW(xFileName,xAccess,xSharedMode,xSecuriteParams,xCreationDisposition,xFlagsAndAttributes,xTemplateFile) \
-	winrtCreateFileW(xFileName,xAccess,xSharedMode,xSecuriteParams,xCreationDisposition,xFlagsAndAttributes,xTemplateFile)
-
 #define RtlGenRandom(xRandomBuffer,xRandomBufferLength) \
   winrtRtlGenRandom(xRandomBuffer,xRandomBufferLength)
+
+#define MessageBoxA(xWnd,xText,xCaption,xType) \
+  winrtMessageBoxA(xWnd,xText,xCaption,xType)
+
+#define MessageBoxW(xWnd,xText,xCaption,xType) \
+  winrtMessageBoxW(xWnd,xText,xCaption,xType)
+
+#ifdef UNICODE
+#define MessageBox(xWnd,xText,xCaption,xType) \
+  winrtMessageBoxW(xWnd,xText,xCaption,xType)
+#else
+#define MessageBox(xWnd,xText,xCaption,xType) \
+  winrtMessageBoxA(xWnd,xText,xCaption,xType)
+#endif /* UNICODE */
+
+#define CreateFileA(xFileName,xDesiredAccess,xShareMode,xSecurityAttributes,xCreationDisposition,xFlagsAndAttributes,xTemplateFile) \
+  winrtCreateFileA(xFileName, xDesiredAccess, xShareMode, xSecurityAttributes, xCreationDisposition, xFlagsAndAttributes, xTemplateFile)
+
+#define CreateFileW(xFileName,xDesiredAccess,xShareMode,xSecurityAttributes,xCreationDisposition,xFlagsAndAttributes,xTemplateFile) \
+    winrtCreateFileW(xFileName, xDesiredAccess, xShareMode, xSecurityAttributes, xCreationDisposition, xFlagsAndAttributes, xTemplateFile)
+
+#ifdef UNICODE
+#define CreateFile(xFileName,xDesiredAccess,xShareMode,xSecurityAttributes,xCreationDisposition,xFlagsAndAttributes,xTemplateFile) \
+    winrtCreateFileW(xFileName, xDesiredAccess, xShareMode, xSecurityAttributes, xCreationDisposition, xFlagsAndAttributes, xTemplateFile)
+#else
+#define CreateFile(xFileName,xDesiredAccess,xShareMode,xSecurityAttributes,xCreationDisposition,xFlagsAndAttributes,xTemplateFile) \
+    winrtCreateFileA(xFileName, xDesiredAccess, xShareMode, xSecurityAttributes, xCreationDisposition, xFlagsAndAttributes, xTemplateFile)
+#endif /* UNICODE */
+
+#define GetModuleHandleW(xModule) winrtGetModuleHandleW(xModule)
+#define GetModuleHandleA(xModule) winrtGetModuleHandleA(xModule)
+
+#ifdef UNICODE
+#define GetModuleHandle(xModule) winrtGetModuleHandleW(xModule)
+#else
+#define GetModuleHandle(xModule) winrtGetModuleHandleA(xModule)
+#endif /* UNICODE */
 
 #ifdef __cplusplus
   extern "C" {
@@ -50,6 +84,50 @@ HANDLE WINAPI winrtCreateFileW(
 BOOLEAN winrtRtlGenRandom(
   PVOID RandomBuffer,
   ULONG RandomBufferLength
+);
+
+
+int WINAPI winrtMessageBoxW(
+  HWND    hWnd,
+  LPCWSTR lpText,
+  LPCWSTR lpCaption,
+  UINT    uType
+);
+
+int WINAPI winrtMessageBoxA(
+  HWND    hWnd,
+  LPCSTR lpText,
+  LPCSTR lpCaption,
+  UINT    uType
+);
+
+HANDLE WINAPI winrtCreateFileW(
+  LPCWSTR               lpFileName,
+  DWORD                 dwDesiredAccess,
+  DWORD                 dwShareMode,
+  LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+  DWORD                 dwCreationDisposition,
+  DWORD                 dwFlagsAndAttributes,
+  HANDLE                hTemplateFile
+);
+
+
+HANDLE WINAPI winrtCreateFileA(
+  LPCSTR                lpFileName,
+  DWORD                 dwDesiredAccess,
+  DWORD                 dwShareMode,
+  LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+  DWORD                 dwCreationDisposition,
+  DWORD                 dwFlagsAndAttributes,
+  HANDLE                hTemplateFile
+);
+
+HMODULE WINAPI winrtGetModuleHandleW(
+  LPCWSTR lpModuleName
+);
+
+HMODULE WINAPI winrtGetModuleHandleA(
+  LPCSTR lpModuleName
 );
 
 #ifdef __cplusplus

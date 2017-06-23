@@ -1,5 +1,5 @@
 /*
-* This source is for use with injected /FI cl.exe header for winrt project.
+* This header is injected using /FI cl.exe flag for winrt project.
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
@@ -23,42 +23,49 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "winrt_compat_std.h"
-#include "winrt_compat_internal.h"
+#pragma once
 
-#include <Windows.h>
-
-static char *winrtInternalGetCwd(char *buf, size_t size)
+namespace WinRT
 {
-  auto current = Windows::Storage::ApplicationData::Current;
-  if (!current) return (char *)NULL;
+  struct StringConvertToUTF8
+  {
+    StringConvertToUTF8(const wchar_t *str);
+    StringConvertToUTF8(Platform::String ^str);
+    ~StringConvertToUTF8();
 
-  auto localFolder = current->LocalFolder;
-  if (!localFolder) return (char *)NULL;
+    const char *result() const;
+    char *result(char *buffer, size_t size) const;
 
-  auto folder = localFolder->Path;
-  if (!folder) return (char *)NULL;
+  protected:
+    char *freeBuffer_{};
+    const char *buffer_ {};
+    size_t length_ {};
+  };
 
-  WinRT::StringConvertToUTF8 str(folder);
-  return str.result(buf, size);
+  struct StringConvertToUTF16
+  {
+    StringConvertToUTF16(const char *str);
+    StringConvertToUTF16(Platform::String ^str);
+    ~StringConvertToUTF16();
+
+    const wchar_t *result() const;
+    wchar_t *result(wchar_t *buffer, size_t size) const;
+
+  protected:
+    wchar_t *freeBuffer_ {};
+    const wchar_t *buffer_ {};
+    size_t length_ {};
+  };
+
+  struct StringConvertToPlatformString
+  {
+    StringConvertToPlatformString(const char *str);
+    StringConvertToPlatformString(const wchar_t *str);
+    ~StringConvertToPlatformString();
+
+    Platform::String ^result() const;
+
+  protected:
+    Platform::String ^buffer_;
+  };
 }
-
-#ifdef __cplusplus
-  extern "C" {
-#endif /* __cplusplus */
-
-char *winrtGetCwd(char *buf, size_t size)
-{
-  return winrtInternalGetCwd(buf, size);
-}
-
-char *winrtGetEnv(
-   const char *varname   
-)
-{
-  return NULL;
-}
-
-#ifdef __cplusplus
-  }
-#endif /* __cplusplus */

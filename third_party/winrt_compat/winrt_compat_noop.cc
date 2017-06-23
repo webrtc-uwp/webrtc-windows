@@ -23,40 +23,12 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "winrt_compat_std.h"
-#include "winrt_compat_internal.h"
-
-#include <Windows.h>
-
-static char *winrtInternalGetCwd(char *buf, size_t size)
-{
-  auto current = Windows::Storage::ApplicationData::Current;
-  if (!current) return (char *)NULL;
-
-  auto localFolder = current->LocalFolder;
-  if (!localFolder) return (char *)NULL;
-
-  auto folder = localFolder->Path;
-  if (!folder) return (char *)NULL;
-
-  WinRT::StringConvertToUTF8 str(folder);
-  return str.result(buf, size);
-}
-
 #ifdef __cplusplus
   extern "C" {
 #endif /* __cplusplus */
 
-char *winrtGetCwd(char *buf, size_t size)
+void winrt_noop()
 {
-  return winrtInternalGetCwd(buf, size);
-}
-
-char *winrtGetEnv(
-   const char *varname   
-)
-{
-  return NULL;
 }
 
 #ifdef __cplusplus

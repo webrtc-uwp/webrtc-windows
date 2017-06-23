@@ -1,0 +1,47 @@
+# Copyright 2014 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+config("force_include_std") {
+  if (is_winrt) {
+    cflags_c = [
+      "/FIwinrt_compat_std.h"
+    ]
+    cflags = [
+      "/FIwinrt_compat_std.h"
+    ]
+  }
+}
+
+config("force_include_win") {
+  if (is_winrt) {
+    cflags_c = [
+      "/FIwinrt_compat_win.h"
+    ]
+    cflags = [
+      "/FIwinrt_compat_win.h"
+    ]
+  }
+}
+
+config("winrt_config") {
+  if (is_winrt) {
+    include_dirs = [ "." ]
+  }
+}
+
+static_library("winrt_compat") {
+  if (is_winrt) {
+    sources = [
+      "winrt_compat_std.cc",
+      "winrt_compat_win.cc",
+    ]
+
+    public_configs = [ ":winrt_config" ]
+
+    include_dirs = [ "./" ]
+  } else {
+    sources = []
+  }
+  sources += [ "winrt_compat_noop.cc" ]
+}
