@@ -35,6 +35,7 @@ namespace WinRT
 
     const char *result() const;
     char *result(char *buffer, size_t size) const;
+    size_t length() const { return length_; }
 
   protected:
     char *freeBuffer_{};
@@ -50,6 +51,7 @@ namespace WinRT
 
     const wchar_t *result() const;
     wchar_t *result(wchar_t *buffer, size_t size) const;
+    size_t length() const { return length_; }
 
   protected:
     wchar_t *freeBuffer_ {};
@@ -68,4 +70,33 @@ namespace WinRT
   protected:
     Platform::String ^buffer_;
   };
+
+  struct MainConvertToUTF8
+  {
+    typedef char char_type;
+    MainConvertToUTF8(Platform::Array<Platform::String^>^ args);
+    ~MainConvertToUTF8();
+
+    int argc() const { return argc_; }
+    char_type **argv() const { return argv_; }
+
+  protected:
+    int argc_ {};
+    char_type **argv_ {};
+  };
+
+  struct MainConvertToUTF16
+  {
+    typedef char char_type;
+    MainConvertToUTF16(Platform::Array<Platform::String^>^ args);
+    ~MainConvertToUTF16();
+
+    int argc() const { return argc_; }
+    char_type **argv() const { return argv_; }
+
+  protected:
+    int argc_ {};
+    char_type **argv_ {};
+  };
+
 }

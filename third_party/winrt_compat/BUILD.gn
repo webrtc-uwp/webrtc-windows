@@ -24,6 +24,150 @@ config("force_include_win") {
   }
 }
 
+config("config_wrap_main_plain_c") {
+  if (is_winrt) {
+    cflags_c = [
+      "/FIwinrt_compat_wrap_main_plain_c.h"
+    ]
+    cflags = [
+      "/FIwinrt_compat_wrap_main_plain_c.h"
+    ]
+  }
+}
+
+config("config_wrap_main_plain_cc") {
+  if (is_winrt) {
+    cflags_c = [
+      "/FIwinrt_compat_wrap_main_plain_cc.h"
+    ]
+    cflags = [
+      "/FIwinrt_compat_wrap_main_plain_cc.h"
+    ]
+  }
+}
+
+config("config_wrap_main_utf8_c") {
+  if (is_winrt) {
+    cflags_c = [
+      "/FIwinrt_compat_wrap_main_utf8_c.h"
+    ]
+    cflags = [
+      "/FIwinrt_compat_wrap_main_utf8_c.h"
+    ]
+  }
+}
+
+config("config_wrap_main_utf8_cc") {
+  if (is_winrt) {
+    cflags_c = [
+      "/FIwinrt_compat_wrap_main_utf8_cc.h"
+    ]
+    cflags = [
+      "/FIwinrt_compat_wrap_main_utf8_cc.h"
+    ]
+  }
+}
+
+config("config_wrap_main_utf16_c") {
+  if (is_winrt) {
+    cflags_c = [
+      "/FIwinrt_compat_wrap_main_utf16_c.h"
+    ]
+    cflags = [
+      "/FIwinrt_compat_wrap_main_utf16_c.h"
+    ]
+  }
+}
+
+config("config_wrap_main_utf16_cc") {
+  if (is_winrt) {
+    cflags_c = [
+      "/FIwinrt_compat_wrap_main_utf16_cc.h"
+    ]
+    cflags = [
+      "/FIwinrt_compat_wrap_main_utf16_cc.h"
+    ]
+  }
+}
+
+source_set("wrap_main_plain_c") {
+  if (is_winrt) {
+    public_configs = [
+      ":config_wrap_main_plain_c",
+      ":winrt_config",
+    ]
+    public_deps = [ ":winrt_compat" ]
+    sources = [ "winrt_compat_wrap_main_plain.cc" ]
+  } else {
+    sources = [ "winrt_compat_noop.cc" ]
+  }
+}
+
+source_set("wrap_main_plain_cc") {
+  if (is_winrt) {
+    public_configs = [
+      ":config_wrap_main_plain_cc",
+      ":winrt_config",
+    ]
+    public_deps = [ ":winrt_compat" ]
+    sources = [ "winrt_compat_wrap_main_plain.cc" ]
+  } else {
+    sources = [ "winrt_compat_noop.cc" ]
+  }
+}
+
+source_set("wrap_main_utf8_c") {
+  if (is_winrt) {
+    public_configs = [
+      ":config_wrap_main_utf8_c",
+      ":winrt_config",
+    ]
+    public_deps = [ ":winrt_compat" ]
+    sources = [ "winrt_compat_wrap_main_utf8_c.cc" ]
+  } else {
+    sources = [ "winrt_compat_noop.cc" ]
+  }
+}
+
+source_set("wrap_main_utf8_cc") {
+  if (is_winrt) {
+    public_configs = [
+      ":config_wrap_main_utf8_cc",
+      ":winrt_config",
+     ]
+    public_deps = [ ":winrt_compat" ]
+    sources = [ "winrt_compat_wrap_main_utf8_cc.cc" ]
+  } else {
+    sources = [ "winrt_compat_noop.cc" ]
+  }
+}
+
+source_set("wrap_main_utf16_c") {
+  if (is_winrt) {
+    public_configs = [
+      ":config_wrap_main_utf16_c",
+      ":winrt_config",
+    ]
+    public_deps = [ ":winrt_compat" ]
+    sources = [ "winrt_compat_wrap_main_utf16_c.cc" ]
+  } else {
+    sources = [ "winrt_compat_noop.cc" ]
+  }
+}
+
+source_set("wrap_main_utf16_cc") {
+  if (is_winrt) {
+    public_configs = [
+      ":config_wrap_main_utf16_cc",
+      ":winrt_config",
+    ]
+    public_deps = [ ":winrt_compat" ]
+    sources = [ "winrt_compat_wrap_main_utf16_cc.cc" ]
+  } else {
+    sources = [ "winrt_compat_noop.cc" ]
+  }
+}
+
 config("ignore_threading_model_warning") {
   if (is_winrt) {
     cflags_c = [
@@ -46,6 +190,7 @@ static_library("winrt_compat") {
     sources = [
       "winrt_compat_std.cc",
       "winrt_compat_win.cc",
+      "winrt_compat_internal.cc",
     ]
 
     public_configs = [ ":winrt_config" ]
