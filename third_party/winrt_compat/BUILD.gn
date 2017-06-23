@@ -24,6 +24,17 @@ config("force_include_win") {
   }
 }
 
+config("ignore_threading_model_warning") {
+  if (is_winrt) {
+    cflags_c = [
+      "/wd4447"
+    ]
+    cflags = [
+      "/wd4447"
+    ]
+  }
+}
+
 config("winrt_config") {
   if (is_winrt) {
     include_dirs = [ "." ]
