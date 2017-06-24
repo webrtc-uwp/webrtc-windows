@@ -232,6 +232,106 @@ static HANDLE WINAPI winrtInternalCreateFileA(
 }
 
 //-----------------------------------------------------------------------------
+DWORD WINAPI winrtInternalGetTempPathW(
+  DWORD  nBufferLength,
+  LPWSTR lpBuffer
+)
+{
+  return GetTempPathW(nBufferLength, lpBuffer);
+}
+
+//-----------------------------------------------------------------------------
+DWORD WINAPI winrtInternalGetTempPathA(
+  DWORD  nBufferLength,
+  LPSTR lpBuffer
+)
+{
+  auto sizeNeeded = winrtInternalGetTempPathW(0, NULL);
+  if (0 == sizeNeeded) return 0;
+
+  auto tempBuffer = (wchar_t *)malloc((sizeNeeded + 1) * sizeof(wchar_t));
+  memset(tempBuffer, 0, (sizeNeeded + 1) * sizeof(wchar_t));
+
+  auto recheckSize = winrtInternalGetTempPathW(sizeNeeded, tempBuffer);
+  if (sizeNeeded != recheckSize) {
+    free(tempBuffer);
+    tempBuffer = NULL;
+    return 0;
+  }
+
+  WinRT::StringConvertToUTF8 conv(static_cast<const wchar_t *>(tempBuffer));
+  free(tempBuffer);
+  tempBuffer = NULL;
+
+  if ((NULL == lpBuffer) || (conv.length() > nBufferLength)) return static_cast<DWORD>(conv.length());
+
+  conv.result(lpBuffer, static_cast<size_t>(nBufferLength));
+  return static_cast<DWORD>(conv.length());
+}
+
+//-----------------------------------------------------------------------------
+BOOL WINAPI winrtInternalMoveFileW(
+  LPCWSTR lpExistingFileName,
+  LPCWSTR lpNewFileName
+)
+{
+  return MoveFileExW(lpExistingFileName, lpNewFileName, 0);
+}
+
+//-----------------------------------------------------------------------------
+BOOL WINAPI winrtInternalMoveFileA(
+  LPCSTR lpExistingFileName,
+  LPCSTR lpNewFileName
+)
+{
+  return MoveFileExA(lpExistingFileName, lpNewFileName, 0);
+}
+
+//-----------------------------------------------------------------------------
+BOOL WINAPI winrtInternalCopyFileW(
+  LPCWSTR lpExistingFileName,
+  LPCWSTR lpNewFileName,
+  BOOL    bFailIfExists
+)
+{
+  COPYFILE2_EXTENDED_PARAMETERS params {};
+  params.dwCopyFlags = (bFailIfExists ? COPY_FILE_FAIL_IF_EXISTS : 0);
+  return CopyFile2(lpExistingFileName, lpNewFileName, &params);
+}
+
+//-----------------------------------------------------------------------------
+BOOL WINAPI winrtInternalCopyFileA(
+  LPCSTR lpExistingFileName,
+  LPCSTR lpNewFileName,
+  BOOL    bFailIfExists
+)
+{
+  WinRT::StringConvertToUTF16 existingFile(lpExistingFileName);
+  WinRT::StringConvertToUTF16 newFile(lpNewFileName);
+  return winrtInternalCopyFileW(existingFile.result(), newFile.result(), bFailIfExists);
+}
+
+//-----------------------------------------------------------------------------
+BOOL WINAPI winrtCopyFileW(
+  LPCWSTR lpExistingFileName,
+  LPCWSTR lpNewFileName,
+  BOOL    bFailIfExists
+)
+{
+  return winrtInternalCopyFileW(lpExistingFileName, lpNewFileName, bFailIfExists);
+}
+
+//-----------------------------------------------------------------------------
+BOOL WINAPI winrtCopyFileA(
+  LPCSTR lpExistingFileName,
+  LPCSTR lpNewFileName,
+  BOOL    bFailIfExists
+)
+{
+  return winrtInternalCopyFileA(lpExistingFileName, lpNewFileName, bFailIfExists);
+}
+
+//-----------------------------------------------------------------------------
 static HMODULE WINAPI winrtInternalGetModuleHandleW(
   LPCWSTR lpModuleName
 )
@@ -315,6 +415,42 @@ HANDLE WINAPI winrtCreateFileA(
 )
 {
   return winrtInternalCreateFileA(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
+}
+
+//-----------------------------------------------------------------------------
+DWORD WINAPI winrtGetTempPathW(
+  DWORD  nBufferLength,
+  LPWSTR lpBuffer
+)
+{
+  return winrtInternalGetTempPathW(nBufferLength, lpBuffer);
+}
+
+//-----------------------------------------------------------------------------
+DWORD WINAPI winrtGetTempPathA(
+  DWORD  nBufferLength,
+  LPSTR lpBuffer
+)
+{
+  return winrtInternalGetTempPathA(nBufferLength, lpBuffer);
+}
+
+//-----------------------------------------------------------------------------
+BOOL WINAPI winrtMoveFileW(
+  LPCWSTR lpExistingFileName,
+  LPCWSTR lpNewFileName
+)
+{
+  return winrtInternalMoveFileW(lpExistingFileName, lpNewFileName);
+}
+
+//-----------------------------------------------------------------------------
+BOOL WINAPI winrtMoveFileA(
+  LPCSTR lpExistingFileName,
+  LPCSTR lpNewFileName
+)
+{
+  return winrtInternalMoveFileA(lpExistingFileName, lpNewFileName);
 }
 
 //-----------------------------------------------------------------------------

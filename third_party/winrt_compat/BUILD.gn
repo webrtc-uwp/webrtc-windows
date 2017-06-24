@@ -189,8 +189,11 @@ static_library("winrt_compat") {
   if (is_winrt) {
     sources = [
       "winrt_compat_std.cc",
+      "winrt_compat_std.h",
       "winrt_compat_win.cc",
+      "winrt_compat_win.h",
       "winrt_compat_internal.cc",
+      "winrt_compat_internal.h",
     ]
 
     public_configs = [ ":winrt_config" ]

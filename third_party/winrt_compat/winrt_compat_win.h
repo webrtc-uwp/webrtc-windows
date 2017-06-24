@@ -27,36 +27,33 @@
 
 #include <windows.h>
 
-#define RtlGenRandom(xRandomBuffer,xRandomBufferLength) \
-  winrtRtlGenRandom(xRandomBuffer,xRandomBufferLength)
+#define RtlGenRandom(xRandomBuffer,xRandomBufferLength) winrtRtlGenRandom(xRandomBuffer,xRandomBufferLength)
 
-#define MessageBoxA(xWnd,xText,xCaption,xType) \
-  winrtMessageBoxA(xWnd,xText,xCaption,xType)
-
-#define MessageBoxW(xWnd,xText,xCaption,xType) \
-  winrtMessageBoxW(xWnd,xText,xCaption,xType)
+#define MessageBoxW(xWnd,xText,xCaption,xType) winrtMessageBoxW(xWnd,xText,xCaption,xType)
+#define MessageBoxA(xWnd,xText,xCaption,xType) winrtMessageBoxA(xWnd,xText,xCaption,xType)
 
 #ifdef UNICODE
-#define MessageBox(xWnd,xText,xCaption,xType) \
-  winrtMessageBoxW(xWnd,xText,xCaption,xType)
+#define MessageBox(xWnd,xText,xCaption,xType) winrtMessageBoxW(xWnd,xText,xCaption,xType)
 #else
-#define MessageBox(xWnd,xText,xCaption,xType) \
-  winrtMessageBoxA(xWnd,xText,xCaption,xType)
+#define MessageBox(xWnd,xText,xCaption,xType) winrtMessageBoxA(xWnd,xText,xCaption,xType)
 #endif /* UNICODE */
 
-#define CreateFileA(xFileName,xDesiredAccess,xShareMode,xSecurityAttributes,xCreationDisposition,xFlagsAndAttributes,xTemplateFile) \
-  winrtCreateFileA(xFileName, xDesiredAccess, xShareMode, xSecurityAttributes, xCreationDisposition, xFlagsAndAttributes, xTemplateFile)
-
-#define CreateFileW(xFileName,xDesiredAccess,xShareMode,xSecurityAttributes,xCreationDisposition,xFlagsAndAttributes,xTemplateFile) \
-    winrtCreateFileW(xFileName, xDesiredAccess, xShareMode, xSecurityAttributes, xCreationDisposition, xFlagsAndAttributes, xTemplateFile)
+#define CreateFileW(xFileName,xDesiredAccess,xShareMode,xSecurityAttributes,xCreationDisposition,xFlagsAndAttributes,xTemplateFile) winrtCreateFileW(xFileName, xDesiredAccess, xShareMode, xSecurityAttributes, xCreationDisposition, xFlagsAndAttributes, xTemplateFile)
+#define CreateFileA(xFileName,xDesiredAccess,xShareMode,xSecurityAttributes,xCreationDisposition,xFlagsAndAttributes,xTemplateFile) winrtCreateFileA(xFileName, xDesiredAccess, xShareMode, xSecurityAttributes, xCreationDisposition, xFlagsAndAttributes, xTemplateFile)
 
 #ifdef UNICODE
-#define CreateFile(xFileName,xDesiredAccess,xShareMode,xSecurityAttributes,xCreationDisposition,xFlagsAndAttributes,xTemplateFile) \
-    winrtCreateFileW(xFileName, xDesiredAccess, xShareMode, xSecurityAttributes, xCreationDisposition, xFlagsAndAttributes, xTemplateFile)
+#define CreateFile(xFileName,xDesiredAccess,xShareMode,xSecurityAttributes,xCreationDisposition,xFlagsAndAttributes,xTemplateFile) winrtCreateFileW(xFileName, xDesiredAccess, xShareMode, xSecurityAttributes, xCreationDisposition, xFlagsAndAttributes, xTemplateFile)
 #else
-#define CreateFile(xFileName,xDesiredAccess,xShareMode,xSecurityAttributes,xCreationDisposition,xFlagsAndAttributes,xTemplateFile) \
-    winrtCreateFileA(xFileName, xDesiredAccess, xShareMode, xSecurityAttributes, xCreationDisposition, xFlagsAndAttributes, xTemplateFile)
+#define CreateFile(xFileName,xDesiredAccess,xShareMode,xSecurityAttributes,xCreationDisposition,xFlagsAndAttributes,xTemplateFile) winrtCreateFileA(xFileName, xDesiredAccess, xShareMode, xSecurityAttributes, xCreationDisposition, xFlagsAndAttributes, xTemplateFile)
 #endif /* UNICODE */
+
+#define GetTempPathA(xBufferLength,xBuffer) winrtGetTempPathA(xBufferLength,xBuffer)
+
+#define MoveFileW(xExistingFileName,xNewFileName) winrtMoveFileW(xExistingFileName,xNewFileName)
+#define MoveFileA(xExistingFileName,xNewFileName) winrtMoveFileA(xExistingFileName,xNewFileName)
+
+#define CopyFileW(xExistingFileName,xNewFileName,xFailIfExistse) winrtCopyFileW(xExistingFileName,xNewFileName,xFailIfExistse)
+#define CopyFileA(xExistingFileName,xNewFileName,xFailIfExistse) winrtCopyFileA(xExistingFileName,xNewFileName,xFailIfExistse)
 
 #define GetModuleHandleW(xModule) winrtGetModuleHandleW(xModule)
 #define GetModuleHandleA(xModule) winrtGetModuleHandleA(xModule)
@@ -71,21 +68,10 @@
   extern "C" {
 #endif /* __cplusplus */
 
-HANDLE WINAPI winrtCreateFileW(
-  LPCWSTR               lpFileName,
-  DWORD                 dwDesiredAccess,
-  DWORD                 dwShareMode,
-  LPSECURITY_ATTRIBUTES lpSecurityAttributes,
-  DWORD                 dwCreationDisposition,
-  DWORD                 dwFlagsAndAttributes,
-  HANDLE                hTemplateFile
-);
-
 BOOLEAN winrtRtlGenRandom(
   PVOID RandomBuffer,
   ULONG RandomBufferLength
 );
-
 
 int WINAPI winrtMessageBoxW(
   HWND    hWnd,
@@ -111,7 +97,6 @@ HANDLE WINAPI winrtCreateFileW(
   HANDLE                hTemplateFile
 );
 
-
 HANDLE WINAPI winrtCreateFileA(
   LPCSTR                lpFileName,
   DWORD                 dwDesiredAccess,
@@ -122,6 +107,32 @@ HANDLE WINAPI winrtCreateFileA(
   HANDLE                hTemplateFile
 );
 
+DWORD WINAPI winrtGetTempPathW(
+  DWORD  nBufferLength,
+  LPWSTR lpBuffer
+);
+
+DWORD WINAPI winrtGetTempPathA(
+  DWORD  nBufferLength,
+  LPSTR lpBuffer
+);
+
+#ifdef GetTempPath
+#undef GetTempPath
+#endif /* GetTempPath */
+
+inline DWORD WINAPI GetTempPath(
+  DWORD  nBufferLength,
+  LPTSTR lpBuffer
+)
+{
+#ifdef UNICODE
+  return winrtGetTempPathW(nBufferLength, lpBuffer);
+#else
+  return winrtGetTempPathA(nBufferLength, lpBuffer);
+#endif /* UNICODE */
+}
+
 HMODULE WINAPI winrtGetModuleHandleW(
   LPCWSTR lpModuleName
 );
@@ -129,6 +140,57 @@ HMODULE WINAPI winrtGetModuleHandleW(
 HMODULE WINAPI winrtGetModuleHandleA(
   LPCSTR lpModuleName
 );
+
+BOOL WINAPI winrtMoveFileW(
+  LPCWSTR lpExistingFileName,
+  LPCWSTR lpNewFileName
+);
+
+BOOL WINAPI winrtMoveFileA(
+  LPCSTR lpExistingFileName,
+  LPCSTR lpNewFileName
+);
+
+inline BOOL WINAPI MoveFile(
+  LPCTSTR lpExistingFileName,
+  LPCTSTR lpNewFileName
+)
+{
+#ifdef UNICODE
+  return winrtMoveFileW(lpExistingFileName, lpNewFileName);
+#else
+  return winrtMoveFileA(lpExistingFileName, lpNewFileName);
+#endif /* UNICODE */
+}
+
+BOOL WINAPI winrtCopyFileW(
+  LPCWSTR lpExistingFileName,
+  LPCWSTR lpNewFileName,
+  BOOL    bFailIfExists
+);
+
+BOOL WINAPI winrtCopyFileA(
+  LPCSTR lpExistingFileName,
+  LPCSTR lpNewFileName,
+  BOOL    bFailIfExists
+);
+
+#ifdef CopyFile
+#undef CopyFile
+#endif /* CopyFile */
+
+inline BOOL WINAPI CopyFile(
+  LPCTSTR lpExistingFileName,
+  LPCTSTR lpNewFileName,
+  BOOL    bFailIfExists
+)
+{
+#ifdef UNICODE
+  return winrtCopyFileW(lpExistingFileName, lpNewFileName, bFailIfExists);
+#else
+  return winrtCopyFileA(lpExistingFileName, lpNewFileName, bFailIfExists);
+#endif /* UNICODE */
+}
 
 #ifdef __cplusplus
   }
