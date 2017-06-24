@@ -26,6 +26,8 @@
 #include "winrt_compat_std.h"
 #include "winrt_compat_internal.h"
 
+#ifdef WINRT
+
 #include <Windows.h>
 
 static char *winrtInternalGetCwd(char *buf, size_t size)
@@ -62,3 +64,7 @@ char *winrtGetEnv(
 #ifdef __cplusplus
   }
 #endif /* __cplusplus */
+
+#endif /* WINRT */
+
+void winrt_compat_std_noop() {}

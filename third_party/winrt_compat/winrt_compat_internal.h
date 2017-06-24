@@ -25,6 +25,8 @@
 
 #pragma once
 
+#ifdef WINRT
+
 namespace WinRT
 {
   struct StringConvertToUTF8
@@ -100,3 +102,5 @@ namespace WinRT
   };
 
 }
+
+#endif /* WINRT */

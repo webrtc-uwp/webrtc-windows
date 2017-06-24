@@ -23,14 +23,6 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifdef __cplusplus
-  extern "C" {
-#endif /* __cplusplus */
-
-void winrt_noop()
+void winrt_compat_noop()
 {
 }
-
-#ifdef __cplusplus
-  }
-#endif /* __cplusplus */

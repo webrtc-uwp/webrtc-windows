@@ -25,6 +25,8 @@
 
 #pragma once
 
+#ifdef WINRT
+
 #include <windows.h>
 
 #define RtlGenRandom(xRandomBuffer,xRandomBufferLength) winrtRtlGenRandom(xRandomBuffer,xRandomBufferLength)
@@ -283,3 +285,5 @@ inline BOOL WINAPI CopyFile(
 #ifdef __cplusplus
   }
 #endif /* __cplusplus */
+
+#endif /* WINRT */

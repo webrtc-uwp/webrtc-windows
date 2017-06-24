@@ -25,6 +25,8 @@
 
 #pragma once
 
+#ifdef WINRT
+
 #define main(xArgc,xArgv) winrtMainC(xArgc,xArgv)
 
 #ifdef __cplusplus
@@ -34,3 +36,5 @@
 #ifdef __cplusplus
   }
 #endif /* __cplusplus */
+
+#endif /* WINRT */

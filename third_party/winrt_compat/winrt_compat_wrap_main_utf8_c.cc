@@ -25,6 +25,8 @@
 
 #include "winrt_compat_internal.h"
 
+#idef WINRT
+
 #ifdef main
 #undef main
 #endif /* main */
@@ -48,3 +50,8 @@ int main(Platform::Array<Platform::String^>^ args)
   WinRT::MainConvertToUTF8 conv(args);
   return winrtMainC(conv.argc(), conv.argv());
 }
+
+
+#endif /* WINRT */
+
+void winrt_compat_main_utf8_c() {}

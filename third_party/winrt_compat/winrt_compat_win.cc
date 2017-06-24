@@ -30,6 +30,8 @@
 #include "winrt_compat_win.h"
 #include "winrt_compat_internal.h"
 
+#ifdef WINRT
+
 #include <Windows.h>
 
 #include <ppltasks.h>
@@ -527,3 +529,7 @@ HANDLE WINAPI winrtCreateEventA(
 #ifdef __cplusplus
   }
 #endif /* __cplusplus */
+
+#endif /* WINRT */
+
+void winrt_compat_win_noop() {}

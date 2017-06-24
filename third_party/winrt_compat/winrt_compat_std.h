@@ -25,6 +25,8 @@
 
 #pragma once
 
+#ifdef WINRT
+
 #include <stddef.h>
 
 #ifdef __cplusplus
@@ -63,3 +65,5 @@ inline char *getcwd(
 #ifdef __cplusplus
   }
 #endif /* __cplusplus */
+
+#endif /* WINRT */

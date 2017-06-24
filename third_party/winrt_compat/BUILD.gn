@@ -2,7 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-config("winrt_config") {
+config("config_winuwp") {
   if (is_winrt) {
     include_dirs = [ "." ]
   }
@@ -23,7 +23,7 @@ source_set("force_include_std") {
   if (is_winrt) {
     public_configs = [
       ":config_force_include_std",
-      ":winrt_config",
+      ":config_winuwp",
     ]
     public_deps = [ ":winrt_compat" ]
   }
@@ -44,7 +44,7 @@ source_set("force_include_win") {
   if (is_winrt) {
     public_configs = [
       ":config_force_include_win",
-      ":winrt_config",
+      ":config_winuwp",
     ]
     public_deps = [ ":winrt_compat" ]
   }
@@ -120,7 +120,7 @@ source_set("wrap_main_plain_c") {
   if (is_winrt) {
     public_configs = [
       ":config_wrap_main_plain_c",
-      ":winrt_config",
+      ":config_winuwp",
     ]
     public_deps = [ ":winrt_compat" ]
     sources = [ "winrt_compat_wrap_main_plain.cc" ]
@@ -133,7 +133,7 @@ source_set("wrap_main_plain_cc") {
   if (is_winrt) {
     public_configs = [
       ":config_wrap_main_plain_cc",
-      ":winrt_config",
+      ":config_winuwp",
     ]
     public_deps = [ ":winrt_compat" ]
     sources = [ "winrt_compat_wrap_main_plain.cc" ]
@@ -146,7 +146,7 @@ source_set("wrap_main_utf8_c") {
   if (is_winrt) {
     public_configs = [
       ":config_wrap_main_utf8_c",
-      ":winrt_config",
+      ":config_winuwp",
     ]
     public_deps = [ ":winrt_compat" ]
     sources = [ "winrt_compat_wrap_main_utf8_c.cc" ]
@@ -159,7 +159,7 @@ source_set("wrap_main_utf8_cc") {
   if (is_winrt) {
     public_configs = [
       ":config_wrap_main_utf8_cc",
-      ":winrt_config",
+      ":config_winuwp",
      ]
     public_deps = [ ":winrt_compat" ]
     sources = [ "winrt_compat_wrap_main_utf8_cc.cc" ]
@@ -172,7 +172,7 @@ source_set("wrap_main_utf16_c") {
   if (is_winrt) {
     public_configs = [
       ":config_wrap_main_utf16_c",
-      ":winrt_config",
+      ":config_winuwp",
     ]
     public_deps = [ ":winrt_compat" ]
     sources = [ "winrt_compat_wrap_main_utf16_c.cc" ]
@@ -185,7 +185,7 @@ source_set("wrap_main_utf16_cc") {
   if (is_winrt) {
     public_configs = [
       ":config_wrap_main_utf16_cc",
-      ":winrt_config",
+      ":config_winuwp",
     ]
     public_deps = [ ":winrt_compat" ]
     sources = [ "winrt_compat_wrap_main_utf16_cc.cc" ]
@@ -216,7 +216,7 @@ static_library("winrt_compat") {
       "winrt_compat_internal.h",
     ]
 
-    public_configs = [ ":winrt_config" ]
+    public_configs = [ ":config_winuwp" ]
 
     include_dirs = [ "./" ]
   } else {

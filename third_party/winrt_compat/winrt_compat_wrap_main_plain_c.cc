@@ -25,6 +25,8 @@
 
 #include "winrt_compat_internal.h"
 
+#ifdef WINRT
+
 #ifdef main
 #undef main
 #endif /* main */
@@ -45,3 +47,7 @@ int main(Platform::Array<Platform::String^>^ args)
 {
   return winrtMainC();
 }
+
+#endif /* WINRT */
+
+void winrt_compat_main_plain_c() {}

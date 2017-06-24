@@ -29,6 +29,8 @@
 
 #include "winrt_compat_internal.h"
 
+#ifdef WINRT
+
 #include <Windows.h>
 
 #include <stdlib.h>
@@ -312,3 +314,7 @@ namespace WinRT
   }
 
 } /* namespace WinRT */
+
+#endif /* WINRT */
+
+void winrt_compat_internal_noop() {}
