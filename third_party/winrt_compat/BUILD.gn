@@ -2,7 +2,13 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-config("force_include_std") {
+config("winrt_config") {
+  if (is_winrt) {
+    include_dirs = [ "." ]
+  }
+}
+
+config("config_force_include_std") {
   if (is_winrt) {
     cflags_c = [
       "/FIwinrt_compat_std.h"
@@ -13,7 +19,17 @@ config("force_include_std") {
   }
 }
 
-config("force_include_win") {
+source_set("force_include_std") {
+  if (is_winrt) {
+    public_configs = [
+      ":config_force_include_std",
+      ":winrt_config",
+    ]
+    public_deps = [ ":winrt_compat" ]
+  }
+}
+
+config("config_force_include_win") {
   if (is_winrt) {
     cflags_c = [
       "/FIwinrt_compat_win.h"
@@ -21,6 +37,16 @@ config("force_include_win") {
     cflags = [
       "/FIwinrt_compat_win.h"
     ]
+  }
+}
+
+source_set("force_include_win") {
+  if (is_winrt) {
+    public_configs = [
+      ":config_force_include_win",
+      ":winrt_config",
+    ]
+    public_deps = [ ":winrt_compat" ]
   }
 }
 
@@ -176,12 +202,6 @@ config("ignore_threading_model_warning") {
     cflags = [
       "/wd4447"
     ]
-  }
-}
-
-config("winrt_config") {
-  if (is_winrt) {
-    include_dirs = [ "." ]
   }
 }
 

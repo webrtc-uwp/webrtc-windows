@@ -349,6 +349,30 @@ static HMODULE WINAPI winrtInternalGetModuleHandleA(
 
 
 //-----------------------------------------------------------------------------
+HANDLE WINAPI winrtInternalCreateEventW(
+  LPSECURITY_ATTRIBUTES lpEventAttributes,
+  BOOL                  bManualReset,
+  BOOL                  bInitialState,
+  LPCWSTR               lpName
+)
+{
+  return CreateEventEx(lpEventAttributes, lpName, (bManualReset ? CREATE_EVENT_MANUAL_RESET : 0) | (bInitialState ? CREATE_EVENT_INITIAL_SET : 0), EVENT_ALL_ACCESS);
+}
+
+//-----------------------------------------------------------------------------
+HANDLE WINAPI winrtInternalCreateEventA(
+  LPSECURITY_ATTRIBUTES lpEventAttributes,
+  BOOL                  bManualReset,
+  BOOL                  bInitialState,
+  LPCSTR                lpName
+)
+{
+  return winrtInternalCreateEventW(lpEventAttributes, bManualReset, bInitialState, WinRT::StringConvertToUTF16(lpName).result());
+}
+
+
+
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -468,6 +492,37 @@ HMODULE WINAPI winrtGetModuleHandleA(
 {
   return winrtInternalGetModuleHandleA(lpModuleName);
 }
+
+//-----------------------------------------------------------------------------
+void WINAPI winrtInitializeCriticalSection(
+  LPCRITICAL_SECTION lpCriticalSection
+)
+{
+  InitializeCriticalSectionEx(lpCriticalSection, 0, 0);
+}
+
+//-----------------------------------------------------------------------------
+HANDLE WINAPI winrtCreateEventW(
+  LPSECURITY_ATTRIBUTES lpEventAttributes,
+  BOOL                  bManualReset,
+  BOOL                  bInitialState,
+  LPCWSTR               lpName
+)
+{
+  return winrtInternalCreateEventW(lpEventAttributes, bManualReset, bInitialState, lpName);
+}
+
+//-----------------------------------------------------------------------------
+HANDLE WINAPI winrtCreateEventA(
+  LPSECURITY_ATTRIBUTES lpEventAttributes,
+  BOOL                  bManualReset,
+  BOOL                  bInitialState,
+  LPCSTR               lpName
+)
+{
+  return winrtInternalCreateEventA(lpEventAttributes, bManualReset, bInitialState, lpName);
+}
+
 
 #ifdef __cplusplus
   }

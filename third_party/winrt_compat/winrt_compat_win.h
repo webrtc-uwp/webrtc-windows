@@ -58,11 +58,9 @@
 #define GetModuleHandleW(xModule) winrtGetModuleHandleW(xModule)
 #define GetModuleHandleA(xModule) winrtGetModuleHandleA(xModule)
 
-#ifdef UNICODE
-#define GetModuleHandle(xModule) winrtGetModuleHandleW(xModule)
-#else
-#define GetModuleHandle(xModule) winrtGetModuleHandleA(xModule)
-#endif /* UNICODE */
+#define CreateEventW(xEventAttributes,xManualReset,xInitialState,xName) winrtCreateEventW(xEventAttributes,xManualReset,xInitialState,xName)
+#define CreateEventA(xEventAttributes,xManualReset,xInitialState,xName) winrtCreateEventA(xEventAttributes,xManualReset,xInitialState,xName)
+
 
 #ifdef __cplusplus
   extern "C" {
@@ -140,6 +138,96 @@ HMODULE WINAPI winrtGetModuleHandleW(
 HMODULE WINAPI winrtGetModuleHandleA(
   LPCSTR lpModuleName
 );
+
+#ifdef GetModuleHandle
+#undef GetModuleHandle
+#endif /* GetModuleHandle */
+
+inline HMODULE WINAPI GetModuleHandle(
+  LPCTSTR lpModuleName
+)
+{
+#ifdef UNICODE
+  return winrtGetModuleHandleW(lpModuleName);
+#else
+  return winrtGetModuleHandleA(lpModuleName);
+#endif /* UNICODE */
+}
+
+
+#ifdef InitializeCriticalSection
+#undef InitializeCriticalSection
+#endif /* InitializeCriticalSection */
+
+void WINAPI winrtInitializeCriticalSection(
+  LPCRITICAL_SECTION lpCriticalSection
+);
+
+inline void WINAPI InitializeCriticalSection(
+  LPCRITICAL_SECTION lpCriticalSection
+)
+{
+  winrtInitializeCriticalSection(lpCriticalSection);
+}
+
+#ifdef CreateEvent
+#undef CreateEvent
+#endif /* CreateEvent */
+
+HANDLE WINAPI winrtCreateEventW(
+  LPSECURITY_ATTRIBUTES lpEventAttributes,
+  BOOL                  bManualReset,
+  BOOL                  bInitialState,
+  LPCWSTR               lpName
+);
+
+HANDLE WINAPI winrtCreateEventA(
+  LPSECURITY_ATTRIBUTES lpEventAttributes,
+  BOOL                  bManualReset,
+  BOOL                  bInitialState,
+  LPCSTR               lpName
+);
+
+
+inline HANDLE WINAPI CreateEvent(
+  _In_opt_ LPSECURITY_ATTRIBUTES lpEventAttributes,
+  _In_     BOOL                  bManualReset,
+  _In_     BOOL                  bInitialState,
+  _In_opt_ LPCTSTR               lpName
+)
+{
+#ifdef UNICODE
+  return winrtCreateEventW(lpEventAttributes, bManualReset, bInitialState, lpName);
+#else
+  return winrtCreateEventA(lpEventAttributes, bManualReset, bInitialState, lpName);
+#endif /* UNICODE */
+}
+
+#ifdef WaitForSingleObject
+#undef WaitForSingleObject
+#endif /* WaitForSingleObject */
+
+inline DWORD WINAPI WaitForSingleObject(
+  HANDLE hHandle,
+  DWORD  dwMilliseconds
+)
+{
+  return WaitForSingleObjectEx(hHandle, dwMilliseconds, FALSE);
+}
+
+#ifdef WaitForMultipleObjects
+#undef WaitForMultipleObjects
+#endif /* WaitForMultipleObjects */
+
+inline DWORD WINAPI WaitForMultipleObjects(
+  DWORD  nCount,
+  const HANDLE *lpHandles,
+  BOOL   bWaitAll,
+  DWORD  dwMilliseconds
+)
+{
+  return WaitForMultipleObjectsEx(nCount, lpHandles, bWaitAll, dwMilliseconds, FALSE);
+}
 
 BOOL WINAPI winrtMoveFileW(
   LPCWSTR lpExistingFileName,

@@ -25,10 +25,17 @@
 
 #pragma once
 
-#define getenv(xVarname) winrtGetEnv(xVarname)
-#define getcwd(xBuf, xSize) winrtGetCwd(xBuf,xSize)
-
 #include <stddef.h>
+
+#ifdef __cplusplus
+namespace webrtc
+{
+  namespace TickTime
+  {
+  	inline void DisableFakeClock() {}
+  }
+}
+#endif /* __cplusplus */
 
 #ifdef __cplusplus
   extern "C" {
@@ -38,7 +45,20 @@ char *winrtGetEnv(
    const char *varname   
 );
 
+inline char *getenv(const char *varname)
+{
+	return winrtGetEnv(varname);
+}
+
 char *winrtGetCwd(char *buf, size_t size);
+
+inline char *getcwd(
+	char *buf,
+	size_t size
+)
+{
+	return winrtGetCwd(buf, size);
+}
 
 #ifdef __cplusplus
   }
