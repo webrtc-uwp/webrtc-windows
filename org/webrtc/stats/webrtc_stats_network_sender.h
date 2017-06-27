@@ -6,8 +6,8 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#ifndef WEBRTC_BUILD_WINRT_GYP_STATS_WEBRTC_STATS_NETWORK_SENDER_H_
-#define WEBRTC_BUILD_WINRT_GYP_STATS_WEBRTC_STATS_NETWORK_SENDER_H_
+#ifndef WEBRTC_BUILD_WINUWP_GYP_STATS_WEBRTC_STATS_NETWORK_SENDER_H_
+#define WEBRTC_BUILD_WINUWP_GYP_STATS_WEBRTC_STATS_NETWORK_SENDER_H_
 
 #include <string>
 #include "webrtc/api/statstypes.h"
@@ -43,4 +43,4 @@ private:
 
 }  // namespace webrtc
 
-#endif  //  WEBRTC_BUILD_WINRT_GYP_STATS_WEBRTC_STATS_NETWORK_SENDER_H_
+#endif  //  WEBRTC_BUILD_WINUWP_GYP_STATS_WEBRTC_STATS_NETWORK_SENDER_H_

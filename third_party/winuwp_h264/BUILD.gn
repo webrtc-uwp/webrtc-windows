@@ -1,0 +1,32 @@
+# Copyright 2014 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+static_library("winuwp_h264") {
+  sources = [
+    "winuwp_h264_factory.cc",
+    "winuwp_h264_factory.h",
+    "Utils/Utils.h",
+    "Utils/Async.h",
+    "Utils/CritSec.h",
+    "Utils/OpQueue.h",
+    "Utils/SampleAttributeQueue.h",
+    "H264Encoder/H264Encoder.h",
+    "H264Encoder/H264Encoder.cc",
+    "H264Encoder/H264MediaSink.h",
+    "H264Encoder/H264MediaSink.cc",
+    "H264Encoder/H264StreamSink.h",
+    "H264Encoder/H264StreamSink.cc",
+    "H264Encoder/IH264EncodingCallback.h",
+    "H264Decoder/H264Decoder.h",
+    "H264Decoder/H264Decoder.cc",
+  ]
+
+  deps = [
+    "//webrtc/:webrtc_common",
+    "//webrtc/common_video:common_video",
+    "//webrtc/modules/video_coding:video_coding_utility",
+    "//webrtc/system_wrappers:system_wrappers",
+  ]
+
+}

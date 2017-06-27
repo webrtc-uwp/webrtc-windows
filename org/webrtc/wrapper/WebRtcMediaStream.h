@@ -7,8 +7,8 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#ifndef WEBRTC_BUILD_WINRT_GYP_API_WEBRTCMEDIASTREAM_H_
-#define WEBRTC_BUILD_WINRT_GYP_API_WEBRTCMEDIASTREAM_H_
+#ifndef WEBRTC_BUILD_WINUWP_GYP_API_WEBRTCMEDIASTREAM_H_
+#define WEBRTC_BUILD_WINUWP_GYP_API_WEBRTCMEDIASTREAM_H_
 
 #include <wrl.h>
 #include <mfidl.h>
@@ -106,4 +106,4 @@ namespace Org {
 	}
 }  // namespace Org.WebRtc.Internal
 
-#endif  // WEBRTC_BUILD_WINRT_GYP_API_WEBRTCMEDIASTREAM_H_
+#endif  // WEBRTC_BUILD_WINUWP_GYP_API_WEBRTCMEDIASTREAM_H_

@@ -16,7 +16,7 @@
 #include "Marshalling.h"
 #include "Media.h"
 #include "DataChannel.h"
-#include "webrtc/common_video/video_common_winrt.h"
+#include "webrtc/common_video/video_common_winuwp.h"
 
 using Platform::Collections::Vector;
 
@@ -26,7 +26,7 @@ namespace Org {
 
 #define POST_PC_EVENT(fn, evt) \
   auto pc = _pc;\
-  Windows::UI::Core::CoreDispatcher^ _windowDispatcher = webrtc::VideoCommonWinRT::GetCoreDispatcher();\
+  Windows::UI::Core::CoreDispatcher^ _windowDispatcher = webrtc::VideoCommonWinUWP::GetCoreDispatcher();\
   if (_windowDispatcher != nullptr) {\
     _windowDispatcher->RunAsync(\
       Windows::UI::Core::CoreDispatcherPriority::Normal, \
@@ -43,7 +43,7 @@ namespace Org {
 
 #define POST_PC_ACTION(fn) \
   auto pc = _pc;\
-  Windows::UI::Core::CoreDispatcher^ _windowDispatcher = webrtc::VideoCommonWinRT::GetCoreDispatcher();\
+  Windows::UI::Core::CoreDispatcher^ _windowDispatcher = webrtc::VideoCommonWinUWP::GetCoreDispatcher();\
   if (_windowDispatcher != nullptr) {\
     _windowDispatcher->RunAsync(\
       Windows::UI::Core::CoreDispatcherPriority::Normal, \
@@ -300,7 +300,7 @@ namespace Org {
 			}
 
 			void DataChannelObserver::OnStateChange() {
-				Windows::UI::Core::CoreDispatcher^ _windowDispatcher = webrtc::VideoCommonWinRT::GetCoreDispatcher();
+				Windows::UI::Core::CoreDispatcher^ _windowDispatcher = webrtc::VideoCommonWinUWP::GetCoreDispatcher();
 				switch (_channel->GetImpl()->state()) {
 				case webrtc::DataChannelInterface::kOpen:
 					if (_windowDispatcher != nullptr) {
@@ -357,7 +357,7 @@ namespace Org {
 				}
 
 
-				Windows::UI::Core::CoreDispatcher^ _windowDispatcher = webrtc::VideoCommonWinRT::GetCoreDispatcher();
+				Windows::UI::Core::CoreDispatcher^ _windowDispatcher = webrtc::VideoCommonWinUWP::GetCoreDispatcher();
 				if (_windowDispatcher != nullptr) {
 					_windowDispatcher->RunAsync(
 						Windows::UI::Core::CoreDispatcherPriority::Normal,

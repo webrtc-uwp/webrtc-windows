@@ -7,8 +7,8 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#ifndef WEBRTC_BUILD_WINRT_GYP_STATS_WEBRTC_STATS_OBSERVER_H_
-#define WEBRTC_BUILD_WINRT_GYP_STATS_WEBRTC_STATS_OBSERVER_H_
+#ifndef WEBRTC_BUILD_WINUWP_GYP_STATS_WEBRTC_STATS_OBSERVER_H_
+#define WEBRTC_BUILD_WINUWP_GYP_STATS_WEBRTC_STATS_OBSERVER_H_
 
 #include <string>
 
@@ -18,7 +18,7 @@
 
 namespace webrtc {
 class CriticalSectionWrapper;
-class WebRTCStatsObserverWinRT;
+class WebRTCStatsObserverWinUWP;
 class WebRTCStatsNetworkSender;
 
 struct ConnectionHealthStats {
@@ -36,7 +36,7 @@ struct ConnectionHealthStats {
 
 // A webrtc::StatsObserver implementation used to receive statistics about the
 // current PeerConnection. The statistics are logged to an ETW session and/or
-// sent to a WebRTCStatsObserverWinRT.
+// sent to a WebRTCStatsObserverWinUWP.
 class WebRTCStatsObserver : public StatsObserver, public rtc::MessageHandler {
  public:
   enum Status {
@@ -48,8 +48,8 @@ class WebRTCStatsObserver : public StatsObserver, public rtc::MessageHandler {
 
   void ToggleETWStats(bool enable);
   void ToggleStatsSendToRemoteHost(bool enable);
-  void ToggleConnectionHealthStats(WebRTCStatsObserverWinRT* observer);
-  void ToggleRTCStats(WebRTCStatsObserverWinRT* observer);
+  void ToggleConnectionHealthStats(WebRTCStatsObserverWinUWP* observer);
+  void ToggleRTCStats(WebRTCStatsObserverWinUWP* observer);
   
   void SetStatsNetworkDestination(std::string remote_hostname, int remote_port);
 
@@ -78,7 +78,7 @@ class WebRTCStatsObserver : public StatsObserver, public rtc::MessageHandler {
 
 	std::unique_ptr<CriticalSectionWrapper> crit_sect_;
   Status status_;
-  WebRTCStatsObserverWinRT* webrtc_stats_observer_winrt_;
+  WebRTCStatsObserverWinUWP* webrtc_stats_observer_winuwp_;
   bool etw_stats_enabled_;
   ConnectionHealthStats conn_health_stats_prev;
   ConnectionHealthStats conn_health_stats_;
@@ -91,7 +91,7 @@ class WebRTCStatsObserver : public StatsObserver, public rtc::MessageHandler {
   std::unique_ptr<WebRTCStatsNetworkSender> network_sender_;
 };
 
-class WebRTCStatsObserverWinRT {
+class WebRTCStatsObserverWinUWP {
  public:
   virtual void OnConnectionHealthStats(const ConnectionHealthStats& stats) = 0;
 
@@ -101,4 +101,4 @@ class WebRTCStatsObserverWinRT {
 
 }  // namespace webrtc
 
-#endif  //  WEBRTC_BUILD_WINRT_GYP_STATS_WEBRTC_STATS_OBSERVER_H_
+#endif  //  WEBRTC_BUILD_WINUWP_GYP_STATS_WEBRTC_STATS_OBSERVER_H_

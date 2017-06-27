@@ -26,8 +26,8 @@
 #include "webrtc/modules/audio_device/audio_device_config.h"
 #include "webrtc/modules/audio_device/audio_device_impl.h"
 #include "webrtc/modules/audio_device/include/audio_device_defines.h"
-#include "webrtc/modules/video_capture/windows/device_info_winrt.h"
-#include "webrtc/modules/video_capture/windows/video_capture_winrt.h"
+#include "webrtc/modules/video_capture/windows/device_info_winuwp.h"
+#include "webrtc/modules/video_capture/windows/video_capture_winuwp.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 #include "webrtc/voice_engine/include/voe_hardware.h"
 
@@ -95,25 +95,6 @@ namespace Org {
 				THROW_WEBRTC_NULL_REFERENCE_EXCEPTION("Invalid video track object");
 
 				_impl->set_enabled(value);
-		}
-
-		bool MediaVideoTrack::Suspended::get() {
-			if (_impl == nullptr)
-				return false;
-
-			return _impl->GetSource()->IsSuspended();
-		}
-
-		void MediaVideoTrack::Suspended::set(bool value) {
-			if (_impl == nullptr)
-				THROW_WEBRTC_NULL_REFERENCE_EXCEPTION("Invalid video track object");
-
-			if (value) {
-				_impl->GetSource()->Suspend();
-			}
-			else {
-				_impl->GetSource()->Resume();
-			}
 		}
 
 		void MediaVideoTrack::Stop() {
@@ -402,13 +383,13 @@ namespace Org {
 
 		Media::Media() :
 			_selectedAudioCapturerDevice(
-				cricket::WinRTDeviceManager::kDefaultDeviceName, 0),
+				cricket::WinUWPDeviceManager::kDefaultDeviceName, 0),
 			_selectedAudioPlayoutDevice(
-				cricket::WinRTDeviceManager::kDefaultDeviceName, 0),
+				cricket::WinUWPDeviceManager::kDefaultDeviceName, 0),
 			_videoCaptureDeviceChanged(true),
 			_audioCaptureDeviceChanged(true),
 			_audioPlayoutDeviceChanged(true) {
-			_dev_manager = std::unique_ptr<cricket::WinRTDeviceManager>
+			_dev_manager = std::unique_ptr<cricket::WinUWPDeviceManager>
 				(cricket::DeviceManagerFactory::Create());
 
 			if (!_dev_manager->Init()) {
@@ -467,7 +448,7 @@ namespace Org {
 								<< "VoEHardware API not available.";
 						}
 						else {
-							if (_selectedAudioCapturerDevice.name != cricket::WinRTDeviceManager::kDefaultDeviceName) {
+							if (_selectedAudioCapturerDevice.name != cricket::WinUWPDeviceManager::kDefaultDeviceName) {
 								// Selected audio playout device is not the default device.
 								audioCaptureDeviceIndex = GetAudioCaptureDeviceIndex(voiceEngineHardware,
 									_selectedAudioCapturerDevice.name, _selectedAudioCapturerDevice.id);
@@ -480,7 +461,7 @@ namespace Org {
 										<< " not found, using default device";
 								}
 							}
-							if (_selectedAudioPlayoutDevice.name != cricket::WinRTDeviceManager::kDefaultDeviceName) {
+							if (_selectedAudioPlayoutDevice.name != cricket::WinUWPDeviceManager::kDefaultDeviceName) {
 								// Selected audio playout device is not the default device.
 								audioPlayoutDeviceIndex = GetAudioPlayoutDeviceIndex(voiceEngineHardware,
 									_selectedAudioPlayoutDevice.name, _selectedAudioPlayoutDevice.id);
@@ -751,7 +732,7 @@ namespace Org {
 		bool Media::SelectAudioCaptureDevice(MediaDevice^ device) {
 			webrtc::CriticalSectionScoped cs(&g_audioCapturerDevicesLock);
 			_selectedAudioCapturerDevice = cricket::Device(
-				cricket::WinRTDeviceManager::kDefaultDeviceName, 0);
+				cricket::WinUWPDeviceManager::kDefaultDeviceName, 0);
 			if (device == nullptr) {
 				// Default audio capture device will be used.
 				return true;
@@ -769,7 +750,7 @@ namespace Org {
 		bool Media::SelectAudioPlayoutDevice(MediaDevice^ device) {
 			webrtc::CriticalSectionScoped cs(&g_audioCapturerDevicesLock);
 			_selectedAudioPlayoutDevice = cricket::Device(
-				cricket::WinRTDeviceManager::kDefaultDeviceName, 0);
+				cricket::WinUWPDeviceManager::kDefaultDeviceName, 0);
 			if (device == nullptr) {
 				// Default audio playout device will be used.
 				return true;
@@ -790,7 +771,7 @@ namespace Org {
 			// Note  For Windows Phone Store apps, music and media apps should clean up
 			// the MediaCapture object and associated resources in the Suspending event
 			// handler and recreate them in the Resuming event handler.
-			webrtc::videocapturemodule::MediaCaptureDevicesWinRT::Instance()->
+			webrtc::videocapturemodule::MediaCaptureDevicesWinUWP::Instance()->
 				ClearCaptureDevicesCache();
 		}
 
@@ -804,7 +785,7 @@ namespace Org {
 			MediaDevice::GetVideoCaptureCapabilities() {
 			auto op = concurrency::create_async([this]() -> IVector<CaptureCapability^>^ {
 				auto mediaCapture =
-					webrtc::videocapturemodule::MediaCaptureDevicesWinRT::Instance()->
+					webrtc::videocapturemodule::MediaCaptureDevicesWinUWP::Instance()->
 					GetMediaCapture(_id);
 				if (mediaCapture == nullptr) {
 					return nullptr;
@@ -917,7 +898,7 @@ namespace Org {
 				// Need to remove the cached MediaCapture intance if device removed,
 				// otherwise, DeviceWatchers stops working properly
 				// (event handlers are not called each time)
-				webrtc::videocapturemodule::MediaCaptureDevicesWinRT::Instance()->
+				webrtc::videocapturemodule::MediaCaptureDevicesWinUWP::Instance()->
 					RemoveMediaCapture(updateInfo->Id);
 				_videoCaptureDeviceChanged = true;
 				OnMediaDevicesChanged(MediaDeviceType::MediaDeviceType_VideoCapture);

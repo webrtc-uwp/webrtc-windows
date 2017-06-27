@@ -7,8 +7,8 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#ifndef WEBRTC_BUILD_WINRT_GYP_API_MARSHALLING_H_
-#define WEBRTC_BUILD_WINRT_GYP_API_MARSHALLING_H_
+#ifndef WEBRTC_BUILD_WINUWP_GYP_API_MARSHALLING_H_
+#define WEBRTC_BUILD_WINUWP_GYP_API_MARSHALLING_H_
 
 #include <string>
 #include <vector>
@@ -20,11 +20,11 @@
 using Platform::String;
 using Windows::Foundation::Collections::IVector;
 
-#define DECLARE_MARSHALLED_ENUM(winrtType, nativeType) \
-  void FromCx(winrtType inObj, nativeType* outObj);\
-  void ToCx(nativeType const& inObj, winrtType* outObj)
+#define DECLARE_MARSHALLED_ENUM(winuwpType, nativeType) \
+  void FromCx(winuwpType inObj, nativeType* outObj);\
+  void ToCx(nativeType const& inObj, winuwpType* outObj)
 
-// Marshalling functions to convert from WinRT objects to native cpp.
+// Marshalling functions to convert from WinUWP objects to native cpp.
 namespace Org {
 	namespace WebRtc {
 		namespace Internal {
@@ -130,5 +130,5 @@ namespace Org {
 	}
 }  // namespace Org.WebRtc.Internal
 
-#endif  // WEBRTC_BUILD_WINRT_GYP_API_MARSHALLING_H_
+#endif  // WEBRTC_BUILD_WINUWP_GYP_API_MARSHALLING_H_
 

@@ -486,13 +486,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yasm_x64", "x64\obj\third_p
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ortc_api", "obj\webrtc\api\ortc_api.vcxproj", "{D0F68244-726E-81C0-535C-67280B118FFC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(winrt_h264)", "(winrt_h264)", "{7D5474CB-EBD8-4281-BA22-E06D2BD5952D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(winuwp_h264)", "(winuwp_h264)", "{7D5474CB-EBD8-4281-BA22-E06D2BD5952D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winrt_h264", "obj\third_party\winrt_h264\winrt_h264.vcxproj", "{AF67414D-C82B-75F1-E2FF-99FAD44DC83E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winuwp_h264", "obj\third_party\winuwp_h264\winuwp_h264.vcxproj", "{AF67414D-C82B-75F1-E2FF-99FAD44DC83E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(winrt_compat)", "(winrt_compat)", "{59832D42-224D-4630-B4C2-9292D199AEA3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(winuwp_compat)", "(winuwp_compat)", "{59832D42-224D-4630-B4C2-9292D199AEA3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winrt_compat", "obj\third_party\winrt_compat\winrt_compat.vcxproj", "{E4AA28C8-1220-8225-6EAA-0215E61C23E6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winuwp_compat", "obj\third_party\winuwp_compat\winuwp_compat.vcxproj", "{E4AA28C8-1220-8225-6EAA-0215E61C23E6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "click_annotate", "obj\webrtc\modules\audio_processing\click_annotate.vcxproj", "{16DC2E28-EAE3-AD26-F7EE-BF0D81CC38F1}"
 EndProject

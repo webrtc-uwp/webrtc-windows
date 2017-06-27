@@ -530,25 +530,25 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "video_capture_module_intern
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "congestion_controller_win10_arm", "webrtc\modules\congestion_controller_win10_arm.vcxproj", "{52F55CA7-A54D-BB5C-FE87-E961C2B91CF3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "h264_winrt", "h264_winrt", "{70B8A2BC-F958-475F-82E3-0A68ABB26C08}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "winuwp_h264", "winuwp_h264", "{70B8A2BC-F958-475F-82E3-0A68ABB26C08}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "congestion_controller_win10_x64", "webrtc\modules\congestion_controller_win10_x64.vcxproj", "{E6E5162C-46A9-251D-EC52-C62F73DF1F1B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "webrtc_h264_winrt_win10_x64", "third_party\h264_winrt\webrtc_h264_winrt_win10_x64.vcxproj", "{721AE0BA-A284-42C1-58C0-89AE3625DF56}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "webrtc_winuwp_h264_win10_x64", "third_party\winuwp_h264\webrtc_winuwp_h264_win10_x64.vcxproj", "{721AE0BA-A284-42C1-58C0-89AE3625DF56}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "congestion_controller_win10_x86", "webrtc\modules\congestion_controller_win10_x86.vcxproj", "{CF577E21-DDE8-166A-9228-98A09935F044}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "h264_winrt", "h264_winrt", "{9FAABAC1-A3F5-496B-86F6-1AAEDCDCEF3A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "winuwp_h264", "winuwp_h264", "{9FAABAC1-A3F5-496B-86F6-1AAEDCDCEF3A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_avx_win10_x64", "third_party\libvpx\libvpx_intrinsics_avx_win10_x64.vcxproj", "{7E479044-38A3-EE28-14CC-DA761578C4B1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "h264_winrt", "h264_winrt", "{EA14CC6C-4738-456B-8761-EBA380280F08}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "winuwp_h264", "winuwp_h264", "{EA14CC6C-4738-456B-8761-EBA380280F08}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvpx_intrinsics_avx_win10_x86", "third_party\libvpx\libvpx_intrinsics_avx_win10_x86.vcxproj", "{C6D044DB-837A-0F57-0293-BDC7A5366E30}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "webrtc_h264_winrt_win10_arm", "third_party\h264_winrt\webrtc_h264_winrt_win10_arm.vcxproj", "{E52ED252-EB46-A8D6-EB7D-9DC386ECE437}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "webrtc_winuwp_h264_win10_arm", "third_party\winuwp_h264\webrtc_winuwp_h264_win10_arm.vcxproj", "{E52ED252-EB46-A8D6-EB7D-9DC386ECE437}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "webrtc_h264_winrt_win10_x86", "third_party\h264_winrt\webrtc_h264_winrt_win10_x86.vcxproj", "{B8F389AA-A93C-6BF3-8CBB-14C751F27964}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "webrtc_winuwp_h264_win10_x86", "third_party\winuwp_h264\webrtc_winuwp_h264_win10_x86.vcxproj", "{B8F389AA-A93C-6BF3-8CBB-14C751F27964}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "expat", "expat", "{C6E96502-2128-47F9-8B1F-D185230847B8}"
 EndProject

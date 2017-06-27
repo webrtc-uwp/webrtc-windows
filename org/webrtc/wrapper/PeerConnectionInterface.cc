@@ -31,9 +31,9 @@
 #include "webrtc/pc/channelmanager.h"
 #include "webrtc/system_wrappers/include/utf_util_win.h"
 #include "webrtc/base/timeutils.h"
-#include "third_party/h264_winrt/h264_winrt_factory.h"
+#include "third_party/winuwp_h264/winuwp_h264_factory.h"
 #include "webrtc/base/trace_event.h"
-#include "webrtc/common_video/video_common_winrt.h"
+#include "webrtc/common_video/video_common_winuwp.h"
 
 using Org::WebRtc::Internal::FromCx;
 using Org::WebRtc::Internal::ToCx;
@@ -611,7 +611,7 @@ namespace Org {
 			// On some platforms, two calls of InitializeAsync on two diferent
 			// instances causes exception to be thrown from the second call to
 			// InitializeAsync. The second InitializeAsync
-			// is called in MediaCaptureDevicesWinRT::GetMediaCapture
+			// is called in MediaCaptureDevicesWinUWP::GetMediaCapture
 			// Behavior present on Lumia620, OS version 8.10.14219.341.
 			Platform::Agile<MediaCapture> mediaAccessRequester(
 				ref new MediaCapture());
@@ -640,7 +640,7 @@ namespace Org {
 		}
 
 		void WinJSHooks::initialize() {
-			webrtc::VideoCommonWinRT::SetCoreDispatcher(Windows::UI::Core::CoreWindow::GetForCurrentThread()->Dispatcher);
+			webrtc::VideoCommonWinUWP::SetCoreDispatcher(Windows::UI::Core::CoreWindow::GetForCurrentThread()->Dispatcher);
 			Org::WebRtc::WebRTC::Initialize(Windows::UI::Core::CoreWindow::GetForCurrentThread()->Dispatcher);
 		}
 
@@ -671,17 +671,17 @@ namespace Org {
 			if (globals::isInitialized)
 				return;
 
-			webrtc::VideoCommonWinRT::SetCoreDispatcher(dispatcher);
+			webrtc::VideoCommonWinUWP::SetCoreDispatcher(dispatcher);
 
 			// Create a worker thread
-			globals::gThread.SetName("WinRTApiWorker", nullptr);
+			globals::gThread.SetName("WinUWPApiWorker", nullptr);
 			globals::gThread.Start();
 			globals::RunOnGlobalThread<void>([] {
 				rtc::EnsureWinsockInit();
 				rtc::InitializeSSL(globals::certificateVerifyCallBack);
 
-				auto encoderFactory = new webrtc::H264WinRTEncoderFactory();
-				auto decoderFactory = new webrtc::H264WinRTDecoderFactory();
+				auto encoderFactory = new webrtc::WinUWPH264EncoderFactory();
+				auto decoderFactory = new webrtc::WinUWPH264DecoderFactory();
 
 				LOG(LS_INFO) << "Creating PeerConnectionFactory.";
 				globals::gPeerConnectionFactory =
@@ -793,7 +793,7 @@ namespace Org {
 
 			//TRACE_COUNTER1 can only log 32bit integer value
 			// also, when the app is idle, CPUUsage is very low <1%
-			globals::WebRTCTraceONE("webrtc", "winrtCPUUsage", (int32)(globals::gCurrentCPUUsage * 100));
+			globals::WebRTCTraceONE("webrtc", "winuwpCPUUsage", (int32)(globals::gCurrentCPUUsage * 100));
 		}
 
 		INT64 WebRTC::MemoryUsage::get() {
@@ -804,9 +804,9 @@ namespace Org {
 			globals::gCurrentMEMUsage = value;
 
 			//TRACE_COUNTER1 can only log 32bit integer value
-			globals::WebRTCTraceONE("webrtc", "winrtMemUsage", (int32)(globals::gCurrentMEMUsage / 1024));
+			globals::WebRTCTraceONE("webrtc", "winuwpMemUsage", (int32)(globals::gCurrentMEMUsage / 1024));
 
-			globals::WebRTCTraceONE("webrtc", "winrtTraceMemSize", (int32)(globals::gTraceLog.CurrentTraceMemUsage() / 1024));
+			globals::WebRTCTraceONE("webrtc", "winuwpTraceMemSize", (int32)(globals::gTraceLog.CurrentTraceMemUsage() / 1024));
 		}
 
 

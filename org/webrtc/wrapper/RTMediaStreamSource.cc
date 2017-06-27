@@ -14,7 +14,7 @@
 #include "webrtc/media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
-#include "webrtc/common_video/video_common_winrt.h"
+#include "webrtc/common_video/video_common_winuwp.h"
 
 using Microsoft::WRL::ComPtr;
 using Platform::Collections::Vector;
@@ -413,7 +413,7 @@ namespace Org {
 
 void Org::WebRtc::FrameCounterHelper::FireEvent(String^ id,
   Platform::String^ str) {
-  Windows::UI::Core::CoreDispatcher^ _windowDispatcher =	webrtc::VideoCommonWinRT::GetCoreDispatcher();
+  Windows::UI::Core::CoreDispatcher^ _windowDispatcher =	webrtc::VideoCommonWinUWP::GetCoreDispatcher();
   if (_windowDispatcher != nullptr) {
     _windowDispatcher->RunAsync(
       Windows::UI::Core::CoreDispatcherPriority::Normal,
@@ -427,7 +427,7 @@ void Org::WebRtc::FrameCounterHelper::FireEvent(String^ id,
 
 void Org::WebRtc::ResolutionHelper::FireEvent(String^ id,
   unsigned int width, unsigned int heigth) {
-  Windows::UI::Core::CoreDispatcher^ _windowDispatcher =	webrtc::VideoCommonWinRT::GetCoreDispatcher();
+  Windows::UI::Core::CoreDispatcher^ _windowDispatcher =	webrtc::VideoCommonWinUWP::GetCoreDispatcher();
   if (_windowDispatcher != nullptr) {
     _windowDispatcher->RunAsync(
       Windows::UI::Core::CoreDispatcherPriority::Normal,

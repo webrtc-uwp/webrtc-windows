@@ -50,7 +50,7 @@ WebRTCStatsObserver::WebRTCStatsObserver(
   rtc::scoped_refptr<webrtc::PeerConnectionInterface> pci) :
   pci_(pci), status_(kStopped),
   crit_sect_(CriticalSectionWrapper::CreateCriticalSection()),
-  webrtc_stats_observer_winrt_(NULL), etw_stats_enabled_(false),
+  webrtc_stats_observer_winuwp_(NULL), etw_stats_enabled_(false),
   rtc_stats_enabled_(false), conn_health_stats_enabled_(false),
   rtc_stats_to_remote_host_enabled_(false), 
   stats_network_destination_port_(-1) {
@@ -129,9 +129,9 @@ void WebRTCStatsObserver::SetStatsNetworkDestination(std::string remote_hostname
 }
 
 void WebRTCStatsObserver::ToggleConnectionHealthStats(
-  WebRTCStatsObserverWinRT* observer) {
+  WebRTCStatsObserverWinUWP* observer) {
   if (observer) {
-    webrtc_stats_observer_winrt_ = observer;
+    webrtc_stats_observer_winuwp_ = observer;
     LOG(LS_INFO) << "WebRTCStatsObserver enabling connection health stats";
     conn_health_stats_enabled_ = true;
   } else {
@@ -141,9 +141,9 @@ void WebRTCStatsObserver::ToggleConnectionHealthStats(
   EvaluatePollNecessity();
 }
 
-void WebRTCStatsObserver::ToggleRTCStats(WebRTCStatsObserverWinRT* observer) {
+void WebRTCStatsObserver::ToggleRTCStats(WebRTCStatsObserverWinUWP* observer) {
   if (observer) {
-    webrtc_stats_observer_winrt_ = observer;
+    webrtc_stats_observer_winuwp_ = observer;
     LOG(LS_INFO) << "WebRTCStatsObserver enabling rtc stats";
     rtc_stats_enabled_ = true;
   } else {
@@ -217,7 +217,7 @@ void WebRTCStatsObserver::OnComplete(const StatsReports& reports) {
         }
       }
     }
-    if (conn_health_stats_enabled_ && webrtc_stats_observer_winrt_) {
+    if (conn_health_stats_enabled_ && webrtc_stats_observer_winuwp_) {
       if (stat_type == StatsReport::kStatsReportTypeCandidatePair) {
         for (auto value : report->values()) {
           if (value.first == StatsReport::kStatsValueNameActiveConnection) {
@@ -244,7 +244,7 @@ void WebRTCStatsObserver::OnComplete(const StatsReports& reports) {
       }
     }
 
-    if (rtc_stats_enabled_ && webrtc_stats_observer_winrt_) {
+    if (rtc_stats_enabled_ && webrtc_stats_observer_winuwp_) {
       Org::WebRtc::RTCStatsReport^ rtcReport;
 			Org::WebRtc::Internal::ToCx(report, &rtcReport);
       rtcStatsReports->Append(rtcReport);
@@ -252,9 +252,9 @@ void WebRTCStatsObserver::OnComplete(const StatsReports& reports) {
   }
 
   if (rtcStatsReports->Size != 0) {
-    webrtc_stats_observer_winrt_->OnRTCStatsReportsReady(rtcStatsReports);
+    webrtc_stats_observer_winuwp_->OnRTCStatsReportsReady(rtcStatsReports);
   }
-  if (conn_health_stats_enabled_ && webrtc_stats_observer_winrt_) {
+  if (conn_health_stats_enabled_ && webrtc_stats_observer_winuwp_) {
     if (conn_health_stats_prev.timestamp != 0 &&
         conn_health_stats_.timestamp != conn_health_stats_prev.timestamp) {
       int64 time_elapsed_ms = static_cast<int64>(conn_health_stats_.timestamp -
@@ -273,7 +273,7 @@ void WebRTCStatsObserver::OnComplete(const StatsReports& reports) {
           time_elapsed_ms / 1024;
       }
     }
-    webrtc_stats_observer_winrt_->OnConnectionHealthStats(conn_health_stats_);
+    webrtc_stats_observer_winuwp_->OnConnectionHealthStats(conn_health_stats_);
   }
 
   if (network_sender_ != nullptr) {
@@ -311,7 +311,7 @@ void WebRTCStatsObserver::PollStats() {
   }
 }
 void WebRTCStatsObserver::EvaluatePollNecessity() {
-  if (etw_stats_enabled_ || webrtc_stats_observer_winrt_ ||
+  if (etw_stats_enabled_ || webrtc_stats_observer_winuwp_ ||
       rtc_stats_enabled_ || conn_health_stats_enabled_ ||
       rtc_stats_to_remote_host_enabled_) {
     Start();

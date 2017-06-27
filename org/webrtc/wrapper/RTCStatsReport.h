@@ -6,8 +6,8 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#ifndef WEBRTC_BUILD_WINRT_GYP_API_RTCSTATSREPORT_H_
-#define WEBRTC_BUILD_WINRT_GYP_API_RTCSTATSREPORT_H_
+#ifndef WEBRTC_BUILD_WINUWP_GYP_API_RTCSTATSREPORT_H_
+#define WEBRTC_BUILD_WINUWP_GYP_API_RTCSTATSREPORT_H_
 
 #include <collection.h>
 #include <webrtc/api/statstypes.h>
@@ -215,4 +215,4 @@ namespace Org {
 	} // namespace WebRtc
 }  // namespace Org
 
-#endif  //  WEBRTC_BUILD_WINRT_GYP_API_RTCSTATSREPORT_H_
+#endif  //  WEBRTC_BUILD_WINUWP_GYP_API_RTCSTATSREPORT_H_

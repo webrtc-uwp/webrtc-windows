@@ -7,8 +7,8 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#ifndef WEBRTC_BUILD_WINRT_GYP_API_MEDIA_H_
-#define WEBRTC_BUILD_WINRT_GYP_API_MEDIA_H_
+#ifndef WEBRTC_BUILD_WINUWP_GYP_API_MEDIA_H_
+#define WEBRTC_BUILD_WINUWP_GYP_API_MEDIA_H_
 
 #include <mfidl.h>
 #include <collection.h>
@@ -16,7 +16,7 @@
 #include "webrtc/api/mediastreaminterface.h"
 #include "webrtc/api/mediaconstraintsinterface.h"
 #include "GlobalObserver.h"
-#include "webrtc/media/devices/winrtdevicemanager.h"
+#include "webrtc/media/devices/winuwpdevicemanager.h"
 #include "webrtc/modules/audio_device/include/audio_device.h"
 #include "Delegates.h"
 
@@ -635,7 +635,7 @@ namespace Org {
 				const std::string& name,
 				const std::string& id);
 
-			std::unique_ptr<cricket::WinRTDeviceManager> _dev_manager;
+			std::unique_ptr<cricket::WinUWPDeviceManager> _dev_manager;
 			cricket::Device _selectedVideoDevice;
 			cricket::Device _selectedAudioCapturerDevice;
 			cricket::Device _selectedAudioPlayoutDevice;
@@ -650,4 +650,4 @@ namespace Org {
 	}
 }  // namespace Org.WebRtc
 
-#endif  // WEBRTC_BUILD_WINRT_GYP_API_MEDIA_H_
+#endif  // WEBRTC_BUILD_WINUWP_GYP_API_MEDIA_H_

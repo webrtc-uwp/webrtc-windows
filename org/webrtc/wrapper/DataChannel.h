@@ -8,8 +8,8 @@
 * be found in the AUTHORS file in the root of the source tree.
 */
 
-#ifndef WEBRTC_BUILD_WINRT_GYP_API_DATACHANNEL_H_
-#define WEBRTC_BUILD_WINRT_GYP_API_DATACHANNEL_H_
+#ifndef WEBRTC_BUILD_WINUWP_GYP_API_DATACHANNEL_H_
+#define WEBRTC_BUILD_WINUWP_GYP_API_DATACHANNEL_H_
 
 #include <collection.h>
 #include "GlobalObserver.h"
@@ -227,5 +227,5 @@ namespace Org {
 	}
 }  // namespace Org.WebRtc
 
-#endif  // WEBRTC_BUILD_WINRT_GYP_API_DATACHANNEL_H_
+#endif  // WEBRTC_BUILD_WINUWP_GYP_API_DATACHANNEL_H_
 

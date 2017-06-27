@@ -7,8 +7,8 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#ifndef WEBRTC_BUILD_WINRT_GYP_API_GLOBALOBSERVER_H_
-#define WEBRTC_BUILD_WINRT_GYP_API_GLOBALOBSERVER_H_
+#ifndef WEBRTC_BUILD_WINUWP_GYP_API_GLOBALOBSERVER_H_
+#define WEBRTC_BUILD_WINUWP_GYP_API_GLOBALOBSERVER_H_
 
 #include <ppltasks.h>
 #include <functional>
@@ -30,7 +30,7 @@ namespace Org {
 		namespace Internal {
 
 			class GlobalObserver : public webrtc::PeerConnectionObserver,
-				public webrtc::WebRTCStatsObserverWinRT {
+				public webrtc::WebRTCStatsObserverWinUWP {
 			public:
 				GlobalObserver();
 
@@ -76,7 +76,7 @@ namespace Org {
 
 				virtual void OnIceComplete();
 
-				// WebRTCStatsObserverWinRT functions
+				// WebRTCStatsObserverWinUWP functions
 				virtual void OnConnectionHealthStats(
 					const webrtc::ConnectionHealthStats& stats);
 				virtual void OnRTCStatsReportsReady(
@@ -140,5 +140,5 @@ namespace Org {
 	}
 }  // namespace Org::WebRtc::Internal
 
-#endif  // WEBRTC_BUILD_WINRT_GYP_API_GLOBALOBSERVER_H_
+#endif  // WEBRTC_BUILD_WINUWP_GYP_API_GLOBALOBSERVER_H_
 
