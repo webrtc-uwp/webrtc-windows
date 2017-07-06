@@ -45,13 +45,13 @@ namespace Org {
 				public WebRtcVideoSinkObserver {
 				InspectableClass(L"WebRtcMediaSource", BaseTrust)
 			public:
-				class WebRtcVideoSink : public rtc::VideoSinkInterface<cricket::VideoFrame> {
+				class WebRtcVideoSink : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
 				public:
 					WebRtcVideoSink(VideoFrameType frameType, 
 						ComPtr<WebRtcMediaStream> i420Stream,
 						ComPtr<WebRtcMediaStream> h264Stream,
 						WebRtcVideoSinkObserver *videoSinkObserver);
-					virtual void OnFrame(const cricket::VideoFrame& frame) override;
+					virtual void OnFrame(const webrtc::VideoFrame& frame) override;
 				private:
 					VideoFrameType _frameType;
 					ComPtr<WebRtcMediaStream> _i420Stream;

@@ -101,14 +101,14 @@ namespace Org {
 			_impl = nullptr;
 		}
 
-		void MediaVideoTrack::SetRenderer(rtc::VideoSinkInterface<cricket::VideoFrame>* renderer) {
+		void MediaVideoTrack::SetRenderer(rtc::VideoSinkInterface<webrtc::VideoFrame>* renderer) {
 			if (_impl == nullptr)
 				THROW_WEBRTC_NULL_REFERENCE_EXCEPTION("Invalid video track object");
 
 			_impl->AddOrUpdateSink(renderer, rtc::VideoSinkWants());
 		}
 
-		void MediaVideoTrack::UnsetRenderer(rtc::VideoSinkInterface<cricket::VideoFrame>* renderer) {
+		void MediaVideoTrack::UnsetRenderer(rtc::VideoSinkInterface<webrtc::VideoFrame>* renderer) {
 			if (_impl == nullptr)
 				THROW_WEBRTC_NULL_REFERENCE_EXCEPTION("Invalid video track object");
 
@@ -295,7 +295,7 @@ namespace Org {
 			_videoSource(videoSource) {
 		}
 
-		void RawVideoStream::RenderFrame(const cricket::VideoFrame* frame) {
+		void RawVideoStream::RenderFrame(const webrtc::VideoFrame* frame) {
 			_videoSource->RawVideoFrame((uint32)frame->width(), (uint32)frame->height(),
 				Platform::ArrayReference<uint8>((uint8*)frame->video_frame_buffer()->DataY(),
 				(unsigned int)(frame->video_frame_buffer()->StrideY() * frame->height())),
@@ -333,7 +333,7 @@ namespace Org {
 			_videoSource(videoSource) {
 		}
 
-		void EncodedVideoStream::RenderFrame(const cricket::VideoFrame* frame) {
+		void EncodedVideoStream::RenderFrame(const webrtc::VideoFrame* frame) {
 			ComPtr<IMFSample> pSample = (IMFSample*)frame->video_frame_buffer()->native_handle();
 			if (pSample == nullptr)
 				return;
@@ -439,8 +439,8 @@ namespace Org {
 						// Check if audio devices candidates are still available.
 						// Application may request to use audio devices that are not
 						// connected anymore. In this case, fallback to default device.
-						webrtc::VoEHardware* voiceEngineHardware =
-							globals::gPeerConnectionFactory->GetMediaEngine()->GetVoEHardware();
+						webrtc::VoEHardware* voiceEngineHardware = nullptr;
+							//globals::gPeerConnectionFactory->GetMediaEngine()->GetVoEHardware();
 						bool useDefaultAudioPlayoutDevice = true;
 						bool useDefaultAudioRecordingDevice = true;
 						if (voiceEngineHardware == nullptr) {
@@ -475,6 +475,7 @@ namespace Org {
 								}
 							}
 						}
+#if 0
 						int audioCaptureDeviceIndexSelected = useDefaultAudioRecordingDevice ?
 							-1 /*Default communication device*/ : audioCaptureDeviceIndex;
 						int audioPlayoutDeviceIndexSelected = useDefaultAudioPlayoutDevice ?
@@ -488,6 +489,7 @@ namespace Org {
 							!= 0) {
 							LOG(LS_ERROR) << "Failed to set audio playout devices.";
 						}
+#endif
 
 						LOG(LS_INFO) << "Creating audio track.";
 						char audioLabel[32];
@@ -658,8 +660,8 @@ namespace Org {
 			if (_audioCaptureDeviceChanged) {
 				g_audioCapturerDevices->Clear();
 				globals::RunOnGlobalThread<void>([this] {
-					webrtc::VoEHardware* voiceEngineHardware =
-						globals::gPeerConnectionFactory->GetMediaEngine()->GetVoEHardware();
+					webrtc::VoEHardware* voiceEngineHardware = nullptr;
+						//globals::gPeerConnectionFactory->GetMediaEngine()->GetVoEHardware();
 					if (voiceEngineHardware == nullptr) {
 						LOG(LS_ERROR) << "Can't enumerate audio capture devices: "
 							<< "VoEHardware API not available.";
@@ -689,8 +691,8 @@ namespace Org {
 			if (_audioPlayoutDeviceChanged) {
 				g_audioPlayoutDevices->Clear();
 				globals::RunOnGlobalThread<void>([this] {
-					webrtc::VoEHardware* voiceEngineHardware =
-						globals::gPeerConnectionFactory->GetMediaEngine()->GetVoEHardware();
+					webrtc::VoEHardware* voiceEngineHardware = nullptr;
+						//globals::gPeerConnectionFactory->GetMediaEngine()->GetVoEHardware();
 					if (voiceEngineHardware == nullptr) {
 						LOG(LS_ERROR) << "Can't enumerate audio playout devices: "
 							<< "VoEHardware API not available.";

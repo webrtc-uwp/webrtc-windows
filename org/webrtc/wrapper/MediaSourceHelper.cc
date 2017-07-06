@@ -10,11 +10,10 @@
 #include <mfapi.h>
 #include <ppltasks.h>
 #include <mfidl.h>
-#include "webrtc/media/base/videoframe.h"
 #include "webrtc/media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
-#include "webrtc/base/timing.h"
+#include "webrtc/modules/video_coding/timing.h"
 
 using Microsoft::WRL::ComPtr;
 using Platform::Collections::Vector;
@@ -34,7 +33,7 @@ namespace Org {
 
 			// Helper functions defined below.
 			bool IsSampleIDR(IMFSample* sample);
-			bool DropFramesToIDR(std::list<cricket::VideoFrame*>& frames);
+			bool DropFramesToIDR(std::list<webrtc::VideoFrame*>& frames);
 
 
 			SampleData::SampleData()
@@ -46,7 +45,7 @@ namespace Org {
 
 			MediaSourceHelper::MediaSourceHelper(
 				VideoFrameType frameType,
-				std::function<HRESULT(cricket::VideoFrame* frame, IMFSample** sample)> mkSample,
+				std::function<HRESULT(webrtc::VideoFrame* frame, IMFSample** sample)> mkSample,
 				std::function<void(int)> fpsCallback)
 				: _mkSample(mkSample)
 				, _fpsCallback(fpsCallback)
@@ -66,12 +65,12 @@ namespace Org {
 				webrtc::CriticalSectionScoped csLock(_lock.get());
 				// Clear the buffered frames.
 				while (!_frames.empty()) {
-					std::unique_ptr<cricket::VideoFrame> frame(_frames.front());
+					std::unique_ptr<webrtc::VideoFrame> frame(_frames.front());
 					_frames.pop_front();
 				}
 			}
 
-			void MediaSourceHelper::QueueFrame(cricket::VideoFrame* frame) {
+			void MediaSourceHelper::QueueFrame(webrtc::VideoFrame* frame) {
 				webrtc::CriticalSectionScoped csLock(_lock.get());
 
 				if (_frameType == FrameTypeH264) {
@@ -117,7 +116,7 @@ namespace Org {
 				if (_isFirstFrame) {
 					_isFirstFrame = false;
 					Org::WebRtc::FirstFrameRenderHelper::FireEvent(
-						rtc::Timing::WallTimeNow() * rtc::kNumMillisecsPerSec);
+						rtc::TimeMillis() * rtc::kNumMillisecsPerSec);
 					LONGLONG frameTime = GetNextSampleTimeHns(data->renderTime, _frameType == FrameTypeH264);
 					data->sample->SetSampleTime(frameTime);
 				} else {
@@ -152,7 +151,7 @@ namespace Org {
 				if (_frames.size() > 15)
 					DropFramesToIDR(_frames);
 
-				std::unique_ptr<cricket::VideoFrame> frame(_frames.front());
+				std::unique_ptr<webrtc::VideoFrame> frame(_frames.front());
 				_frames.pop_front();
 
 				std::unique_ptr<SampleData> data(new SampleData);
@@ -163,7 +162,7 @@ namespace Org {
 					if (tmp != nullptr) {
 						tmp->AddRef();
 						data->sample.Attach(tmp);
-						data->renderTime = frame->GetTimeStamp();
+						data->renderTime = frame->timestamp();
 
 						ComPtr<IMFAttributes> sampleAttributes;
 						data->sample.As(&sampleAttributes);
@@ -178,7 +177,7 @@ namespace Org {
 			}
 
 			std::unique_ptr<SampleData> MediaSourceHelper::DequeueI420Frame() {
-				std::unique_ptr<cricket::VideoFrame> frame(_frames.front());
+				std::unique_ptr<webrtc::VideoFrame> frame(_frames.front());
 				_frames.pop_front();
 
 				std::unique_ptr<SampleData> data(new SampleData);
@@ -238,8 +237,8 @@ namespace Org {
 				return false;
 			}
 
-			bool DropFramesToIDR(std::list<cricket::VideoFrame*>& frames) {
-				cricket::VideoFrame* idrFrame = nullptr;
+			bool DropFramesToIDR(std::list<webrtc::VideoFrame*>& frames) {
+				webrtc::VideoFrame* idrFrame = nullptr;
 				// Go through the frames in reverse order (from newest to oldest) and look
 				// for an IDR frame.
 				for (auto it = frames.rbegin(); it != frames.rend(); ++it) {
@@ -275,7 +274,7 @@ namespace Org {
 				if (!DropFramesToIDR(_frames)) {
 					// Flush all frames then.
 					while (!_frames.empty()) {
-						std::unique_ptr<cricket::VideoFrame> frame(_frames.front());
+						std::unique_ptr<webrtc::VideoFrame> frame(_frames.front());
 						_frames.pop_front();
 					}
 				}
@@ -309,7 +308,7 @@ namespace Org {
 				}
 			}
 
-			void MediaSourceHelper::CheckForAttributeChanges(cricket::VideoFrame* frame, SampleData* data) {
+			void MediaSourceHelper::CheckForAttributeChanges(webrtc::VideoFrame* frame, SampleData* data) {
 
 				// Update size property
 				SIZE currentSize = { (LONG)frame->width(), (LONG)frame->height() };

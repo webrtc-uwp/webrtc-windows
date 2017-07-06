@@ -28,7 +28,7 @@ namespace Org {
 				_frameType(frameType) {
 			}
 
-			void WebRtcMediaSource::WebRtcVideoSink::OnFrame(const cricket::VideoFrame& frame) {
+			void WebRtcMediaSource::WebRtcVideoSink::OnFrame(const webrtc::VideoFrame& frame) {
 				if (frame.video_frame_buffer()->native_handle() == nullptr) {
 					if (_frameType == FrameTypeH264) {
 						_videoSinkObserver->OnVideoFormatChanged(FrameTypeI420);
@@ -81,10 +81,10 @@ namespace Org {
 				RETURN_ON_FAIL(MakeAndInitialize<WebRtcMediaStream>(
 					&_h264Stream, this, id, FrameTypeH264));
 
-				if (!track->GetImpl()->GetSource()->IsH264Source())
+				//if (!track->GetImpl()->GetSource()->IsH264Source())
 					_selectedStream = 0;
-				else
-					_selectedStream = 1;
+				//else
+				//	_selectedStream = 1;
 
 				_webRtcVideoSink.reset(new WebRtcVideoSink(
 				_selectedStream == 0 ? FrameTypeI420 : FrameTypeH264,

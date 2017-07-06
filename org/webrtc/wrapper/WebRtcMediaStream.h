@@ -57,7 +57,7 @@ namespace Org {
 				IFACEMETHOD(GetService)(REFGUID guidService, REFIID riid, LPVOID *ppvObject);
 
 				// rtc::VideoSinkInterface<cricket::VideoFrame>
-				virtual void RenderFrame(const cricket::VideoFrame *frame);
+				virtual void RenderFrame(const webrtc::VideoFrame *frame);
 
 				STDMETHOD(Start)(IMFPresentationDescriptor *pPresentationDescriptor,
 					const GUID *pguidTimeFormat, const PROPVARIANT *pvarStartPosition);
@@ -76,7 +76,7 @@ namespace Org {
 
 				static HRESULT CreateMediaType(unsigned int width, unsigned int height,
 					unsigned int rotation, bool isH264, IMFMediaType** ppType);
-				HRESULT MakeSampleCallback(const cricket::VideoFrame* frame, IMFSample** sample);
+				HRESULT MakeSampleCallback(const webrtc::VideoFrame* frame, IMFSample** sample);
 				void FpsCallback(int fps);
 
 				HRESULT ReplyToSampleRequest();

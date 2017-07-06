@@ -57,18 +57,18 @@ namespace Org {
 			public:
 				MediaSourceHelper(
 					VideoFrameType frameType,
-					std::function<HRESULT(cricket::VideoFrame* frame, IMFSample** sample)> mkSample,
+					std::function<HRESULT(webrtc::VideoFrame* frame, IMFSample** sample)> mkSample,
 					std::function<void(int)> fpsCallback);
 				~MediaSourceHelper();
 
 				void SetStartTimeNow();
-				void QueueFrame(cricket::VideoFrame* frame);
+				void QueueFrame(webrtc::VideoFrame* frame);
 				std::unique_ptr<SampleData> DequeueFrame();
 				bool HasFrames();
 
 			private:
 				std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
-				std::list<cricket::VideoFrame*> _frames;
+				std::list<webrtc::VideoFrame*> _frames;
 				VideoFrameType _frameType;
 				bool _isFirstFrame;
 				LONGLONG _startTime;
@@ -92,9 +92,9 @@ namespace Org {
 				// Guarantees no duplicate timestamps.
 				LONGLONG GetNextSampleTimeHns(LONGLONG frameRenderTime, bool isH264);
 
-				void CheckForAttributeChanges(cricket::VideoFrame* frame, SampleData* data);
+				void CheckForAttributeChanges(webrtc::VideoFrame* frame, SampleData* data);
 
-				std::function<HRESULT(cricket::VideoFrame* frame, IMFSample** sample)> _mkSample;
+				std::function<HRESULT(webrtc::VideoFrame* frame, IMFSample** sample)> _mkSample;
 				std::function<void(int)> _fpsCallback;
 
 				// Called whenever a new sample is sent for rendering.

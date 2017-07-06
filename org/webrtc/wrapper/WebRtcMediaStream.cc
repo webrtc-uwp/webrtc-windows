@@ -178,7 +178,7 @@ namespace Org {
 
 			void WebRtcMediaStream::RenderFrame(
 				const cricket::VideoFrame *frame) {
-				auto frameCopy = new cricket::WebRtcVideoFrame(
+				auto frameCopy = new webrtc::VideoFrame(
 					frame->video_frame_buffer(), frame->rotation(),
 					frame->timestamp_us());
 				InterlockedIncrement(&_frameBeingQueued);
