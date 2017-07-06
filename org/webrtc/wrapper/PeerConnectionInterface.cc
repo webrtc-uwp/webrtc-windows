@@ -98,6 +98,9 @@ namespace Org {
 			std::unique_ptr<rtc::LoggingServer> gLoggingServer;
 			// The worker thread for webrtc.
 			rtc::Thread gThread;
+			std::unique_ptr<rtc::Thread> gNetworkThread;
+			std::unique_ptr<rtc::Thread> gWorkerThread;
+			std::unique_ptr<rtc::Thread> gSignalingThread;
 			// Default resolution. If no preferred video capture format is specified,
 			// this is the resolution we will use.
 			cricket::VideoFormat gPreferredVideoCaptureFormat = cricket::VideoFormat(640, 480,
@@ -655,12 +658,24 @@ namespace Org {
 				rtc::EnsureWinsockInit();
 				rtc::InitializeSSL(globals::certificateVerifyCallBack);
 
+				globals::gNetworkThread = rtc::Thread::CreateWithSocketServer();
+				globals::gNetworkThread->Start();
+
+				globals::gWorkerThread = rtc::Thread::Create();
+				globals::gWorkerThread->Start();
+
+				globals::gSignalingThread = rtc::Thread::Create();
+				globals::gSignalingThread->Start();
+
 				auto encoderFactory = new webrtc::WinUWPH264EncoderFactory();
 				auto decoderFactory = new webrtc::WinUWPH264DecoderFactory();
 
 				LOG(LS_INFO) << "Creating PeerConnectionFactory.";
 				globals::gPeerConnectionFactory =
-					webrtc::CreatePeerConnectionFactory(encoderFactory, decoderFactory);
+					webrtc::CreatePeerConnectionFactory(
+						globals::gNetworkThread.get(), globals::gWorkerThread.get(),
+						globals::gSignalingThread.get(),
+						nullptr, encoderFactory, decoderFactory);
 
 				rtc::tracing::SetupInternalTracer();
 			});
