@@ -24,7 +24,6 @@
 #include "webrtc/base/bind.h"
 #include "webrtc/base/event_tracer.h"
 #include "webrtc/base/loggingserver.h"
-#include "webrtc/base/tracelog.h"
 #include "webrtc/base/stream.h"
 #include "webrtc/test/field_trial.h"
 #include "webrtc/api/test/fakeconstraints.h"
@@ -32,7 +31,6 @@
 #include "webrtc/system_wrappers/include/utf_util_win.h"
 #include "webrtc/base/timeutils.h"
 #include "third_party/winuwp_h264/winuwp_h264_factory.h"
-#include "webrtc/base/trace_event.h"
 #include "webrtc/common_video/video_common_winuwp.h"
 
 using Org::WebRtc::Internal::FromCx;
@@ -95,31 +93,15 @@ namespace Org {
 
 			rtc::scoped_refptr<webrtc::PeerConnectionFactoryInterface>
 				gPeerConnectionFactory;
+			bool gIsTracing = false;
+			std::unique_ptr<FileLogSink> gLoggingFile;
+			std::unique_ptr<rtc::LoggingServer> gLoggingServer;
 			// The worker thread for webrtc.
 			rtc::Thread gThread;
-			rtc::TraceLog gTraceLog;
-			std::unique_ptr<rtc::LoggingServer> gLoggingServer;
-			std::unique_ptr<FileLogSink> gLoggingFile;
 			// Default resolution. If no preferred video capture format is specified,
 			// this is the resolution we will use.
 			cricket::VideoFormat gPreferredVideoCaptureFormat = cricket::VideoFormat(640, 480,
 				cricket::VideoFormat::FpsToInterval(30), cricket::FOURCC_ANY);
-
-			// Helper function, this is to replace the webrtc macro TRACE_COUNTER1
-			// as it is not working when it is directly called from background process
-			void WebRTCTraceONE(const char* category_group_enabled,
-				const char* name, INT32 value) {
-				unsigned char arg_types[1];
-				char* arg_name = "value";
-				unsigned long long arg_values[1];
-				arg_types[0] = TRACE_VALUE_TYPE_UINT;
-				arg_values[0] = value;
-				gTraceLog.Add('c',/*phase c*/
-					(const unsigned char*)category_group_enabled, name, 0, 1,
-					(const char**)&arg_name, arg_types, arg_values,
-					'N'/*dummy flag*/);
-
-			}
 		}  // namespace globals
 
 		RTCIceCandidate::RTCIceCandidate() {
@@ -652,19 +634,12 @@ namespace Org {
 			return  Org::WebRtc::WebRTC::IsTracing();
 		}
 
-		void WinJSHooks::StartTracing() {
-			Org::WebRtc::WebRTC::StartTracing();
+		void WinJSHooks::StartTracing(Platform::String^ filename) {
+			Org::WebRtc::WebRTC::StartTracing(filename);
 		}
 
 		void WinJSHooks::StopTracing() {
 			Org::WebRtc::WebRTC::StopTracing();
-		}
-
-		bool WinJSHooks::SaveTrace(Platform::String^ filename) {
-			return  Org::WebRtc::WebRTC::SaveTrace(filename);
-		}
-		bool WinJSHooks::SaveTrace(Platform::String^ host, int port) {
-			return  Org::WebRtc::WebRTC::SaveTrace(host, port);
 		}
 
 		void WebRTC::Initialize(Windows::UI::Core::CoreDispatcher^ dispatcher) {
@@ -687,33 +662,24 @@ namespace Org {
 				globals::gPeerConnectionFactory =
 					webrtc::CreatePeerConnectionFactory(encoderFactory, decoderFactory);
 
-				webrtc::SetupEventTracer(&WebRTC::GetCategoryGroupEnabled,
-					&WebRTC::AddTraceEvent);
+				rtc::tracing::SetupInternalTracer();
 			});
 			globals::isInitialized = true;
 		}
 
 		bool WebRTC::IsTracing() {
-			return globals::gTraceLog.IsTracing();
+			return globals::gIsTracing;
 		}
 
-		void WebRTC::StartTracing() {
-			globals::gTraceLog.EnableTraceInternalStorage();
-			globals::gTraceLog.StartTracing();
+		void WebRTC::StartTracing(Platform::String^ filename) {
+			globals::gIsTracing = true;
+			std::string filenameStr = FromCx(filename);
+			rtc::tracing::StartInternalCapture(filenameStr.c_str());
 		}
 
 		void WebRTC::StopTracing() {
-			globals::gTraceLog.StopTracing();
-		}
-
-		bool WebRTC::SaveTrace(Platform::String^ filename) {
-			std::string filenameStr = FromCx(filename);
-			return globals::gTraceLog.Save(filenameStr);
-		}
-
-		bool WebRTC::SaveTrace(Platform::String^ host, int port) {
-			std::string hostStr = FromCx(host);
-			return globals::gTraceLog.Save(hostStr, port);
+			globals::gIsTracing = false;
+			rtc::tracing::StopInternalCapture();
 		}
 
 		void WebRTC::EnableLogging(LogLevel level) {
@@ -790,10 +756,6 @@ namespace Org {
 
 		void WebRTC::CpuUsage::set(double value) {
 			globals::gCurrentCPUUsage = value;
-
-			//TRACE_COUNTER1 can only log 32bit integer value
-			// also, when the app is idle, CPUUsage is very low <1%
-			globals::WebRTCTraceONE("webrtc", "winuwpCPUUsage", (int32)(globals::gCurrentCPUUsage * 100));
 		}
 
 		INT64 WebRTC::MemoryUsage::get() {
@@ -802,13 +764,7 @@ namespace Org {
 
 		void WebRTC::MemoryUsage::set(INT64 value) {
 			globals::gCurrentMEMUsage = value;
-
-			//TRACE_COUNTER1 can only log 32bit integer value
-			globals::WebRTCTraceONE("webrtc", "winuwpMemUsage", (int32)(globals::gCurrentMEMUsage / 1024));
-
-			globals::WebRTCTraceONE("webrtc", "winuwpTraceMemSize", (int32)(globals::gTraceLog.CurrentTraceMemUsage() / 1024));
 		}
-
 
 		void WebRTC::SetPreferredVideoCaptureFormat(int frameWidth,
 			int frameHeight, int fps) {
@@ -816,24 +772,6 @@ namespace Org {
 				cricket::VideoFormat::FpsToInterval(fps);
 			globals::gPreferredVideoCaptureFormat.width = frameWidth;
 			globals::gPreferredVideoCaptureFormat.height = frameHeight;
-		}
-
-		const unsigned char* /*__cdecl*/ WebRTC::GetCategoryGroupEnabled(
-			const char* category_group) {
-			return reinterpret_cast<const unsigned char*>("webrtc");
-		}
-
-		void __cdecl WebRTC::AddTraceEvent(char phase,
-			const unsigned char* category_group_enabled,
-			const char* name,
-			uint64 id,
-			int num_args,
-			const char** arg_names,
-			const unsigned char* arg_types,
-			const uint64* arg_values,
-			unsigned char flags) {
-			globals::gTraceLog.Add(phase, category_group_enabled, name, id,
-				num_args, arg_names, arg_types, arg_values, flags);
 		}
 	}
 }  // namespace Org.WebRtc

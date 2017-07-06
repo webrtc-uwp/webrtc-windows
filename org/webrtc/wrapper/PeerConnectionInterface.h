@@ -122,29 +122,12 @@ namespace Org {
 			/// <summary>
 			/// Starts WebRTC tracing.
 			/// </summary>
-			static void StartTracing();
+			static void StartTracing(Platform::String^ filename);
 
 			/// <summary>
 			/// Stops WebRTC tracing.
 			/// </summary>
 			static void StopTracing();
-
-			/// <summary>
-			/// Saves the collected WebRTC trace information to a file.
-			/// </summary>
-			/// <param name="filename">Path of the file to save trace information to.</param>
-			/// <returns>True if trace information was saved successfully, false otherwise.</returns>
-			static bool SaveTrace(Platform::String^ filename);
-
-			/// <summary>
-			/// Can be used for sending the trace information from a device to a TCP client application
-			/// running on a remote machine.
-			/// </summary>
-			/// <param name="host">The IP or name of the machine the trace information is collected on.</param>
-			/// <param name="port">The port of the machine the trace information is collected on.</param>
-			/// <returns>True if the socket to send trace information is created successfully,
-			/// false otherwise.</returns>
-			static bool SaveTrace(Platform::String^ host, int port);
 
 			/// <summary>
 			/// Starts WebRTC logging.
@@ -213,18 +196,6 @@ namespace Org {
 		private:
 			// This type is not meant to be created.
 			WebRTC();
-
-			static const unsigned char* GetCategoryGroupEnabled(const char*
-				category_group);
-			static void __cdecl AddTraceEvent(char phase,
-				const unsigned char* category_group_enabled,
-				const char* name,
-				uint64 id,
-				int num_args,
-				const char** arg_names,
-				const unsigned char* arg_types,
-				const uint64* arg_values,
-				unsigned char flags);
 		};
 
 		/// <summary>
@@ -235,10 +206,8 @@ namespace Org {
 			static void initialize();
 			static IAsyncOperation<bool>^ requestAccessForMediaCapture();
 			static bool IsTracing();
-			static void StartTracing();
+			static void StartTracing(Platform::String^ filename);
 			static void StopTracing();
-			static bool SaveTrace(Platform::String^ filename);
-			static bool SaveTrace(Platform::String^ host, int port);
 		};
 
 		public enum class RTCBundlePolicy {
