@@ -70,7 +70,6 @@ int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* inst,
   currentHeight_ = inst->height;
   currentBitrateBps_ = inst->targetBitrate > 0 ? inst->targetBitrate * 1024 : currentWidth_ * currentHeight_ * 2.0;
   currentFps_ = inst->maxFramerate;
-  //quality_scaler_.Init(inst->qpMax / 2, 64, false, 0, currentWidth_, currentHeight_);
   return InitEncoderWithSettings(inst);
 }
 
@@ -113,8 +112,6 @@ int WinUWPH264EncoderImpl::InitEncoderWithSettings(const VideoCodec* inst) {
     MF_MT_FRAME_SIZE, currentWidth_, currentHeight_));
   ON_SUCCEEDED(MFSetAttributeRatio(mediaTypeIn.Get(),
     MF_MT_FRAME_RATE, currentFps_, 1));
-
-  //quality_scaler_.ReportFramerate(currentFps_);
 
   // Create the media sink
   ON_SUCCEEDED(Microsoft::WRL::MakeAndInitialize<H264MediaSink>(&mediaSink_));
@@ -192,8 +189,6 @@ int WinUWPH264EncoderImpl::Release() {
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
-#define DYNAMIC_SCALING
-
 ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame) {
   HRESULT hr = S_OK;
   ComPtr<IMFSample> sample;
@@ -202,13 +197,7 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
   ComPtr<IMFAttributes> sampleAttributes;
   ON_SUCCEEDED(sample.As(&sampleAttributes));
 
-  //quality_scaler_.OnEncodeFrame(frame.width(), frame.height());
-#ifdef DYNAMIC_SCALING
   rtc::scoped_refptr<VideoFrameBuffer> frameBuffer = frame.video_frame_buffer();
-    //quality_scaler_.GetScaledBuffer(frame.video_frame_buffer());
-#else
-  rtc::scoped_refptr<VideoFrameBuffer> frameBuffer = frame.video_frame_buffer();
-#endif
 
   if (SUCCEEDED(hr)) {
     auto totalSize = frameBuffer->StrideY() * frameBuffer->height() +
@@ -334,7 +323,6 @@ int WinUWPH264EncoderImpl::Encode(
   {
     webrtc::CriticalSectionScoped csLock(_lock.get());
     if (_sampleAttributeQueue.size() > 2) {
-      //quality_scaler_.ReportDroppedFrame();
       return WEBRTC_VIDEO_CODEC_OK;
     }
     sample = FromVideoFrame(frame);
@@ -447,13 +435,6 @@ void WinUWPH264EncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
         return;
       }
 
-
-      _h264Parser.ParseBitstream(sendBuffer.data(), sendBuffer.size());
-      int lastQp;
-      if (_h264Parser.GetLastSliceQp(&lastQp)) {
-        //quality_scaler_.ReportQP(lastQp);
-      }
-
       LONGLONG sampleTimestamp;
       sample->GetSampleTime(&sampleTimestamp);
 
@@ -464,8 +445,6 @@ void WinUWPH264EncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
         encodedImage.capture_time_ms_ = frameAttributes.captureRenderTime;
         encodedImage._encodedWidth = frameAttributes.frameWidth;
         encodedImage._encodedHeight = frameAttributes.frameHeight;
-        //encodedImage.adapt_reason_.quality_resolution_downscales =
-        //  quality_scaler_.downscale_shift();
       }
       else {
         // No point in confusing the callback with a frame that doesn't
@@ -521,7 +500,6 @@ int WinUWPH264EncoderImpl::SetRates(
     fpsUpdated = true;
   }
 #endif
-  //quality_scaler_.ReportFramerate(new_framerate);
 
   if (bitrateUpdated || fpsUpdated) {
     if ((rtc::TimeMillis() - lastTimeSettingsChanged_) < 15000) {
@@ -541,19 +519,8 @@ int WinUWPH264EncoderImpl::SetRates(
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
-void WinUWPH264EncoderImpl::OnDroppedFrame(uint32_t timestamp) {
-  LONGLONG timestampHns = 0;
-  ComPtr<IMFSinkWriter> tempSinkWriter;
-  {
-    webrtc::CriticalSectionScoped csLock(_lock.get());
-    //quality_scaler_.ReportDroppedFrame();
-    timestampHns = ((timestamp - startTime_) / 90) * 1000 * 10;
-    lastFrameDropped_ = true;
-    tempSinkWriter = sinkWriter_;
-  }
-  if (tempSinkWriter != nullptr) {
-    sinkWriter_->SendStreamTick(streamIndex_, timestampHns);
-  }
+VideoEncoder::ScalingSettings WinUWPH264EncoderImpl::GetScalingSettings() const {
+  return ScalingSettings(true);
 }
 
 const char* WinUWPH264EncoderImpl::ImplementationName() const {
