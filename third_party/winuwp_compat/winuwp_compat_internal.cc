@@ -349,7 +349,7 @@ namespace WinUWP
     EnterCriticalSection(&lock_);
     if (totalInfos_ < 1) goto done;
 
-    for (int loop = 0; loop < totalInfos_; ++loop) {
+    for (size_t loop = 0; loop < totalInfos_; ++loop) {
       auto info = infos_[loop];
       if (!info) continue;
 
@@ -439,7 +439,7 @@ namespace WinUWP
   {
     if (NULL == infos_) return;
 
-    for (auto loop = 0; loop < totalInfos_; ++loop) {
+    for (size_t loop = 0; loop < totalInfos_; ++loop) {
       if (NULL == infos_[loop]) continue;
 
       delete infos_[loop];
@@ -471,7 +471,7 @@ namespace WinUWP
     Info **sourcePos = oldInfos;
     Info **destPos = infos_;
 
-    for (auto loop = 0; loop < oldTotalInfos; ++loop) {
+    for (size_t loop = 0; loop < oldTotalInfos; ++loop) {
       destPos[loop+1] = sourcePos[loop];
     }
 
