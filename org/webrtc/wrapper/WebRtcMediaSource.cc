@@ -8,7 +8,41 @@
 // be found in the AUTHORS file in the root of the source tree.
 
 #include "WebRtcMediaSource.h"
+#include "Media.h"
 #include <mferror.h>
+#include "webrtc/common_video/video_common_winuwp.h"
+
+namespace Org {
+	namespace WebRtc {
+		void Org::WebRtc::FrameCounterHelper::FireEvent(String^ id,
+			Platform::String^ str) {
+			Windows::UI::Core::CoreDispatcher^ _windowDispatcher = webrtc::VideoCommonWinUWP::GetCoreDispatcher();
+			if (_windowDispatcher != nullptr) {
+				_windowDispatcher->RunAsync(
+					Windows::UI::Core::CoreDispatcherPriority::Normal,
+					ref new Windows::UI::Core::DispatchedHandler([id, str] {
+					FramesPerSecondChanged(id, str);
+				}));
+			} else {
+				FramesPerSecondChanged(id, str);
+			}
+		}
+
+		void Org::WebRtc::ResolutionHelper::FireEvent(String^ id,
+			unsigned int width, unsigned int heigth) {
+			Windows::UI::Core::CoreDispatcher^ _windowDispatcher = webrtc::VideoCommonWinUWP::GetCoreDispatcher();
+			if (_windowDispatcher != nullptr) {
+				_windowDispatcher->RunAsync(
+					Windows::UI::Core::CoreDispatcherPriority::Normal,
+					ref new Windows::UI::Core::DispatchedHandler([id, width, heigth] {
+					ResolutionChanged(id, width, heigth);
+				}));
+			} else {
+				ResolutionChanged(id, width, heigth);
+			}
+		}
+	}
+}
 
 namespace Org {
 	namespace WebRtc {
@@ -55,21 +89,19 @@ namespace Org {
 			}
 
 			HRESULT WebRtcMediaSource::CreateMediaSource(
-				IMediaSource** source,
-				Org::WebRtc::MediaVideoTrack^ track,
+				WebRtcMediaSource** source,
+				VideoFrameType frameType,
 				String^ id) {
 				*source = nullptr;
-				ComPtr<WebRtcMediaSource> internalRet;
+				ComPtr<WebRtcMediaSource> comSource;
 				RETURN_ON_FAIL(MakeAndInitialize<WebRtcMediaSource>(
-					&internalRet, track, id));
-				ComPtr<IMediaSource> ret;
-				internalRet.As(&ret);
-				*source = ret.Detach();
+					&comSource, frameType, id));
+				*source = comSource.Detach();
 				return S_OK;
 			}
 
 			HRESULT WebRtcMediaSource::RuntimeClassInitialize(
-				Org::WebRtc::MediaVideoTrack^ track, String^ id) {
+				VideoFrameType frameType, String^ id) {
 				webrtc::CriticalSectionScoped csLock(_lock.get());
 				if (_eventQueue != nullptr)
 					return S_OK;
@@ -81,16 +113,13 @@ namespace Org {
 				RETURN_ON_FAIL(MakeAndInitialize<WebRtcMediaStream>(
 					&_h264Stream, this, id, FrameTypeH264));
 
-				//if (!track->GetImpl()->GetSource()->IsH264Source())
+				if (frameType == FrameTypeI420)
 					_selectedStream = 0;
-				//else
-				//	_selectedStream = 1;
+				else if (frameType == FrameTypeH264)
+					_selectedStream = 1;
 
 				_webRtcVideoSink.reset(new WebRtcVideoSink(
-				_selectedStream == 0 ? FrameTypeI420 : FrameTypeH264,
-				_i420Stream, _h264Stream, this));
-				_track = track;
-				_track->SetRenderer(_webRtcVideoSink.get());
+					frameType, _i420Stream, _h264Stream, this));
 
 				ComPtr<IMFStreamDescriptor> i420StreamDescriptor;
 				ComPtr<IMFStreamDescriptor> h264streamDescriptor;
@@ -257,14 +286,11 @@ namespace Org {
 					_eventQueue->Shutdown();
 				}
 
-				_track->UnsetRenderer(_webRtcVideoSink.get());
-
 				RETURN_ON_FAIL(_i420Stream->Shutdown());
 				RETURN_ON_FAIL(_h264Stream->Shutdown());
 
 				_presDescriptor = nullptr;
 				_deviceManager = nullptr;
-				_track = nullptr;
 				_eventQueue = nullptr;
 				_webRtcVideoSink.reset();
 				_i420Stream.Reset();
@@ -399,6 +425,18 @@ namespace Org {
 				}
 
 				return S_OK;
+			}
+
+			void WebRtcMediaSource::RenderFrame(const webrtc::VideoFrame *frame) {
+				webrtc::CriticalSectionScoped csLock(_lock.get());
+				if (_selectedStream == 0) {
+					if (_i420Stream != nullptr)
+						_i420Stream->RenderFrame(frame);
+				}
+				else if (_selectedStream == 1) {
+					if (_h264Stream != nullptr)
+						_h264Stream->RenderFrame(frame);
+				}
 			}
 		}
 	}

@@ -15,7 +15,6 @@
 #include <vector>
 #include "webrtc/api/mediastreaminterface.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
-#include "Media.h"
 #include "MediaSourceHelper.h"
 
 using Microsoft::WRL::ComPtr;
@@ -23,6 +22,49 @@ using Microsoft::WRL::RuntimeClass;
 using Microsoft::WRL::RuntimeClassFlags;
 using Microsoft::WRL::RuntimeClassType;
 using Windows::System::Threading::ThreadPoolTimer;
+using Platform::String;
+
+namespace Org {
+	namespace WebRtc {
+		/// <summary>
+		/// Delegate used to notify an update of the frame per second on a video stream.
+		/// </summary>
+		public delegate void FramesPerSecondChangedEventHandler(String^ id,
+			Platform::String^ fps);
+
+		/// <summary>
+		/// Delegate used to notify an update of the frame resolutions.
+		/// </summary>
+		public delegate void ResolutionChangedEventHandler(String^ id,
+			unsigned int width, unsigned int height);
+
+		/// <summary>
+		/// Class used to get frame rate events from renderer.
+		/// </summary>
+		public ref class FrameCounterHelper sealed {
+		public:
+			/// <summary>
+			/// Event fires when the frame rate changes.
+			/// </summary>
+			static event FramesPerSecondChangedEventHandler^ FramesPerSecondChanged;
+		internal:
+			static void FireEvent(String^ id, Platform::String^ str);
+		};
+
+		/// <summary>
+		/// Class used to get frame size change events from renderer.
+		/// </summary>
+		public ref class ResolutionHelper sealed {
+		public:
+			/// <summary>
+			/// Event fires when the resolution changes.
+			/// </summary>
+			static event ResolutionChangedEventHandler^ ResolutionChanged;
+		internal:
+			static void FireEvent(String^ id, unsigned int width, unsigned int height);
+		};
+	}
+}
 
 namespace Org {
 	namespace WebRtc {
@@ -56,8 +98,7 @@ namespace Org {
 				// IMFGetService
 				IFACEMETHOD(GetService)(REFGUID guidService, REFIID riid, LPVOID *ppvObject);
 
-				// rtc::VideoSinkInterface<cricket::VideoFrame>
-				virtual void RenderFrame(const webrtc::VideoFrame *frame);
+				void RenderFrame(const webrtc::VideoFrame *frame);
 
 				STDMETHOD(Start)(IMFPresentationDescriptor *pPresentationDescriptor,
 					const GUID *pguidTimeFormat, const PROPVARIANT *pvarStartPosition);

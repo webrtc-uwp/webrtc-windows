@@ -16,7 +16,6 @@
 #include <set>
 #include "PeerConnectionInterface.h"
 #include "Marshalling.h"
-#include "RTMediaStreamSource.h"
 #include "WebRtcMediaSource.h"
 #include "webrtc/base/logging.h"
 #include "webrtc/media/base/videosourceinterface.h"
@@ -30,6 +29,7 @@
 #include "webrtc/modules/video_capture/windows/video_capture_winuwp.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 #include "webrtc/voice_engine/include/voe_hardware.h"
+#include "webrtc/common_video/video_common_winuwp.h"
 
 using Platform::Collections::Vector;
 using Org::WebRtc::Internal::ToCx;
@@ -41,6 +41,8 @@ using Windows::Devices::Enumeration::DeviceWatcherStatus;
 using Windows::Devices::Enumeration::DeviceInformationCollection;
 using Windows::Devices::Enumeration::EnclosureLocation;
 using Windows::Foundation::TypedEventHandler;
+using Windows::UI::Core::DispatchedHandler;
+using Windows::UI::Core::CoreDispatcherPriority;
 
 namespace {
   IVector<Org::WebRtc::MediaDevice^>^ g_videoDevices = ref new Vector<Org::WebRtc::MediaDevice^>();
@@ -359,18 +361,18 @@ namespace Org {
 		// = EncodedVideoSource =============================================================
 
 		EncodedVideoSource::EncodedVideoSource(MediaVideoTrack^ track) :
-		_videoStream(new EncodedVideoStream(this)),
-		_track(track) {
-		_track->SetRenderer(_videoStream.get());
+			_videoStream(new EncodedVideoStream(this)),
+			_track(track) {
+			_track->SetRenderer(_videoStream.get());
 		}
 
 		void EncodedVideoSource::EncodedVideoFrame(uint32 width, uint32 height,
 		const Platform::Array<uint8>^ frameData) {
-		OnEncodedVideoFrame(width, height, frameData);
+			OnEncodedVideoFrame(width, height, frameData);
 		}
 
 		EncodedVideoSource::~EncodedVideoSource() {
-		_track->UnsetRenderer(_videoStream.get());
+			_track->UnsetRenderer(_videoStream.get());
 		}
 
 		// = Media ===================================================================
@@ -380,6 +382,39 @@ namespace Org {
 		const char kStreamLabel[] = "stream_label_%llx";
 		// we will append current time (uint32 in Hex, e.g.:
 		// 8chars to the end to generate a unique string)
+
+		Media::VideoFrameSink::VideoFrameSink(MediaElement^ mediaElement, String^ id) :
+			_mediaElement(mediaElement),
+			_id(id) { }
+
+		void Media::VideoFrameSink::OnFrame(const webrtc::VideoFrame& frame) {
+			if (_mediaSource == nullptr) {
+				if (frame.video_frame_buffer()->native_handle() == nullptr)
+					_frameType = Internal::FrameTypeI420;
+				else
+					_frameType = Internal::FrameTypeH264;
+
+				auto handler = ref new DispatchedHandler([this]() {
+					Internal::WebRtcMediaSource::CreateMediaSource(&_mediaSource, _frameType, _id);
+					ComPtr<ABI::Windows::Media::Core::IMediaSource> comSource;
+					_mediaSource.As(&comSource);
+					IMediaSource^ source = reinterpret_cast<IMediaSource^>(comSource.Get());
+					_mediaElement->SetMediaStreamSource(source);
+				});
+
+				Windows::UI::Core::CoreDispatcher^ windowDispatcher =
+					webrtc::VideoCommonWinUWP::GetCoreDispatcher();
+				if (windowDispatcher != nullptr) {
+					auto dispatcher_action = windowDispatcher->RunAsync(
+						CoreDispatcherPriority::Normal, handler);
+					Concurrency::create_task(dispatcher_action).wait();
+				}
+				else {
+					handler->Invoke();
+				}
+			}
+			_mediaSource->RenderFrame(&frame);
+		}
 
 		Media::Media() :
 			_selectedAudioCapturerDevice(
@@ -589,15 +624,50 @@ namespace Org {
 			});
 		}*/
 
-		IMediaSource^ Media::CreateMediaSource(
-			MediaVideoTrack^ track, String^ id) {
-			return globals::RunOnGlobalThread<IMediaSource^>([track, id]() -> IMediaSource^ {
-				ComPtr<ABI::Windows::Media::Core::IMediaSource> comSource;
-				Org::WebRtc::Internal::WebRtcMediaSource::CreateMediaSource(&comSource, track, id);
-				IMediaSource^ source = reinterpret_cast<IMediaSource^>(comSource.Get());
-				return source;
-			});
+		void Media::AddVideoTrackMediaElementPair(MediaVideoTrack^ track, MediaElement^ mediaElement, String^ id) {
+			std::list<std::unique_ptr<VideoTrackMediaElementPair>>::iterator iter =
+				_videoTrackMediaElementPairList.begin();
+			while (iter != _videoTrackMediaElementPairList.end()) {
+				if ((*iter)->_videoTrack == track) {
+					(*iter)->_videoSink.reset(new VideoFrameSink(mediaElement, id));
+					(*iter)->_mediaElement = mediaElement;
+					track->SetRenderer((*iter)->_videoSink.get());
+					return;
+				}
+				iter++;
+			}
+			_videoTrackMediaElementPairList.push_back(
+				std::unique_ptr<VideoTrackMediaElementPair>(new VideoTrackMediaElementPair()));
+			_videoTrackMediaElementPairList.back()->_videoTrack = track;
+			_videoTrackMediaElementPairList.back()->_videoSink.reset(new VideoFrameSink(mediaElement, id));
+			_videoTrackMediaElementPairList.back()->_mediaElement = mediaElement;
+			track->SetRenderer(_videoTrackMediaElementPairList.back()->_videoSink.get());
 		}
+
+		void Media::RemoveVideoTrackMediaElementPair(MediaVideoTrack^ track) {
+			std::list<std::unique_ptr<VideoTrackMediaElementPair>>::iterator iter =
+				_videoTrackMediaElementPairList.begin();
+			while (iter != _videoTrackMediaElementPairList.end()) {
+				if ((*iter)->_videoTrack == track) {
+					(*iter)->_videoTrack->UnsetRenderer((*iter)->_videoSink.get());
+					(*iter)->_mediaElement->Stop();
+					(*iter)->_mediaElement->Source = nullptr;
+					_videoTrackMediaElementPairList.erase(iter);
+					return;
+				}
+				iter++;
+			}
+		}
+
+		//IMediaSource^ Media::CreateMediaSource(
+		//	MediaVideoTrack^ track, String^ id) {
+		//	return globals::RunOnGlobalThread<IMediaSource^>([track, id]() -> IMediaSource^ {
+		//		ComPtr<ABI::Windows::Media::Core::IMediaSource> comSource;
+		//		Org::WebRtc::Internal::WebRtcMediaSource::CreateMediaSource(&comSource, Internal::FrameTypeI420, id);
+		//		IMediaSource^ source = reinterpret_cast<IMediaSource^>(comSource.Get());
+		//		return source;
+		//	});
+		//}
 
 		RawVideoSource^ Media::CreateRawVideoSource(MediaVideoTrack^ track) {
 			return ref new RawVideoSource(track);
@@ -825,6 +895,7 @@ namespace Org {
 			});
 			return op;
 		}
+
 		void Media::SubscribeToMediaDeviceChanges() {
 			_videoCaptureWatcher = DeviceInformation::CreateWatcher(
 				DeviceClass::VideoCapture);
