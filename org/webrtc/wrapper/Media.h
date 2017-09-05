@@ -526,7 +526,6 @@ namespace Org {
 			/// audio and/or video tracks, as requested by the
 			/// <paramref name="mediaStreamConstraints"/> parameter.
 			/// </returns>
-
 			IAsyncOperation<MediaStream^>^ GetUserMedia(
 				RTCMediaStreamConstraints^ mediaStreamConstraints);
 
@@ -596,21 +595,6 @@ namespace Org {
 			EncodedVideoSource^ CreateEncodedVideoSource(MediaVideoTrack^ track);
 
 			/// <summary>
-			/// Retrieves system devices that can be used for audio capturing.
-			/// (microphones).
-			/// </summary>
-			/// <returns>Vector of system devices that can be used for audio capturing
-			/// (microphones).</returns>
-			IVector<MediaDevice^>^ GetAudioCaptureDevices();
-
-			/// <summary>
-			/// Retrieves system devices that can be used for audio playout (speakers).
-			/// </summary>
-			/// <returns>Vector of system devices that can be used for audio playout
-			/// (speakers).</returns>
-			IVector<MediaDevice^>^ GetAudioPlayoutDevices();
-
-			/// <summary>
 			/// Retrieves system devices that can be used for video capturing (webcams).
 			/// </summary>
 			/// <returns>Vector of system devices that can be used for video capturing
@@ -622,22 +606,6 @@ namespace Org {
 			/// </summary>
 			/// <param name="device">Webcam to be used for video capturing.</param>
 			void SelectVideoDevice(MediaDevice^ device);
-
-			/// <summary>
-			/// Allows switching between microphones.
-			/// </summary>
-			/// <param name="device">Microphone to be used for audio capturing.If null,
-			/// default audio recording device will be used</param>
-			/// <returns>True if the operation succeeded.</returns>
-			bool SelectAudioCaptureDevice(MediaDevice^ device);
-
-			/// <summary>
-			/// Allows switching between audio playout devices (speakers).
-			/// </summary>
-			/// <param name="device">Device to be used for audio playback. If null,
-			/// default audio playout device will be used.</param>
-			/// <returns>True if the operation succeeded.</returns>
-			bool SelectAudioPlayoutDevice(MediaDevice^ device);
 
 			/// <summary>
 			/// App suspending event handler.
@@ -669,26 +637,14 @@ namespace Org {
 				DeviceInformation^ args);
 			void OnMediaDeviceRemoved(DeviceWatcher^ sender,
 				DeviceInformationUpdate^ args);
-			static int GetAudioPlayoutDeviceIndex(webrtc::VoEHardware* voeHardware,
-				const std::string& name,
-				const std::string& id);
-			static int GetAudioCaptureDeviceIndex(webrtc::VoEHardware* voeHardware,
-				const std::string& name,
-				const std::string& id);
 
 			std::unique_ptr<cricket::WinUWPDeviceManager> _dev_manager;
 			cricket::Device _selectedVideoDevice;
-			cricket::Device _selectedAudioCapturerDevice;
-			cricket::Device _selectedAudioPlayoutDevice;
 
 			std::list<std::unique_ptr<VideoTrackMediaElementPair>> _videoTrackMediaElementPairList;
 
 			DeviceWatcher^ _videoCaptureWatcher;
-			DeviceWatcher^ _audioCaptureWatcher;
-			DeviceWatcher^ _audioPlayoutWatcher;
 			bool _videoCaptureDeviceChanged;
-			bool _audioCaptureDeviceChanged;
-			bool _audioPlayoutDeviceChanged;
 		};
 	}
 }  // namespace Org.WebRtc

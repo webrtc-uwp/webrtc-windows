@@ -741,12 +741,13 @@ namespace Org {
 		IVector<CodecInfo^>^ WebRTC::GetAudioCodecs() {
 			auto ret = ref new Vector<CodecInfo^>();
 			globals::RunOnGlobalThread<void>([ret] {
-#if 0
-				const std::vector<cricket::AudioCodec>& codecs = globals::gPeerConnectionFactory->GetMediaEngine()->audio_recv_codecs();
-				for (auto it = codecs.begin(); it != codecs.end(); ++it) {
-					ret->Append(ref new CodecInfo(it->id, it->clockrate, ToCx(it->name)));
-				}
-#endif
+				ret->Append(ref new CodecInfo(111, 48000, "opus"));
+				ret->Append(ref new CodecInfo(103, 16000, "ISAC"));
+				ret->Append(ref new CodecInfo(104, 32000, "ISAC"));
+				ret->Append(ref new CodecInfo(9, 8000, "G722"));
+				ret->Append(ref new CodecInfo(102, 8000, "ILBC"));
+				ret->Append(ref new CodecInfo(0, 8000, "PCMU"));
+				ret->Append(ref new CodecInfo(8, 8000, "PCMA"));
 			});
 			return ret;
 		}
@@ -754,13 +755,9 @@ namespace Org {
 		IVector<CodecInfo^>^ WebRTC::GetVideoCodecs() {
 			auto ret = ref new Vector<CodecInfo^>();
 			globals::RunOnGlobalThread<void>([ret] {
-#if 0
-				const std::vector<cricket::VideoCodec>& codecs = globals::gPeerConnectionFactory->GetMediaEngine()->video_codecs();
-				for (auto it = codecs.begin(); it != codecs.end(); ++it) {
-					if (it->GetCodecType() == cricket::VideoCodec::CODEC_VIDEO)
-						ret->Append(ref new CodecInfo(it->id, it->clockrate, ToCx(it->name)));
-				}
-#endif
+				ret->Append(ref new CodecInfo(96, 90000, "VP8"));
+				ret->Append(ref new CodecInfo(98, 90000, "VP9"));
+				ret->Append(ref new CodecInfo(125, 90000, "H264"));
 			});
 			return ret;
 		}
