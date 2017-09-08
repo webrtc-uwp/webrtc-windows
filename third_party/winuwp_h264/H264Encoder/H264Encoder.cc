@@ -452,9 +452,19 @@ void WinUWPH264EncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
         return;
       }
 
+
       if (encodedCompleteCallback_ != nullptr) {
-        encodedCompleteCallback_->OnEncodedImage(
-          encodedImage, codecSpecificInfo_, &fragmentationHeader);
+        CodecSpecificInfo codecSpecificInfo;
+        if (codecSpecificInfo_ != nullptr) {
+          codecSpecificInfo = *codecSpecificInfo_;
+        }
+        else {
+          codecSpecificInfo.codecType = webrtc::kVideoCodecH264;
+          codecSpecificInfo.codecSpecific.H264.packetization_mode =
+            H264PacketizationMode::NonInterleaved;
+          encodedCompleteCallback_->OnEncodedImage(
+            encodedImage, &codecSpecificInfo, &fragmentationHeader);
+        }
       }
     }
   }

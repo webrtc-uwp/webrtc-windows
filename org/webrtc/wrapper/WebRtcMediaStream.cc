@@ -14,8 +14,9 @@
 #include <d3d11_2.h>
 #include <d2d1_2.h>
 #include <functional>
+#include <wrl.h>
+#include <ppltasks.h>
 #include "webrtc/media/base/videoframe.h"
-#include "RTMediaStreamSource.h"
 #include "webrtc/media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
 

@@ -19,14 +19,16 @@
 #include "webrtc/media/devices/winuwpdevicemanager.h"
 #include "webrtc/modules/audio_device/include/audio_device.h"
 #include "Delegates.h"
+#include "WebRtcMediaSource.h"
 
-using Windows::Foundation::IAsyncOperation;
 using Platform::String;
+using Windows::Foundation::IAsyncOperation;
 using Windows::Foundation::Collections::IVector;
 using Windows::Media::Core::IMediaSource;
 using Windows::Devices::Enumeration::DeviceWatcher;
 using Windows::Devices::Enumeration::DeviceInformation;
 using Windows::Devices::Enumeration::DeviceInformationUpdate;
+using Windows::UI::Xaml::Controls::MediaElement;
 
 #define THROW_WEBRTC_NULL_REFERENCE_EXCEPTION(exceptionMessage) { if (exceptionMessage) { throw ref new Platform::NullReferenceException(exceptionMessage); } else {throw ref new Platform::NullReferenceException(); } }
 
@@ -482,7 +484,27 @@ namespace Org {
 		/// <remarks>
 		/// http://www.w3.org/TR/mediacapture-streams
 		/// </remarks>
+		[Windows::Foundation::Metadata::WebHostHidden]
 		public ref class Media sealed {
+
+		private:
+			class VideoFrameSink : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
+			public:
+				VideoFrameSink(MediaElement^ mediaElement, String^ id);
+				virtual void OnFrame(const webrtc::VideoFrame& frame) override;
+			private:
+				Internal::VideoFrameType _frameType;
+				MediaElement^ _mediaElement;
+				String^ _id;
+				ComPtr<Internal::WebRtcMediaSource> _mediaSource;
+			};
+
+			struct VideoTrackMediaElementPair {
+				MediaVideoTrack^ _videoTrack;
+				MediaElement^ _mediaElement;
+				std::unique_ptr<VideoFrameSink> _videoSink;
+			};
+
 		public:
 			static Media^ CreateMedia();
 
@@ -504,7 +526,6 @@ namespace Org {
 			/// audio and/or video tracks, as requested by the
 			/// <paramref name="mediaStreamConstraints"/> parameter.
 			/// </returns>
-
 			IAsyncOperation<MediaStream^>^ GetUserMedia(
 				RTCMediaStreamConstraints^ mediaStreamConstraints);
 
@@ -523,6 +544,25 @@ namespace Org {
 			//	MediaVideoTrack^ track, uint32 framerate, String^ id);
 
 			/// <summary>
+			/// Adds Video Track and Media Element piar structure to keep a reference
+			/// of which video frame source is connected to which video surface. When
+			/// first video frame arrives from Video Track, Media class creates raw video
+			/// or H.264 Custom Media Source object and it is attached as a media source
+			/// to Media Element object.
+			/// </summary>
+			/// <param name="track">Video track used as a frame source</param>
+			/// <param name="mediaElement">Rendering surface</param>
+			/// <param name="id">Identifier for media source.</param>
+			void AddVideoTrackMediaElementPair(MediaVideoTrack^ track, MediaElement^ mediaElement, String^ id);
+
+			/// <summary>
+			/// Removes Video Track and Media Element piar structure from list of pairs.
+			/// </summary>
+			/// <param name="track">Video track used as a frame source which ientifies
+			/// the pair to be removed</param>
+			void RemoveVideoTrackMediaElementPair(MediaVideoTrack^ track);
+
+			/// <summary>
 			/// Creates an <see cref="IMediaSource"/> for a video track, with a given
 			/// frame rate and identifier to be used for notifications on media
 			/// changes.
@@ -535,8 +575,8 @@ namespace Org {
 			/// when receiving media change event notifications.
 			/// </param>
 			/// <returns>A media source.</returns>
-			IMediaSource^ CreateMediaSource(
-				MediaVideoTrack^ track, String^ id);
+			//IMediaSource^ CreateMediaSource(
+			//	MediaVideoTrack^ track, String^ id);
 
 			/// <summary>
 			/// Creates an <see cref="RawVideoSource"/> for a video track.
@@ -555,21 +595,6 @@ namespace Org {
 			EncodedVideoSource^ CreateEncodedVideoSource(MediaVideoTrack^ track);
 
 			/// <summary>
-			/// Retrieves system devices that can be used for audio capturing.
-			/// (microphones).
-			/// </summary>
-			/// <returns>Vector of system devices that can be used for audio capturing
-			/// (microphones).</returns>
-			IVector<MediaDevice^>^ GetAudioCaptureDevices();
-
-			/// <summary>
-			/// Retrieves system devices that can be used for audio playout (speakers).
-			/// </summary>
-			/// <returns>Vector of system devices that can be used for audio playout
-			/// (speakers).</returns>
-			IVector<MediaDevice^>^ GetAudioPlayoutDevices();
-
-			/// <summary>
 			/// Retrieves system devices that can be used for video capturing (webcams).
 			/// </summary>
 			/// <returns>Vector of system devices that can be used for video capturing
@@ -581,22 +606,6 @@ namespace Org {
 			/// </summary>
 			/// <param name="device">Webcam to be used for video capturing.</param>
 			void SelectVideoDevice(MediaDevice^ device);
-
-			/// <summary>
-			/// Allows switching between microphones.
-			/// </summary>
-			/// <param name="device">Microphone to be used for audio capturing.If null,
-			/// default audio recording device will be used</param>
-			/// <returns>True if the operation succeeded.</returns>
-			bool SelectAudioCaptureDevice(MediaDevice^ device);
-
-			/// <summary>
-			/// Allows switching between audio playout devices (speakers).
-			/// </summary>
-			/// <param name="device">Device to be used for audio playback. If null,
-			/// default audio playout device will be used.</param>
-			/// <returns>True if the operation succeeded.</returns>
-			bool SelectAudioPlayoutDevice(MediaDevice^ device);
 
 			/// <summary>
 			/// App suspending event handler.
@@ -628,24 +637,14 @@ namespace Org {
 				DeviceInformation^ args);
 			void OnMediaDeviceRemoved(DeviceWatcher^ sender,
 				DeviceInformationUpdate^ args);
-			static int GetAudioPlayoutDeviceIndex(webrtc::VoEHardware* voeHardware,
-				const std::string& name,
-				const std::string& id);
-			static int GetAudioCaptureDeviceIndex(webrtc::VoEHardware* voeHardware,
-				const std::string& name,
-				const std::string& id);
 
 			std::unique_ptr<cricket::WinUWPDeviceManager> _dev_manager;
 			cricket::Device _selectedVideoDevice;
-			cricket::Device _selectedAudioCapturerDevice;
-			cricket::Device _selectedAudioPlayoutDevice;
+
+			std::list<std::unique_ptr<VideoTrackMediaElementPair>> _videoTrackMediaElementPairList;
 
 			DeviceWatcher^ _videoCaptureWatcher;
-			DeviceWatcher^ _audioCaptureWatcher;
-			DeviceWatcher^ _audioPlayoutWatcher;
 			bool _videoCaptureDeviceChanged;
-			bool _audioCaptureDeviceChanged;
-			bool _audioPlayoutDeviceChanged;
 		};
 	}
 }  // namespace Org.WebRtc
