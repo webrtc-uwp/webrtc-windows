@@ -20,6 +20,7 @@
 #include "webrtc/modules/audio_device/include/audio_device.h"
 #include "Delegates.h"
 #include "WebRtcMediaSource.h"
+#include "RTMediaStreamSource.h"
 
 using Platform::String;
 using Windows::Foundation::IAsyncOperation;
@@ -540,8 +541,8 @@ namespace Org {
 			/// when receiving media change event notifications.
 			/// </param>
 			/// <returns>A media source.</returns>
-			//IMediaSource^ CreateMediaStreamSource(
-			//	MediaVideoTrack^ track, uint32 framerate, String^ id);
+			IMediaSource^ CreateMediaStreamSource(
+				MediaVideoTrack^ track, uint32 framerate, String^ id);
 
 			/// <summary>
 			/// Adds Video Track and Media Element piar structure to keep a reference
@@ -575,8 +576,8 @@ namespace Org {
 			/// when receiving media change event notifications.
 			/// </param>
 			/// <returns>A media source.</returns>
-			//IMediaSource^ CreateMediaSource(
-			//	MediaVideoTrack^ track, String^ id);
+			IMediaSource^ CreateMediaSource(
+				MediaVideoTrack^ track, String^ id);
 
 			/// <summary>
 			/// Creates an <see cref="RawVideoSource"/> for a video track.

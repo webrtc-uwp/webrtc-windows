@@ -13,6 +13,7 @@
 #include "Media.h"
 #include "MediaSourceHelper.h"
 #include "webrtc/api/mediastreaminterface.h"
+#include "webrtc/media/base/videoframe.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 
 using Windows::Media::Core::MediaStreamSource;
@@ -20,7 +21,7 @@ using Platform::WeakReference;
 using Org::WebRtc::MediaVideoTrack;
 using Windows::System::Threading::ThreadPoolTimer;
 using Windows::Media::Core::MediaStreamSourceSampleRequest;
-/*
+
 namespace Org {
 	namespace WebRtc {
 		namespace Internal {
@@ -86,11 +87,12 @@ namespace Org {
 				MediaStreamSourceSampleRequest^ _request;
 				Windows::Media::Core::MediaStreamSourceSampleRequestDeferral^ _deferral;
 				Windows::Media::Core::MediaStreamSourceStartingRequestDeferral^ _startingDeferral;
+				Windows::Media::Core::MediaStreamSourceStartingEventArgs^ _startingArgs;
 
 				ULONG _frameBeingQueued;
 			};
 		}
 	}
 }  // namespace Org.WebRtc.Internal
-*/
+
 #endif  // WEBRTC_BUILD_WINUWP_GYP_API_RTMEDIASTREAMSOURCE_H_

@@ -162,11 +162,11 @@ namespace Org {
 					if (tmp != nullptr) {
 						tmp->AddRef();
 						data->sample.Attach(tmp);
-						data->renderTime = frame->timestamp();
 
 						ComPtr<IMFAttributes> sampleAttributes;
 						data->sample.As(&sampleAttributes);
 						if (IsSampleIDR(tmp)) {
+							sampleAttributes->SetUINT32(MFSampleExtension_Discontinuity, TRUE);
 							sampleAttributes->SetUINT32(MFSampleExtension_CleanPoint, TRUE);
 						}
 					}

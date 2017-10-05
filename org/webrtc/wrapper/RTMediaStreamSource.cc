@@ -27,7 +27,7 @@ using Windows::Media::MediaProperties::VideoEncodingProperties;
 using Windows::Media::MediaProperties::MediaEncodingSubtypes;
 using Windows::System::Threading::TimerElapsedHandler;
 using Windows::System::Threading::ThreadPoolTimer;
-/*
+
 namespace Org {
 	namespace WebRtc {
 		namespace Internal {
@@ -35,7 +35,7 @@ namespace Org {
 			MediaStreamSource^ RTMediaStreamSource::CreateMediaSource(
 				MediaVideoTrack^ track, uint32 frameRate, String^ id) {
 
-				bool isH264 = false;//TODO Check track->GetImpl()->GetSource()->IsH264Source();
+				bool isH264 = true;//TODO Check track->GetImpl()->GetSource()->IsH264Source();
 
 				auto streamState = ref new RTMediaStreamSource(track, isH264);
 				streamState->_id = id;
@@ -80,8 +80,13 @@ namespace Org {
 					// Get a deferall on the starting event so we can trigger it
 					// when the first frame arrives.
 					streamState->_startingDeferral = args->Request->GetDeferral();
+					streamState->_startingArgs = args;
 				});
 
+				// Set buffertime to 0 for rtc
+				auto timespan = Windows::Foundation::TimeSpan();
+				timespan.Duration = 0;
+				streamSource->BufferTime = timespan;
 				streamState->_mediaStreamSource = streamSource;
 
 				// Use a lambda to capture a strong reference to RTMediaStreamSource.
@@ -109,26 +114,26 @@ namespace Org {
 				});
 
 				// Create a timer which sends request progress periodically.
-				{
-					auto handler = ref new TimerElapsedHandler(streamState,
-						&RTMediaStreamSource::ProgressTimerElapsedExecute);
-					auto timespan = Windows::Foundation::TimeSpan();
-					timespan.Duration = 500 * 1000 * 10;  // 500 ms in hns
-					streamState->_progressTimer = ThreadPoolTimer::CreatePeriodicTimer(
-						handler, timespan);
-				}
+				//{
+				//	auto handler = ref new TimerElapsedHandler(streamState,
+				//		&RTMediaStreamSource::ProgressTimerElapsedExecute);
+				//	auto timespan = Windows::Foundation::TimeSpan();
+				//	timespan.Duration = 500 * 1000 * 10;  // 500 ms in hns
+				//	streamState->_progressTimer = ThreadPoolTimer::CreatePeriodicTimer(
+				//		handler, timespan);
+				//}
 
-				// Create a timer which ensures we don't display frames faster that expected.
-				// Required because Media Foundation sometimes requests samples in burst mode
-				// but we use the wall clock to drive timestamps.
-				{
-					auto handler = ref new TimerElapsedHandler(streamState,
-						&RTMediaStreamSource::FPSTimerElapsedExecute);
-					auto timespan = Windows::Foundation::TimeSpan();
-					timespan.Duration = 15 * 1000 * 10;
-					streamState->_fpsTimer = ThreadPoolTimer::CreatePeriodicTimer(handler,
-						timespan);
-				}
+				//// Create a timer which ensures we don't display frames faster that expected.
+				//// Required because Media Foundation sometimes requests samples in burst mode
+				//// but we use the wall clock to drive timestamps.
+				//{
+				//	auto handler = ref new TimerElapsedHandler(streamState,
+				//		&RTMediaStreamSource::FPSTimerElapsedExecute);
+				//	auto timespan = Windows::Foundation::TimeSpan();
+				//	timespan.Duration = 15 * 1000 * 10;
+				//	streamState->_fpsTimer = ThreadPoolTimer::CreatePeriodicTimer(handler,
+				//		timespan);
+				//}
 
 				return streamSource;
 			}
@@ -142,7 +147,8 @@ namespace Org {
 				LOG(LS_INFO) << "RTMediaStreamSource::RTMediaStreamSource";
 
 				// Create the helper with the callback functions.
-				_helper.reset(new MediaSourceHelper(isH264,
+				_helper.reset(new MediaSourceHelper(
+					FrameTypeH264,
 					[this](cricket::VideoFrame* frame, IMFSample** sample) -> HRESULT {
 					return MakeSampleCallback(frame, sample);
 				},
@@ -219,13 +225,19 @@ namespace Org {
 
 			void RTMediaStreamSource::RTCRenderer::RenderFrame(
 				const cricket::VideoFrame *frame) {
+				auto stream = _streamSource.Resolve<RTMediaStreamSource>();
+				if (stream != nullptr) {
+					auto frameCopy = new cricket::VideoFrame(
+						frame->video_frame_buffer(), frame->rotation(),
+						0);
 
+					stream->ProcessReceivedFrame(frameCopy);
+				}
 			}
 
 			void RTMediaStreamSource::ProgressTimerElapsedExecute(ThreadPoolTimer^ source) {
 				webrtc::CriticalSectionScoped csLock(_lock.get());
 				if (_request != nullptr) {
-					_request->ReportSampleProgress(1);
 				}
 			}
 
@@ -268,20 +280,12 @@ namespace Org {
 				HRESULT hr = reinterpret_cast<IInspectable*>(_request)->QueryInterface(
 					spRequest.ReleaseAndGetAddressOf());
 
-				//Fixme: it appears that MSS works well if we hardcode the sample duration with 33ms,
-				// Don' know why, override the value set by the mediahelper
-				LONGLONG duration = (LONGLONG)((1.0 / 30) * 1000 * 1000 * 10);
-				sampleData->sample.Get()->SetSampleDuration(duration);
-
 				hr = spRequest->SetSample(sampleData->sample.Get());
 
 				if (_deferral != nullptr) {
 					_deferral->Complete();
 				}
 
-				_frameSentThisTime = true;
-
-				_request = nullptr;
 				_deferral = nullptr;
 			}
 
@@ -389,8 +393,14 @@ namespace Org {
 				webrtc::CriticalSectionScoped csLock(_lock.get());
 
 				if (_startingDeferral != nullptr) {
+					auto timespan = Windows::Foundation::TimeSpan();
+					timespan.Duration = 0;
+					_startingArgs->Request->SetActualStartPosition(timespan);
 					_startingDeferral->Complete();
 					_startingDeferral = nullptr;
+					_startingArgs = nullptr;
+
+					//TODO: Request a keyframe from the server when the first frame is received.
 				}
 
 				if (_helper == nullptr) {  // May be null while tearing down the MSS
@@ -399,7 +409,7 @@ namespace Org {
 				_helper->QueueFrame(frame);
 
 				// If we have a pending request, reply to it now.
-				if (_deferral != nullptr && _request != nullptr && !_frameSentThisTime) {
+				if (_request != nullptr) {
 					ReplyToSampleRequest();
 				}
 			}
@@ -409,4 +419,4 @@ namespace Org {
 		}
 	}
 }  // namespace Org.WebRtc.Internal
-*/
+

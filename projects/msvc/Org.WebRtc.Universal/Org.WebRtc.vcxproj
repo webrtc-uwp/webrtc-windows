@@ -33,6 +33,7 @@
     <ClCompile Include="..\..\..\org\webrtc\wrapper\Media.cc" />
     <ClCompile Include="..\..\..\org\webrtc\wrapper\MediaSourceHelper.cc" />
     <ClCompile Include="..\..\..\org\webrtc\wrapper\PeerConnectionInterface.cc" />
+    <ClCompile Include="..\..\..\org\webrtc\wrapper\RTMediaStreamSource.cc" />
     <ClCompile Include="..\..\..\org\webrtc\wrapper\WebRtcMediaSource.cc" />
     <ClCompile Include="..\..\..\org\webrtc\wrapper\WebRtcMediaStream.cc" />
   </ItemGroup>
@@ -45,6 +46,7 @@
     <ClInclude Include="..\..\..\org\webrtc\wrapper\MediaSourceHelper.h" />
     <ClInclude Include="..\..\..\org\webrtc\wrapper\PeerConnectionInterface.h" />
     <ClInclude Include="..\..\..\org\webrtc\wrapper\RTCStatsReport.h" />
+    <ClInclude Include="..\..\..\org\webrtc\wrapper\RTMediaStreamSource.h" />
     <ClInclude Include="..\..\..\org\webrtc\wrapper\WebRtcMediaSource.h" />
     <ClInclude Include="..\..\..\org\webrtc\wrapper\WebRtcMediaStream.h" />
   </ItemGroup>

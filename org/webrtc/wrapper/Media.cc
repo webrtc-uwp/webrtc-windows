@@ -536,14 +536,14 @@ namespace Org {
 			return asyncOp;
 		}
 
-		//IMediaSource^ Media::CreateMediaStreamSource(
-		//	MediaVideoTrack^ track, uint32 framerate, String^ id) {
-		//	return globals::RunOnGlobalThread<MediaStreamSource^>([track, framerate,
-		//		id]()->MediaStreamSource^ {
-		//		return Org::WebRtc::Internal::RTMediaStreamSource::
-		//			CreateMediaSource(track, framerate, id);
-		//	});
-		//}
+		IMediaSource^ Media::CreateMediaStreamSource(
+			MediaVideoTrack^ track, uint32 framerate, String^ id) {
+			return globals::RunOnGlobalThread<MediaStreamSource^>([track, framerate,
+				id]()->MediaStreamSource^ {
+				return Org::WebRtc::Internal::RTMediaStreamSource::
+					CreateMediaSource(track, framerate, id);
+			});
+		}
 
 		void Media::AddVideoTrackMediaElementPair(MediaVideoTrack^ track, MediaElement^ mediaElement, String^ id) {
 			std::list<std::unique_ptr<VideoTrackMediaElementPair>>::iterator iter =
@@ -580,15 +580,15 @@ namespace Org {
 			}
 		}
 
-		//IMediaSource^ Media::CreateMediaSource(
-		//	MediaVideoTrack^ track, String^ id) {
-		//	return globals::RunOnGlobalThread<IMediaSource^>([track, id]() -> IMediaSource^ {
-		//		ComPtr<ABI::Windows::Media::Core::IMediaSource> comSource;
-		//		Org::WebRtc::Internal::WebRtcMediaSource::CreateMediaSource(&comSource, Internal::FrameTypeI420, id);
-		//		IMediaSource^ source = reinterpret_cast<IMediaSource^>(comSource.Get());
-		//		return source;
-		//	});
-		//}
+		IMediaSource^ Media::CreateMediaSource(
+			MediaVideoTrack^ track, String^ id) {
+			return globals::RunOnGlobalThread<IMediaSource^>([track, id]() -> IMediaSource^ {
+				ComPtr<Org::WebRtc::Internal::WebRtcMediaSource> comSource;
+				Org::WebRtc::Internal::WebRtcMediaSource::CreateMediaSource(&comSource, Internal::FrameTypeH264, id);
+				IMediaSource^ source = reinterpret_cast<IMediaSource^>(comSource.Get());
+				return source;
+			});
+		}
 
 		RawVideoSource^ Media::CreateRawVideoSource(MediaVideoTrack^ track) {
 			return ref new RawVideoSource(track);
