@@ -110,10 +110,6 @@ int WinUWPH264DecoderImpl::Decode(const EncodedImage& input_image,
   const CodecSpecificInfo* codec_specific_info,
   int64_t render_time_ms) {
 
-  // We sleep here to simulate work.  Otherwise webrtc thinks
-  // decoding take no time and it seems to interfere with its
-  // ability to load balance.
-  Sleep(15);
   UpdateVideoFrameDimensions(input_image);
   auto sample = FromEncodedImage(input_image);
 
