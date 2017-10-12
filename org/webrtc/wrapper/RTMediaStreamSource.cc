@@ -53,6 +53,7 @@ namespace Org {
 						VideoEncodingProperties::CreateUncompressed(
 							MediaEncodingSubtypes::Nv12, 10, 10);
 				}
+				
 				streamState->_videoDesc = ref new VideoStreamDescriptor(videoProperties);
 
 				// initial value, this will be override by incoming frame from webrtc.
@@ -370,7 +371,7 @@ namespace Org {
 						return;
 					}
 
-					if (!_frameSentThisTime && _helper->HasFrames()) {
+					if (_helper->HasFrames()) {
 						ReplyToSampleRequest();
 						return;
 					}
@@ -379,6 +380,7 @@ namespace Org {
 						if (_deferral != nullptr) {
 							LOG(LS_ERROR) << "Got deferral when another hasn't completed.";
 						}
+
 						_deferral = _request->GetDeferral();
 						return;
 					}
@@ -409,7 +411,7 @@ namespace Org {
 				_helper->QueueFrame(frame);
 
 				// If we have a pending request, reply to it now.
-				if (_request != nullptr) {
+				if (_deferral != nullptr) {
 					ReplyToSampleRequest();
 				}
 			}
