@@ -28,10 +28,10 @@
 #include "H264MediaSink.h"
 #include "../Utils/Utils.h"
 #include "webrtc/modules/video_coding/include/video_codec_interface.h"
-#include "webrtc/base/timeutils.h"
+#include "webrtc/rtc_base/timeutils.h"
 #include "libyuv/convert.h"
-#include "webrtc/base/logging.h"
-#include "webrtc/base/win32.h"
+#include "webrtc/rtc_base/logging.h"
+#include "webrtc/rtc_base/win32.h"
 
 
 #pragma comment(lib, "mfreadwrite")
