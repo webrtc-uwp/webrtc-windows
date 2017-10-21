@@ -22,7 +22,7 @@ class WinUWPH264EncoderFactory : public cricket::WebRtcVideoEncoderFactory {
  public:
   WinUWPH264EncoderFactory();
 
-  webrtc::VideoEncoder* CreateVideoEncoder(webrtc::VideoCodecType type)
+  webrtc::VideoEncoder* CreateVideoEncoder(const cricket::VideoCodec& codec)
     override;
 
   const std::vector<cricket::VideoCodec>& supported_codecs()

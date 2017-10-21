@@ -33,6 +33,34 @@
 
 namespace webrtc {
 
+class NativeHandleBuffer : public VideoFrameBuffer {
+public:
+  NativeHandleBuffer(void* native_handle, int width, int height)
+    : native_handle_(native_handle),
+    width_(width),
+    height_(height) { }
+
+  virtual Type type() const {
+    return Type::kNative;
+  }
+
+  int width() const override {
+    return width_;
+  }
+  int height() const override {
+    return height_;
+  }
+
+  void* native_handle() const {
+    return native_handle_;
+  }
+
+protected:
+  void* native_handle_;
+  const int width_;
+  const int height_;
+};
+
 //////////////////////////////////////////
 // H264 WinUWP Decoder Implementation
 //////////////////////////////////////////
@@ -40,8 +68,7 @@ namespace webrtc {
 WinUWPH264DecoderImpl::WinUWPH264DecoderImpl()
   : width_(0),
   height_(0),
-  _cbLock(webrtc::CriticalSectionWrapper::CreateCriticalSection())
-  , decodeCompleteCallback_(nullptr) {
+  decodeCompleteCallback_(nullptr) {
 }
 
 WinUWPH264DecoderImpl::~WinUWPH264DecoderImpl() {
@@ -95,7 +122,7 @@ public:
   virtual ~H264NativeHandleBuffer() {
   }
 
-  rtc::scoped_refptr<VideoFrameBuffer> NativeToI420Buffer() override {
+  rtc::scoped_refptr<I420BufferInterface> ToI420() override {
     RTC_NOTREACHED();  // Should not be called.
     return nullptr;
   }
@@ -123,7 +150,7 @@ int WinUWPH264DecoderImpl::Decode(const EncodedImage& input_image,
     VideoFrame decodedFrame(buffer, input_image._timeStamp, render_time_ms, kVideoRotation_0);
     decodedFrame.set_ntp_time_ms(input_image.ntp_time_ms_);
 
-    webrtc::CriticalSectionScoped csLock(_cbLock.get());
+    rtc::CritScope lock(&crit_);
 
     if (decodeCompleteCallback_ != nullptr) {
       decodeCompleteCallback_->Decoded(decodedFrame);
@@ -134,7 +161,7 @@ int WinUWPH264DecoderImpl::Decode(const EncodedImage& input_image,
 
 int WinUWPH264DecoderImpl::RegisterDecodeCompleteCallback(
   DecodedImageCallback* callback) {
-  webrtc::CriticalSectionScoped csLock(_cbLock.get());
+  rtc::CritScope lock(&crit_);
   decodeCompleteCallback_ = callback;
   return WEBRTC_VIDEO_CODEC_OK;
 }
