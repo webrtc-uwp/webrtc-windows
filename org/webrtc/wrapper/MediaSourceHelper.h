@@ -10,12 +10,14 @@
 #ifndef WEBRTC_BUILD_WINUWP_GYP_API_MEDIASOURCEHELPER_H_
 #define WEBRTC_BUILD_WINUWP_GYP_API_MEDIASOURCEHELPER_H_
 
-#include "Media.h"
+#include <wrl.h>
+#include <collection.h>
+#include <mfidl.h>
 #include "webrtc/api/mediastreaminterface.h"
-//#include "webrtc/system_wrappers/include/tick_util.h"
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 
 using Microsoft::WRL::ComPtr;
+
 namespace Org {
 	namespace WebRtc {
 		/// <summary>

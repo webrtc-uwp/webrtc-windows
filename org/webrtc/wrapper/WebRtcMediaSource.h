@@ -10,14 +10,13 @@
 #ifndef WEBRTC_BUILD_WINUWP_GYP_API_WEBRTCMEDIASOURCE_H_
 #define WEBRTC_BUILD_WINUWP_GYP_API_WEBRTCMEDIASOURCE_H_
 
-#include <wrl.h>
 #include "WebRtcMediaStream.h"
+#include <wrl.h>
 #include <mfapi.h>
 #include <mfidl.h>
 #include <windows.media.h>
 #include <windows.media.core.h>
 #include "webrtc/system_wrappers/include/critical_section_wrapper.h"
-#include "Media.h"
 
 interface IFrameSource;
 
@@ -28,14 +27,22 @@ using Microsoft::WRL::RuntimeClassType;
 
 namespace Org {
 	namespace WebRtc {
+		ref class MediaVideoTrack;
+	}
+}
+
+namespace Org {
+	namespace WebRtc {
 		namespace Internal {
+
+			class WebRtcMediaSource;
 
 			class WebRtcVideoSinkObserver {
 			public:
 				virtual void OnVideoFormatChanged(VideoFrameType frameType) = 0;
 			};
 
-			class WebRtcMediaSource :
+			class DECLSPEC_UUID("E306B192-18F8-49BF-BCA5-E675540E91D1") WebRtcMediaSource :
 				public RuntimeClass<RuntimeClassFlags<RuntimeClassType::WinRtClassicComMix>,
 					IMFMediaSourceEx, IMFMediaSource, IMFMediaEventGenerator,
 					IMFGetService,
@@ -50,22 +57,22 @@ namespace Org {
 					WebRtcVideoSink(VideoFrameType frameType, 
 						ComPtr<WebRtcMediaStream> i420Stream,
 						ComPtr<WebRtcMediaStream> h264Stream,
-						WebRtcVideoSinkObserver *videoSinkObserver);
+						WebRtcVideoSinkObserver* videoSinkObserver);
 					virtual void OnFrame(const webrtc::VideoFrame& frame) override;
 				private:
 					VideoFrameType _frameType;
 					ComPtr<WebRtcMediaStream> _i420Stream;
 					ComPtr<WebRtcMediaStream> _h264Stream;
-					WebRtcVideoSinkObserver *_videoSinkObserver;
+					WebRtcVideoSinkObserver* _videoSinkObserver;
 				};
 
 				static HRESULT CreateMediaSource(
-					ABI::Windows::Media::Core::IMediaSource** source,
-					Org::WebRtc::MediaVideoTrack^ track, String^ id);
+					WebRtcMediaSource** source,
+					VideoFrameType frameType, String^ id);
 
 				WebRtcMediaSource();
 				virtual ~WebRtcMediaSource();
-				HRESULT RuntimeClassInitialize(Org::WebRtc::MediaVideoTrack^ track, String^ id);
+				HRESULT RuntimeClassInitialize(VideoFrameType frameType, String^ id);
 
 				// WebRtcVideoSinkObserver
 				virtual void OnVideoFormatChanged(VideoFrameType frameType) override;
@@ -100,10 +107,11 @@ namespace Org {
 				IFACEMETHOD(GetFastestRate)(MFRATE_DIRECTION eDirection, BOOL fThin, float *pflRate);
 				IFACEMETHOD(IsRateSupported)(BOOL fThin, float flRate, float *pflNearestSupportedRate);
 
+				void RenderFrame(const webrtc::VideoFrame *frame);
+
 			private:
 				std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
 				std::unique_ptr<WebRtcVideoSink> _webRtcVideoSink;
-				Org::WebRtc::MediaVideoTrack^ _track;
 				ComPtr<WebRtcMediaStream> _i420Stream;
 				ComPtr<WebRtcMediaStream> _h264Stream;
 				ComPtr<IMFMediaEventQueue> _eventQueue;
