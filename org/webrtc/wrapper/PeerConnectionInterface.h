@@ -14,8 +14,8 @@
 #include <collection.h>
 #include <vector>
 #include "webrtc/api/peerconnectioninterface.h"
-#include "webrtc/base/scopedptrcollection.h"
-#include "webrtc/base/logging.h"
+#include "webrtc/rtc_base/scopedptrcollection.h"
+#include "webrtc/rtc_base/logging.h"
 #include "GlobalObserver.h"
 #include "DataChannel.h"
 #include "webrtc/rtc_base/criticalsection.h"
