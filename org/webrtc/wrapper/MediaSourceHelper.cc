@@ -12,7 +12,6 @@
 #include <mfidl.h>
 #include "webrtc/media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
-#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 #include "webrtc/modules/video_coding/timing.h"
 
 using Microsoft::WRL::ComPtr;
@@ -57,12 +56,11 @@ namespace Org {
 				, _lastRotation(-1)
 				, _frameCounter(0)
 				, _startTime(0)
-				, _lastTimeFPSCalculated(rtc::TimeMillis())
-				, _lock(webrtc::CriticalSectionWrapper::CreateCriticalSection()) {
+				, _lastTimeFPSCalculated(rtc::TimeMillis()) {
 
 			}
 			MediaSourceHelper::~MediaSourceHelper() {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				// Clear the buffered frames.
 				while (!_frames.empty()) {
 					std::unique_ptr<webrtc::VideoFrame> frame(_frames.front());
@@ -71,7 +69,7 @@ namespace Org {
 			}
 
 			void MediaSourceHelper::QueueFrame(webrtc::VideoFrame* frame) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 
 				if (_frameType == FrameTypeH264) {
 					// Check it is really a H.264 frame, the codec might have been switched within the call, in this case just ignore frames
@@ -99,7 +97,7 @@ namespace Org {
 			}
 
 			std::unique_ptr<SampleData> MediaSourceHelper::DequeueFrame() {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 
 				if (_frames.size() == 0) {
 					return nullptr;
@@ -140,7 +138,7 @@ namespace Org {
 			}
 
 			bool MediaSourceHelper::HasFrames() {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				return _frames.size() > 0;
 			}
 
@@ -269,7 +267,7 @@ namespace Org {
 			}
 
 			void MediaSourceHelper::SetStartTimeNow() {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				_startTickTime = rtc::TimeMillis();
 				if (!DropFramesToIDR(_frames)) {
 					// Flush all frames then.

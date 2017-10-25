@@ -18,7 +18,7 @@
 #include "webrtc/base/logging.h"
 #include "GlobalObserver.h"
 #include "DataChannel.h"
-#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
+#include "webrtc/rtc_base/criticalsection.h"
 #include "RTCStatsReport.h"
 
 using Platform::String;
@@ -698,7 +698,7 @@ namespace Org {
 			~RTCPeerConnection();
 			rtc::scoped_refptr<webrtc::PeerConnectionInterface> _impl;
 			// This lock protects _impl.
-			std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
+			rtc::CriticalSection _critSect;
 
 			std::unique_ptr<GlobalObserver> _observer;
 

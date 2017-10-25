@@ -14,7 +14,7 @@
 #include <collection.h>
 #include <mfidl.h>
 #include "webrtc/api/mediastreaminterface.h"
-#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
+#include "webrtc/rtc_base/criticalsection.h"
 
 using Microsoft::WRL::ComPtr;
 
@@ -69,7 +69,7 @@ namespace Org {
 				bool HasFrames();
 
 			private:
-				std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
+				rtc::CriticalSection _critSect;
 				std::list<webrtc::VideoFrame*> _frames;
 				VideoFrameType _frameType;
 				bool _isFirstFrame;

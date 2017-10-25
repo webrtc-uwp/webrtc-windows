@@ -16,7 +16,7 @@
 #include <mfidl.h>
 #include <windows.media.h>
 #include <windows.media.core.h>
-#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
+#include "webrtc/rtc_base/criticalsection.h"
 
 interface IFrameSource;
 
@@ -110,7 +110,7 @@ namespace Org {
 				void RenderFrame(const webrtc::VideoFrame *frame);
 
 			private:
-				std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
+				rtc::CriticalSection _critSect;
 				std::unique_ptr<WebRtcVideoSink> _webRtcVideoSink;
 				ComPtr<WebRtcMediaStream> _i420Stream;
 				ComPtr<WebRtcMediaStream> _h264Stream;

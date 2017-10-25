@@ -55,7 +55,6 @@ namespace Org {
 
 			WebRtcMediaStream::WebRtcMediaStream() :
 				_frameBufferIndex(0), _frameReady(0), _frameCount(0),
-				_lock(webrtc::CriticalSectionWrapper::CreateCriticalSection()),
 				_gpuVideoBuffer(false),
 				_frameBeingQueued(0), _started(false),_isShutdown(false) {
 				_mediaBuffers.resize(BufferCount);
@@ -74,7 +73,7 @@ namespace Org {
 
 			HRESULT WebRtcMediaStream::RuntimeClassInitialize(
 				WebRtcMediaSource* source, String^ id, VideoFrameType frameType) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue != nullptr)
 					return S_OK;
 
@@ -109,7 +108,7 @@ namespace Org {
 			// IMFMediaEventGenerator
 			IFACEMETHODIMP WebRtcMediaStream::GetEvent(
 				DWORD dwFlags, IMFMediaEvent **ppEvent) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -118,7 +117,7 @@ namespace Org {
 
 			IFACEMETHODIMP WebRtcMediaStream::BeginGetEvent(
 				IMFAsyncCallback *pCallback, IUnknown *punkState) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -127,7 +126,7 @@ namespace Org {
 
 			IFACEMETHODIMP WebRtcMediaStream::EndGetEvent(
 				IMFAsyncResult *pResult, IMFMediaEvent **ppEvent) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -137,7 +136,7 @@ namespace Org {
 			IFACEMETHODIMP WebRtcMediaStream::QueueEvent(
 				MediaEventType met, const GUID& guidExtendedType,
 				HRESULT hrStatus, const PROPVARIANT *pvValue) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -148,21 +147,21 @@ namespace Org {
 			// IMFMediaStream
 			IFACEMETHODIMP WebRtcMediaStream::GetMediaSource(
 				IMFMediaSource **ppMediaSource) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				return _source->QueryInterface(IID_IMFMediaSource,
 					reinterpret_cast<void**>(ppMediaSource));
 			}
 
 			IFACEMETHODIMP WebRtcMediaStream::GetStreamDescriptor(
 				IMFStreamDescriptor **ppStreamDescriptor) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				*ppStreamDescriptor = _streamDescriptor.Get();
 				(*ppStreamDescriptor)->AddRef();
 				return S_OK;
 			}
 
 			IFACEMETHODIMP WebRtcMediaStream::RequestSample(IUnknown *pToken) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return E_POINTER;
 				}
@@ -186,7 +185,7 @@ namespace Org {
 				// Do the processing async because there's a risk of a deadlock otherwise.
 				Concurrency::create_async([this, frameCopy] {
 					{
-						webrtc::CriticalSectionScoped csLock(_lock.get());
+						rtc::CritScope lock(&_critSect);
 						if (_helper != nullptr) {
 							_helper->QueueFrame(frameCopy);
 							ReplyToSampleRequest();
@@ -289,7 +288,7 @@ namespace Org {
 			}
 
 			HRESULT WebRtcMediaStream::ReplyToSampleRequest() {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_frameReady == 0 || !_helper->HasFrames()) {
 					return S_OK;
 				}
@@ -344,7 +343,7 @@ namespace Org {
 			STDMETHODIMP WebRtcMediaStream::Start(
 				IMFPresentationDescriptor *pPresentationDescriptor,
 				const GUID *pguidTimeFormat, const PROPVARIANT *pvarStartPosition) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -359,7 +358,7 @@ namespace Org {
 			}
 
 			STDMETHODIMP WebRtcMediaStream::Stop() {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -368,7 +367,7 @@ namespace Org {
 			}
 
 			STDMETHODIMP WebRtcMediaStream::Shutdown() {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 
 				if (!_isShutdown)
 				{
@@ -387,7 +386,7 @@ namespace Org {
 
 			STDMETHODIMP WebRtcMediaStream::SetD3DManager(
 				ComPtr<IMFDXGIDeviceManager> manager) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				_deviceManager = manager;
 				HANDLE deviceHandle;
 				_deviceManager->OpenDeviceHandle(&deviceHandle);

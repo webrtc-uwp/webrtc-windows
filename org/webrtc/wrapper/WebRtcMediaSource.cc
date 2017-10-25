@@ -80,8 +80,7 @@ namespace Org {
 
 			WebRtcMediaSource::WebRtcMediaSource() :
 				_i420FirstStart(true),
-				_h264FirstStart(true),
-				_lock(webrtc::CriticalSectionWrapper::CreateCriticalSection()) {
+				_h264FirstStart(true) {
 			}
 
 			WebRtcMediaSource::~WebRtcMediaSource() {
@@ -102,7 +101,7 @@ namespace Org {
 
 			HRESULT WebRtcMediaSource::RuntimeClassInitialize(
 				VideoFrameType frameType, String^ id) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue != nullptr)
 					return S_OK;
 
@@ -141,7 +140,7 @@ namespace Org {
 				// The MediaElement rendering component doesn't support video format
 				// changes on the fly (I420<->H264). This case is not handled for now.
 				return;
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (frameType == FrameTypeI420) {
 					_selectedStream = 0;
 					if (_presDescriptor != nullptr) {
@@ -170,7 +169,7 @@ namespace Org {
 			// IMFMediaEventGenerator
 			IFACEMETHODIMP WebRtcMediaSource::GetEvent(
 				DWORD dwFlags, IMFMediaEvent **ppEvent) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -179,7 +178,7 @@ namespace Org {
 
 			IFACEMETHODIMP WebRtcMediaSource::BeginGetEvent(
 				IMFAsyncCallback *pCallback, IUnknown *punkState) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -188,7 +187,7 @@ namespace Org {
 
 			IFACEMETHODIMP WebRtcMediaSource::EndGetEvent(
 				IMFAsyncResult *pResult, IMFMediaEvent **ppEvent) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -198,7 +197,7 @@ namespace Org {
 			IFACEMETHODIMP WebRtcMediaSource::QueueEvent(
 				MediaEventType met, const GUID& guidExtendedType,
 				HRESULT hrStatus, const PROPVARIANT *pvValue) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -209,7 +208,7 @@ namespace Org {
 			// IMFMediaSource
 			IFACEMETHODIMP WebRtcMediaSource::GetCharacteristics(
 				DWORD *pdwCharacteristics) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -219,7 +218,7 @@ namespace Org {
 
 			IFACEMETHODIMP WebRtcMediaSource::CreatePresentationDescriptor(
 				IMFPresentationDescriptor **ppPresentationDescriptor) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -229,7 +228,7 @@ namespace Org {
 			IFACEMETHODIMP WebRtcMediaSource::Start(
 				IMFPresentationDescriptor *pPresentationDescriptor,
 				const GUID *pguidTimeFormat, const PROPVARIANT *pvarStartPosition) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				OutputDebugString(L"WebRtcMediaSource::Start\r\n");
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
@@ -262,7 +261,7 @@ namespace Org {
 			}
 
 			IFACEMETHODIMP WebRtcMediaSource::Stop() {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				OutputDebugString(L"WebRtcMediaSource::Stop\r\n");
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
@@ -280,7 +279,7 @@ namespace Org {
 			}
 
 			IFACEMETHODIMP WebRtcMediaSource::Shutdown() {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				OutputDebugString(L"WebRtcMediaSource::Shutdown\r\n");
 				if (_eventQueue != nullptr) {
 					_eventQueue->Shutdown();
@@ -310,7 +309,7 @@ namespace Org {
 			}
 
 			IFACEMETHODIMP WebRtcMediaSource::SetD3DManager(IUnknown *pManager) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -333,7 +332,7 @@ namespace Org {
 			}
 
 			IFACEMETHODIMP WebRtcMediaSource::SetRate(BOOL fThin, float flRate) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -351,7 +350,7 @@ namespace Org {
 			}
 
 			IFACEMETHODIMP WebRtcMediaSource::GetRate(BOOL *pfThin, float *pflRate) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -362,7 +361,7 @@ namespace Org {
 
 			IFACEMETHODIMP WebRtcMediaSource::GetSlowestRate(
 				MFRATE_DIRECTION eDirection, BOOL fThin, float *pflRate) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -385,7 +384,7 @@ namespace Org {
 
 			IFACEMETHODIMP WebRtcMediaSource::GetFastestRate(
 				MFRATE_DIRECTION eDirection, BOOL fThin, float *pflRate) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -408,7 +407,7 @@ namespace Org {
 
 			IFACEMETHODIMP WebRtcMediaSource::IsRateSupported(
 				BOOL fThin, float flRate, float *pflNearestSupportedRate) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_eventQueue == nullptr) {
 					return MF_E_SHUTDOWN;
 				}
@@ -428,7 +427,7 @@ namespace Org {
 			}
 
 			void WebRtcMediaSource::RenderFrame(const webrtc::VideoFrame *frame) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_selectedStream == 0) {
 					if (_i420Stream != nullptr)
 						_i420Stream->RenderFrame(frame);

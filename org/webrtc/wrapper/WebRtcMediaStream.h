@@ -14,7 +14,7 @@
 #include <mfidl.h>
 #include <vector>
 #include "webrtc/api/mediastreaminterface.h"
-#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
+#include "webrtc/rtc_base/criticalsection.h"
 #include "MediaSourceHelper.h"
 
 using Microsoft::WRL::ComPtr;
@@ -107,7 +107,7 @@ namespace Org {
 				STDMETHOD(SetD3DManager)(ComPtr<IMFDXGIDeviceManager> manager);
 
 			private:
-				std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
+				rtc::CriticalSection _critSect;
 
 				ComPtr<IMFMediaEventQueue> _eventQueue;
 
