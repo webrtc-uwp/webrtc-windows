@@ -410,8 +410,8 @@ namespace Org {
 
 		Media::Media() :
 			_videoCaptureDeviceChanged(true) {
-			_dev_manager = std::unique_ptr<cricket::WinUWPDeviceManager>
-				(cricket::DeviceManagerFactory::Create());
+			_dev_manager = std::unique_ptr<Internal::WinUWPDeviceManager>
+				(Internal::DeviceManagerFactory::Create());
 
 			if (!_dev_manager->Init()) {
 				LOG(LS_ERROR) << "Can't create device manager";

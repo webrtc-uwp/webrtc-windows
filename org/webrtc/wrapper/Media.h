@@ -16,7 +16,7 @@
 #include "webrtc/api/mediastreaminterface.h"
 #include "webrtc/api/mediaconstraintsinterface.h"
 #include "GlobalObserver.h"
-#include "webrtc/media/devices/winuwpdevicemanager.h"
+#include "WinUWPDeviceManager.h"
 #include "webrtc/modules/audio_device/include/audio_device.h"
 #include "Delegates.h"
 #include "WebRtcMediaSource.h"
@@ -638,7 +638,7 @@ namespace Org {
 			void OnMediaDeviceRemoved(DeviceWatcher^ sender,
 				DeviceInformationUpdate^ args);
 
-			std::unique_ptr<cricket::WinUWPDeviceManager> _dev_manager;
+			std::unique_ptr<Internal::WinUWPDeviceManager> _dev_manager;
 			cricket::Device _selectedVideoDevice;
 
 			std::list<std::unique_ptr<VideoTrackMediaElementPair>> _videoTrackMediaElementPairList;

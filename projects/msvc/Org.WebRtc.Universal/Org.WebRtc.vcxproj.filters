@@ -15,6 +15,7 @@
     <ClCompile Include="..\..\..\org\webrtc\wrapper\PeerConnectionInterface.cc" />
     <ClCompile Include="..\..\..\org\webrtc\wrapper\WebRtcMediaSource.cc" />
     <ClCompile Include="..\..\..\org\webrtc\wrapper\WebRtcMediaStream.cc" />
+    <ClCompile Include="..\..\..\org\webrtc\wrapper\WinUWPDeviceManager.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\org\webrtc\wrapper\DataChannel.h" />
@@ -27,5 +28,6 @@
     <ClInclude Include="..\..\..\org\webrtc\wrapper\RTCStatsReport.h" />
     <ClInclude Include="..\..\..\org\webrtc\wrapper\WebRtcMediaSource.h" />
     <ClInclude Include="..\..\..\org\webrtc\wrapper\WebRtcMediaStream.h" />
+    <ClInclude Include="..\..\..\org\webrtc\wrapper\WinUWPDeviceManager.h" />
   </ItemGroup>
 </Project>
