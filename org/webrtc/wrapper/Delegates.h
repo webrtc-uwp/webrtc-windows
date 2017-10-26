@@ -7,8 +7,8 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#ifndef WEBRTC_BUILD_WINUWP_GYP_API_DELEGATES_H_
-#define WEBRTC_BUILD_WINUWP_GYP_API_DELEGATES_H_
+#ifndef ORG_WEBRTC_DELEGATES_H_
+#define ORG_WEBRTC_DELEGATES_H_
 
 namespace Org {
 	namespace WebRtc {
@@ -92,5 +92,5 @@ namespace Org {
 	}
 }  // namespace Org.WebRtc
 
-#endif  // WEBRTC_BUILD_WINUWP_GYP_API_DELEGATES_H_
+#endif  // ORG_WEBRTC_DELEGATES_H_
 

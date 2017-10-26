@@ -7,8 +7,8 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#ifndef WEBRTC_BUILD_WINUWP_GYP_API_MEDIA_H_
-#define WEBRTC_BUILD_WINUWP_GYP_API_MEDIA_H_
+#ifndef ORG_WEBRTC_MEDIA_H_
+#define ORG_WEBRTC_MEDIA_H_
 
 #include <mfidl.h>
 #include <collection.h>
@@ -649,4 +649,4 @@ namespace Org {
 	}
 }  // namespace Org.WebRtc
 
-#endif  // WEBRTC_BUILD_WINUWP_GYP_API_MEDIA_H_
+#endif  // ORG_WEBRTC_MEDIA_H_
