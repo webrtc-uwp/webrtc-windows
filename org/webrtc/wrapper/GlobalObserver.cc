@@ -156,21 +156,21 @@ namespace Org {
 			}
 
 			// Triggered when media is received on a new stream from remote peer.
-			void GlobalObserver::OnAddStream(webrtc::MediaStreamInterface* stream) {
+			void GlobalObserver::OnAddStream(rtc::scoped_refptr<webrtc::MediaStreamInterface> stream) {
 				auto evt = ref new Org::WebRtc::MediaStreamEvent();
 				evt->Stream = ref new Org::WebRtc::MediaStream(stream);
 				POST_PC_EVENT(OnAddStream, evt);
 			}
 
 			// Triggered when a remote peer close a stream.
-			void GlobalObserver::OnRemoveStream(webrtc::MediaStreamInterface* stream) {
+			void GlobalObserver::OnRemoveStream(rtc::scoped_refptr<webrtc::MediaStreamInterface> stream) {
 				auto evt = ref new Org::WebRtc::MediaStreamEvent();
 				evt->Stream = ref new Org::WebRtc::MediaStream(stream);
 				POST_PC_EVENT(OnRemoveStream, evt);
 			}
 
 			// Triggered when a remote peer open a data channel.
-			void GlobalObserver::OnDataChannel(webrtc::DataChannelInterface* data_channel) {
+			void GlobalObserver::OnDataChannel(rtc::scoped_refptr<webrtc::DataChannelInterface> data_channel) {
 				auto evt = ref new Org::WebRtc::RTCDataChannelEvent();
 				evt->Channel = ref new Org::WebRtc::RTCDataChannel(data_channel);
 				// This observer is deleted when the channel closes.

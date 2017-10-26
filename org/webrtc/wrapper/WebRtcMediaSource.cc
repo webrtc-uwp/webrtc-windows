@@ -63,7 +63,7 @@ namespace Org {
 			}
 
 			void WebRtcMediaSource::WebRtcVideoSink::OnFrame(const webrtc::VideoFrame& frame) {
-				if (frame.video_frame_buffer()->native_handle() == nullptr) {
+				if (frame.video_frame_buffer()->ToI420() != nullptr) {
 					if (_frameType == FrameTypeH264) {
 						_videoSinkObserver->OnVideoFormatChanged(FrameTypeI420);
 						_frameType = FrameTypeI420;

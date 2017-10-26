@@ -14,7 +14,7 @@
 #include <collection.h>
 #include <vector>
 #include "webrtc/api/peerconnectioninterface.h"
-#include "webrtc/rtc_base/scopedptrcollection.h"
+#include "webrtc/rtc_base/scoped_ref_ptr.h"
 #include "webrtc/rtc_base/logging.h"
 #include "GlobalObserver.h"
 #include "DataChannel.h"
@@ -704,7 +704,7 @@ namespace Org {
 
 			typedef std::vector<rtc::scoped_refptr<CreateSdpObserver>> CreateSdpObservers;
 			typedef std::vector<rtc::scoped_refptr<SetSdpObserver>> SetSdpObservers;
-			typedef rtc::ScopedPtrCollection<DataChannelObserver> DataChannelObservers;
+			typedef std::vector<DataChannelObserver*> DataChannelObservers;
 			CreateSdpObservers _createSdpObservers;
 			SetSdpObservers _setSdpObservers;
 			DataChannelObservers _dataChannelObservers;

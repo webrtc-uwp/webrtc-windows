@@ -13,6 +13,7 @@
 #include "webrtc/media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
 #include "webrtc/modules/video_coding/timing.h"
+#include "third_party/winuwp_h264/H264Decoder/H264Decoder.h"
 
 using Microsoft::WRL::ComPtr;
 using Platform::Collections::Vector;
@@ -73,7 +74,7 @@ namespace Org {
 
 				if (_frameType == FrameTypeH264) {
 					// Check it is really a H.264 frame, the codec might have been switched within the call, in this case just ignore frames
-					if (frame->video_frame_buffer()->native_handle() != nullptr) {
+					if (frame->video_frame_buffer()->ToI420() == nullptr) {
 						// For H264 we keep all frames since they are encoded.
 						_frames.push_back(frame);
 					} else {
@@ -82,7 +83,7 @@ namespace Org {
 					}
 				} else {
 					// Check it is not H.264 frame, the codec might have been switched within the call, in this case just ignore frames
-					if (frame->video_frame_buffer()->native_handle() == nullptr) {
+					if (frame->video_frame_buffer()->ToI420() != nullptr) {
 						// For I420 frame, keep only the latest.
 						for (auto oldFrame : _frames) {
 							delete oldFrame;
@@ -156,7 +157,9 @@ namespace Org {
 
 				// Get the IMFSample in the frame.
 				{
-					IMFSample* tmp = (IMFSample*)frame->video_frame_buffer()->native_handle();
+					rtc::scoped_refptr<webrtc::NativeHandleBuffer> frameBuffer =
+						static_cast<webrtc::NativeHandleBuffer*>(frame->video_frame_buffer().get());
+					IMFSample* tmp = (IMFSample*)frameBuffer->native_handle();
 					if (tmp != nullptr) {
 						tmp->AddRef();
 						data->sample.Attach(tmp);
@@ -240,7 +243,9 @@ namespace Org {
 				// Go through the frames in reverse order (from newest to oldest) and look
 				// for an IDR frame.
 				for (auto it = frames.rbegin(); it != frames.rend(); ++it) {
-					IMFSample* pSample = (IMFSample*)(*it)->video_frame_buffer()->native_handle();
+					rtc::scoped_refptr<webrtc::NativeHandleBuffer> frameBuffer =
+						static_cast<webrtc::NativeHandleBuffer*>((*it)->video_frame_buffer().get());
+					IMFSample* pSample = (IMFSample*)frameBuffer->native_handle();
 					if (pSample == nullptr) {
 						continue;  // I don't expect this will ever happen.
 					}

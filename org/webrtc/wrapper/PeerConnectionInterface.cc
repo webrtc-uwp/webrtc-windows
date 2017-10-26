@@ -28,7 +28,7 @@
 #include "webrtc/test/field_trial.h"
 #include "webrtc/api/test/fakeconstraints.h"
 #include "webrtc/pc/channelmanager.h"
-#include "webrtc/system_wrappers/include/utf_util_win.h"
+#include "webrtc/rtc_base/win32.h"
 #include "webrtc/rtc_base/timeutils.h"
 #include "third_party/winuwp_h264/winuwp_h264_factory.h"
 #include "webrtc/common_video/video_common_winuwp.h"
@@ -60,7 +60,7 @@ namespace Org {
 				auto folder = Windows::Storage::ApplicationData::Current->LocalFolder;
 				wchar_t buffer[255];
 				wcsncpy_s(buffer, 255, folder->Path->Data(), _TRUNCATE);
-				return webrtc::ToUtf8(buffer) + "\\";
+				return rtc::ToUtf8(buffer) + "\\";
 			}
 
 			// helper function to convert a std string to Platform string
@@ -143,6 +143,10 @@ namespace Org {
 
 		RTCPeerConnection::~RTCPeerConnection() {
 			LOG(LS_INFO) << "RTCPeerConnection::~RTCPeerConnection";
+			for (typename std::vector<DataChannelObserver*>::iterator it = _dataChannelObservers.begin();
+				it != _dataChannelObservers.end(); ++it) {
+				delete *it;
+			}
 		}
 
 		// Utility function to create an async operation
@@ -412,7 +416,7 @@ namespace Org {
 
 			auto observer = new Org::WebRtc::Internal::DataChannelObserver(ret);
 			// The callback is kept for the lifetime of the RTCPeerConnection.
-			_dataChannelObservers.PushBack(observer);
+			_dataChannelObservers.push_back(observer);
 			channel->RegisterObserver(observer);
 			return ret;
 		}

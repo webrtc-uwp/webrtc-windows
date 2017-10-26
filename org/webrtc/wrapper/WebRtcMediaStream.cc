@@ -16,7 +16,7 @@
 #include <functional>
 #include <wrl.h>
 #include <ppltasks.h>
-#include "webrtc/media/base/videoframe.h"
+#include "webrtc/api/video/video_frame.h"
 #include "webrtc/media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
 
@@ -84,7 +84,7 @@ namespace Org {
 				// Create the helper with the callback functions.
 				_helper.reset(new MediaSourceHelper(
 					frameType,
-					[this](cricket::VideoFrame* frame, IMFSample** sample) -> HRESULT {
+					[this](webrtc::VideoFrame* frame, IMFSample** sample) -> HRESULT {
 					return MakeSampleCallback(frame, sample);
 				},
 					[this](int fps) {
@@ -177,7 +177,7 @@ namespace Org {
 			}
 
 			void WebRtcMediaStream::RenderFrame(
-				const cricket::VideoFrame *frame) {
+				const webrtc::VideoFrame *frame) {
 				auto frameCopy = new webrtc::VideoFrame(
 					frame->video_frame_buffer(), frame->rotation(),
 					frame->timestamp_us());
@@ -225,7 +225,7 @@ namespace Org {
 			}
 
 			HRESULT WebRtcMediaStream::MakeSampleCallback(
-				const cricket::VideoFrame* frame, IMFSample** sample) {
+				const webrtc::VideoFrame* frame, IMFSample** sample) {
 				ComPtr<IMFSample> spSample;
 				RETURN_ON_FAIL(MFCreateSample(&spSample));
 
@@ -267,10 +267,12 @@ namespace Org {
 				AutoFunction autoUnlockBuffer([buffer2d]() {buffer2d->Unlock2D(); });
 
 				// Convert to NV12
+				rtc::scoped_refptr<webrtc::PlanarYuvBuffer> frameBuffer =
+					static_cast<webrtc::PlanarYuvBuffer*>(frame->video_frame_buffer().get());
 				uint8* uvDest = destRawData + (pitch * destHeight);
-				libyuv::I420ToNV12(frame->video_frame_buffer()->DataY(), frame->video_frame_buffer()->StrideY(),
-					frame->video_frame_buffer()->DataU(), frame->video_frame_buffer()->StrideU(),
-					frame->video_frame_buffer()->DataV(), frame->video_frame_buffer()->StrideV(),
+				libyuv::I420ToNV12(frameBuffer->DataY(), frameBuffer->StrideY(),
+					frameBuffer->DataU(), frameBuffer->StrideU(),
+					frameBuffer->DataV(), frameBuffer->StrideV(),
 					reinterpret_cast<uint8*>(destRawData), pitch,
 					uvDest, pitch,
 					static_cast<int>(destWidth),

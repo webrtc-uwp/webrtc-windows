@@ -58,11 +58,11 @@ namespace Org {
 
 				virtual void OnStateChange(StateType state_changed);
 
-				virtual void OnAddStream(webrtc::MediaStreamInterface* stream);
+				virtual void OnAddStream(rtc::scoped_refptr<webrtc::MediaStreamInterface> stream);
 
-				virtual void OnRemoveStream(webrtc::MediaStreamInterface* stream);
+				virtual void OnRemoveStream(rtc::scoped_refptr<webrtc::MediaStreamInterface> stream);
 
-				virtual void OnDataChannel(webrtc::DataChannelInterface* data_channel);
+				virtual void OnDataChannel(rtc::scoped_refptr<webrtc::DataChannelInterface> data_channel);
 
 				virtual void OnRenegotiationNeeded();
 
