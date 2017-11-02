@@ -95,7 +95,6 @@ public:
   }
 
   rtc::scoped_refptr<I420BufferInterface> ToI420() override {
-    RTC_NOTREACHED();  // Should not be called.
     return nullptr;
   }
 

@@ -243,6 +243,9 @@ namespace Org {
 				// Go through the frames in reverse order (from newest to oldest) and look
 				// for an IDR frame.
 				for (auto it = frames.rbegin(); it != frames.rend(); ++it) {
+					if ((*it)->video_frame_buffer()->ToI420() != nullptr) {
+						continue; // Frame type is I420, skip it
+					}
 					rtc::scoped_refptr<webrtc::NativeHandleBuffer> frameBuffer =
 						static_cast<webrtc::NativeHandleBuffer*>((*it)->video_frame_buffer().get());
 					IMFSample* pSample = (IMFSample*)frameBuffer->native_handle();

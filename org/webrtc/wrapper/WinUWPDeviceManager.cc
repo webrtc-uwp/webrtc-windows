@@ -53,9 +53,7 @@ namespace Org {
 
 			WinUWPDeviceManager::WinUWPDeviceManager() :
 				watcher_(ref new WinUWPWatcher()), initialized_(false) {
-#ifdef HAVE_WEBRTC_VIDEO
-				SetVideoDeviceCapturerFactory(new WebRtcVideoDeviceCapturerFactory());
-#endif  // HAVE_WEBRTC_VIDEO
+				SetVideoDeviceCapturerFactory(new cricket::WebRtcVideoDeviceCapturerFactory());
 			}
 
 			WinUWPDeviceManager::~WinUWPDeviceManager() {
