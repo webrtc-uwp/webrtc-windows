@@ -7,15 +7,15 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#ifndef WEBRTC_BUILD_WINUWP_GYP_API_GLOBALOBSERVER_H_
-#define WEBRTC_BUILD_WINUWP_GYP_API_GLOBALOBSERVER_H_
+#ifndef ORG_WEBRTC_GLOBALOBSERVER_H_
+#define ORG_WEBRTC_GLOBALOBSERVER_H_
 
 #include <ppltasks.h>
 #include <functional>
 #include <string>
 #include "webrtc/api/peerconnectioninterface.h"
-#include "webrtc/base/event.h"
-#include "webrtc/base/scoped_ref_ptr.h"
+#include "webrtc/rtc_base/event.h"
+#include "webrtc/rtc_base/scoped_ref_ptr.h"
 #include "../stats/webrtc_stats_observer.h"
 
 namespace Org {
@@ -58,11 +58,11 @@ namespace Org {
 
 				virtual void OnStateChange(StateType state_changed);
 
-				virtual void OnAddStream(webrtc::MediaStreamInterface* stream);
+				virtual void OnAddStream(rtc::scoped_refptr<webrtc::MediaStreamInterface> stream);
 
-				virtual void OnRemoveStream(webrtc::MediaStreamInterface* stream);
+				virtual void OnRemoveStream(rtc::scoped_refptr<webrtc::MediaStreamInterface> stream);
 
-				virtual void OnDataChannel(webrtc::DataChannelInterface* data_channel);
+				virtual void OnDataChannel(rtc::scoped_refptr<webrtc::DataChannelInterface> data_channel);
 
 				virtual void OnRenegotiationNeeded();
 
@@ -140,5 +140,5 @@ namespace Org {
 	}
 }  // namespace Org::WebRtc::Internal
 
-#endif  // WEBRTC_BUILD_WINUWP_GYP_API_GLOBALOBSERVER_H_
+#endif  // ORG_WEBRTC_GLOBALOBSERVER_H_
 

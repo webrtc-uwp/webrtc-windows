@@ -17,8 +17,8 @@
 #include <mferror.h>
 #include <wrl.h>
 #include "../Utils/SampleAttributeQueue.h"
-#include "webrtc/video_decoder.h"
-#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
+#include "webrtc/api/video_codecs/video_decoder.h"
+#include "webrtc/rtc_base/criticalsection.h"
 
 #pragma comment(lib, "mfreadwrite")
 #pragma comment(lib, "mfplat")
@@ -27,6 +27,34 @@
 using Microsoft::WRL::ComPtr;
 
 namespace webrtc {
+
+class NativeHandleBuffer : public VideoFrameBuffer {
+ public:
+  NativeHandleBuffer(void* native_handle, int width, int height)
+    : native_handle_(native_handle),
+    width_(width),
+    height_(height) { }
+
+  virtual Type type() const {
+    return Type::kNative;
+  }
+
+  int width() const override {
+    return width_;
+  }
+  int height() const override {
+    return height_;
+  }
+
+  void* native_handle() const {
+    return native_handle_;
+  }
+
+ protected:
+  void* native_handle_;
+  const int width_;
+  const int height_;
+};
 
 class WinUWPH264DecoderImpl : public VideoDecoder {
  public:
@@ -54,7 +82,7 @@ class WinUWPH264DecoderImpl : public VideoDecoder {
  private:
   uint32_t width_;
   uint32_t height_;
-  std::unique_ptr<webrtc::CriticalSectionWrapper> _cbLock;
+  rtc::CriticalSection crit_;
   DecodedImageCallback* decodeCompleteCallback_;
 };  // end of WinUWPH264DecoderImpl class
 

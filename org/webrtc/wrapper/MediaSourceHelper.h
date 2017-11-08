@@ -7,14 +7,14 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#ifndef WEBRTC_BUILD_WINUWP_GYP_API_MEDIASOURCEHELPER_H_
-#define WEBRTC_BUILD_WINUWP_GYP_API_MEDIASOURCEHELPER_H_
+#ifndef ORG_WEBRTC_MEDIASOURCEHELPER_H_
+#define ORG_WEBRTC_MEDIASOURCEHELPER_H_
 
 #include <wrl.h>
 #include <collection.h>
 #include <mfidl.h>
 #include "webrtc/api/mediastreaminterface.h"
-#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
+#include "webrtc/rtc_base/criticalsection.h"
 
 using Microsoft::WRL::ComPtr;
 
@@ -69,7 +69,7 @@ namespace Org {
 				bool HasFrames();
 
 			private:
-				std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
+				rtc::CriticalSection _critSect;
 				std::list<webrtc::VideoFrame*> _frames;
 				VideoFrameType _frameType;
 				bool _isFirstFrame;
@@ -112,4 +112,4 @@ namespace Org {
 
 }  // namespace Org.WebRtc.Internal
 
-#endif  // WEBRTC_BUILD_WINUWP_GYP_API_MEDIASOURCEHELPER_H_
+#endif  // ORG_WEBRTC_MEDIASOURCEHELPER_H_

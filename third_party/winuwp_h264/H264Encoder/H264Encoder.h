@@ -19,8 +19,8 @@
 #include "H264MediaSink.h"
 #include "IH264EncodingCallback.h"
 #include "../Utils/SampleAttributeQueue.h"
-#include "webrtc/video_encoder.h"
-#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
+#include "webrtc/api/video_codecs/video_encoder.h"
+#include "webrtc/rtc_base/criticalsection.h"
 #include "webrtc/modules/video_coding/utility/quality_scaler.h"
 #include "webrtc/common_video/h264/h264_bitstream_parser.h"
 
@@ -59,8 +59,8 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
   int InitEncoderWithSettings(const VideoCodec* inst);
 
  private:
-  std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
-  std::unique_ptr<webrtc::CriticalSectionWrapper> _callbackLock;
+  rtc::CriticalSection crit_;
+  rtc::CriticalSection callbackCrit_;
   bool inited_;
   const CodecSpecificInfo* codecSpecificInfo_;
   ComPtr<IMFSinkWriter> sinkWriter_;

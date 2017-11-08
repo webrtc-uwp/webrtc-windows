@@ -10,10 +10,10 @@
 #include "etw_providers.h"
 
 #include "webrtc/api/peerconnectioninterface.h"
-#include "webrtc/base/asynctcpsocket.h" 
-#include "webrtc/base/json.h"
-#include "webrtc/base/logging.h"
-#include "webrtc/base/physicalsocketserver.h"
+#include "webrtc/rtc_base/asynctcpsocket.h" 
+#include "webrtc/rtc_base/json.h"
+#include "webrtc/rtc_base/logging.h"
+#include "webrtc/rtc_base/physicalsocketserver.h"
 
 namespace webrtc {
  

@@ -12,8 +12,8 @@
 #include <mfidl.h>
 #include "webrtc/media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
-#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 #include "webrtc/modules/video_coding/timing.h"
+#include "third_party/winuwp_h264/H264Decoder/H264Decoder.h"
 
 using Microsoft::WRL::ComPtr;
 using Platform::Collections::Vector;
@@ -57,12 +57,11 @@ namespace Org {
 				, _lastRotation(-1)
 				, _frameCounter(0)
 				, _startTime(0)
-				, _lastTimeFPSCalculated(rtc::TimeMillis())
-				, _lock(webrtc::CriticalSectionWrapper::CreateCriticalSection()) {
+				, _lastTimeFPSCalculated(rtc::TimeMillis()) {
 
 			}
 			MediaSourceHelper::~MediaSourceHelper() {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				// Clear the buffered frames.
 				while (!_frames.empty()) {
 					std::unique_ptr<webrtc::VideoFrame> frame(_frames.front());
@@ -71,11 +70,11 @@ namespace Org {
 			}
 
 			void MediaSourceHelper::QueueFrame(webrtc::VideoFrame* frame) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 
 				if (_frameType == FrameTypeH264) {
 					// Check it is really a H.264 frame, the codec might have been switched within the call, in this case just ignore frames
-					if (frame->video_frame_buffer()->native_handle() != nullptr) {
+					if (frame->video_frame_buffer()->ToI420() == nullptr) {
 						// For H264 we keep all frames since they are encoded.
 						_frames.push_back(frame);
 					} else {
@@ -84,7 +83,7 @@ namespace Org {
 					}
 				} else {
 					// Check it is not H.264 frame, the codec might have been switched within the call, in this case just ignore frames
-					if (frame->video_frame_buffer()->native_handle() == nullptr) {
+					if (frame->video_frame_buffer()->ToI420() != nullptr) {
 						// For I420 frame, keep only the latest.
 						for (auto oldFrame : _frames) {
 							delete oldFrame;
@@ -99,7 +98,7 @@ namespace Org {
 			}
 
 			std::unique_ptr<SampleData> MediaSourceHelper::DequeueFrame() {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 
 				if (_frames.size() == 0) {
 					return nullptr;
@@ -140,7 +139,7 @@ namespace Org {
 			}
 
 			bool MediaSourceHelper::HasFrames() {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				return _frames.size() > 0;
 			}
 
@@ -158,7 +157,9 @@ namespace Org {
 
 				// Get the IMFSample in the frame.
 				{
-					IMFSample* tmp = (IMFSample*)frame->video_frame_buffer()->native_handle();
+					rtc::scoped_refptr<webrtc::NativeHandleBuffer> frameBuffer =
+						static_cast<webrtc::NativeHandleBuffer*>(frame->video_frame_buffer().get());
+					IMFSample* tmp = (IMFSample*)frameBuffer->native_handle();
 					if (tmp != nullptr) {
 						tmp->AddRef();
 						data->sample.Attach(tmp);
@@ -242,7 +243,12 @@ namespace Org {
 				// Go through the frames in reverse order (from newest to oldest) and look
 				// for an IDR frame.
 				for (auto it = frames.rbegin(); it != frames.rend(); ++it) {
-					IMFSample* pSample = (IMFSample*)(*it)->video_frame_buffer()->native_handle();
+					if ((*it)->video_frame_buffer()->ToI420() != nullptr) {
+						continue; // Frame type is I420, skip it
+					}
+					rtc::scoped_refptr<webrtc::NativeHandleBuffer> frameBuffer =
+						static_cast<webrtc::NativeHandleBuffer*>((*it)->video_frame_buffer().get());
+					IMFSample* pSample = (IMFSample*)frameBuffer->native_handle();
 					if (pSample == nullptr) {
 						continue;  // I don't expect this will ever happen.
 					}
@@ -269,7 +275,7 @@ namespace Org {
 			}
 
 			void MediaSourceHelper::SetStartTimeNow() {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				_startTickTime = rtc::TimeMillis();
 				if (!DropFramesToIDR(_frames)) {
 					// Flush all frames then.

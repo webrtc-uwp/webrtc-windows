@@ -8,17 +8,17 @@
 // be found in the AUTHORS file in the root of the source tree.
 
 
-#ifndef WEBRTC_BUILD_WINUWP_GYP_API_PEERCONNECTIONINTERFACE_H_
-#define WEBRTC_BUILD_WINUWP_GYP_API_PEERCONNECTIONINTERFACE_H_
+#ifndef ORG_WEBRTC_PEERCONNECTIONINTERFACE_H_
+#define ORG_WEBRTC_PEERCONNECTIONINTERFACE_H_
 
 #include <collection.h>
 #include <vector>
 #include "webrtc/api/peerconnectioninterface.h"
-#include "webrtc/base/scopedptrcollection.h"
-#include "webrtc/base/logging.h"
+#include "webrtc/rtc_base/scoped_ref_ptr.h"
+#include "webrtc/rtc_base/logging.h"
 #include "GlobalObserver.h"
 #include "DataChannel.h"
-#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
+#include "webrtc/rtc_base/criticalsection.h"
 #include "RTCStatsReport.h"
 
 using Platform::String;
@@ -698,13 +698,13 @@ namespace Org {
 			~RTCPeerConnection();
 			rtc::scoped_refptr<webrtc::PeerConnectionInterface> _impl;
 			// This lock protects _impl.
-			std::unique_ptr<webrtc::CriticalSectionWrapper> _lock;
+			rtc::CriticalSection _critSect;
 
 			std::unique_ptr<GlobalObserver> _observer;
 
 			typedef std::vector<rtc::scoped_refptr<CreateSdpObserver>> CreateSdpObservers;
 			typedef std::vector<rtc::scoped_refptr<SetSdpObserver>> SetSdpObservers;
-			typedef rtc::ScopedPtrCollection<DataChannelObserver> DataChannelObservers;
+			typedef std::vector<DataChannelObserver*> DataChannelObservers;
 			CreateSdpObservers _createSdpObservers;
 			SetSdpObservers _setSdpObservers;
 			DataChannelObservers _dataChannelObservers;
@@ -728,4 +728,4 @@ namespace Org {
 	}
 }  // namespace Org.WebRtc
 
-#endif  // WEBRTC_BUILD_WINUWP_GYP_API_PEERCONNECTIONINTERFACE_H_
+#endif  // ORG_WEBRTC_PEERCONNECTIONINTERFACE_H_

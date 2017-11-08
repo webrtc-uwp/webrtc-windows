@@ -11,8 +11,8 @@
 
 #include <string>
 #include "webrtc/api/statstypes.h"
-#include "webrtc/base/sigslot.h"
-#include "webrtc/base/scoped_ref_ptr.h"
+#include "webrtc/rtc_base/sigslot.h"
+#include "webrtc/rtc_base/scoped_ref_ptr.h"
 
 namespace rtc {
   class AsyncSocket;

@@ -14,7 +14,7 @@
 
 #include "webrtc/api/peerconnectioninterface.h"
 #include "../wrapper/RTCStatsReport.h"
-
+#include "webrtc/rtc_base/criticalsection.h"
 
 namespace webrtc {
 class CriticalSectionWrapper;
@@ -76,7 +76,7 @@ class WebRTCStatsObserver : public StatsObserver, public rtc::MessageHandler {
   static const int kInterval;
   rtc::scoped_refptr<webrtc::PeerConnectionInterface> pci_;
 
-	std::unique_ptr<CriticalSectionWrapper> crit_sect_;
+  rtc::CriticalSection crit_sect_;
   Status status_;
   WebRTCStatsObserverWinUWP* webrtc_stats_observer_winuwp_;
   bool etw_stats_enabled_;

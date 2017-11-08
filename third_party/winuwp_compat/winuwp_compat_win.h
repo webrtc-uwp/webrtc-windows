@@ -25,6 +25,8 @@
 
 #pragma once
 
+#include <winapifamily.h>
+
 #ifdef WINUWP
 
 /* ------------------------------------------------------------------------- */
@@ -336,11 +338,10 @@ inline HANDLE CreateFile(
 #undef GetTempPath
 #endif /* GetTempPath */
 
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 #define GetTempPathA(xBufferLength,xBuffer) winuwpGetTempPathA(xBufferLength,xBuffer)
-#ifndef WIN10
 #define GetTempPathW(xBufferLength,xBuffer) winuwpGetTempPathW(xBufferLength,xBuffer)
-#endif /* WIN10 */
-
+#endif
 DWORD winuwpGetTempPathW(
   DWORD  nBufferLength,
   LPWSTR lpBuffer
@@ -408,9 +409,10 @@ inline BOOL MoveFile(
 #undef CopyFile
 #endif /* CopyFile */
 
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 #define CopyFileW(xExistingFileName,xNewFileName,xFailIfExistse) winuwpCopyFileW(xExistingFileName,xNewFileName,xFailIfExistse)
 #define CopyFileA(xExistingFileName,xNewFileName,xFailIfExistse) winuwpCopyFileA(xExistingFileName,xNewFileName,xFailIfExistse)
-
+#endif
 BOOL winuwpCopyFileW(
   LPCWSTR lpExistingFileName,
   LPCWSTR lpNewFileName,

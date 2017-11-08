@@ -20,25 +20,22 @@ namespace webrtc {
 
   WinUWPH264EncoderFactory::WinUWPH264EncoderFactory() {
     codecList_ =
-      std::vector<cricket::WebRtcVideoEncoderFactory::VideoCodec> {
-        cricket::WebRtcVideoEncoderFactory::VideoCodec(
-        webrtc::VideoCodecType::kVideoCodecH264,
-        "H264",
-        1920, 1080, 60)  // Max width/height/fps
+      std::vector<cricket::VideoCodec> {
+        cricket::VideoCodec("H264")
     };
   }
 
   webrtc::VideoEncoder* WinUWPH264EncoderFactory::CreateVideoEncoder(
-    webrtc::VideoCodecType type) {
-    if (type == kVideoCodecH264) {
+    const cricket::VideoCodec& codec) {
+    if (codec.name == "H264") {
       return new WinUWPH264EncoderImpl();
     } else {
       return nullptr;
     }
   }
 
-  const std::vector<cricket::WebRtcVideoEncoderFactory::VideoCodec>&
-    WinUWPH264EncoderFactory::codecs() const {
+  const std::vector<cricket::VideoCodec>&
+    WinUWPH264EncoderFactory::supported_codecs() const {
     return codecList_;
   }
 

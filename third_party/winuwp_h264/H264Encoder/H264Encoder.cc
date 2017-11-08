@@ -28,10 +28,10 @@
 #include "H264MediaSink.h"
 #include "../Utils/Utils.h"
 #include "webrtc/modules/video_coding/include/video_codec_interface.h"
-#include "webrtc/base/timeutils.h"
+#include "webrtc/rtc_base/timeutils.h"
 #include "libyuv/convert.h"
-#include "webrtc/base/logging.h"
-#include "webrtc/base/win32.h"
+#include "webrtc/rtc_base/logging.h"
+#include "webrtc/rtc_base/win32.h"
 
 
 #pragma comment(lib, "mfreadwrite")
@@ -45,9 +45,7 @@ namespace webrtc {
 //////////////////////////////////////////
 
 WinUWPH264EncoderImpl::WinUWPH264EncoderImpl()
-  : _lock(webrtc::CriticalSectionWrapper::CreateCriticalSection())
-  , _callbackLock(webrtc::CriticalSectionWrapper::CreateCriticalSection())
-  , firstFrame_(true)
+  : firstFrame_(true)
   , startTime_(0)
   , framePendingCount_(0)
   , frameCount_(0)
@@ -76,7 +74,7 @@ int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* inst,
 int WinUWPH264EncoderImpl::InitEncoderWithSettings(const VideoCodec* inst) {
   HRESULT hr = S_OK;
 
-  webrtc::CriticalSectionScoped csLock(_lock.get());
+  rtc::CritScope lock(&crit_);
 
   ON_SUCCEEDED(MFStartup(MF_VERSION));
 
@@ -154,7 +152,7 @@ int WinUWPH264EncoderImpl::InitEncoderWithSettings(const VideoCodec* inst) {
 
 int WinUWPH264EncoderImpl::RegisterEncodeCompleteCallback(
   EncodedImageCallback* callback) {
-  webrtc::CriticalSectionScoped csLock(_callbackLock.get());
+  rtc::CritScope lock(&callbackCrit_);
   encodedCompleteCallback_ = callback;
   return WEBRTC_VIDEO_CODEC_OK;
 }
@@ -165,7 +163,7 @@ int WinUWPH264EncoderImpl::Release() {
   ComPtr<H264MediaSink> tmpMediaSink;
 
   {
-    webrtc::CriticalSectionScoped csLock(_lock.get());
+    rtc::CritScope lock(&crit_);
     sinkWriter_.Reset();
     if (mediaSink_ != nullptr) {
       tmpMediaSink = mediaSink_;
@@ -179,7 +177,7 @@ int WinUWPH264EncoderImpl::Release() {
     inited_ = false;
     framePendingCount_ = 0;
     _sampleAttributeQueue.clear();
-    webrtc::CriticalSectionScoped csCbLock(_callbackLock.get());
+    rtc::CritScope callbackLock(&callbackCrit_);
     encodedCompleteCallback_ = nullptr;
   }
 
@@ -197,7 +195,7 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
   ComPtr<IMFAttributes> sampleAttributes;
   ON_SUCCEEDED(sample.As(&sampleAttributes));
 
-  rtc::scoped_refptr<VideoFrameBuffer> frameBuffer = frame.video_frame_buffer();
+  rtc::scoped_refptr<PlanarYuvBuffer> frameBuffer = static_cast<PlanarYuvBuffer*>(frame.video_frame_buffer().get());
 
   if (SUCCEEDED(hr)) {
     auto totalSize = frameBuffer->StrideY() * frameBuffer->height() +
@@ -233,7 +231,7 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
         EncodedImageCallback* tempCallback = encodedCompleteCallback_;
         Release();
         {
-          webrtc::CriticalSectionScoped csLock(_callbackLock.get());
+          rtc::CritScope lock(&callbackCrit_);
           encodedCompleteCallback_ = tempCallback;
         }
 
@@ -293,8 +291,8 @@ int WinUWPH264EncoderImpl::Encode(
   const CodecSpecificInfo* codec_specific_info,
   const std::vector<FrameType>* frame_types) {
   {
-    webrtc::CriticalSectionScoped csLock(_lock.get());
-    if (!inited_) {
+      rtc::CritScope lock(&crit_);
+      if (!inited_) {
       return -1;
     }
   }
@@ -321,7 +319,7 @@ int WinUWPH264EncoderImpl::Encode(
 
   ComPtr<IMFSample> sample;
   {
-    webrtc::CriticalSectionScoped csLock(_lock.get());
+    rtc::CritScope lock(&crit_);
     if (_sampleAttributeQueue.size() > 2) {
       return WEBRTC_VIDEO_CODEC_OK;
     }
@@ -330,7 +328,7 @@ int WinUWPH264EncoderImpl::Encode(
 
   ON_SUCCEEDED(sinkWriter_->WriteSample(streamIndex_, sample.Get()));
 
-  webrtc::CriticalSectionScoped csLock(_lock.get());
+  rtc::CritScope lock(&crit_);
   // Some threads online mention this is useful to do regularly.
   ++frameCount_;
   if (frameCount_ % 30 == 0) {
@@ -429,7 +427,7 @@ void WinUWPH264EncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
     }
 
     {
-      webrtc::CriticalSectionScoped csLock(_callbackLock.get());
+      rtc::CritScope lock(&callbackCrit_);
       --framePendingCount_;
       if (encodedCompleteCallback_ == nullptr) {
         return;
@@ -488,7 +486,7 @@ int WinUWPH264EncoderImpl::SetRates(
     return WEBRTC_VIDEO_CODEC_OK;
   }
 
-  webrtc::CriticalSectionScoped csLock(_lock.get());
+  rtc::CritScope lock(&crit_);
   if (sinkWriter_ == nullptr) {
     return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
   }
@@ -520,7 +518,7 @@ int WinUWPH264EncoderImpl::SetRates(
     EncodedImageCallback* tempCallback = encodedCompleteCallback_;
     Release();
     {
-      webrtc::CriticalSectionScoped csLock(_callbackLock.get());
+      rtc::CritScope lock(&callbackCrit_);
       encodedCompleteCallback_ = tempCallback;
     }
     InitEncoderWithSettings(&codec_);

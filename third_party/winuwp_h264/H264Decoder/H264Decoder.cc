@@ -22,8 +22,8 @@
 #include <iomanip>
 #include "../Utils/Utils.h"
 #include "libyuv/convert.h"
-#include "webrtc/base/logging.h"
-#include "webrtc/base/checks.h"
+#include "webrtc/rtc_base/logging.h"
+#include "webrtc/rtc_base/checks.h"
 #include "webrtc/common_video/include/video_frame_buffer.h"
 #include "webrtc/modules/video_coding/include/video_codec_interface.h"
 
@@ -40,8 +40,7 @@ namespace webrtc {
 WinUWPH264DecoderImpl::WinUWPH264DecoderImpl()
   : width_(0),
   height_(0),
-  _cbLock(webrtc::CriticalSectionWrapper::CreateCriticalSection())
-  , decodeCompleteCallback_(nullptr) {
+  decodeCompleteCallback_(nullptr) {
 }
 
 WinUWPH264DecoderImpl::~WinUWPH264DecoderImpl() {
@@ -95,8 +94,7 @@ public:
   virtual ~H264NativeHandleBuffer() {
   }
 
-  rtc::scoped_refptr<VideoFrameBuffer> NativeToI420Buffer() override {
-    RTC_NOTREACHED();  // Should not be called.
+  rtc::scoped_refptr<I420BufferInterface> ToI420() override {
     return nullptr;
   }
 
@@ -119,7 +117,7 @@ int WinUWPH264DecoderImpl::Decode(const EncodedImage& input_image,
     VideoFrame decodedFrame(buffer, input_image._timeStamp, render_time_ms, kVideoRotation_0);
     decodedFrame.set_ntp_time_ms(input_image.ntp_time_ms_);
 
-    webrtc::CriticalSectionScoped csLock(_cbLock.get());
+    rtc::CritScope lock(&crit_);
 
     if (decodeCompleteCallback_ != nullptr) {
       decodeCompleteCallback_->Decoded(decodedFrame);
@@ -130,7 +128,7 @@ int WinUWPH264DecoderImpl::Decode(const EncodedImage& input_image,
 
 int WinUWPH264DecoderImpl::RegisterDecodeCompleteCallback(
   DecodedImageCallback* callback) {
-  webrtc::CriticalSectionScoped csLock(_cbLock.get());
+  rtc::CritScope lock(&crit_);
   decodeCompleteCallback_ = callback;
   return WEBRTC_VIDEO_CODEC_OK;
 }
