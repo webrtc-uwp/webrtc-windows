@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Org.WebRtc", "..\projects\msvc\Org.WebRtc.Universal\Org.WebRtc.vcxproj", "{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -33,7 +33,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WebRtc.Stats.Observer", "..
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stats", "Stats", "{543A47F2-E580-4CEE-8591-DBF4CD57F652}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "peerconnection_server", "..\..\xplatform\webrtc\out\win_x86_debug\obj\webrtc\examples\peerconnection_server.vcxproj", "{B97F0653-F750-F645-0851-C215EED8D7C8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "peerconnection_server", "..\..\xplatform\webrtc\out\win_x86_debug\obj\webrtc\examples\peerconnection_server.vcxproj", "{A45B5759-1DFA-6F0E-FE1F-D7F656B46C9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,17 +99,17 @@ Global
 		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Release|x64.Build.0 = Release|x64
 		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Release|x86.ActiveCfg = Release|Win32
 		{8F6CC751-235C-50C4-5D46-F577A04AADF2}.Release|x86.Build.0 = Release|Win32
-		{B97F0653-F750-F645-0851-C215EED8D7C8}.Debug|x64.ActiveCfg = GN|Win32
-		{B97F0653-F750-F645-0851-C215EED8D7C8}.Debug|x64.Build.0 = GN|Win32
-		{B97F0653-F750-F645-0851-C215EED8D7C8}.Debug|x86.ActiveCfg = GN|Win32
-		{B97F0653-F750-F645-0851-C215EED8D7C8}.Debug|x86.Build.0 = GN|Win32
-		{B97F0653-F750-F645-0851-C215EED8D7C8}.GN|x64.ActiveCfg = GN|Win32
-		{B97F0653-F750-F645-0851-C215EED8D7C8}.GN|x86.ActiveCfg = GN|Win32
-		{B97F0653-F750-F645-0851-C215EED8D7C8}.GN|x86.Build.0 = GN|Win32
-		{B97F0653-F750-F645-0851-C215EED8D7C8}.Release|x64.ActiveCfg = GN|Win32
-		{B97F0653-F750-F645-0851-C215EED8D7C8}.Release|x64.Build.0 = GN|Win32
-		{B97F0653-F750-F645-0851-C215EED8D7C8}.Release|x86.ActiveCfg = GN|Win32
-		{B97F0653-F750-F645-0851-C215EED8D7C8}.Release|x86.Build.0 = GN|Win32
+		{A45B5759-1DFA-6F0E-FE1F-D7F656B46C9A}.Debug|x64.ActiveCfg = GN|Win32
+		{A45B5759-1DFA-6F0E-FE1F-D7F656B46C9A}.Debug|x64.Build.0 = GN|Win32
+		{A45B5759-1DFA-6F0E-FE1F-D7F656B46C9A}.Debug|x86.ActiveCfg = GN|Win32
+		{A45B5759-1DFA-6F0E-FE1F-D7F656B46C9A}.Debug|x86.Build.0 = GN|Win32
+		{A45B5759-1DFA-6F0E-FE1F-D7F656B46C9A}.GN|x64.ActiveCfg = GN|Win32
+		{A45B5759-1DFA-6F0E-FE1F-D7F656B46C9A}.GN|x86.ActiveCfg = GN|Win32
+		{A45B5759-1DFA-6F0E-FE1F-D7F656B46C9A}.GN|x86.Build.0 = GN|Win32
+		{A45B5759-1DFA-6F0E-FE1F-D7F656B46C9A}.Release|x64.ActiveCfg = GN|Win32
+		{A45B5759-1DFA-6F0E-FE1F-D7F656B46C9A}.Release|x64.Build.0 = GN|Win32
+		{A45B5759-1DFA-6F0E-FE1F-D7F656B46C9A}.Release|x86.ActiveCfg = GN|Win32
+		{A45B5759-1DFA-6F0E-FE1F-D7F656B46C9A}.Release|x86.Build.0 = GN|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -124,6 +124,9 @@ Global
 		{147E84F0-5746-4E0C-9E2D-ACF8D0F88490} = {F3CEBBE9-B35F-40D1-B62E-5FA923D9456C}
 		{8F6CC751-235C-50C4-5D46-F577A04AADF2} = {543A47F2-E580-4CEE-8591-DBF4CD57F652}
 		{543A47F2-E580-4CEE-8591-DBF4CD57F652} = {A247AD4E-D83A-40C1-8BB6-6B72F3A1EE5C}
-		{B97F0653-F750-F645-0851-C215EED8D7C8} = {F01290E5-AA5F-4AB6-938F-674BEDC720F4}
+		{A45B5759-1DFA-6F0E-FE1F-D7F656B46C9A} = {F01290E5-AA5F-4AB6-938F-674BEDC720F4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {36335805-B335-4845-8EEB-77E32101A75D}
 	EndGlobalSection
 EndGlobal
