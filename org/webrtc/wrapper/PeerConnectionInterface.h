@@ -31,6 +31,10 @@ using Org::WebRtc::Internal::SetSdpObserver;
 using Org::WebRtc::Internal::DataChannelObserver;
 using Org::WebRtc::Internal::GlobalObserver;
 
+namespace webrtc {
+	class AudioDeviceWindowsWasapi;
+}
+
 namespace Org {
 	namespace WebRtc {
 
@@ -193,7 +197,25 @@ namespace Org {
 			/// </summary>
 			static property INT64 MemoryUsage { INT64 get(); void set(INT64 value); }
 
+			/// <summary>
+			/// This method gives aplication ability to have manual control of starting and stoping microphone.
+			/// </summary>
+			/// <param name="manualControl">true gives aplication full control over microphone. False fives full control to WebRTC</param>
+			static void SetAudioManualAudioRecordingControl(bool manualControl);
+
+			/// <summary>
+			/// Starts audio recording manual.
+			/// </summary>
+			static void StartAudioRecordingManual();
+
+			/// <summary>
+			/// Stops audio recording manual.
+			/// </summary>
+			static void StopAudioRecordingManual();
+
 		private:
+			static webrtc::AudioDeviceWindowsWasapi* m_NativeAudioDevice;
+			static void DecibellFullScaleCallBack(double decibel);
 			// This type is not meant to be created.
 			WebRTC();
 		};

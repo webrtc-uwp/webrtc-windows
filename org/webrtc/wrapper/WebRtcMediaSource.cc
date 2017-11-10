@@ -41,6 +41,21 @@ namespace Org {
 				ResolutionChanged(id, width, heigth);
 			}
 		}
+
+		void DecibelFullScaleHelper::FireEvent(double decibel)
+		{
+			Windows::UI::Core::CoreDispatcher^ _windowDispatcher = webrtc::VideoCommonWinUWP::GetCoreDispatcher();
+			if (_windowDispatcher != nullptr) {
+				_windowDispatcher->RunAsync(
+					Windows::UI::Core::CoreDispatcherPriority::Normal,
+					ref new Windows::UI::Core::DispatchedHandler([decibel] {
+					DecibelFullScaleComputed(decibel);
+				}));
+			}
+			else {
+				DecibelFullScaleComputed(decibel);
+			}
+		}
 	}
 }
 
