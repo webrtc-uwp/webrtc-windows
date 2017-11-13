@@ -11,8 +11,8 @@
     <AssemblyName>WebRtc.Builder</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -108,7 +108,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call "$(ProjectDir)..\..\..\..\..\bin\prepare.bat" -target webrtc -platform $(Platform) -logLevel 4 &amp;&amp; call "$(ProjectDir)..\..\..\..\..\bin\prepare.bat" -target webrtc -platform win32 -logLevel 4 &amp;&amp; popd &amp;&amp; call "$(ProjectDir)..\..\..\..\..\bin\buildWebRTC.bat" "$(ProjectDir)..\..\..\..\..\webrtc\xplatform\webrtc\out\winuwp_10_$(Platform)_$(Configuration)\WebRtc.sln" $(Configuration) $(Platform) webrtc</PreBuildEvent>
+    <PreBuildEvent>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call "bin\prepare.bat" -target webrtc -platform $(Platform) -logLevel 4 &amp;&amp; call "bin\prepare.bat" -target webrtc -platform win32 -logLevel 4 &amp;&amp; popd &amp;&amp; pushd "$(ProjectDir)..\..\..\..\..\webrtc\xplatform\webrtc\out\winuwp_10_$(Platform)_$(Configuration)" &amp;&amp; call "..\..\..\..\..\bin\ninja" webrtc &amp;&amp; call "..\..\..\..\..\bin\ninja" webrtc/rtc_base:rtc_json &amp;&amp; popd</PreBuildEvent>
   </PropertyGroup>
   <Target Name="BeforeClean">
     <Message Text="Veselo" />
