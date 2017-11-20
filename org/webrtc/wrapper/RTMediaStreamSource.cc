@@ -10,10 +10,8 @@
 #include <mfapi.h>
 #include <ppltasks.h>
 #include <mfidl.h>
-#include "webrtc/media/base/videoframe.h"
 #include "webrtc/media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
-#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 #include "webrtc/common_video/video_common_winuwp.h"
 
 using Microsoft::WRL::ComPtr;
@@ -142,7 +140,6 @@ namespace Org {
 			RTMediaStreamSource::RTMediaStreamSource(MediaVideoTrack^ videoTrack,
 				bool isH264) :
 				_videoTrack(videoTrack),
-				_lock(webrtc::CriticalSectionWrapper::CreateCriticalSection()),
 				_frameSentThisTime(false),
 				_frameBeingQueued(0) {
 				LOG(LS_INFO) << "RTMediaStreamSource::RTMediaStreamSource";
@@ -150,7 +147,7 @@ namespace Org {
 				// Create the helper with the callback functions.
 				_helper.reset(new MediaSourceHelper(
 					FrameTypeH264,
-					[this](cricket::VideoFrame* frame, IMFSample** sample) -> HRESULT {
+					[this](webrtc::VideoFrame* frame, IMFSample** sample) -> HRESULT {
 					return MakeSampleCallback(frame, sample);
 				},
 					[this](int fps) {
@@ -166,7 +163,7 @@ namespace Org {
 			void RTMediaStreamSource::Teardown() {
 				LOG(LS_INFO) << "RTMediaStreamSource::Teardown() ID=" << _idUtf8;
 				{
-					webrtc::CriticalSectionScoped csLock(_lock.get());
+					rtc::CritScope lock(&_critSect);
 					if (_progressTimer != nullptr) {
 						_progressTimer->Cancel();
 						_progressTimer = nullptr;
@@ -200,7 +197,7 @@ namespace Org {
 				}
 
 				{
-					webrtc::CriticalSectionScoped csLock(_lock.get());
+					rtc::CritScope lock(&_critSect);
 					if (_rtcRenderer != nullptr) {
 						_rtcRenderer.reset();
 					}
@@ -225,10 +222,10 @@ namespace Org {
 			}
 
 			void RTMediaStreamSource::RTCRenderer::RenderFrame(
-				const cricket::VideoFrame *frame) {
+				const webrtc::VideoFrame *frame) {
 				auto stream = _streamSource.Resolve<RTMediaStreamSource>();
 				if (stream != nullptr) {
-					auto frameCopy = new cricket::VideoFrame(
+					auto frameCopy = new webrtc::VideoFrame(
 						frame->video_frame_buffer(), frame->rotation(),
 						0);
 
@@ -237,13 +234,13 @@ namespace Org {
 			}
 
 			void RTMediaStreamSource::ProgressTimerElapsedExecute(ThreadPoolTimer^ source) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				if (_request != nullptr) {
 				}
 			}
 
 			void RTMediaStreamSource::FPSTimerElapsedExecute(ThreadPoolTimer^ source) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				rtc::CritScope lock(&_critSect);
 				_frameSentThisTime = false;
 				if (_request != nullptr) {
 					ReplyToSampleRequest();
@@ -291,7 +288,7 @@ namespace Org {
 			}
 
 			HRESULT RTMediaStreamSource::MakeSampleCallback(
-				cricket::VideoFrame* frame, IMFSample** sample) {
+				webrtc::VideoFrame* frame, IMFSample** sample) {
 				ComPtr<IMFSample> spSample;
 				HRESULT hr = MFCreateSample(spSample.GetAddressOf());
 				if (FAILED(hr)) {
@@ -326,10 +323,12 @@ namespace Org {
 					//TODO Check
 					//frame->MakeExclusive();
 					// Convert to NV12
+					rtc::scoped_refptr<webrtc::PlanarYuvBuffer> frameBuffer =
+						static_cast<webrtc::PlanarYuvBuffer*>(frame->video_frame_buffer().get());
 					uint8* uvDest = destRawData + (pitch * frame->height());
-					libyuv::I420ToNV12(frame->video_frame_buffer()->DataY(), frame->video_frame_buffer()->StrideY(),
-						frame->video_frame_buffer()->DataU(), frame->video_frame_buffer()->StrideU(),
-						frame->video_frame_buffer()->DataV(), frame->video_frame_buffer()->StrideV(),
+					libyuv::I420ToNV12(frameBuffer->DataY(), frameBuffer->StrideY(),
+						frameBuffer->DataU(), frameBuffer->StrideU(),
+						frameBuffer->DataV(), frameBuffer->StrideV(),
 						reinterpret_cast<uint8*>(destRawData), pitch,
 						uvDest, pitch,
 						static_cast<int>(frame->width()),
@@ -361,7 +360,7 @@ namespace Org {
 					if (_mediaStreamSource == nullptr)
 						return;
 
-					webrtc::CriticalSectionScoped csLock(_lock.get());
+					rtc::CritScope lock(&_critSect);
 
 					_request = args->Request;
 					if (_request == nullptr) {
@@ -391,8 +390,8 @@ namespace Org {
 			}
 
 			void RTMediaStreamSource::ProcessReceivedFrame(
-				cricket::VideoFrame *frame) {
-				webrtc::CriticalSectionScoped csLock(_lock.get());
+				webrtc::VideoFrame *frame) {
+				rtc::CritScope lock(&_critSect);
 
 				if (_startingDeferral != nullptr) {
 					auto timespan = Windows::Foundation::TimeSpan();
