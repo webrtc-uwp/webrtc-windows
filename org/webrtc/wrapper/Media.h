@@ -497,7 +497,7 @@ namespace Org {
 				Internal::VideoFrameType _frameType;
 				MediaElement^ _mediaElement;
 				String^ _id;
-				ComPtr<Internal::WebRtcMediaSource> _mediaSource;
+				Internal::RTMediaStreamSource^ _mediaSource;
 			};
 
 			struct VideoTrackMediaElementPair {
@@ -531,18 +531,15 @@ namespace Org {
 				RTCMediaStreamConstraints^ mediaStreamConstraints);
 
 			/// <summary>
-			/// Creates an <see cref="IMediaSource"/> for a video track, with a given
+			/// Creates an <see cref="IMediaSource"/>  for I420 frames with a given
 			/// identifier to be used for notifications on media changes.
 			/// </summary>
-			/// <param name="track">Video track to create a <see cref="IMediaSource"/>
-			/// from</param>
 			/// <param name="id">Identifier that can be used by applications for
 			/// distinguishing between <see cref="MediaStream"/>s
 			/// when receiving media change event notifications.
 			/// </param>
 			/// <returns>A media source.</returns>
-			IMediaSource^ CreateMediaStreamSource(
-				MediaVideoTrack^ track, uint32 framerate, String^ id);
+			IMediaSource^ CreateMediaStreamSource(String^ id);
 
 			/// <summary>
 			/// Adds Video Track and Media Element piar structure to keep a reference

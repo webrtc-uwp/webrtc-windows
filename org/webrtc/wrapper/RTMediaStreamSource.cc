@@ -13,6 +13,8 @@
 #include "webrtc/media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
 #include "webrtc/common_video/video_common_winuwp.h"
+#include "webrtc/rtc_base/logging.h"
+#include "webrtc/media/base/videocommon.h"
 
 using Microsoft::WRL::ComPtr;
 using Platform::Collections::Vector;
@@ -28,21 +30,60 @@ using Windows::System::Threading::ThreadPoolTimer;
 
 namespace Org {
 	namespace WebRtc {
+		/// <summary>
+		/// Delegate used to notify an update of the frame per second on a video stream.
+		/// </summary>
+		public delegate void FramesPerSecondChangedEventHandler(String^ id,
+			Platform::String^ fps);
+
+		/// <summary>
+		/// Delegate used to notify an update of the frame resolutions.
+		/// </summary>
+		public delegate void ResolutionChangedEventHandler(String^ id,
+			unsigned int width, unsigned int height);
+
+		/// <summary>
+		/// Class used to get frame rate events from renderer.
+		/// </summary>
+		public ref class FrameCounterHelper sealed {
+		public:
+			/// <summary>
+			/// Event fires when the frame rate changes.
+			/// </summary>
+			static event FramesPerSecondChangedEventHandler^ FramesPerSecondChanged;
+		internal:
+			static void FireEvent(String^ id, Platform::String^ str);
+		};
+
+		/// <summary>
+		/// Class used to get frame size change events from renderer.
+		/// </summary>
+		public ref class ResolutionHelper sealed {
+		public:
+			/// <summary>
+			/// Event fires when the resolution changes.
+			/// </summary>
+			static event ResolutionChangedEventHandler^ ResolutionChanged;
+		internal:
+			static void FireEvent(String^ id, unsigned int width, unsigned int height);
+		};
+	}
+}
+
+namespace Org {
+	namespace WebRtc {
 		namespace Internal {
 
-			MediaStreamSource^ RTMediaStreamSource::CreateMediaSource(
-				MediaVideoTrack^ track, uint32 frameRate, String^ id) {
+			RTMediaStreamSource^ RTMediaStreamSource::CreateMediaSource(
+				VideoFrameType frameType, String^ id) {
 
-				bool isH264 = true;//TODO Check track->GetImpl()->GetSource()->IsH264Source();
-
-				auto streamState = ref new RTMediaStreamSource(track, isH264);
+				auto streamState = ref new RTMediaStreamSource(frameType);
 				streamState->_id = id;
 				streamState->_idUtf8 = rtc::ToUtf8(streamState->_id->Data());
 				streamState->_rtcRenderer = std::unique_ptr<RTCRenderer>(
 					new RTCRenderer(streamState));
-				track->SetRenderer(streamState->_rtcRenderer.get());
 				VideoEncodingProperties^ videoProperties;
-				if (isH264) {
+				if (frameType == FrameTypeH264) {
 					videoProperties = VideoEncodingProperties::CreateH264();
 					//videoProperties->ProfileId = Windows::Media::MediaProperties::H264ProfileIds::Baseline;
 				}
@@ -65,8 +106,7 @@ namespace Org {
 					streamState->_videoDesc->EncodingProperties->Width,
 					streamState->_videoDesc->EncodingProperties->Height);
 
-				streamState->_videoDesc->EncodingProperties->FrameRate->Numerator =
-					frameRate;
+				streamState->_videoDesc->EncodingProperties->FrameRate->Numerator = 30;
 				streamState->_videoDesc->EncodingProperties->FrameRate->Denominator = 1;
 				auto streamSource = ref new MediaStreamSource(streamState->_videoDesc);
 
@@ -134,19 +174,29 @@ namespace Org {
 				//		timespan);
 				//}
 
-				return streamSource;
+				return streamState;
 			}
 
-			RTMediaStreamSource::RTMediaStreamSource(MediaVideoTrack^ videoTrack,
-				bool isH264) :
-				_videoTrack(videoTrack),
+			MediaStreamSource^ RTMediaStreamSource::GetMediaStreamSource() {
+				rtc::CritScope lock(&_critSect);
+				return _mediaStreamSource;
+			}
+
+			void RTMediaStreamSource::RenderFrame(const webrtc::VideoFrame *frame) {
+				auto frameCopy = new webrtc::VideoFrame(
+					frame->video_frame_buffer(), frame->rotation(),
+					0);
+				ProcessReceivedFrame(frameCopy);
+			}
+
+			RTMediaStreamSource::RTMediaStreamSource(VideoFrameType frameType) :
 				_frameSentThisTime(false),
 				_frameBeingQueued(0) {
 				LOG(LS_INFO) << "RTMediaStreamSource::RTMediaStreamSource";
 
 				// Create the helper with the callback functions.
 				_helper.reset(new MediaSourceHelper(
-					FrameTypeH264,
+					frameType,
 					[this](webrtc::VideoFrame* frame, IMFSample** sample) -> HRESULT {
 					return MakeSampleCallback(frame, sample);
 				},
@@ -172,11 +222,6 @@ namespace Org {
 						_fpsTimer->Cancel();
 						_fpsTimer = nullptr;
 					}
-					if (_rtcRenderer != nullptr && _videoTrack != nullptr) {
-						_videoTrack->UnsetRenderer(_rtcRenderer.get());
-					}
-
-					_videoTrack = nullptr;
 
 					_request = nullptr;
 					if (_deferral != nullptr) {
@@ -351,12 +396,7 @@ namespace Org {
 			void RTMediaStreamSource::OnSampleRequested(
 				MediaStreamSource ^sender, MediaStreamSourceSampleRequestedEventArgs ^args) {
 				try {
-					// Check to detect cases where samples are still being requested
-					// but the source has ended.
-					auto trackState = _videoTrack->GetImpl()->GetSource()->state();
-					if (trackState == webrtc::MediaSourceInterface::kEnded) {
-						return;
-					}
+
 					if (_mediaStreamSource == nullptr)
 						return;
 

@@ -387,11 +387,8 @@ namespace Org {
 					_frameType = Internal::FrameTypeH264;
 
 				auto handler = ref new DispatchedHandler([this]() {
-					Internal::WebRtcMediaSource::CreateMediaSource(&_mediaSource, _frameType, _id);
-					ComPtr<ABI::Windows::Media::Core::IMediaSource> comSource;
-					_mediaSource.As(&comSource);
-					IMediaSource^ source = reinterpret_cast<IMediaSource^>(comSource.Get());
-					_mediaElement->SetMediaStreamSource(source);
+					_mediaSource = Internal::RTMediaStreamSource::CreateMediaSource(_frameType, _id);
+					_mediaElement->SetMediaStreamSource(_mediaSource->GetMediaStreamSource());
 				});
 
 				Windows::UI::Core::CoreDispatcher^ windowDispatcher =
@@ -539,12 +536,11 @@ namespace Org {
 			return asyncOp;
 		}
 
-		IMediaSource^ Media::CreateMediaStreamSource(
-			MediaVideoTrack^ track, uint32 framerate, String^ id) {
-			return globals::RunOnGlobalThread<MediaStreamSource^>([track, framerate,
-				id]()->MediaStreamSource^ {
-				return Org::WebRtc::Internal::RTMediaStreamSource::
-					CreateMediaSource(track, framerate, id);
+		IMediaSource^ Media::CreateMediaStreamSource(String^ id) {
+			return globals::RunOnGlobalThread<MediaStreamSource^>([id]()->MediaStreamSource^ {
+				Internal::RTMediaStreamSource^ mediaSource =
+					Internal::RTMediaStreamSource::CreateMediaSource(Internal::VideoFrameType::FrameTypeI420, id);
+				return mediaSource->GetMediaStreamSource();
 			});
 		}
 

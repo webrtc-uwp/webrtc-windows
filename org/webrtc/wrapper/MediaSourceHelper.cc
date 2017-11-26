@@ -111,27 +111,31 @@ namespace Org {
 					data = DequeueI420Frame();
 				}
 
-				// Set the timestamp property
-				//if (_isFirstFrame) {
-				//	_isFirstFrame = false;
-				//	Org::WebRtc::FirstFrameRenderHelper::FireEvent(
-				//		rtc::TimeMillis() * rtc::kNumMillisecsPerSec);
-				//	LONGLONG frameTime = GetNextSampleTimeHns(data->renderTime, _frameType == FrameTypeH264);
-				//	data->sample->SetSampleTime(frameTime);
-				//} else {
-				//	LONGLONG frameTime = GetNextSampleTimeHns(data->renderTime, _frameType == FrameTypeH264);
+				if (_frameType == FrameTypeI420) {
+					// Set the timestamp property
+					if (_isFirstFrame) {
+						_isFirstFrame = false;
+						Org::WebRtc::FirstFrameRenderHelper::FireEvent(
+							rtc::TimeMillis() * rtc::kNumMillisecsPerSec);
+						LONGLONG frameTime = GetNextSampleTimeHns(data->renderTime, _frameType == FrameTypeH264);
+						data->sample->SetSampleTime(frameTime);
+					}
+					else {
+						LONGLONG frameTime = GetNextSampleTimeHns(data->renderTime, _frameType == FrameTypeH264);
 
-				//	data->sample->SetSampleTime(frameTime);
+						data->sample->SetSampleTime(frameTime);
 
-				//	// Set the duration property
-				//	if (_frameType == FrameTypeH264) {
-				//		data->sample->SetSampleDuration(frameTime - _lastSampleTime);
-				//	} else {
-				//		LONGLONG duration = (LONGLONG)((1.0 / 30) * 1000 * 1000 * 10);
-				//		data->sample->SetSampleDuration(duration);
-				//	}
-				//	_lastSampleTime = frameTime;
-				//}
+						// Set the duration property
+						if (_frameType == FrameTypeH264) {
+							data->sample->SetSampleDuration(frameTime - _lastSampleTime);
+						}
+						else {
+							LONGLONG duration = (LONGLONG)((1.0 / 30) * 1000 * 1000 * 10);
+							data->sample->SetSampleDuration(duration);
+						}
+						_lastSampleTime = frameTime;
+					}
+				}
 
 				UpdateFrameRate();
 

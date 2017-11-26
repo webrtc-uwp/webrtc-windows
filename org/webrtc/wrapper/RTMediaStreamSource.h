@@ -10,14 +10,13 @@
 #ifndef WEBRTC_BUILD_WINUWP_GYP_API_RTMEDIASTREAMSOURCE_H_
 #define WEBRTC_BUILD_WINUWP_GYP_API_RTMEDIASTREAMSOURCE_H_
 
-#include "Media.h"
 #include "MediaSourceHelper.h"
 #include "webrtc/api/mediastreaminterface.h"
 #include "webrtc/rtc_base/criticalsection.h"
 
 using Windows::Media::Core::MediaStreamSource;
 using Platform::WeakReference;
-using Org::WebRtc::MediaVideoTrack;
+using Platform::String;
 using Windows::System::Threading::ThreadPoolTimer;
 using Windows::Media::Core::MediaStreamSourceSampleRequest;
 
@@ -33,8 +32,13 @@ namespace Org {
 					Windows::Media::Core::MediaStreamSourceSampleRequestedEventArgs ^args);
 
 			internal:
-				static MediaStreamSource^ CreateMediaSource(
-					MediaVideoTrack^ track, uint32 frameRate, String^ id);
+				static RTMediaStreamSource^ CreateMediaSource(
+					VideoFrameType frameType, String^ id);
+
+				MediaStreamSource^ GetMediaStreamSource();
+
+				void RenderFrame(const webrtc::VideoFrame *frame);
+
 			private:
 				class RTCRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
 				public:
@@ -52,7 +56,7 @@ namespace Org {
 					WeakReference _streamSource;
 				};
 
-				RTMediaStreamSource(MediaVideoTrack^ videoTrack, bool isH264);
+				RTMediaStreamSource(VideoFrameType frameType);
 				void ProcessReceivedFrame(webrtc::VideoFrame *frame);
 				bool ConvertFrame(IMFMediaBuffer* mediaBuffer, webrtc::VideoFrame* frame);
 				void ResizeSource(uint32 width, uint32 height);
@@ -60,13 +64,10 @@ namespace Org {
 				HRESULT MakeSampleCallback(webrtc::VideoFrame* frame, IMFSample** sample);
 				void FpsCallback(int fps);
 
-				MediaVideoTrack^ _videoTrack;
 				String^ _id;  // Provided by the calling API.
 				std::string _idUtf8; // Provided by the calling API, same as _id
 
-				// Keep a weak reference here.
-				// Its _mediaStreamSource that keeps a reference to this object.
-				WeakReference _mediaStreamSource;
+				MediaStreamSource^ _mediaStreamSource;
 				std::unique_ptr<RTCRenderer> _rtcRenderer;
 				rtc::CriticalSection _critSect;
 
