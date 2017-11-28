@@ -19,7 +19,6 @@
 #include "WinUWPDeviceManager.h"
 #include "webrtc/modules/audio_device/include/audio_device.h"
 #include "Delegates.h"
-#include "WebRtcMediaSource.h"
 #include "RTMediaStreamSource.h"
 
 using Platform::String;
@@ -531,7 +530,7 @@ namespace Org {
 				RTCMediaStreamConstraints^ mediaStreamConstraints);
 
 			/// <summary>
-			/// Creates an <see cref="IMediaSource"/>  for I420 frames with a given
+			/// Creates an <see cref="IMediaSource"/>  for H264 frames with a given
 			/// identifier to be used for notifications on media changes.
 			/// </summary>
 			/// <param name="id">Identifier that can be used by applications for
@@ -559,22 +558,6 @@ namespace Org {
 			/// <param name="track">Video track used as a frame source which ientifies
 			/// the pair to be removed</param>
 			void RemoveVideoTrackMediaElementPair(MediaVideoTrack^ track);
-
-			/// <summary>
-			/// Creates an <see cref="IMediaSource"/> for a video track, with a given
-			/// frame rate and identifier to be used for notifications on media
-			/// changes.
-			/// </summary>
-			/// <param name="track">Video track to create a <see cref="IMediaSource"/>
-			/// from</param>
-			/// <param name="framerate">Target frame rate</param>
-			/// <param name="id">Identifier that can be used by applications for
-			/// distinguishing between <see cref="MediaStream"/>s
-			/// when receiving media change event notifications.
-			/// </param>
-			/// <returns>A media source.</returns>
-			IMediaSource^ CreateMediaSource(
-				MediaVideoTrack^ track, String^ id);
 
 			/// <summary>
 			/// Creates an <see cref="RawVideoSource"/> for a video track.

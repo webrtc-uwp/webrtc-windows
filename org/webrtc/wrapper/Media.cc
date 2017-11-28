@@ -16,7 +16,6 @@
 #include <set>
 #include "PeerConnectionInterface.h"
 #include "Marshalling.h"
-#include "WebRtcMediaSource.h"
 #include "webrtc/rtc_base/logging.h"
 #include "webrtc/media/base/videosourceinterface.h"
 #include "webrtc/pc/channelmanager.h"
@@ -539,7 +538,7 @@ namespace Org {
 		IMediaSource^ Media::CreateMediaStreamSource(String^ id) {
 			return globals::RunOnGlobalThread<MediaStreamSource^>([id]()->MediaStreamSource^ {
 				Internal::RTMediaStreamSource^ mediaSource =
-					Internal::RTMediaStreamSource::CreateMediaSource(Internal::VideoFrameType::FrameTypeI420, id);
+					Internal::RTMediaStreamSource::CreateMediaSource(Internal::VideoFrameType::FrameTypeH264, id);
 				return mediaSource->GetMediaStreamSource();
 			});
 		}
@@ -577,16 +576,6 @@ namespace Org {
 				}
 				iter++;
 			}
-		}
-
-		IMediaSource^ Media::CreateMediaSource(
-			MediaVideoTrack^ track, String^ id) {
-			return globals::RunOnGlobalThread<IMediaSource^>([track, id]() -> IMediaSource^ {
-				ComPtr<Org::WebRtc::Internal::WebRtcMediaSource> comSource;
-				Org::WebRtc::Internal::WebRtcMediaSource::CreateMediaSource(&comSource, Internal::FrameTypeH264, id);
-				IMediaSource^ source = reinterpret_cast<IMediaSource^>(comSource.Get());
-				return source;
-			});
 		}
 
 		RawVideoSource^ Media::CreateRawVideoSource(MediaVideoTrack^ track) {

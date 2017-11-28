@@ -67,6 +67,36 @@ namespace Org {
 		internal:
 			static void FireEvent(String^ id, unsigned int width, unsigned int height);
 		};
+
+		void Org::WebRtc::FrameCounterHelper::FireEvent(String^ id,
+			Platform::String^ str) {
+			Windows::UI::Core::CoreDispatcher^ windowDispatcher = webrtc::VideoCommonWinUWP::GetCoreDispatcher();
+			if (windowDispatcher != nullptr) {
+				windowDispatcher->RunAsync(
+					Windows::UI::Core::CoreDispatcherPriority::Normal,
+					ref new Windows::UI::Core::DispatchedHandler([id, str] {
+					FramesPerSecondChanged(id, str);
+				}));
+			}
+			else {
+				FramesPerSecondChanged(id, str);
+			}
+		}
+
+		void Org::WebRtc::ResolutionHelper::FireEvent(String^ id,
+			unsigned int width, unsigned int heigth) {
+			Windows::UI::Core::CoreDispatcher^ windowDispatcher = webrtc::VideoCommonWinUWP::GetCoreDispatcher();
+			if (windowDispatcher != nullptr) {
+				windowDispatcher->RunAsync(
+					Windows::UI::Core::CoreDispatcherPriority::Normal,
+					ref new Windows::UI::Core::DispatchedHandler([id, width, heigth] {
+					ResolutionChanged(id, width, heigth);
+				}));
+			}
+			else {
+				ResolutionChanged(id, width, heigth);
+			}
+		}
 	}
 }
 
