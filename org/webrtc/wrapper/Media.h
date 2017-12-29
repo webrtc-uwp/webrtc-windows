@@ -538,7 +538,7 @@ namespace Org {
 			/// when receiving media change event notifications.
 			/// </param>
 			/// <returns>A media source.</returns>
-			IMediaSource^ CreateMediaStreamSource(String^ id);
+			IMediaSource^ CreateMediaStreamSource(MediaVideoTrack^ track, String^ type, String^ id);
 
 			/// <summary>
 			/// Adds Video Track and Media Element piar structure to keep a reference

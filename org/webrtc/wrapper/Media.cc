@@ -386,7 +386,7 @@ namespace Org {
 					_frameType = Internal::FrameTypeH264;
 
 				auto handler = ref new DispatchedHandler([this]() {
-					_mediaSource = Internal::RTMediaStreamSource::CreateMediaSource(_frameType, _id);
+					_mediaSource = Internal::RTMediaStreamSource::CreateMediaSource(nullptr, _frameType, _id);
 					_mediaElement->SetMediaStreamSource(_mediaSource->GetMediaStreamSource());
 				});
 
@@ -535,10 +535,17 @@ namespace Org {
 			return asyncOp;
 		}
 
-		IMediaSource^ Media::CreateMediaStreamSource(String^ id) {
-			return globals::RunOnGlobalThread<MediaStreamSource^>([id]()->MediaStreamSource^ {
+		IMediaSource^ Media::CreateMediaStreamSource(MediaVideoTrack^ track, String^ type, String^ id) {
+			Internal::VideoFrameType frameType;
+			if (_wcsicmp(type->Data(), L"i420") == 0)
+				frameType = Internal::VideoFrameType::FrameTypeI420;
+			else if (_wcsicmp(type->Data(), L"h264") == 0)
+				frameType = Internal::VideoFrameType::FrameTypeH264;
+			else
+				return nullptr;
+			return globals::RunOnGlobalThread<MediaStreamSource^>([track, frameType, id]()->MediaStreamSource^ {
 				Internal::RTMediaStreamSource^ mediaSource =
-					Internal::RTMediaStreamSource::CreateMediaSource(Internal::VideoFrameType::FrameTypeH264, id);
+					Internal::RTMediaStreamSource::CreateMediaSource(track, frameType, id);
 				return mediaSource->GetMediaStreamSource();
 			});
 		}

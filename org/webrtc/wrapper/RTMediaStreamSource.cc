@@ -7,6 +7,7 @@
 // be found in the AUTHORS file in the root of the source tree.
 
 #include "RTMediaStreamSource.h"
+#include "Media.h"
 #include <mfapi.h>
 #include <ppltasks.h>
 #include <mfidl.h>
@@ -105,13 +106,16 @@ namespace Org {
 		namespace Internal {
 
 			RTMediaStreamSource^ RTMediaStreamSource::CreateMediaSource(
-				VideoFrameType frameType, String^ id) {
+				MediaVideoTrack^ track, VideoFrameType frameType, String^ id) {
 
 				auto streamState = ref new RTMediaStreamSource(frameType);
 				streamState->_id = id;
 				streamState->_idUtf8 = rtc::ToUtf8(streamState->_id->Data());
 				streamState->_rtcRenderer = std::unique_ptr<RTCRenderer>(
 					new RTCRenderer(streamState));
+				streamState->_videoTrack = track;
+				if (streamState->_videoTrack != nullptr)
+					streamState->_videoTrack->SetRenderer(streamState->_rtcRenderer.get());
 				VideoEncodingProperties^ videoProperties;
 				if (frameType == FrameTypeH264) {
 					videoProperties = VideoEncodingProperties::CreateH264();
@@ -273,6 +277,11 @@ namespace Org {
 
 				{
 					rtc::CritScope lock(&_critSect);
+					if (_videoTrack != nullptr) {
+						if (_rtcRenderer != nullptr)
+							_videoTrack->UnsetRenderer(_rtcRenderer.get());
+						_videoTrack = nullptr;
+					}
 					if (_rtcRenderer != nullptr) {
 						_rtcRenderer.reset();
 					}

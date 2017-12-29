@@ -201,6 +201,21 @@
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+	<PostBuildEvent>
+      <Command>SETLOCAL
+      set TARGET_PLUGIN_PATH=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\Client\Unity\UnityVideoSurface\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH%
+
+      mkdir "%TARGET_PLUGIN_PATH%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetPath)" "%TARGET_PLUGIN_PATH%Plugins\WSA\$(PlatformShortName)\Org.WebRtc$(TargetExt)"
+      copy /Y "$(TargetPath)" "%TARGET_PLUGIN_PATH%Plugins\WSA\$(PlatformShortName)\Org.WebRtc.pdb"
+ENDLOCAL
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
