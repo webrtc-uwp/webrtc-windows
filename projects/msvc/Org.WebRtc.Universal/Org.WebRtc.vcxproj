@@ -211,8 +211,9 @@
       mkdir "%TARGET_PLUGIN_PATH%Plugins\WSA"
       mkdir "%TARGET_PLUGIN_PATH%Plugins\WSA\$(PlatformShortName)"
 
-      copy /Y "$(TargetPath)" "%TARGET_PLUGIN_PATH%Plugins\WSA\$(PlatformShortName)\Org.WebRtc$(TargetExt)"
-      copy /Y "$(TargetPath)" "%TARGET_PLUGIN_PATH%Plugins\WSA\$(PlatformShortName)\Org.WebRtc.pdb"
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
 ENDLOCAL
       </Command>
     </PostBuildEvent>
