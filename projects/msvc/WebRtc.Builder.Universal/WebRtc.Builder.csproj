@@ -108,7 +108,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call "bin\prepare.bat" -target webrtc -platform $(Platform) -logLevel 4 &amp;&amp; call "bin\prepare.bat" -target webrtc -platform win32 -logLevel 4 &amp;&amp; popd &amp;&amp; pushd "$(ProjectDir)..\..\..\..\..\webrtc\xplatform\webrtc\out\winuwp_10_$(Platform)_$(Configuration)" &amp;&amp; call "..\..\..\..\..\bin\ninja" webrtc &amp;&amp; call "..\..\..\..\..\bin\ninja" webrtc/rtc_base:rtc_json &amp;&amp; popd</PreBuildEvent>
+    <PreBuildEvent>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call "bin\prepare.bat" -target webrtc -platform $(Platform) -logLevel 4 &amp;&amp; call "bin\prepare.bat" -target webrtc -platform win32 -logLevel 4 &amp;&amp; popd &amp;&amp; pushd "$(ProjectDir)..\..\..\..\..\webrtc\xplatform\webrtc\out\winuwp_10_$(Platform)_$(Configuration)" &amp;&amp; call "..\..\..\..\..\webrtc\xplatform\depot_tools\ninja" webrtc &amp;&amp; call "..\..\..\..\..\webrtc\xplatform\depot_tools\ninja" webrtc/rtc_base:rtc_json &amp;&amp; popd</PreBuildEvent>
   </PropertyGroup>
   <Target Name="BeforeClean">
     <Message Text="Veselo" />
