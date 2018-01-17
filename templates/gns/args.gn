@@ -3,4 +3,5 @@
 
 target_os="-target_os-"
 target_cpu="-target_cpu-"
+is_winuwp=-is_winuwp-
 is_debug=-is_debug-
