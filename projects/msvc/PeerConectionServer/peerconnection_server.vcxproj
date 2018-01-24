@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="GN|Win32">
-      <Configuration>GN</Configuration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -31,7 +43,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
   <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
-    <OutDir>../../../../xplatform/webrtc/out/win_x86_debug/</OutDir>
+    <OutDir>$(ProjectDir)..\..\..\..\xplatform\webrtc\out\win_$(PlatformTarget)_$(Configuration)\</OutDir>
     <TargetName>$(ProjectName)</TargetName>
     <TargetPath>$(OutDir)\$(ProjectName)$(TargetExt)</TargetPath>
   </PropertyGroup>
@@ -80,9 +92,9 @@
   <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <Target Name="Build">
-    <Exec Command="call C:\Work\2018\xamarin_net\check\ortclib-sdk\webrtc\xplatform\depot_tools\ninja.exe -C $(OutDir) ./peerconnection_server.exe" />
+    <Exec Command="call $(ProjectDir)..\..\..\..\xplatform\depot_tools\ninja.exe -C $(OutDir) ./peerconnection_server.exe" />
   </Target>
   <Target Name="Clean">
-    <Exec Command="call C:\Work\2018\xamarin_net\check\ortclib-sdk\webrtc\xplatform\depot_tools\ninja.exe -C $(OutDir) -tclean ./peerconnection_server.exe" />
+    <Exec Command="call $(ProjectDir)..\..\..\..\xplatform\depot_tools\ninja.exe -C $(OutDir) -tclean ./peerconnection_server.exe" />
   </Target>
 </Project>
