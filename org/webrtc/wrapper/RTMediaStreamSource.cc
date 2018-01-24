@@ -275,17 +275,15 @@ namespace Org {
 					Sleep(1);
 				}
 
-				{
-					rtc::CritScope lock(&_critSect);
-					if (_videoTrack != nullptr) {
-						if (_rtcRenderer != nullptr)
-							_videoTrack->UnsetRenderer(_rtcRenderer.get());
-						_videoTrack = nullptr;
-					}
-					if (_rtcRenderer != nullptr) {
-						_rtcRenderer.reset();
-					}
+				if (_videoTrack != nullptr) {
+					if (_rtcRenderer != nullptr)
+						_videoTrack->UnsetRenderer(_rtcRenderer.get());
+					_videoTrack = nullptr;
 				}
+				if (_rtcRenderer != nullptr) {
+					_rtcRenderer.reset();
+				}
+
 				LOG(LS_INFO) << "RTMediaStreamSource::Teardown() done ID=" << _idUtf8;
 			}
 
