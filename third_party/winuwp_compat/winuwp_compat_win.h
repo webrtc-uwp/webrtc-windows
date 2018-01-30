@@ -332,43 +332,6 @@ inline HANDLE CreateFile(
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 
-#ifdef GetTempPath
-#undef GetTempPath
-#endif /* GetTempPath */
-
-#define GetTempPathA(xBufferLength,xBuffer) winuwpGetTempPathA(xBufferLength,xBuffer)
-#ifndef WIN10
-#define GetTempPathW(xBufferLength,xBuffer) winuwpGetTempPathW(xBufferLength,xBuffer)
-#endif /* WIN10 */
-
-DWORD winuwpGetTempPathW(
-  DWORD  nBufferLength,
-  LPWSTR lpBuffer
-);
-
-DWORD winuwpGetTempPathA(
-  DWORD  nBufferLength,
-  LPSTR lpBuffer
-);
-
-inline DWORD GetTempPath(
-  DWORD  nBufferLength,
-  LPTSTR lpBuffer
-)
-{
-#ifdef UNICODE
-  return winuwpGetTempPathW(nBufferLength, lpBuffer);
-#else
-  return winuwpGetTempPathA(nBufferLength, lpBuffer);
-#endif /* UNICODE */
-}
-
-
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-
 #ifdef MoveFile
 #undef MoveFile
 #endif /* MoveFile */
@@ -396,43 +359,6 @@ inline BOOL MoveFile(
   return winuwpMoveFileW(lpExistingFileName, lpNewFileName);
 #else
   return winuwpMoveFileA(lpExistingFileName, lpNewFileName);
-#endif /* UNICODE */
-}
-
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-
-#ifdef CopyFile
-#undef CopyFile
-#endif /* CopyFile */
-
-#define CopyFileW(xExistingFileName,xNewFileName,xFailIfExistse) winuwpCopyFileW(xExistingFileName,xNewFileName,xFailIfExistse)
-#define CopyFileA(xExistingFileName,xNewFileName,xFailIfExistse) winuwpCopyFileA(xExistingFileName,xNewFileName,xFailIfExistse)
-
-BOOL winuwpCopyFileW(
-  LPCWSTR lpExistingFileName,
-  LPCWSTR lpNewFileName,
-  BOOL    bFailIfExists
-);
-
-BOOL winuwpCopyFileA(
-  LPCSTR lpExistingFileName,
-  LPCSTR lpNewFileName,
-  BOOL    bFailIfExists
-);
-
-inline BOOL CopyFile(
-  LPCTSTR lpExistingFileName,
-  LPCTSTR lpNewFileName,
-  BOOL    bFailIfExists
-)
-{
-#ifdef UNICODE
-  return winuwpCopyFileW(lpExistingFileName, lpNewFileName, bFailIfExists);
-#else
-  return winuwpCopyFileA(lpExistingFileName, lpNewFileName, bFailIfExists);
 #endif /* UNICODE */
 }
 
