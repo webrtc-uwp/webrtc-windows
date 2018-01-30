@@ -484,7 +484,7 @@ namespace Org {
 		/// <remarks>
 		/// http://www.w3.org/TR/mediacapture-streams
 		/// </remarks>
-		[Windows::Foundation::Metadata::WebHostHidden]
+		//[Windows::Foundation::Metadata::WebHostHidden]
 		public ref class Media sealed {
 
 		private:
@@ -540,8 +540,11 @@ namespace Org {
 			/// when receiving media change event notifications.
 			/// </param>
 			/// <returns>A media source.</returns>
-			//IMediaSource^ CreateMediaStreamSource(
-			//	MediaVideoTrack^ track, uint32 framerate, String^ id);
+      IMediaSource^ CreateMediaStreamSource(
+        MediaVideoTrack^ track,
+        String^ type,
+        String^ id
+      );
 
 			/// <summary>
 			/// Adds Video Track and Media Element piar structure to keep a reference
@@ -553,14 +556,18 @@ namespace Org {
 			/// <param name="track">Video track used as a frame source</param>
 			/// <param name="mediaElement">Rendering surface</param>
 			/// <param name="id">Identifier for media source.</param>
+#if 0
 			void AddVideoTrackMediaElementPair(MediaVideoTrack^ track, MediaElement^ mediaElement, String^ id);
+#endif //0
 
 			/// <summary>
 			/// Removes Video Track and Media Element piar structure from list of pairs.
 			/// </summary>
 			/// <param name="track">Video track used as a frame source which ientifies
 			/// the pair to be removed</param>
+#if 0
 			void RemoveVideoTrackMediaElementPair(MediaVideoTrack^ track);
+#endif 0
 
 			/// <summary>
 			/// Creates an <see cref="IMediaSource"/> for a video track, with a given

@@ -203,8 +203,8 @@ namespace Org {
 		/// </summary>
 		public ref class WinJSHooks sealed {
 		public:
-			static void initialize();
-			static IAsyncOperation<bool>^ requestAccessForMediaCapture();
+			static void Initialize();
+			static IAsyncOperation<bool>^ RequestAccessForMediaCapture();
 			static bool IsTracing();
 			static void StartTracing(Platform::String^ filename);
 			static void StopTracing();

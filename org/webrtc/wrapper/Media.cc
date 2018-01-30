@@ -536,15 +536,47 @@ namespace Org {
 			return asyncOp;
 		}
 
-		//IMediaSource^ Media::CreateMediaStreamSource(
-		//	MediaVideoTrack^ track, uint32 framerate, String^ id) {
-		//	return globals::RunOnGlobalThread<MediaStreamSource^>([track, framerate,
-		//		id]()->MediaStreamSource^ {
-		//		return Org::WebRtc::Internal::RTMediaStreamSource::
-		//			CreateMediaSource(track, framerate, id);
-		//	});
-		//}
+    IMediaSource^ Media::CreateMediaStreamSource(
+      MediaVideoTrack^ track,
+      String^ type,
+      String^ id) {
+      Internal::VideoFrameType frameType;
+      if (_wcsicmp(type->Data(), L"i420") == 0)
+        frameType = Internal::VideoFrameType::FrameTypeI420;
+      else if (_wcsicmp(type->Data(), L"h264") == 0)
+        frameType = Internal::VideoFrameType::FrameTypeH264;
+      else
+        return nullptr;
 
+      return globals::RunOnGlobalThread<IMediaSource^>([track, frameType, id]() -> IMediaSource^ {
+        ComPtr<Internal::WebRtcMediaSource> comSource;
+        Org::WebRtc::Internal::WebRtcMediaSource::CreateMediaSource(&comSource, frameType, id);
+        IMediaSource^ source = reinterpret_cast<IMediaSource^>(comSource.Get());
+        return source;
+      });
+    }
+
+        /*
+		  return globals::RunOnGlobalThread<MediaStreamSource^>([track, frameType, id]()->MediaStreamSource^ {
+        Internal::RTMediaStreamSource^ mediaSource =
+          Internal::RTMediaStreamSource::CreateMediaSource(track, frameType, id);
+        return mediaSource->GetMediaStreamSource();
+      });
+      */
+
+#if 0
+      IMediaSource^ Media::CreateMediaStreamSource(
+			MediaVideoTrack^ track, uint32 framerate, String^ id) {
+
+			return globals::RunOnGlobalThread<MediaStreamSource^>([track, framerate,
+				id]()->MediaStreamSource^ {
+				return Org::WebRtc::Internal::RTMediaStreamSource::
+					CreateMediaSource(track, framerate, id);
+			});
+		}
+#endif //0
+
+#if 0
 		void Media::AddVideoTrackMediaElementPair(MediaVideoTrack^ track, MediaElement^ mediaElement, String^ id) {
 			std::list<std::unique_ptr<VideoTrackMediaElementPair>>::iterator iter =
 				_videoTrackMediaElementPairList.begin();
@@ -579,6 +611,7 @@ namespace Org {
 				iter++;
 			}
 		}
+#endif //0
 
 		//IMediaSource^ Media::CreateMediaSource(
 		//	MediaVideoTrack^ track, String^ id) {
