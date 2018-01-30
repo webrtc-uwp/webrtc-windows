@@ -57,11 +57,14 @@ namespace Org {
 			HRESULT WebRtcMediaSource::CreateMediaSource(
 				IMediaSource** source,
 				Org::WebRtc::MediaVideoTrack^ track,
-				String^ id) {
+        BOOL frameTypeKnown,
+        BOOL isH264,
+        String^ id
+      ) {
 				*source = nullptr;
 				ComPtr<WebRtcMediaSource> internalRet;
 				RETURN_ON_FAIL(MakeAndInitialize<WebRtcMediaSource>(
-					&internalRet, track, id));
+					&internalRet, track, frameTypeKnown, isH264, id));
 				ComPtr<IMediaSource> ret;
 				internalRet.As(&ret);
 				*source = ret.Detach();
@@ -69,7 +72,12 @@ namespace Org {
 			}
 
 			HRESULT WebRtcMediaSource::RuntimeClassInitialize(
-				Org::WebRtc::MediaVideoTrack^ track, String^ id) {
+				Org::WebRtc::MediaVideoTrack^ track,
+        BOOL frameTypeKnown,
+        BOOL isH264,
+        String^ id
+      ) {
+
 				webrtc::CriticalSectionScoped csLock(_lock.get());
 				if (_eventQueue != nullptr)
 					return S_OK;
@@ -85,6 +93,14 @@ namespace Org {
 					_selectedStream = 0;
 				else
 					_selectedStream = 1;
+
+        if (frameTypeKnown) {
+          // override from parameter
+          if (!isH264)
+            _selectedStream = 0;
+          else
+            _selectedStream = 1;
+        }
 
 				_webRtcVideoSink.reset(new WebRtcVideoSink(
 				_selectedStream == 0 ? FrameTypeI420 : FrameTypeH264,

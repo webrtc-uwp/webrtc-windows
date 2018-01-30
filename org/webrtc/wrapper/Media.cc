@@ -606,18 +606,7 @@ namespace Org {
 			});
 		}*/
 
-#if 0
-		IMediaSource^ Media::CreateMediaSource(
-			MediaVideoTrack^ track, String^ id
-			return globals::RunOnGlobalThread<IMediaSource^>([track, id]() -> IMediaSource^ {
-				ComPtr<ABI::Windows::Media::Core::IMediaSource> comSource;
-				Org::WebRtc::Internal::WebRtcMediaSource::CreateMediaSource(&comSource, track, id);
-				IMediaSource^ source = reinterpret_cast<IMediaSource^>(comSource.Get());
-				return source;
-			});
-		}
-#endif //0
-    IMediaSource^ CreateMediaStreamSource(MediaVideoTrack^ track, String^ type, String^ id)
+    IMediaSource^ Media::CreateMediaStreamSource(MediaVideoTrack^ track, String^ type, String^ id)
     {
       Internal::VideoFrameType frameType;
       if (_wcsicmp(type->Data(), L"i420") == 0)
@@ -628,13 +617,26 @@ namespace Org {
          return nullptr;
       return globals::RunOnGlobalThread<IMediaSource^>([track, frameType, id]() -> IMediaSource^ {
         ComPtr<ABI::Windows::Media::Core::IMediaSource> comSource;
-        Org::WebRtc::Internal::WebRtcMediaSource::CreateMediaSource(&comSource, track, id);
+        Org::WebRtc::Internal::WebRtcMediaSource::CreateMediaSource(&comSource, track, TRUE, frameType == Internal::VideoFrameType::FrameTypeH264, id);
         IMediaSource^ source = reinterpret_cast<IMediaSource^>(comSource.Get());
         return source;
       });
     }
 
-		RawVideoSource^ Media::CreateRawVideoSource(MediaVideoTrack^ track) {
+   IMediaSource^ Media::CreateMediaSource(
+     MediaVideoTrack^ track,
+     String^ id
+   )
+   {
+     return globals::RunOnGlobalThread<IMediaSource^>([track, id]() -> IMediaSource^ {
+       ComPtr<ABI::Windows::Media::Core::IMediaSource> comSource;
+       Org::WebRtc::Internal::WebRtcMediaSource::CreateMediaSource(&comSource, track, FALSE, FALSE, id);
+       IMediaSource^ source = reinterpret_cast<IMediaSource^>(comSource.Get());
+       return source;
+     });
+    }
+
+    RawVideoSource^ Media::CreateRawVideoSource(MediaVideoTrack^ track) {
 			return ref new RawVideoSource(track);
 		}
 

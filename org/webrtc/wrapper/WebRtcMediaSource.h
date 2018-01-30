@@ -61,11 +61,20 @@ namespace Org {
 
 				static HRESULT CreateMediaSource(
 					ABI::Windows::Media::Core::IMediaSource** source,
-					Org::WebRtc::MediaVideoTrack^ track, String^ id);
+					Org::WebRtc::MediaVideoTrack^ track,
+          BOOL frameTypeKnown,
+          BOOL isH264,
+          String^ id
+        );
 
 				WebRtcMediaSource();
 				virtual ~WebRtcMediaSource();
-				HRESULT RuntimeClassInitialize(Org::WebRtc::MediaVideoTrack^ track, String^ id);
+				HRESULT RuntimeClassInitialize(
+          Org::WebRtc::MediaVideoTrack^ track,
+          BOOL frameTypeKnown,
+          BOOL isH264,
+          String^ id
+        );
 
 				// WebRtcVideoSinkObserver
 				virtual void OnVideoFormatChanged(VideoFrameType frameType) override;
