@@ -606,8 +606,9 @@ namespace Org {
 			});
 		}*/
 
+#if 0
 		IMediaSource^ Media::CreateMediaSource(
-			MediaVideoTrack^ track, String^ id) {
+			MediaVideoTrack^ track, String^ id
 			return globals::RunOnGlobalThread<IMediaSource^>([track, id]() -> IMediaSource^ {
 				ComPtr<ABI::Windows::Media::Core::IMediaSource> comSource;
 				Org::WebRtc::Internal::WebRtcMediaSource::CreateMediaSource(&comSource, track, id);
@@ -615,6 +616,23 @@ namespace Org {
 				return source;
 			});
 		}
+#endif //0
+    IMediaSource^ CreateMediaStreamSource(MediaVideoTrack^ track, String^ type, String^ id)
+    {
+      Internal::VideoFrameType frameType;
+      if (_wcsicmp(type->Data(), L"i420") == 0)
+         frameType = Internal::VideoFrameType::FrameTypeI420;
+      else if (_wcsicmp(type->Data(), L"h264") == 0)
+         frameType = Internal::VideoFrameType::FrameTypeH264;
+      else
+         return nullptr;
+      return globals::RunOnGlobalThread<IMediaSource^>([track, frameType, id]() -> IMediaSource^ {
+        ComPtr<ABI::Windows::Media::Core::IMediaSource> comSource;
+        Org::WebRtc::Internal::WebRtcMediaSource::CreateMediaSource(&comSource, track, id);
+        IMediaSource^ source = reinterpret_cast<IMediaSource^>(comSource.Get());
+        return source;
+      });
+    }
 
 		RawVideoSource^ Media::CreateRawVideoSource(MediaVideoTrack^ track) {
 			return ref new RawVideoSource(track);

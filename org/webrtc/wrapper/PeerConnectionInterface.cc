@@ -639,12 +639,12 @@ namespace Org {
 			});
 		}
 
-		void WinJSHooks::initialize() {
+		void WinJSHooks::Initialize() {
 			webrtc::VideoCommonWinRT::SetCoreDispatcher(Windows::UI::Core::CoreWindow::GetForCurrentThread()->Dispatcher);
 			Org::WebRtc::WebRTC::Initialize(Windows::UI::Core::CoreWindow::GetForCurrentThread()->Dispatcher);
 		}
 
-		IAsyncOperation<bool>^ WinJSHooks::requestAccessForMediaCapture() {
+		IAsyncOperation<bool>^ WinJSHooks::RequestAccessForMediaCapture() {
 			return  Org::WebRtc::WebRTC::RequestAccessForMediaCapture();
 		}
 
