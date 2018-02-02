@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{83E751BE-CB7D-FD8C-0C9D-22BF30FFF3CB}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>peerconnection_server</RootNamespace>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Locals">
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="PropertySheets">
+    <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+  <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <OutDir>$(ProjectDir)..\..\..\..\xplatform\webrtc\out\win_$(PlatformTarget)_$(Configuration)\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <TargetPath>$(OutDir)\$(ProjectName)$(TargetExt)</TargetPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../../../xplatform/webrtc;../../../../xplatform/webrtc/out/win_x86_debug/gen;C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\winrt;$(VSInstallDir)\VC\atlmfc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/D__DATE__= /D__TIME__= /D__TIMESTAMP__= /Gy /FS /bigobj /d2FastFail /Zc:sizedDealloc- /utf-8 /Ob0 /GF /Zi /GR- %(AdditionalOptions)</AdditionalOptions>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4117;4091;4127;4251;4275;4312;4324;4351;4355;4503;4589;4611;4100;4121;4244;4505;4510;4512;4610;4838;4995;4996;4456;4457;4458;4459;4267;4702;4577;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>false</ExceptionHandling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>V8_DEPRECATION_WARNINGS;USE_AURA=1;NO_TCMALLOC;FULL_SAFE_BROWSING;SAFE_BROWSING_CSD;SAFE_BROWSING_DB_LOCAL;CHROMIUM_BUILD;FIELDTRIAL_TESTING_ENABLED;__STD_C;_CRT_RAND_S;_CRT_SECURE_NO_DEPRECATE;_HAS_EXCEPTIONS=0;_SCL_SECURE_NO_DEPRECATE;_ATL_NO_OPENGL;_WINDOWS;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;PSAPI_VERSION=1;WIN32;_SECURE_ATL;_USING_V110_SDK71_;WIN32_LEAN_AND_MEAN;NOMINMAX;_UNICODE;UNICODE;NTDDI_VERSION=0x0A000000;_WIN32_WINNT=0x0A00;WINVER=0x0A00;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;_DEBUG;DYNAMIC_ANNOTATIONS_ENABLED=1;WTF_USE_DYNAMIC_ANNOTATIONS=1;WEBRTC_ENABLE_PROTOBUF=1;WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE;HAVE_SCTP;WEBRTC_NON_STATIC_TRACE_EVENT_HANDLERS=1;WEBRTC_WIN;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>CONSOLE</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="../../../../xplatform/webrtc/webrtc/examples/peerconnection/server/data_socket.cc">
+      <Command>call C:\Work\2018\xamarin_net\check\ortclib-sdk\webrtc\xplatform\depot_tools\ninja.exe -C $(OutDir) obj/webrtc/examples/peerconnection_server/data_socket.obj</Command>
+      <Outputs>$(OutDir)obj/webrtc/examples/peerconnection_server/data_socket.obj</Outputs>
+    </CustomBuild>
+    <None Include="../../../../xplatform/webrtc/webrtc/examples/peerconnection/server/data_socket.h" />
+    <CustomBuild Include="../../../../xplatform/webrtc/webrtc/examples/peerconnection/server/main.cc">
+      <Command>call C:\Work\2018\xamarin_net\check\ortclib-sdk\webrtc\xplatform\depot_tools\ninja.exe -C $(OutDir) obj/webrtc/examples/peerconnection_server/main.obj</Command>
+      <Outputs>$(OutDir)obj/webrtc/examples/peerconnection_server/main.obj</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="../../../../xplatform/webrtc/webrtc/examples/peerconnection/server/peer_channel.cc">
+      <Command>call C:\Work\2018\xamarin_net\check\ortclib-sdk\webrtc\xplatform\depot_tools\ninja.exe -C $(OutDir) obj/webrtc/examples/peerconnection_server/peer_channel.obj</Command>
+      <Outputs>$(OutDir)obj/webrtc/examples/peerconnection_server/peer_channel.obj</Outputs>
+    </CustomBuild>
+    <None Include="../../../../xplatform/webrtc/webrtc/examples/peerconnection/server/peer_channel.h" />
+    <CustomBuild Include="../../../../xplatform/webrtc/webrtc/examples/peerconnection/server/utils.cc">
+      <Command>call C:\Work\2018\xamarin_net\check\ortclib-sdk\webrtc\xplatform\depot_tools\ninja.exe -C $(OutDir) obj/webrtc/examples/peerconnection_server/utils.obj</Command>
+      <Outputs>$(OutDir)obj/webrtc/examples/peerconnection_server/utils.obj</Outputs>
+    </CustomBuild>
+    <None Include="../../../../xplatform/webrtc/webrtc/examples/peerconnection/server/utils.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+  <Target Name="Build">
+    <Exec Command="call $(ProjectDir)..\..\..\..\xplatform\depot_tools\ninja.exe -C $(OutDir) ./peerconnection_server.exe" />
+  </Target>
+  <Target Name="Clean">
+    <Exec Command="call $(ProjectDir)..\..\..\..\xplatform\depot_tools\ninja.exe -C $(OutDir) -tclean ./peerconnection_server.exe" />
+  </Target>
+</Project>
