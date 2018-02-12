@@ -34,6 +34,28 @@ using Windows::UI::Xaml::Controls::MediaElement;
 
 namespace Org {
 	namespace WebRtc {
+		//public ref class MrcUWPEffectDefinitions sealed {
+		//	struct MrcVideoEffectDefinition {
+		//		// MediaStreamType_VideoPreview = 0,
+		//		// MediaStreamType_VideoRecord = 1,
+		//		// MediaStreamType_Audio = 2,
+		//		// MediaStreamType_Photo = 3,
+		//		uint32_t streamType;
+		//		bool hologramCompositionEnabled;
+		//		bool recordingIndicatorEnabled;
+		//		bool videoStabilizationEnabled;
+		//		//VideoStabilizationBufferLength = DefaultVideoStabilizationBufferLength;
+		//		uint32_t videoStabilizationBufferLength;
+		//		float  globalOpacityCoefficient;
+		//	};
+
+		//	struct MrcAudioEffectDefinition {
+		//		//Mic = 0,
+		//		//Loopback = 1,
+		//		//MicAndLoopback = 2
+		//		uint32_t mixerMode;
+		//	};
+		//};
 
 		/// <summary>
 		/// An IMediaStreamTrack object represents media of a single type that
@@ -594,6 +616,11 @@ namespace Org {
 			static void OnAppSuspending();
 
 			/// <summary>
+			/// Sets holographic capture settings for Windows.Holographic devices.
+			/// </summary>
+			void SetVideoCaptureHolographicCapabilities();
+
+			/// <summary>
 			/// Set display orientation, used to rotate captured video in case the
 			/// capturer is attached to the enclosure.
 			/// This method should be called only if WebRTC::Initialize was called with
@@ -626,6 +653,8 @@ namespace Org {
 
 			DeviceWatcher^ _videoCaptureWatcher;
 			bool _videoCaptureDeviceChanged;
+			bool _audioEffectAdded;
+			bool _videoEffectAdded;
 		};
 	}
 }  // namespace Org.WebRtc

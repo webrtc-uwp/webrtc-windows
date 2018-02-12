@@ -30,6 +30,7 @@
 using Platform::Collections::Vector;
 using Org::WebRtc::Internal::ToCx;
 using Org::WebRtc::Internal::FromCx;
+using Windows::Media::IMediaExtension;
 using Windows::Media::Capture::MediaStreamType;
 using Windows::Devices::Enumeration::DeviceClass;
 using Windows::Devices::Enumeration::DeviceInformation;
@@ -498,7 +499,7 @@ namespace Org {
 								}
 							}
 						}
-						if (videoCaptureDevice != nullptr) {
+						if (videoCaptureDevice != nullptr) {							
 							videoCapturer = _dev_manager->CreateVideoCapturer(
 								*videoCaptureDevice);
 						}
@@ -643,6 +644,13 @@ namespace Org {
 
 		void Media::SelectVideoDevice(MediaDevice^ device) {
 			rtc::CritScope lock(&g_videoDevicesCritSect);
+			//if (device->hasVideoCaptureHolographicCapabilities()) {
+			//	device->ClearVideoCaptureHolographicCapabilities();
+			//}
+			//if (Windows::System::Profile::AnalyticsInfo::VersionInfo->DeviceFamily->Equals(L"Windows.Holographic"))
+			//{
+			//	device->SetVideoCaptureHolographicCapabilities();
+			//}
 			_selectedVideoDevice.id = "";
 			_selectedVideoDevice.name = "";
 			for (auto videoDev : g_videoDevices) {
@@ -669,6 +677,24 @@ namespace Org {
 				DisplayOrientationChanged(display_orientation);
 		}
 
+		//TODO: Extend this to the UI properties to allow for runtime config
+		void Media::SetVideoCaptureHolographicCapabilities() {
+			//struct MrcVideoEffectDefinition videoEffect = {
+			//	1, //VideoRecord
+			//	false, //No MRC
+			//	false, // No recording indicator
+			//	false, // No stabilizations
+			//	0, //buffer length
+			//	0.9f //90% opacity
+			//};
+			//struct MrcAudioEffectDefinition audioEffect = { 2 };
+			//webrtc::videocapturemodule::AppStateDispatcher::Instance()->
+			//	MixedRealityCaptureChanged( 
+			//		&videoEffect,
+			//		&audioEffect);
+			return;
+		}
+
 		IAsyncOperation<IVector<CaptureCapability^>^>^
 			MediaDevice::GetVideoCaptureCapabilities() {
 			auto op = concurrency::create_async([this]() -> IVector<CaptureCapability^>^ {
@@ -678,6 +704,7 @@ namespace Org {
 				if (mediaCapture == nullptr) {
 					return nullptr;
 				}
+
 				auto streamProperties =
 					mediaCapture->VideoDeviceController->GetAvailableMediaStreamProperties(
 						MediaStreamType::VideoRecord);

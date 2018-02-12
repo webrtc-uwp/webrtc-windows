@@ -54,21 +54,9 @@ namespace Org {
 			int _channels;
 			String^ _name;
 		public:
-			CodecInfo(int id, int clockrate, String^ name) {
-				_id = id;
+			CodecInfo(int clockrate, String^ name) {
 				_clockrate = clockrate;
 				_name = name;
-			}
-			/// <summary>
-			/// Get or sets a unique identifier that represents a codec.
-			/// </summary>
-			property int Id {
-				int get() {
-					return _id;
-				}
-				void set(int value) {
-					_id = value;
-				}
 			}
 			/// <summary>
 			/// Get or sets a clock rate in cycles per second.
