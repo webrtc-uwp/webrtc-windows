@@ -1,4 +1,3 @@
-
 // Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
 //
 // Use of this source code is governed by a BSD-style license
@@ -98,6 +97,8 @@ namespace Org {
 				Windows::Media::Core::MediaStreamSourceStartingEventArgs^ _startingArgs;
 
 				ULONG _frameBeingQueued;
+				ULONGLONG _startTick;
+				bool _videoSourceStarted;
 			};
 		}
 	}
