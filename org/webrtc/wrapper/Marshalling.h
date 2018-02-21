@@ -16,8 +16,6 @@
 #include "Media.h"
 #include "webrtc/api/jsep.h"
 #include "PeerConnectionInterface.h"
-#include "webrtc/modules/video_capture/windows/mrc_audio_effect_definition.h"
-#include "webrtc/modules/video_capture/windows/mrc_video_effect_definition.h"
 
 using Platform::String;
 using Windows::Foundation::Collections::IVector;
