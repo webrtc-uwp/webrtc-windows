@@ -53,6 +53,8 @@ namespace Org {
 				bool rotationHasChanged;
 				int rotation;
 				LONGLONG renderTime;
+				LONGLONG predictionTimestamp;
+				uint8_t predictionTimestampId;
 			};
 
 			class MediaSourceHelper {
@@ -67,6 +69,9 @@ namespace Org {
 				void QueueFrame(webrtc::VideoFrame* frame);
 				std::unique_ptr<SampleData> DequeueFrame();
 				bool HasFrames();
+				void ClearFrames();
+				void ResetFrameRate();
+				void UpdateFrameRate();
 
 			private:
 				rtc::CriticalSection _critSect;
@@ -86,8 +91,8 @@ namespace Org {
 				// In degrees.  In practice it can only be 0, 90, 180 or 270.
 				int _lastRotation;
 
-				std::unique_ptr<SampleData> DequeueH264Frame();
-				std::unique_ptr<SampleData> DequeueI420Frame();
+				std::unique_ptr<SampleData> DequeueH264Frame(int64_t &frameTimestamp);
+				std::unique_ptr<SampleData> DequeueI420Frame(int64_t &frameTimestamp);
 
 
 				// Gets the next timestamp using the clock.
@@ -99,13 +104,20 @@ namespace Org {
 				std::function<HRESULT(webrtc::VideoFrame* frame, IMFSample** sample)> _mkSample;
 				std::function<void(int)> _fpsCallback;
 
-				// Called whenever a new sample is sent for rendering.
-				void UpdateFrameRate();
 				// State related to calculating FPS.
 				int _frameCounter;
+				int _lastFrameRateCounter;
 				int64_t _lastTimeFPSCalculated;
 
 				int64_t _startTickTime;
+
+				// Prediction timestamp.
+				int _timestampCounter;
+				LONGLONG _lastSampleDuration;
+				LONGLONG _frameTimeTotal;
+				LONGLONG lastTimestampHns_;
+				int64_t _freezeTickTime;
+				bool _isFreezing;
 			};
 		}
 	}
