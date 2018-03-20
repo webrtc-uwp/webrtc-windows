@@ -46,6 +46,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WebRtc.UWP.Native.Builder",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "peerconnection_server", "..\projects\msvc\PeerConectionServer\peerconnection_server.vcxproj", "{83E751BE-CB7D-FD8C-0C9D-22BF30FFF3CB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerConnectionClientCore", "..\..\..\common\windows\samples\PeerCC\Core\PeerConnectionClientCore.csproj", "{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\common\windows\samples\PeerCC\Client\Unity\MediaEnginePlayerPlugin\MediaEngineUWP\Shared\Shared.vcxitems*{4a859119-6730-4612-987f-dabf98f213ed}*SharedItemsImports = 4
@@ -224,6 +226,28 @@ Global
 		{83E751BE-CB7D-FD8C-0C9D-22BF30FFF3CB}.Release|x64.Build.0 = Release|x64
 		{83E751BE-CB7D-FD8C-0C9D-22BF30FFF3CB}.Release|x86.ActiveCfg = Release|Win32
 		{83E751BE-CB7D-FD8C-0C9D-22BF30FFF3CB}.Release|x86.Build.0 = Release|Win32
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Debug|ARM.ActiveCfg = Debug|ARM
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Debug|ARM.Build.0 = Debug|ARM
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Debug|x64.ActiveCfg = Debug|x64
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Debug|x64.Build.0 = Debug|x64
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Debug|x86.ActiveCfg = Debug|x86
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Debug|x86.Build.0 = Debug|x86
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.GN|Any CPU.ActiveCfg = Release|x86
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.GN|Any CPU.Build.0 = Release|x86
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.GN|ARM.ActiveCfg = Release|ARM
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.GN|ARM.Build.0 = Release|ARM
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.GN|x64.ActiveCfg = Release|x64
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.GN|x64.Build.0 = Release|x64
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.GN|x86.ActiveCfg = Release|x86
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.GN|x86.Build.0 = Release|x86
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Release|Any CPU.ActiveCfg = Release|x86
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Release|ARM.ActiveCfg = Release|ARM
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Release|ARM.Build.0 = Release|ARM
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Release|x64.ActiveCfg = Release|x64
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Release|x64.Build.0 = Release|x64
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Release|x86.ActiveCfg = Release|x86
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -244,6 +268,7 @@ Global
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF} = {507EFBC7-5B0B-4ACB-A67A-7F24A2340A86}
 		{08C8FB57-A433-44AD-AE99-4AF554F02BED} = {F3CEBBE9-B35F-40D1-B62E-5FA923D9456C}
 		{83E751BE-CB7D-FD8C-0C9D-22BF30FFF3CB} = {F01290E5-AA5F-4AB6-938F-674BEDC720F4}
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1} = {B75554FF-2598-4F34-B11F-027282FB26CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {36335805-B335-4845-8EEB-77E32101A75D}
