@@ -514,7 +514,7 @@ namespace Org {
 							constraints.SetMandatory(webrtc::MediaConstraintsInterface::kMinHeight, globals::gPreferredVideoCaptureFormat.height);
 							constraints.SetMandatory(webrtc::MediaConstraintsInterface::kMaxWidth, globals::gPreferredVideoCaptureFormat.width);
 							constraints.SetMandatory(webrtc::MediaConstraintsInterface::kMaxHeight, globals::gPreferredVideoCaptureFormat.height);
-							constraints.SetMandatoryMaxFrameRate(cricket::VideoFormat::IntervalToFps(globals::gPreferredVideoCaptureFormat.height));
+							constraints.SetMandatoryMaxFrameRate(cricket::VideoFormat::IntervalToFps(globals::gPreferredVideoCaptureFormat.interval));
 
 							LOG(LS_INFO) << "Creating video track.";
 							rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track(
