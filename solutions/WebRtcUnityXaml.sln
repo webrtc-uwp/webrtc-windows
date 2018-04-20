@@ -28,7 +28,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerConnectionClientUnity.WebRtc", "..\..\..\common\windows\samples\PeerCC\Client\PeerConnectionClientUnity.WebRtc.csproj", "{A2EA7350-EE59-42C5-9323-C942B058B217}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4A859119-6730-4612-987F-DABF98F213ED} = {4A859119-6730-4612-987F-DABF98F213ED}
-		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF} = {32A4ABD8-EB1C-4198-B261-425E6CADDBEF}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Org.WebRtc.Uwp", "..\projects\msvc\Org.WebRtc.Uwp\Org.WebRtc.Uwp.vcxproj", "{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}"
