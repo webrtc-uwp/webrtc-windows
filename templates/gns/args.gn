@@ -1,7 +1,6 @@
 # Build arguments go here.
 # See "gn args <out_dir> --list" for available build arguments.
 
-current_os="win"
 target_os="-target_os-"
 target_cpu="-target_cpu-"
 is_debug=-is_debug-
