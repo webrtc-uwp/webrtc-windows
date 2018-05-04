@@ -51,10 +51,12 @@ char *winuwpGetEnv(
    const char *varname   
 );
 
+#if (NTDDI_VERSION < NTDDI_WIN10_RS4)
 inline char *getenv(const char *varname)
 {
 	return winuwpGetEnv(varname);
 }
+#endif //(NTDDI_VERSION < NTDDI_WIN10_RS4)
 
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -67,6 +69,7 @@ errno_t winuwpDupEnv(
    const char *varname  
 );  
 
+#if (NTDDI_VERSION < NTDDI_WIN10_RS4)
 inline errno_t _dupenv_s(  
    char **buffer,  
    size_t *numberOfElements,  
@@ -75,7 +78,7 @@ inline errno_t _dupenv_s(
 {
   return winuwpDupEnv(buffer, numberOfElements, varname);
 }
-
+#endif //(NTDDI_VERSION < NTDDI_WIN10_RS4)
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -83,16 +86,18 @@ inline errno_t _dupenv_s(
 int winuwpPutEvnA(const char *envstring);
 int winuwpPutEvnW(const wchar_t *envstring);
 
+#if (NTDDI_VERSION < NTDDI_WIN10_RS4)
 inline int _putenv(const char *envstring)
 {
   return winuwpPutEvnA(envstring);
 }
 
+
 inline int _wputenv(const wchar_t *envstring)
 {
   return winuwpPutEvnW(envstring);
 }
-
+#endif //(NTDDI_VERSION < NTDDI_WIN10_RS4)
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
