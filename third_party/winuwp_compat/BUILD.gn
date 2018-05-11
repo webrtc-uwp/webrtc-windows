@@ -3,13 +3,13 @@
 # found in the LICENSE file.
 
 config("config_winuwp") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     include_dirs = [ "." ]
   }
 }
 
 config("config_force_include_std") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     cflags_c = [
       "/FIwinuwp_compat_std.h"
     ]
@@ -20,7 +20,7 @@ config("config_force_include_std") {
 }
 
 source_set("force_include_std") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     public_configs = [
       ":config_force_include_std",
       ":config_winuwp",
@@ -30,7 +30,7 @@ source_set("force_include_std") {
 }
 
 config("config_force_include_win") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     cflags_c = [
       "/FIwinuwp_compat_win.h"
     ]
@@ -41,7 +41,7 @@ config("config_force_include_win") {
 }
 
 source_set("force_include_win") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     public_configs = [
       ":config_force_include_win",
       ":config_winuwp",
@@ -51,7 +51,7 @@ source_set("force_include_win") {
 }
 
 source_set("force_include_all") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     public_configs = [
       ":config_force_include_std",
       ":config_force_include_win",
@@ -62,7 +62,7 @@ source_set("force_include_all") {
 }
 
 config("config_wrap_main_plain_c") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     cflags_c = [
       "/FIwinuwp_compat_wrap_main_plain_c.h"
     ]
@@ -73,7 +73,7 @@ config("config_wrap_main_plain_c") {
 }
 
 config("config_wrap_main_plain_cc") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     cflags_c = [
       "/FIwinuwp_compat_wrap_main_plain_cc.h"
     ]
@@ -84,7 +84,7 @@ config("config_wrap_main_plain_cc") {
 }
 
 config("config_wrap_main_utf8_c") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     cflags_c = [
       "/FIwinuwp_compat_wrap_main_utf8_c.h"
     ]
@@ -95,7 +95,7 @@ config("config_wrap_main_utf8_c") {
 }
 
 config("config_wrap_main_utf8_cc") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     cflags_c = [
       "/FIwinuwp_compat_wrap_main_utf8_cc.h"
     ]
@@ -106,7 +106,7 @@ config("config_wrap_main_utf8_cc") {
 }
 
 config("config_wrap_main_utf16_c") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     cflags_c = [
       "/FIwinuwp_compat_wrap_main_utf16_c.h"
     ]
@@ -117,7 +117,7 @@ config("config_wrap_main_utf16_c") {
 }
 
 config("config_wrap_main_utf16_cc") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     cflags_c = [
       "/FIwinuwp_compat_wrap_main_utf16_cc.h"
     ]
@@ -128,7 +128,7 @@ config("config_wrap_main_utf16_cc") {
 }
 
 source_set("wrap_main_plain_c") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     public_configs = [
       ":config_wrap_main_plain_c",
       ":config_winuwp",
@@ -141,7 +141,7 @@ source_set("wrap_main_plain_c") {
 }
 
 source_set("wrap_main_plain_cc") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     public_configs = [
       ":config_wrap_main_plain_cc",
       ":config_winuwp",
@@ -154,7 +154,7 @@ source_set("wrap_main_plain_cc") {
 }
 
 source_set("wrap_main_utf8_c") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     public_configs = [
       ":config_wrap_main_utf8_c",
       ":config_winuwp",
@@ -167,7 +167,7 @@ source_set("wrap_main_utf8_c") {
 }
 
 source_set("wrap_main_utf8_cc") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     public_configs = [
       ":config_wrap_main_utf8_cc",
       ":config_winuwp",
@@ -180,7 +180,7 @@ source_set("wrap_main_utf8_cc") {
 }
 
 source_set("wrap_main_utf16_c") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     public_configs = [
       ":config_wrap_main_utf16_c",
       ":config_winuwp",
@@ -193,7 +193,7 @@ source_set("wrap_main_utf16_c") {
 }
 
 source_set("wrap_main_utf16_cc") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     public_configs = [
       ":config_wrap_main_utf16_cc",
       ":config_winuwp",
@@ -206,7 +206,7 @@ source_set("wrap_main_utf16_cc") {
 }
 
 config("ignore_threading_model_warning") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     cflags_c = [
       "/wd4447"
     ]
@@ -217,7 +217,7 @@ config("ignore_threading_model_warning") {
 }
 
 static_library("winuwp_compat") {
-  if (is_winuwp) {
+  if (current_os == "winuwp") {
     sources = [
       "winuwp_compat_std.cc",
       "winuwp_compat_std.h",
