@@ -47,7 +47,7 @@ namespace webrtc
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
-#if (WDK_NTDDI_VERSION < NTDDI_WIN10_RS4)
+#if !defined(NTDDI_WIN10_RS4) || (WDK_NTDDI_VERSION < NTDDI_WIN10_RS4)
 char *winuwpGetEnv(
    const char *varname   
 );
@@ -92,7 +92,7 @@ inline int _wputenv(const wchar_t *envstring)
 {
   return winuwpPutEvnW(envstring);
 }
-#endif //(WDK_NTDDI_VERSION < NTDDI_WIN10_RS4)
+#endif // !defined(NTDDI_WIN10_RS4) || (WDK_NTDDI_VERSION < NTDDI_WIN10_RS4)
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */

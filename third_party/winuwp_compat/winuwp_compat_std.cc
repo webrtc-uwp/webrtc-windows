@@ -87,7 +87,7 @@ char *winuwpGetCwd(char *buf, size_t size)
   return winuwpInternalGetCwd(buf, size);
 }
 
-#if (WDK_NTDDI_VERSION < NTDDI_WIN10_RS4)
+#if !defined(NTDDI_WIN10_RS4) || (WDK_NTDDI_VERSION < NTDDI_WIN10_RS4)
 char *winuwpGetEnv(const char *varname)
 {
   return winuwpInternalGetEnvA(varname);
@@ -111,7 +111,7 @@ int winuwpPutEvnW(const wchar_t *envstring)
 {
   return winuwpInternalPutEnvW(envstring);
 }
-#endif //(WDK_NTDDI_VERSION < NTDDI_WIN10_RS4)
+#endif // !defined(NTDDI_WIN10_RS4) || (WDK_NTDDI_VERSION < NTDDI_WIN10_RS4)
 pid_t winuwpGetPid()
 {
   return static_cast<pid_t>(GetCurrentProcessId());
