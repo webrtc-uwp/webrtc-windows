@@ -13,9 +13,9 @@
 #include <ppltasks.h>
 #include <functional>
 #include <string>
-#include "webrtc/api/peerconnectioninterface.h"
-#include "webrtc/rtc_base/event.h"
-#include "webrtc/rtc_base/scoped_ref_ptr.h"
+#include "api/peerconnectioninterface.h"
+#include "rtc_base/event.h"
+#include "rtc_base/scoped_ref_ptr.h"
 #include "../stats/webrtc_stats_observer.h"
 
 namespace Org {

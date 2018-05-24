@@ -12,8 +12,8 @@
 #include "Marshalling.h"
 #include <map>
 
-#include "webrtc/p2p/base/candidate.h"
-#include "webrtc/api/webrtcsdp.h"
+#include "p2p/base/candidate.h"
+#include "api/webrtcsdp.h"
 #include "RTCStatsReport.h"
 
 using Org::WebRtc::RTCBundlePolicy;

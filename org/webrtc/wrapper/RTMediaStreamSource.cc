@@ -10,11 +10,11 @@
 #include <mfapi.h>
 #include <ppltasks.h>
 #include <mfidl.h>
-#include "webrtc/media/base/videosourceinterface.h"
+#include "media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
-#include "webrtc/common_video/video_common_winuwp.h"
-#include "webrtc/rtc_base/logging.h"
-#include "webrtc/media/base/videocommon.h"
+#include "common_video/video_common_winuwp.h"
+#include "rtc_base/logging.h"
+#include "media/base/videocommon.h"
 
 using Microsoft::WRL::ComPtr;
 using Platform::Collections::Vector;

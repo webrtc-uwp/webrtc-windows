@@ -22,10 +22,10 @@
 #include <iomanip>
 #include "../Utils/Utils.h"
 #include "libyuv/convert.h"
-#include "webrtc/rtc_base/logging.h"
-#include "webrtc/rtc_base/checks.h"
-#include "webrtc/common_video/include/video_frame_buffer.h"
-#include "webrtc/modules/video_coding/include/video_codec_interface.h"
+#include "rtc_base/logging.h"
+#include "rtc_base/checks.h"
+#include "common_video/include/video_frame_buffer.h"
+#include "modules/video_coding/include/video_codec_interface.h"
 
 #pragma comment(lib, "mfreadwrite")
 #pragma comment(lib, "mfplat")

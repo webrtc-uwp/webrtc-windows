@@ -10,7 +10,7 @@
 #error Invalid build configuration
 #endif  // WINUWP
 #include "winuwpdevicemanager.h"
-#include "webrtc/media/engine/webrtcvideocapturerfactory.h"
+#include "media/engine/webrtcvideocapturerfactory.h"
 #include <dbt.h>
 #include <strmif.h>
 #include <ks.h>
@@ -23,12 +23,12 @@
 #include <ppltasks.h>
 #include <collection.h>
 
-#include "webrtc/rtc_base/logging.h"
-#include "webrtc/rtc_base/stringutils.h"
-#include "webrtc/rtc_base/thread.h"
-#include "webrtc/rtc_base/win32.h"  // ToUtf8
-#include "webrtc/rtc_base/win32window.h"
-#include "webrtc/modules/video_capture/video_capture_factory.h"
+#include "rtc_base/logging.h"
+#include "rtc_base/stringutils.h"
+#include "rtc_base/thread.h"
+#include "rtc_base/win32.h"  // ToUtf8
+#include "rtc_base/win32window.h"
+#include "modules/video_capture/video_capture_factory.h"
 
 namespace {
 

@@ -10,9 +10,9 @@
 #define WEBRTC_BUILD_WINUWP_GYP_STATS_WEBRTC_STATS_NETWORK_SENDER_H_
 
 #include <string>
-#include "webrtc/api/statstypes.h"
-#include "webrtc/rtc_base/sigslot.h"
-#include "webrtc/rtc_base/scoped_ref_ptr.h"
+#include "api/statstypes.h"
+#include "rtc_base/sigslot.h"
+#include "rtc_base/scoped_ref_ptr.h"
 
 namespace rtc {
   class AsyncSocket;

@@ -12,9 +12,9 @@
 
 #include <string>
 
-#include "webrtc/api/peerconnectioninterface.h"
+#include "api/peerconnectioninterface.h"
 #include "../wrapper/RTCStatsReport.h"
-#include "webrtc/rtc_base/criticalsection.h"
+#include "rtc_base/criticalsection.h"
 
 namespace webrtc {
 class CriticalSectionWrapper;

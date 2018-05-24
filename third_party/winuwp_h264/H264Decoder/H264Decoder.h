@@ -17,8 +17,8 @@
 #include <mferror.h>
 #include <wrl.h>
 #include "../Utils/SampleAttributeQueue.h"
-#include "webrtc/api/video_codecs/video_decoder.h"
-#include "webrtc/rtc_base/criticalsection.h"
+#include "api/video_codecs/video_decoder.h"
+#include "rtc_base/criticalsection.h"
 
 #pragma comment(lib, "mfreadwrite")
 #pragma comment(lib, "mfplat")

@@ -16,8 +16,8 @@
 #include <functional>
 #include <wrl.h>
 #include <ppltasks.h>
-#include "webrtc/api/video/video_frame.h"
-#include "webrtc/media/base/videosourceinterface.h"
+#include "api/video/video_frame.h"
+#include "media/base/videosourceinterface.h"
 #include "libyuv/convert.h"
 
 using Microsoft::WRL::MakeAndInitialize;

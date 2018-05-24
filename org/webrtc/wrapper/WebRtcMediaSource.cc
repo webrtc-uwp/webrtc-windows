@@ -10,7 +10,7 @@
 #include "WebRtcMediaSource.h"
 #include "Media.h"
 #include <mferror.h>
-#include "webrtc/common_video/video_common_winuwp.h"
+#include "common_video/video_common_winuwp.h"
 
 namespace Org {
 	namespace WebRtc {

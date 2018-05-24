@@ -16,7 +16,7 @@
 #include "Marshalling.h"
 #include "Media.h"
 #include "DataChannel.h"
-#include "webrtc/common_video/video_common_winuwp.h"
+#include "common_video/video_common_winuwp.h"
 
 using Platform::Collections::Vector;
 

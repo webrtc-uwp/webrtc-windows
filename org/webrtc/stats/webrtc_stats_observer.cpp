@@ -12,8 +12,8 @@
 
 #include "webrtc_stats_observer.h"
 #include "webrtc_stats_network_sender.h"
-#include "webrtc/rtc_base/thread.h"
-#include "webrtc/modules/video_coding/timing.h"
+#include "rtc_base/thread.h"
+#include "modules/video_coding/timing.h"
 #include "../wrapper/RTCStatsReport.h"
 #include "../wrapper/Marshalling.h"
 
