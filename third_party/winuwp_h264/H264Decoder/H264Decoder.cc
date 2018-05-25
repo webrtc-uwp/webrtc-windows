@@ -50,7 +50,7 @@ WinUWPH264DecoderImpl::~WinUWPH264DecoderImpl() {
 
 int WinUWPH264DecoderImpl::InitDecode(const VideoCodec* inst,
   int number_of_cores) {
-  LOG(LS_INFO) << "WinUWPH264DecoderImpl::InitDecode()\n";
+  RTC_LOG(LS_INFO) << "WinUWPH264DecoderImpl::InitDecode()\n";
   // Nothing to do here, decoder acts as a passthrough
   return WEBRTC_VIDEO_CODEC_OK;
 }
