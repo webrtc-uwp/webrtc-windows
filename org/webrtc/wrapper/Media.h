@@ -34,29 +34,6 @@ using Windows::UI::Xaml::Controls::MediaElement;
 
 namespace Org {
 	namespace WebRtc {
-		//public ref class MrcUWPEffectDefinitions sealed {
-		//	struct MrcVideoEffectDefinition {
-		//		// MediaStreamType_VideoPreview = 0,
-		//		// MediaStreamType_VideoRecord = 1,
-		//		// MediaStreamType_Audio = 2,
-		//		// MediaStreamType_Photo = 3,
-		//		uint32_t streamType;
-		//		bool hologramCompositionEnabled;
-		//		bool recordingIndicatorEnabled;
-		//		bool videoStabilizationEnabled;
-		//		//VideoStabilizationBufferLength = DefaultVideoStabilizationBufferLength;
-		//		uint32_t videoStabilizationBufferLength;
-		//		float  globalOpacityCoefficient;
-		//	};
-
-		//	struct MrcAudioEffectDefinition {
-		//		//Mic = 0,
-		//		//Loopback = 1,
-		//		//MicAndLoopback = 2
-		//		uint32_t mixerMode;
-		//	};
-		//};
-
 		/// <summary>
 		/// An IMediaStreamTrack object represents media of a single type that
 		/// originates from one media source, e.g. video produced by a web camera.
@@ -262,11 +239,12 @@ namespace Org {
 			/// <param name="pixelAspect">Sets the shape of a pixel. Some codecs, such as H.264, support
 			/// non-square pixels. Codecs that support only square pixes, such as VPx, will force a 1:1 ratio.</param>
 			CaptureCapability(unsigned int width, unsigned int height,
-				unsigned int fps,
+				unsigned int fps, bool mrcEnabled,
 				Windows::Media::MediaProperties::MediaRatio^ pixelAspect) {
 				_width = width;
 				_height = height;
 				_fps = fps;
+				_mrcEnabled = mrcEnabled;
 				_pixelAspectRatio = pixelAspect;
 				wchar_t resolutionDesc[64];
 				swprintf_s(resolutionDesc, 64, L"%u x %u",
@@ -301,6 +279,14 @@ namespace Org {
 			property unsigned int FrameRate {
 				unsigned int get() {
 					return _fps;
+				}
+			}
+			/// <summary>
+			/// Gets a flag about Mixed Reality Capture status on HoloLens device.
+			/// </summary>
+			property bool MrcEnabled {
+				bool get() {
+					return _mrcEnabled;
 				}
 			}
 			/// <summary>
@@ -343,6 +329,7 @@ namespace Org {
 			unsigned int _width;
 			unsigned int _height;
 			unsigned int _fps;
+			bool _mrcEnabled;
 			Windows::Media::MediaProperties::MediaRatio^ _pixelAspectRatio;
 			String^ _resolutionDescription;
 			String^ _fpsDescription;
@@ -412,7 +399,7 @@ namespace Org {
 		};
 
 		/// <summary>
-		/// Allows defining constraints to exclude media types from a
+		/// Allows defining constraints to exclude media types from a media stream.
 		/// <see cref="MediaStream"/>.
 		/// </summary>
 		public ref class RTCMediaStreamConstraints sealed {
@@ -614,11 +601,6 @@ namespace Org {
 			/// App suspending event handler.
 			/// </summary>
 			static void OnAppSuspending();
-
-			/// <summary>
-			/// Sets holographic capture settings for Windows.Holographic devices.
-			/// </summary>
-			void SetVideoCaptureHolographicCapabilities();
 
 			/// <summary>
 			/// Set display orientation, used to rotate captured video in case the

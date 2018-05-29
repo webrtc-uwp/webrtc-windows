@@ -104,7 +104,7 @@ namespace Org {
 			// Default resolution. If no preferred video capture format is specified,
 			// this is the resolution we will use.
 			cricket::VideoFormat gPreferredVideoCaptureFormat = cricket::VideoFormat(640, 480,
-				cricket::VideoFormat::FpsToInterval(30), cricket::FOURCC_ANY);
+				cricket::VideoFormat::FpsToInterval(30), cricket::FOURCC_ANY, false);
 		}  // namespace globals
 
 		RTCIceCandidate::RTCIceCandidate() {
@@ -786,11 +786,12 @@ namespace Org {
 		}
 
 		void WebRTC::SetPreferredVideoCaptureFormat(int frameWidth,
-			int frameHeight, int fps) {
+			int frameHeight, int fps, bool mrcEnabled) {
 			globals::gPreferredVideoCaptureFormat.interval =
 				cricket::VideoFormat::FpsToInterval(fps);
 			globals::gPreferredVideoCaptureFormat.width = frameWidth;
 			globals::gPreferredVideoCaptureFormat.height = frameHeight;
+			globals::gPreferredVideoCaptureFormat.mrcEnabled = mrcEnabled;
 		}
 	}
 }  // namespace Org.WebRtc

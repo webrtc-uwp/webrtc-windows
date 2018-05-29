@@ -160,9 +160,13 @@ namespace Org {
 			/// <param name="frameWidth">Image width.</param>
 			/// <param name="frameHeight">Image height.</param>
 			/// <param name="fps">Frames per second.</param>
+			/// <param name="mrcEnabled">
+			/// Inidicates whether Mixed Reality Capture should be enabled if application runs on HoloLens device.
+			/// </param>
 			static void SetPreferredVideoCaptureFormat(int frameWidth,
 				int frameHeight,
-				int fps);
+				int fps,
+				bool mrcEnabled);
 
 			/// <summary>
 			/// Synchronization with NTP is needed for end to end delay measurements,

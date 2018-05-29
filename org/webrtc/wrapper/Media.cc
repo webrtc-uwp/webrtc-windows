@@ -516,6 +516,7 @@ namespace Org {
 							constraints.SetMandatory(webrtc::MediaConstraintsInterface::kMaxWidth, globals::gPreferredVideoCaptureFormat.width);
 							constraints.SetMandatory(webrtc::MediaConstraintsInterface::kMaxHeight, globals::gPreferredVideoCaptureFormat.height);
 							constraints.SetMandatoryMaxFrameRate(cricket::VideoFormat::IntervalToFps(globals::gPreferredVideoCaptureFormat.interval));
+							constraints.SetMandatory(webrtc::MediaConstraintsInterface::kEnableMrc, globals::gPreferredVideoCaptureFormat.mrcEnabled);
 
 							LOG(LS_INFO) << "Creating video track.";
 							rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track(
@@ -644,13 +645,6 @@ namespace Org {
 
 		void Media::SelectVideoDevice(MediaDevice^ device) {
 			rtc::CritScope lock(&g_videoDevicesCritSect);
-			//if (device->hasVideoCaptureHolographicCapabilities()) {
-			//	device->ClearVideoCaptureHolographicCapabilities();
-			//}
-			//if (Windows::System::Profile::AnalyticsInfo::VersionInfo->DeviceFamily->Equals(L"Windows.Holographic"))
-			//{
-			//	device->SetVideoCaptureHolographicCapabilities();
-			//}
 			_selectedVideoDevice.id = "";
 			_selectedVideoDevice.name = "";
 			for (auto videoDev : g_videoDevices) {
@@ -675,24 +669,6 @@ namespace Org {
 			Windows::Graphics::Display::DisplayOrientations display_orientation) {
 			webrtc::videocapturemodule::AppStateDispatcher::Instance()->
 				DisplayOrientationChanged(display_orientation);
-		}
-
-		//TODO: Extend this to the UI properties to allow for runtime config
-		void Media::SetVideoCaptureHolographicCapabilities() {
-			//struct MrcVideoEffectDefinition videoEffect = {
-			//	1, //VideoRecord
-			//	false, //No MRC
-			//	false, // No recording indicator
-			//	false, // No stabilizations
-			//	0, //buffer length
-			//	0.9f //90% opacity
-			//};
-			//struct MrcAudioEffectDefinition audioEffect = { 2 };
-			//webrtc::videocapturemodule::AppStateDispatcher::Instance()->
-			//	MixedRealityCaptureChanged( 
-			//		&videoEffect,
-			//		&audioEffect);
-			return;
 		}
 
 		IAsyncOperation<IVector<CaptureCapability^>^>^
@@ -728,7 +704,7 @@ namespace Org {
 					}
 					auto cap = ref new CaptureCapability(videoProp->Width, videoProp->Height,
 						videoProp->FrameRate->Numerator / videoProp->FrameRate->Denominator,
-						videoProp->PixelAspectRatio);
+						false, videoProp->PixelAspectRatio);
 					if (descSet.find(cap->FullDescription->Data()) == descSet.end()) {
 						ret->Append(cap);
 						descSet.insert(cap->FullDescription->Data());
