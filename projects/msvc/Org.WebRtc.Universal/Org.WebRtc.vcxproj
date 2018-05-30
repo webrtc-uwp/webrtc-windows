@@ -49,6 +49,7 @@
     <ClInclude Include="..\..\..\org\webrtc\wrapper\RTMediaStreamSource.h" />
     <ClInclude Include="..\..\..\org\webrtc\wrapper\WebRtcMediaSource.h" />
     <ClInclude Include="..\..\..\org\webrtc\wrapper\WebRtcMediaStream.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebRtc.Stats.Observer.Universal\WebRtc.Stats.Observer.vcxproj">
@@ -56,6 +57,9 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Org.WebRtc.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{32a4abd8-eb1c-4198-b261-425e6caddbef}</ProjectGuid>

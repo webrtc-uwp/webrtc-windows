@@ -29,5 +29,11 @@
     <ClInclude Include="..\..\..\org\webrtc\wrapper\RTMediaStreamSource.h" />
     <ClInclude Include="..\..\..\org\webrtc\wrapper\WebRtcMediaSource.h" />
     <ClInclude Include="..\..\..\org\webrtc\wrapper\WebRtcMediaStream.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Org.WebRtc.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
