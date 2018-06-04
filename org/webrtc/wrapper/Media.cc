@@ -21,8 +21,6 @@
 #include "webrtc/pc/channelmanager.h"
 #include "webrtc/media/base/mediaengine.h"
 #include "webrtc/api/test/fakeconstraints.h"
-#include "webrtc/modules/video_capture/windows/device_info_winuwp.h"
-#include "webrtc/modules/video_capture/windows/video_capture_winuwp.h"
 #include "webrtc/rtc_base/criticalsection.h"
 #include "webrtc/common_video/video_common_winuwp.h"
 #include "third_party/winuwp_h264/H264Decoder/H264Decoder.h"
@@ -366,6 +364,32 @@ namespace Org {
 		EncodedVideoSource::~EncodedVideoSource() {
 			_track->UnsetRenderer(_videoStream.get());
 		}
+		
+		// = MFSampleVideoStream =============================================================
+
+		MFSampleVideoStream::MFSampleVideoStream(MFSampleVideoSource^ videoSource) :
+			_videoSource(videoSource) {
+		}
+
+		void MFSampleVideoStream::VideoFrameReceived(void* pSample) {
+			IMFSample* mfSample = static_cast<IMFSample*>(pSample);
+			_videoSource->MFSampleVideoFrame(mfSample);
+		}
+
+		// = MFSampleVideoSource =============================================================
+
+		MFSampleVideoSource::MFSampleVideoSource() :
+			_videoStream(new MFSampleVideoStream(this)) {
+			webrtc::videocapturemodule::AppStateDispatcher::Instance()->AddObserver(_videoStream.get());
+		}
+
+		void MFSampleVideoSource::MFSampleVideoFrame(void* pSample) {
+			OnMFSampleVideoFrame(reinterpret_cast<uint64>(pSample));
+		}
+
+		MFSampleVideoSource::~MFSampleVideoSource() {
+			webrtc::videocapturemodule::AppStateDispatcher::Instance()->RemoveObserver(_videoStream.get());
+		}
 
 		// = Media ===================================================================
 
@@ -593,6 +617,10 @@ namespace Org {
 
 		EncodedVideoSource^ Media::CreateEncodedVideoSource(MediaVideoTrack^ track) {
 			return ref new EncodedVideoSource(track);
+		}
+
+		MFSampleVideoSource^ Media::CreateMFSampleVideoSource() {
+			return ref new MFSampleVideoSource();
 		}
 
 		IVector<MediaDevice^>^ Media::GetVideoCaptureDevices() {

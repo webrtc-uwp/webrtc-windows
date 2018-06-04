@@ -18,6 +18,8 @@
 #include "GlobalObserver.h"
 #include "WinUWPDeviceManager.h"
 #include "webrtc/modules/audio_device/include/audio_device.h"
+#include "webrtc/modules/video_capture/windows/device_info_winuwp.h"
+#include "webrtc/modules/video_capture/windows/video_capture_winuwp.h"
 #include "Delegates.h"
 #include "RTMediaStreamSource.h"
 
@@ -486,6 +488,37 @@ namespace Org {
 			MediaVideoTrack^ _track;
 		};
 
+		ref class MFSampleVideoSource;
+
+		/// <summary>
+		/// Video stream of MFSample objects sent for local video source.
+		/// </summary>
+		class MFSampleVideoStream : public webrtc::videocapturemodule::AppStateObserver {
+		public:
+			MFSampleVideoStream(MFSampleVideoSource^ videoSource);
+			void VideoFrameReceived(void* pSample) override;
+		private:
+			MFSampleVideoSource^ _videoSource;
+		};
+
+		/// <summary>
+		/// Source of local video samples sent as pointer to MFSample.
+		/// Used to obtain camera spatial positioning details in VR scenarios.
+		/// </summary>
+		public ref class MFSampleVideoSource sealed {
+		internal:
+			MFSampleVideoSource();
+			void MFSampleVideoFrame(void* pSample);
+		public:
+			/// <summary>
+			/// MF sample has been received.
+			/// </summary>
+			event MFSampleVideoSourceDelegate^ OnMFSampleVideoFrame;
+			virtual ~MFSampleVideoSource();
+		private:
+			std::unique_ptr<MFSampleVideoStream> _videoStream;
+		};
+
 		/// <summary>
 		/// Defines methods for accessing local media devices, like microphones
 		/// and video cameras, and creating multimedia streams.
@@ -583,6 +616,14 @@ namespace Org {
 			/// from</param>
 			/// <returns>Encoded video source.</returns>
 			EncodedVideoSource^ CreateEncodedVideoSource(MediaVideoTrack^ track);
+
+			/// <summary>
+			/// Creates an <see cref="MFSampleVideoSource"/>. The source object is used
+			/// to receive Media Foundation samples from local video capturing device
+			/// as uint64 pointer values.
+			/// </summary>
+			/// <returns>Encoded video source.</returns>
+			MFSampleVideoSource^ CreateMFSampleVideoSource();
 
 			/// <summary>
 			/// Retrieves system devices that can be used for video capturing (webcams).
