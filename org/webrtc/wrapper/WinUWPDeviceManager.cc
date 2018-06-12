@@ -162,7 +162,7 @@ namespace Org {
 
 			cricket::VideoCapturer* WinUWPDeviceManager::CreateVideoCapturer(const cricket::Device& device) const {
 				if (!video_device_capturer_factory_) {
-					LOG(LS_ERROR) << "No video capturer factory for devices.";
+					RTC_LOG(LS_ERROR) << "No video capturer factory for devices.";
 					return NULL;
 				}
 				std::unique_ptr<cricket::VideoCapturer> capturer =
@@ -170,7 +170,7 @@ namespace Org {
 				if (!capturer) {
 					return NULL;
 				}
-				LOG(LS_INFO) << "Created VideoCapturer for " << device.name;
+				RTC_LOG(LS_INFO) << "Created VideoCapturer for " << device.name;
 				cricket::VideoFormat video_format;
 				bool has_max = GetMaxFormat(device, &video_format);
 				capturer->set_enable_camera_list(has_max);

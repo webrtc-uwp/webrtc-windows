@@ -56,8 +56,6 @@ namespace Org {
 				virtual void OnSignalingChange(
 					webrtc::PeerConnectionInterface::SignalingState new_state);
 
-				virtual void OnStateChange(StateType state_changed);
-
 				virtual void OnAddStream(rtc::scoped_refptr<webrtc::MediaStreamInterface> stream);
 
 				virtual void OnRemoveStream(rtc::scoped_refptr<webrtc::MediaStreamInterface> stream);

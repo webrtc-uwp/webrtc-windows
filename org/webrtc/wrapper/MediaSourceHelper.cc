@@ -10,7 +10,7 @@
 #include <mfapi.h>
 #include <ppltasks.h>
 #include <mfidl.h>
-#include "media/base/videosourceinterface.h"
+#include "api/videosourceinterface.h"
 #include "libyuv/convert.h"
 #include "modules/video_coding/timing.h"
 #include "third_party/winuwp_h264/H264Decoder/H264Decoder.h"

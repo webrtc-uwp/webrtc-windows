@@ -17,7 +17,7 @@
 #include "PeerConnectionInterface.h"
 #include "Marshalling.h"
 #include "rtc_base/logging.h"
-#include "media/base/videosourceinterface.h"
+#include "api/videosourceinterface.h"
 #include "pc/channelmanager.h"
 #include "media/base/mediaengine.h"
 #include "api/test/fakeconstraints.h"
@@ -153,7 +153,7 @@ namespace Org {
 		}
 
 		MediaStream::~MediaStream() {
-			LOG(LS_INFO) << "MediaStream::~MediaStream";
+			RTC_LOG(LS_INFO) << "MediaStream::~MediaStream";
 
 		}
 
@@ -332,19 +332,19 @@ namespace Org {
 				return;
 			ComPtr<IMFMediaBuffer> pBuffer;
 			if (FAILED(pSample->GetBufferByIndex(0, &pBuffer))) {
-				LOG(LS_ERROR) << "Failed to retrieve buffer.";
+				RTC_LOG(LS_ERROR) << "Failed to retrieve buffer.";
 				return;
 			}
 			BYTE* pBytes;
 			DWORD maxLength, curLength;
 			if (FAILED(pBuffer->Lock(&pBytes, &maxLength, &curLength))) {
-				LOG(LS_ERROR) << "Failed to lock buffer.";
+				RTC_LOG(LS_ERROR) << "Failed to lock buffer.";
 				return;
 			}
 			_videoSource->EncodedVideoFrame((uint32)frame->width(), (uint32)frame->height(),
 			Platform::ArrayReference<uint8>((uint8*)pBytes, curLength));
 			if (FAILED(pBuffer->Unlock())) {
-				LOG(LS_ERROR) << "Failed to unlock buffer";
+				RTC_LOG(LS_ERROR) << "Failed to unlock buffer";
 				return;
 			}
 		}
@@ -410,7 +410,7 @@ namespace Org {
 				(Internal::DeviceManagerFactory::Create());
 
 			if (!_dev_manager->Init()) {
-				LOG(LS_ERROR) << "Can't create device manager";
+				RTC_LOG(LS_ERROR) << "Can't create device manager";
 				return;
 			}
 			SubscribeToMediaDeviceChanges();
@@ -449,7 +449,7 @@ namespace Org {
 					auto ret = ref new MediaStream(stream);
 
 					if (mediaStreamConstraints->audioEnabled) {
-						LOG(LS_INFO) << "Creating audio track.";
+						RTC_LOG(LS_INFO) << "Creating audio track.";
 						char audioLabel[32];
 						_snprintf(audioLabel, sizeof(audioLabel), kAudioLabel,
 							rtc::CreateRandomId64());
@@ -457,7 +457,7 @@ namespace Org {
 							globals::gPeerConnectionFactory->CreateAudioTrack(
 								audioLabel,
 								globals::gPeerConnectionFactory->CreateAudioSource(NULL)));
-						LOG(LS_INFO) << "Adding audio track to stream.";
+						RTC_LOG(LS_INFO) << "Adding audio track to stream.";
 						auto audioTrack = ref new MediaAudioTrack(audio_track);
 						ret->AddTrack(audioTrack);
 					}
@@ -469,7 +469,7 @@ namespace Org {
 						std::vector<cricket::Device> videoDevices;
 						globals::RunOnGlobalThread<void>([this, &videoDevices] {
 							if (!_dev_manager->GetVideoCaptureDevices(&videoDevices)) {
-								LOG(LS_ERROR) << "Can't get video capture devices list";
+								RTC_LOG(LS_ERROR) << "Can't get video capture devices list";
 							}
 						});
 						if (_selectedVideoDevice.id == "") {
@@ -488,12 +488,12 @@ namespace Org {
 							}
 							if (videoCaptureDevice == nullptr) {
 								// Selected device not connected anymore, try to use the first video device as the capturer.
-								LOG(LS_WARNING) << "Selected video capturer ("
+								RTC_LOG(LS_WARNING) << "Selected video capturer ("
 									<< _selectedVideoDevice.name << ") not found. ";
 								videoCaptureDevice = videoDevices.size() ? &(videoDevices[0])
 									: nullptr;
 								if (videoCaptureDevice != nullptr) {
-									LOG(LS_WARNING) << "Using video capturer "
+									RTC_LOG(LS_WARNING) << "Using video capturer "
 										<< videoCaptureDevice->name;
 								}
 							}
@@ -516,13 +516,13 @@ namespace Org {
 							constraints.SetMandatory(webrtc::MediaConstraintsInterface::kMaxHeight, globals::gPreferredVideoCaptureFormat.height);
 							constraints.SetMandatoryMaxFrameRate(cricket::VideoFormat::IntervalToFps(globals::gPreferredVideoCaptureFormat.height));
 
-							LOG(LS_INFO) << "Creating video track.";
+							RTC_LOG(LS_INFO) << "Creating video track.";
 							rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track(
 								globals::gPeerConnectionFactory->CreateVideoTrack(
 									videoLabel,
 									globals::gPeerConnectionFactory->CreateVideoSource(
 										videoCapturer, &constraints)));
-							LOG(LS_INFO) << "Adding video track to stream.";
+							RTC_LOG(LS_INFO) << "Adding video track to stream.";
 							auto videoTrack = ref new MediaVideoTrack(video_track);
 							ret->AddTrack(videoTrack);
 						}
@@ -595,7 +595,7 @@ namespace Org {
 				// Get list of devices from device manager.
 				globals::RunOnGlobalThread<void>([this, &videoDevices, &dev_info_collection] {
 					if (!_dev_manager->GetVideoCaptureDevices(&videoDevices)) {
-						LOG(LS_ERROR) << "Can't enumerate video capture devices";
+						RTC_LOG(LS_ERROR) << "Can't enumerate video capture devices";
 					}
 
 					// Obtain also the list of devices directly from the OS API.
@@ -607,7 +607,7 @@ namespace Org {
 							dev_info_collection = find_task.get();
 						}
 						catch (Platform::Exception^ e) {
-							LOG(LS_ERROR)
+							RTC_LOG(LS_ERROR)
 								<< "Failed to retrieve device info collection. "
 								<< rtc::ToUtf8(e->Message->Data());
 						}
@@ -730,10 +730,10 @@ namespace Org {
 			if (sender->Status != DeviceWatcherStatus::EnumerationCompleted)
 				return;
 			if (sender == _videoCaptureWatcher) {
-				LOG(LS_INFO) << "OnVideoCaptureAdded";
+				RTC_LOG(LS_INFO) << "OnVideoCaptureAdded";
 				_videoCaptureDeviceChanged = true;
 				OnMediaDevicesChanged(MediaDeviceType::MediaDeviceType_VideoCapture);
-				LOG(LS_INFO) << "OnVideoCaptureAdded END";
+				RTC_LOG(LS_INFO) << "OnVideoCaptureAdded END";
 			}
 		}
 

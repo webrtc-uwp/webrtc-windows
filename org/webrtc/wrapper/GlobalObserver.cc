@@ -150,11 +150,6 @@ namespace Org {
 				POST_PC_ACTION(OnSignalingStateChange);
 			}
 
-			// Triggered when SignalingState or IceState have changed.
-			// TODO(bemasc): Remove once callers transition to OnSignalingChange.
-			void GlobalObserver::OnStateChange(StateType state_changed) {
-			}
-
 			// Triggered when media is received on a new stream from remote peer.
 			void GlobalObserver::OnAddStream(rtc::scoped_refptr<webrtc::MediaStreamInterface> stream) {
 				auto evt = ref new Org::WebRtc::MediaStreamEvent();
@@ -214,7 +209,7 @@ namespace Org {
 			// Called any time the IceGatheringState changes
 			void GlobalObserver::OnIceGatheringChange(
 				webrtc::PeerConnectionInterface::IceGatheringState new_state) {
-				LOG(LS_INFO) << "OnIceGatheringChange";
+				RTC_LOG(LS_INFO) << "OnIceGatheringChange";
 			}
 
 			// New Ice candidate have been found.
@@ -222,7 +217,7 @@ namespace Org {
 				const webrtc::IceCandidateInterface* candidate) {
 				std::string c;
 				candidate->ToString(&c);
-				LOG(LS_INFO) << "Ice candidate = " << c;
+				RTC_LOG(LS_INFO) << "Ice candidate = " << c;
 				auto evt = ref new Org::WebRtc::RTCPeerConnectionIceEvent();
 				Org::WebRtc::RTCIceCandidate^ cxCandidate;
 				if (candidate == nullptr) {

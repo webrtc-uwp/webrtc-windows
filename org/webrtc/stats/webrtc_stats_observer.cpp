@@ -71,7 +71,7 @@ void WebRTCStatsObserver::Start() {
     rtc::CritScope lock(&crit_sect_);
     if (status_ == kStopped) {
       performStart = true;
-      LOG(LS_INFO) << "WebRTCStatsObserver starting";
+	  RTC_LOG(LS_INFO) << "WebRTCStatsObserver starting";
     }
     status_ = kStarted;
   }
@@ -85,12 +85,12 @@ void WebRTCStatsObserver::Stop() {
   rtc::CritScope lock(&crit_sect_);
   if (status_ == kStarted) {
     status_ = kStopping;
-    LOG(LS_INFO) << "WebRTCStatsObserver stopping";
+	RTC_LOG(LS_INFO) << "WebRTCStatsObserver stopping";
   }
 }
 
 void WebRTCStatsObserver::ToggleETWStats(bool enable) {
-  LOG(LS_INFO) << "WebRTCStatsObserver "
+  RTC_LOG(LS_INFO) << "WebRTCStatsObserver "
     << (enable ? "enabling" : "disabling")
     << " ETW stats";
   etw_stats_enabled_ = enable;
@@ -98,7 +98,7 @@ void WebRTCStatsObserver::ToggleETWStats(bool enable) {
 }
 
 void WebRTCStatsObserver::ToggleStatsSendToRemoteHost(bool enable) {
-  LOG(LS_INFO) << "WebRTCStatsObserver "
+  RTC_LOG(LS_INFO) << "WebRTCStatsObserver "
     << (enable ? "enabling" : "disabling")
     << " sending stats to remote host";
   if (rtc_stats_to_remote_host_enabled_ == enable) {
@@ -130,10 +130,10 @@ void WebRTCStatsObserver::ToggleConnectionHealthStats(
   WebRTCStatsObserverWinUWP* observer) {
   if (observer) {
     webrtc_stats_observer_winuwp_ = observer;
-    LOG(LS_INFO) << "WebRTCStatsObserver enabling connection health stats";
+	RTC_LOG(LS_INFO) << "WebRTCStatsObserver enabling connection health stats";
     conn_health_stats_enabled_ = true;
   } else {
-    LOG(LS_INFO) << "WebRTCStatsObserver disabling connection health stats";
+	RTC_LOG(LS_INFO) << "WebRTCStatsObserver disabling connection health stats";
     conn_health_stats_enabled_ = false;
   }
   EvaluatePollNecessity();
@@ -142,10 +142,10 @@ void WebRTCStatsObserver::ToggleConnectionHealthStats(
 void WebRTCStatsObserver::ToggleRTCStats(WebRTCStatsObserverWinUWP* observer) {
   if (observer) {
     webrtc_stats_observer_winuwp_ = observer;
-    LOG(LS_INFO) << "WebRTCStatsObserver enabling rtc stats";
+	RTC_LOG(LS_INFO) << "WebRTCStatsObserver enabling rtc stats";
     rtc_stats_enabled_ = true;
   } else {
-    LOG(LS_INFO) << "WebRTCStatsObserver disabling rtc stats";
+	RTC_LOG(LS_INFO) << "WebRTCStatsObserver disabling rtc stats";
     rtc_stats_enabled_ = false;
   }
   EvaluatePollNecessity();
@@ -301,7 +301,7 @@ void WebRTCStatsObserver::PollStats() {
   {
     rtc::CritScope lock(&crit_sect_);
     if (status_ != kStarted) {
-      LOG(LS_INFO) << "WebRTCStatsObserver stopped";
+	  RTC_LOG(LS_INFO) << "WebRTCStatsObserver stopped";
       status_ = kStopped;
       return;
     }

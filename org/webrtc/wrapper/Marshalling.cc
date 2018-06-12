@@ -12,8 +12,8 @@
 #include "Marshalling.h"
 #include <map>
 
-#include "p2p/base/candidate.h"
-#include "api/webrtcsdp.h"
+#include "api/candidate.h"
+#include "pc/webrtcsdp.h"
 #include "RTCStatsReport.h"
 
 using Org::WebRtc::RTCBundlePolicy;
@@ -273,8 +273,6 @@ namespace Org {
 					webrtc::StatsReport::kStatsValueNameDer },
 				{ RTCStatsValueName::StatsValueNameDtlsCipher,
 					webrtc::StatsReport::kStatsValueNameDtlsCipher },
-				{ RTCStatsValueName::StatsValueNameEchoCancellationQualityMin,
-					webrtc::StatsReport::kStatsValueNameEchoCancellationQualityMin },
 				{ RTCStatsValueName::StatsValueNameEchoDelayMedian,
 					webrtc::StatsReport::kStatsValueNameEchoDelayMedian },
 				{ RTCStatsValueName::StatsValueNameEchoDelayStdDev,

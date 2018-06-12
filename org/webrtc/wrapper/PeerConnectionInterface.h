@@ -721,7 +721,7 @@ namespace Org {
 
 			template <typename T>
 			T RunOnGlobalThread(std::function<T()> fn) {
-				return gThread.Invoke<T, std::function<T()>>(RTC_FROM_HERE,fn);
+				return gThread.Invoke<T, std::function<T()>&>(RTC_FROM_HERE,fn);
 			}
 
 		}  // namespace globals
