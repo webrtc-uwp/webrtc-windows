@@ -28,6 +28,7 @@
 #ifdef WINUWP
 
 #include <stddef.h>
+#include <sdkddkver.h>
 
 #ifdef __cplusplus
 namespace webrtc
