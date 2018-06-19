@@ -680,7 +680,8 @@ namespace Org {
 					webrtc::CreatePeerConnectionFactory(
 						globals::gNetworkThread.get(), globals::gWorkerThread.get(),
 						globals::gSignalingThread.get(),
-						nullptr, nullptr, nullptr, encoderFactory, decoderFactory);
+						nullptr, webrtc::CreateBuiltinAudioEncoderFactory(), webrtc::CreateBuiltinAudioDecoderFactory(),
+						encoderFactory, decoderFactory);
 
 				rtc::tracing::SetupInternalTracer();
 			});
