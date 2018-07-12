@@ -4,3 +4,4 @@
 target_os="-target_os-"
 target_cpu="-target_cpu-"
 is_debug=-is_debug-
+use_rtti=true
