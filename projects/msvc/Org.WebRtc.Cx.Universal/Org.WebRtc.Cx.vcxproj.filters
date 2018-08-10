@@ -1,0 +1,642 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="wrapper">
+      <UniqueIdentifier>{9575be09-7a1f-4e48-9b35-05289c36461c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wrapper\generated">
+      <UniqueIdentifier>{07467970-4ace-4c78-b975-fecb5bbf9bd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wrapper\generated\cx">
+      <UniqueIdentifier>{c2bf1555-94ba-4f51-ae5f-dceddde6dcda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wrapper\override">
+      <UniqueIdentifier>{bc58229f-498f-4a23-abff-fa75a6a589ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wrapper\override\cx">
+      <UniqueIdentifier>{967907c9-6de9-42fc-ae1a-e1cfc7de4253}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\cx_Helpers.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_AudioOptions.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_AudioTrackSource.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_Constraint.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_EventQueue.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_EventQueueMaker.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaConstraints.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaElement.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaElementMaker.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaSource.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaStreamTrack.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaTrackSource.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MessageEvent.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MillisecondIntervalRange.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCAnswerOptions.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCAudioHandlerStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCAudioReceiverStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCAudioSenderStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCBitrateParameters.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCCertificate.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCCertificateStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCCodecStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCConfiguration.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDataChannel.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDataChannelEvent.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDataChannelInit.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDataChannelStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDtlsFingerprint.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDtmfSender.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDtmfToneChangeEvent.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCError.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCIceCandidate.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCIceCandidateInit.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCIceCandidatePairStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCIceCandidateStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCIceServer.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCInboundRtpStreamStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCKeyParams.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCMediaHandlerStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCMediaStreamStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCOAuthCredential.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCOfferAnswerOptions.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCOfferOptions.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCOutboundRtpStreamStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCPeerConnection.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCPeerConnectionIceErrorEvent.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCPeerConnectionIceEvent.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCPeerConnectionStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCReceivedRtpStreamStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRemoteInboundRtpStreamStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRemoteOutboundRtpStreamStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRSAParams.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtcpFeedback.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtcpParameters.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpCapabilities.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpCodecCapability.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpCodecParameters.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpCodingParameters.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpContributingSource.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpContributingSourceStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpDecodingParameters.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpEncodingParameters.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpFecParameters.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpHeaderExtensionCapability.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpHeaderExtensionParameters.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpParameters.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpReceiveParameters.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpReceiver.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpRtxParameters.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpSender.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpSendParameters.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpStreamStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpSynchronizationSource.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpTransceiver.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpTransceiverInit.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCSenderAudioTrackAttachmentStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCSenderVideoTrackAttachmentStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCSentRtpStreamStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCSessionDescription.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCSessionDescriptionInit.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCStatsProvider.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCStatsReport.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCStatsTypeSet.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCTrackEvent.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCTransportStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCVideoHandlerStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCVideoReceiverStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCVideoSenderStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoCapturer.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoCapturerInputSize.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoDeviceInfo.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoFormat.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoTrackSource.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoTrackSourceStats.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_WebRtcLib.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\cx_Helpers_Throwers.cpp">
+      <Filter>wrapper\override\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_EventQueue.cpp">
+      <Filter>wrapper\override\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_EventQueueMaker.cpp">
+      <Filter>wrapper\override\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaElement.cpp">
+      <Filter>wrapper\override\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaElementMaker.cpp">
+      <Filter>wrapper\override\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaSource.cpp">
+      <Filter>wrapper\override\cx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_VideoDeviceInfo.cpp">
+      <Filter>wrapper\override\cx</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\cx_Helpers.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_AudioOptions.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_AudioTrackSource.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_Constraint.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_EventQueue.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_EventQueueMaker.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaConstraints.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaElement.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaElementMaker.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaSource.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaStreamTrack.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaTrackSource.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MessageEvent.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MillisecondIntervalRange.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCAnswerOptions.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCAudioHandlerStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCAudioReceiverStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCAudioSenderStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCBitrateParameters.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCCertificate.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCCertificateStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCCodecStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCConfiguration.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDataChannel.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDataChannelEvent.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDataChannelInit.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDataChannelStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDtlsFingerprint.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDtmfSender.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCDtmfToneChangeEvent.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCError.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCIceCandidate.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCIceCandidateInit.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCIceCandidatePairStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCIceCandidateStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCIceServer.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCInboundRtpStreamStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCKeyParams.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCMediaHandlerStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCMediaStreamStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCOAuthCredential.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCOfferAnswerOptions.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCOfferOptions.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCOutboundRtpStreamStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCPeerConnection.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCPeerConnectionIceErrorEvent.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCPeerConnectionIceEvent.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCPeerConnectionStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCReceivedRtpStreamStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRemoteInboundRtpStreamStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRemoteOutboundRtpStreamStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRSAParams.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtcpFeedback.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtcpParameters.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpCapabilities.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpCodecCapability.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpCodecParameters.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpCodingParameters.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpContributingSource.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpContributingSourceStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpDecodingParameters.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpEncodingParameters.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpFecParameters.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpHeaderExtensionCapability.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpHeaderExtensionParameters.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpParameters.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpReceiveParameters.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpReceiver.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpRtxParameters.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpSender.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpSendParameters.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpStreamStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpSynchronizationSource.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpTransceiver.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCRtpTransceiverInit.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCSenderAudioTrackAttachmentStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCSenderVideoTrackAttachmentStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCSentRtpStreamStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCSessionDescription.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCSessionDescriptionInit.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCStatsProvider.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCStatsReport.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCStatsTypeSet.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCTrackEvent.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCTransportStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCVideoHandlerStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCVideoReceiverStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_RTCVideoSenderStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoCapturer.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoCapturerInputSize.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoDeviceInfo.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoFormat.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoTrackSource.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoTrackSourceStats.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_WebRtcLib.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\types.h">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_EventQueue.h">
+      <Filter>wrapper\override\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_EventQueueMaker.h">
+      <Filter>wrapper\override\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaElement.h">
+      <Filter>wrapper\override\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaElementMaker.h">
+      <Filter>wrapper\override\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaSource.h">
+      <Filter>wrapper\override\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_VideoDeviceInfo.h">
+      <Filter>wrapper\override\cx</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
