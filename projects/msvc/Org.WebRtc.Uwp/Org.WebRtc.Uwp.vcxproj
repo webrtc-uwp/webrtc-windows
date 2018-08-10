@@ -203,7 +203,7 @@
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\..\webrtc\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\..\webrtc\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
@@ -251,7 +251,7 @@
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\..\webrtc\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\..\webrtc\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>

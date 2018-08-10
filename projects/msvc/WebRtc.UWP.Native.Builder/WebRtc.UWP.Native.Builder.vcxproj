@@ -136,7 +136,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call "bin\prepare.bat" -target webrtc -platform  $(PlatformTarget) -logLevel 4 &amp;&amp; call "bin\prepare.bat" -target webrtc -platform win32 -logLevel 4 &amp;&amp; call "bin\buildWebRTC.bat" $(Configuration) $(PlatformTarget) webrtc &amp;&amp; popd</Command>
+      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call "bin\prepare.bat" -target webrtc -platform winuwp -cpu x86 -logLevel 4 &amp;&amp; call "bin\prepare.bat" -target webrtc -platform $(Platform) -cpu x86 -logLevel 4 &amp;&amp; call "bin\buildWebRTC.bat" $(Configuration) winuwp x86 webrtc &amp;&amp; popd</Command>
       <Message>Building native Ortc lib</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -192,7 +192,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call "bin\prepare.bat" -target webrtc -platform  $(PlatformTarget) -logLevel 4 &amp;&amp; call "bin\prepare.bat" -target webrtc -platform win32 -logLevel 4 &amp;&amp; call "bin\buildWebRTC.bat" $(Configuration) $(PlatformTarget) webrtc &amp;&amp; popd</Command>
+      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call "bin\prepare.bat" -target webrtc -platform winuwp -cpu x86 -logLevel 4 &amp;&amp; call "bin\prepare.bat" -target webrtc -platform $(Platform) -cpu x86 -logLevel 4 &amp;&amp; call "bin\buildWebRTC.bat" $(Configuration) winuwp x86 webrtc &amp;&amp; popd</Command>
       <Message>Building native Ortc lib</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
