@@ -122,6 +122,15 @@
     <PostBuildEvent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd</Command>
     </PostBuildEvent>
+    <Midl>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl</AdditionalIncludeDirectories>
+    </Midl>
+    <Midl>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl</AdditionalIncludeDirectories>
+    </Midl>
+    <Midl>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl</AdditionalIncludeDirectories>
+    </Midl>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
