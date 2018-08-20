@@ -29,7 +29,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8f5f734c-b823-4029-ab7a-5017b21b865a}</ProjectGuid>
     <Keyword>WindowsRuntimeComponent</Keyword>
-    <RootNamespace>Org_WebRtc_Cx</RootNamespace>
+    <RootNamespace>Org.WebRtc</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
