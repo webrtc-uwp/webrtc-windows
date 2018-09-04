@@ -26,6 +26,12 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DummyClass.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DummyClass.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{08C8FB57-A433-44AD-AE99-4AF554F02BED}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
