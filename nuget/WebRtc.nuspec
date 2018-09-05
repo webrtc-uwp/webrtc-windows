@@ -18,6 +18,9 @@
 		
         <file src="runtimes\win10-x64\native\Org.WebRtc.dll" target="runtimes\win10-x64\native" />
 		<file src="runtimes\win10-x64\native\Org.WebRtc.pri" target="runtimes\win10-x64\native" />
+        
+        <file src="runtimes\win10-arm\native\Org.WebRtc.dll" target="runtimes\win10-arm\native" />
+		<file src="runtimes\win10-arm\native\Org.WebRtc.pri" target="runtimes\win10-arm\native" />
 		
         <file src="build\native\WebRtc.targets" target="build\native\WebRtc.targets" />
     </files>
