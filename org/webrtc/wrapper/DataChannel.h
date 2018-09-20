@@ -13,7 +13,7 @@
 
 #include <collection.h>
 #include "GlobalObserver.h"
-#include "webrtc/api/peerconnectioninterface.h"
+#include "api/peerconnectioninterface.h"
 #include "Delegates.h"
 
 using Platform::String;

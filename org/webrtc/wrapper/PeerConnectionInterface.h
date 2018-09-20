@@ -13,12 +13,12 @@
 
 #include <collection.h>
 #include <vector>
-#include "webrtc/api/peerconnectioninterface.h"
-#include "webrtc/rtc_base/scoped_ref_ptr.h"
-#include "webrtc/rtc_base/logging.h"
+#include "api/peerconnectioninterface.h"
+#include "rtc_base/scoped_ref_ptr.h"
+#include "rtc_base/logging.h"
 #include "GlobalObserver.h"
 #include "DataChannel.h"
-#include "webrtc/rtc_base/criticalsection.h"
+#include "rtc_base/criticalsection.h"
 #include "RTCStatsReport.h"
 
 using Platform::String;
@@ -721,7 +721,7 @@ namespace Org {
 
 			template <typename T>
 			T RunOnGlobalThread(std::function<T()> fn) {
-				return gThread.Invoke<T, std::function<T()>>(RTC_FROM_HERE,fn);
+				return gThread.Invoke<T, std::function<T()>&>(RTC_FROM_HERE,fn);
 			}
 
 		}  // namespace globals

@@ -10,11 +10,11 @@
 #include <mfapi.h>
 #include <ppltasks.h>
 #include <mfidl.h>
-#include "webrtc/media/base/videosourceinterface.h"
+#include "api/videosourceinterface.h"
 #include "libyuv/convert.h"
-#include "webrtc/common_video/video_common_winuwp.h"
-#include "webrtc/rtc_base/logging.h"
-#include "webrtc/media/base/videocommon.h"
+#include "common_video/video_common_winuwp.h"
+#include "rtc_base/logging.h"
+#include "media/base/videocommon.h"
 
 using Microsoft::WRL::ComPtr;
 using Platform::Collections::Vector;
@@ -176,7 +176,7 @@ namespace Org {
 						[streamState, startingCookie, sampleRequestedCookie](
 							Windows::Media::Core::MediaStreamSource^ sender,
 							Windows::Media::Core::MediaStreamSourceClosedEventArgs^ args) {
-					LOG(LS_INFO) << "RTMediaStreamSource::OnClosed";
+					RTC_LOG(LS_INFO) << "RTMediaStreamSource::OnClosed";
 					streamState->Teardown();
 					sender->Starting -= startingCookie;
 					sender->SampleRequested -= sampleRequestedCookie;
@@ -222,7 +222,7 @@ namespace Org {
 			RTMediaStreamSource::RTMediaStreamSource(VideoFrameType frameType) :
 				_frameSentThisTime(false),
 				_frameBeingQueued(0) {
-				LOG(LS_INFO) << "RTMediaStreamSource::RTMediaStreamSource";
+				RTC_LOG(LS_INFO) << "RTMediaStreamSource::RTMediaStreamSource";
 
 				// Create the helper with the callback functions.
 				_helper.reset(new MediaSourceHelper(
@@ -236,12 +236,12 @@ namespace Org {
 			}
 
 			RTMediaStreamSource::~RTMediaStreamSource() {
-				LOG(LS_INFO) << "RTMediaStreamSource::~RTMediaStreamSource ID=" << _idUtf8;
+				RTC_LOG(LS_INFO) << "RTMediaStreamSource::~RTMediaStreamSource ID=" << _idUtf8;
 				Teardown();
 			}
 
 			void RTMediaStreamSource::Teardown() {
-				LOG(LS_INFO) << "RTMediaStreamSource::Teardown() ID=" << _idUtf8;
+				RTC_LOG(LS_INFO) << "RTMediaStreamSource::Teardown() ID=" << _idUtf8;
 				{
 					rtc::CritScope lock(&_critSect);
 					if (_progressTimer != nullptr) {
@@ -277,7 +277,7 @@ namespace Org {
 						_rtcRenderer.reset();
 					}
 				}
-				LOG(LS_INFO) << "RTMediaStreamSource::Teardown() done ID=" << _idUtf8;
+				RTC_LOG(LS_INFO) << "RTMediaStreamSource::Teardown() done ID=" << _idUtf8;
 			}
 
 			RTMediaStreamSource::RTCRenderer::RTCRenderer(
@@ -285,7 +285,7 @@ namespace Org {
 			}
 
 			RTMediaStreamSource::RTCRenderer::~RTCRenderer() {
-				LOG(LS_INFO) << "RTMediaStreamSource::RTCRenderer::~RTCRenderer";
+				RTC_LOG(LS_INFO) << "RTMediaStreamSource::RTCRenderer::~RTCRenderer";
 			}
 
 			void RTMediaStreamSource::RTCRenderer::SetSize(
@@ -410,7 +410,7 @@ namespace Org {
 						static_cast<int>(frame->height()));
 				}
 				catch (...) {
-					LOG(LS_ERROR) << "Exception caught in RTMediaStreamSource::ConvertFrame()";
+					RTC_LOG(LS_ERROR) << "Exception caught in RTMediaStreamSource::ConvertFrame()";
 				}
 				imageBuffer->Unlock2D();
 
@@ -447,7 +447,7 @@ namespace Org {
 					else {
 						// Save the request and referral for when a sample comes in.
 						if (_deferral != nullptr) {
-							LOG(LS_ERROR) << "Got deferral when another hasn't completed.";
+							RTC_LOG(LS_ERROR) << "Got deferral when another hasn't completed.";
 						}
 
 						_deferral = _request->GetDeferral();
@@ -455,7 +455,7 @@ namespace Org {
 					}
 				}
 				catch (...) {
-					LOG(LS_ERROR) << "Exception in RTMediaStreamSource::OnSampleRequested.";
+					RTC_LOG(LS_ERROR) << "Exception in RTMediaStreamSource::OnSampleRequested.";
 				}
 			}
 

@@ -19,10 +19,10 @@
 #include "H264MediaSink.h"
 #include "IH264EncodingCallback.h"
 #include "../Utils/SampleAttributeQueue.h"
-#include "webrtc/api/video_codecs/video_encoder.h"
-#include "webrtc/rtc_base/criticalsection.h"
-#include "webrtc/modules/video_coding/utility/quality_scaler.h"
-#include "webrtc/common_video/h264/h264_bitstream_parser.h"
+#include "api/video_codecs/video_encoder.h"
+#include "rtc_base/criticalsection.h"
+#include "modules/video_coding/utility/quality_scaler.h"
+#include "common_video/h264/h264_bitstream_parser.h"
 
 #pragma comment(lib, "mfreadwrite")
 #pragma comment(lib, "mfplat")

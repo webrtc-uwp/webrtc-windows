@@ -17,12 +17,12 @@
 #include <string>
 #include <vector>
 
-#include "webrtc/media/base/device.h"
-#include "webrtc/media/base/videocapturer.h"
-#include "webrtc/media/base/videocapturerfactory.h"
-#include "webrtc/rtc_base/sigslot.h"
-#include "webrtc/rtc_base/stringencode.h"
-#include "webrtc/rtc_base/logging.h"
+#include "media/base/device.h"
+#include "media/base/videocapturer.h"
+#include "media/base/videocapturerfactory.h"
+#include "rtc_base/sigslot.h"
+#include "rtc_base/stringencode.h"
+#include "rtc_base/logging.h"
 
 namespace Org {
 	namespace WebRtc {

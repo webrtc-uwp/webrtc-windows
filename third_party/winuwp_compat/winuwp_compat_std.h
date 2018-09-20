@@ -28,6 +28,7 @@
 #ifdef WINUWP
 
 #include <stddef.h>
+#include <sdkddkver.h>
 
 #ifdef __cplusplus
 namespace webrtc
@@ -47,6 +48,7 @@ namespace webrtc
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
+#if !defined(NTDDI_WIN10_RS4) || (WDK_NTDDI_VERSION < NTDDI_WIN10_RS4)
 char *winuwpGetEnv(
    const char *varname   
 );
@@ -60,7 +62,6 @@ inline char *getenv(const char *varname)
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
-
 errno_t winuwpDupEnv(
    char **buffer,  
    size_t *numberOfElements,  
@@ -75,7 +76,6 @@ inline errno_t _dupenv_s(
 {
   return winuwpDupEnv(buffer, numberOfElements, varname);
 }
-
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -88,11 +88,12 @@ inline int _putenv(const char *envstring)
   return winuwpPutEvnA(envstring);
 }
 
+
 inline int _wputenv(const wchar_t *envstring)
 {
   return winuwpPutEvnW(envstring);
 }
-
+#endif // !defined(NTDDI_WIN10_RS4) || (WDK_NTDDI_VERSION < NTDDI_WIN10_RS4)
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */

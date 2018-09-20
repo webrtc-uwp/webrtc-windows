@@ -10,7 +10,7 @@
 #define ORG_WEBRTC_RTCSTATSREPORT_H_
 
 #include <collection.h>
-#include <webrtc/api/statstypes.h>
+#include <api/statstypes.h>
 
 #include <vector>
 #include <map>

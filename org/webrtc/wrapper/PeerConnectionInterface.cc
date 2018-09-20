@@ -18,20 +18,22 @@
 #include "Marshalling.h"
 #include "DataChannel.h"
 #include "Media.h"
-#include "webrtc/rtc_base/ssladapter.h"
-#include "webrtc/rtc_base/win32socketinit.h"
-#include "webrtc/rtc_base/thread.h"
-#include "webrtc/rtc_base/bind.h"
-#include "webrtc/rtc_base/event_tracer.h"
-#include "webrtc/rtc_base/loggingserver.h"
-#include "webrtc/rtc_base/stream.h"
-#include "webrtc/test/field_trial.h"
-#include "webrtc/api/test/fakeconstraints.h"
-#include "webrtc/pc/channelmanager.h"
-#include "webrtc/rtc_base/win32.h"
-#include "webrtc/rtc_base/timeutils.h"
+#include "rtc_base/ssladapter.h"
+#include "rtc_base/win32socketinit.h"
+#include "rtc_base/thread.h"
+#include "rtc_base/bind.h"
+#include "rtc_base/event_tracer.h"
+#include "rtc_base/loggingserver.h"
+#include "rtc_base/stream.h"
+#include "test/field_trial.h"
+#include "api/test/fakeconstraints.h"
+#include "pc/channelmanager.h"
+#include "rtc_base/win32.h"
+#include "rtc_base/timeutils.h"
 #include "third_party/winuwp_h264/winuwp_h264_factory.h"
-#include "webrtc/common_video/video_common_winuwp.h"
+#include "common_video/video_common_winuwp.h"
+#include "api/audio_codecs/builtin_audio_decoder_factory.h"
+#include "api/audio_codecs/builtin_audio_encoder_factory.h"
 
 using Org::WebRtc::Internal::FromCx;
 using Org::WebRtc::Internal::ToCx;
@@ -135,14 +137,14 @@ namespace Org {
 				constraints.AddOptional(
 					webrtc::MediaConstraintsInterface::kCombinedAudioVideoBwe, "true");
 				_observer->SetPeerConnection(this);
-				LOG(LS_INFO) << "Creating PeerConnection native.";
+				RTC_LOG(LS_INFO) << "Creating PeerConnection native.";
 				_impl = globals::gPeerConnectionFactory->CreatePeerConnection(
 					cc_configuration, &constraints, nullptr, nullptr, _observer.get());
 			});
 		}
 
 		RTCPeerConnection::~RTCPeerConnection() {
-			LOG(LS_INFO) << "RTCPeerConnection::~RTCPeerConnection";
+			RTC_LOG(LS_INFO) << "RTCPeerConnection::~RTCPeerConnection";
 			for (typename std::vector<DataChannelObserver*>::iterator it = _dataChannelObservers.begin();
 				it != _dataChannelObservers.end(); ++it) {
 				delete *it;
@@ -619,7 +621,7 @@ namespace Org {
 					initTask.get();
 				}
 				catch (Platform::Exception^ e) {
-					LOG(LS_ERROR) << "Failed to obtain media access permission: "
+					RTC_LOG(LS_ERROR) << "Failed to obtain media access permission: "
 						<< rtc::ToUtf8(e->Message->Data()).c_str();
 					accessRequestAccepted = false;
 				}
@@ -673,12 +675,13 @@ namespace Org {
 				auto encoderFactory = new webrtc::WinUWPH264EncoderFactory();
 				auto decoderFactory = new webrtc::WinUWPH264DecoderFactory();
 
-				LOG(LS_INFO) << "Creating PeerConnectionFactory.";
+				RTC_LOG(LS_INFO) << "Creating PeerConnectionFactory.";
 				globals::gPeerConnectionFactory =
 					webrtc::CreatePeerConnectionFactory(
 						globals::gNetworkThread.get(), globals::gWorkerThread.get(),
 						globals::gSignalingThread.get(),
-						nullptr, encoderFactory, decoderFactory);
+						nullptr, webrtc::CreateBuiltinAudioEncoderFactory(), webrtc::CreateBuiltinAudioDecoderFactory(),
+						encoderFactory, decoderFactory);
 
 				rtc::tracing::SetupInternalTracer();
 			});
@@ -722,11 +725,11 @@ namespace Org {
 			rtc::LogMessage::AddLogToStream(globals::gLoggingFile.get(),
 				static_cast<rtc::LoggingSeverity>(level));
 
-			LOG(LS_INFO) << "WebRTC logging enabled";
+			RTC_LOG(LS_INFO) << "WebRTC logging enabled";
 		}
 
 		void WebRTC::DisableLogging() {
-			LOG(LS_INFO) << "WebRTC logging disabled";
+			RTC_LOG(LS_INFO) << "WebRTC logging disabled";
 			rtc::LogMessage::RemoveLogToStream(globals::gLoggingFile.get());
 			globals::gLoggingFile.get()->file()->Close();
 			globals::gLoggingFile.reset();

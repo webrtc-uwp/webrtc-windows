@@ -13,8 +13,8 @@
 #include <wrl.h>
 #include <mfidl.h>
 #include <vector>
-#include "webrtc/api/mediastreaminterface.h"
-#include "webrtc/rtc_base/criticalsection.h"
+#include "api/mediastreaminterface.h"
+#include "rtc_base/criticalsection.h"
 #include "MediaSourceHelper.h"
 
 using Microsoft::WRL::ComPtr;

@@ -23,10 +23,10 @@ static_library("winuwp_h264") {
   ]
 
   deps = [
-    "//webrtc/:webrtc_common",
-    "//webrtc/common_video:common_video",
-    "//webrtc/modules/video_coding:video_coding_utility",
-    "//webrtc/system_wrappers:system_wrappers",
+    "//:webrtc_common",
+    "//common_video:common_video",
+    "//modules/video_coding:video_coding_utility",
+    "//system_wrappers:system_wrappers",
   ]
 
 }

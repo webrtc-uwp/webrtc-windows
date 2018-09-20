@@ -10,9 +10,9 @@
 #include <mfapi.h>
 #include <ppltasks.h>
 #include <mfidl.h>
-#include "webrtc/media/base/videosourceinterface.h"
+#include "api/videosourceinterface.h"
 #include "libyuv/convert.h"
-#include "webrtc/modules/video_coding/timing.h"
+#include "modules/video_coding/timing.h"
 #include "third_party/winuwp_h264/H264Decoder/H264Decoder.h"
 
 using Microsoft::WRL::ComPtr;

@@ -16,7 +16,7 @@
 #include <mfidl.h>
 #include <windows.media.h>
 #include <windows.media.core.h>
-#include "webrtc/rtc_base/criticalsection.h"
+#include "rtc_base/criticalsection.h"
 
 interface IFrameSource;
 

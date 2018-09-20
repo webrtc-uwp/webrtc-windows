@@ -106,7 +106,7 @@ namespace Org {
 				_impl->Send(buffer);
 			}
 			else {
-				LOG(LS_ERROR) << "Tried to send data channel message of unknown data type";
+				RTC_LOG(LS_ERROR) << "Tried to send data channel message of unknown data type";
 			}
 		}
 	}

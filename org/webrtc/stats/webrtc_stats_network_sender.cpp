@@ -9,11 +9,11 @@
 #include "webrtc_stats_network_sender.h"
 #include "etw_providers.h"
 
-#include "webrtc/api/peerconnectioninterface.h"
-#include "webrtc/rtc_base/asynctcpsocket.h" 
-#include "webrtc/rtc_base/json.h"
-#include "webrtc/rtc_base/logging.h"
-#include "webrtc/rtc_base/physicalsocketserver.h"
+#include "api/peerconnectioninterface.h"
+#include "rtc_base/asynctcpsocket.h" 
+#include "rtc_base/json.h"
+#include "rtc_base/logging.h"
+#include "rtc_base/physicalsocketserver.h"
 
 namespace webrtc {
  
@@ -31,7 +31,7 @@ WebRTCStatsNetworkSender::~WebRTCStatsNetworkSender() {
 
 bool WebRTCStatsNetworkSender::Start(std::string remote_hostname, int remote_port) {
   if (IsRunning()) {
-    LOG(LS_INFO) << "WebRTCStatsNetworkSender already started";
+    RTC_LOG(LS_INFO) << "WebRTCStatsNetworkSender already started";
     return false;
   }
 
@@ -54,7 +54,7 @@ bool WebRTCStatsNetworkSender::Start(std::string remote_hostname, int remote_por
     thread_->socketserver()->CreateAsyncSocket(AF_INET, SOCK_STREAM));
 
   if (socket_ == nullptr) {
-    LOG(LS_ERROR) << "WebRTCStatsNetworkSender failed to start";
+	RTC_LOG(LS_ERROR) << "WebRTCStatsNetworkSender failed to start";
     return false;
   }
   socket_->Connect(remoteAddress);
@@ -64,7 +64,7 @@ bool WebRTCStatsNetworkSender::Start(std::string remote_hostname, int remote_por
 
 bool WebRTCStatsNetworkSender::Stop() {
   if (!IsRunning()) {
-    LOG(LS_INFO) << "WebRTCStatsNetworkSender not running";
+	RTC_LOG(LS_INFO) << "WebRTCStatsNetworkSender not running";
     return false;
   }
 

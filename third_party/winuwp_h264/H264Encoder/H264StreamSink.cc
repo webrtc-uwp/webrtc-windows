@@ -14,7 +14,7 @@
 #include <mfapi.h>
 #include <mfidl.h>
 #include "../Utils/Utils.h"
-#include "webrtc/rtc_base/logging.h"
+#include "rtc_base/logging.h"
 
 namespace webrtc {
 

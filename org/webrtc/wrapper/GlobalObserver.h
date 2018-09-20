@@ -13,9 +13,9 @@
 #include <ppltasks.h>
 #include <functional>
 #include <string>
-#include "webrtc/api/peerconnectioninterface.h"
-#include "webrtc/rtc_base/event.h"
-#include "webrtc/rtc_base/scoped_ref_ptr.h"
+#include "api/peerconnectioninterface.h"
+#include "rtc_base/event.h"
+#include "rtc_base/scoped_ref_ptr.h"
 #include "../stats/webrtc_stats_observer.h"
 
 namespace Org {
@@ -55,8 +55,6 @@ namespace Org {
 				// PeerConnectionObserver functions
 				virtual void OnSignalingChange(
 					webrtc::PeerConnectionInterface::SignalingState new_state);
-
-				virtual void OnStateChange(StateType state_changed);
 
 				virtual void OnAddStream(rtc::scoped_refptr<webrtc::MediaStreamInterface> stream);
 

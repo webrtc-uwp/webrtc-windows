@@ -12,12 +12,12 @@
 
 #include <mfidl.h>
 #include <collection.h>
-#include "webrtc/api/peerconnectioninterface.h"
-#include "webrtc/api/mediastreaminterface.h"
-#include "webrtc/api/mediaconstraintsinterface.h"
+#include "api/peerconnectioninterface.h"
+#include "api/mediastreaminterface.h"
+#include "api/mediaconstraintsinterface.h"
 #include "GlobalObserver.h"
 #include "WinUWPDeviceManager.h"
-#include "webrtc/modules/audio_device/include/audio_device.h"
+#include "modules/audio_device/include/audio_device.h"
 #include "Delegates.h"
 #include "RTMediaStreamSource.h"
 

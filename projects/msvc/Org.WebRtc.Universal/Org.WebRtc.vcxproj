@@ -1,441 +1,558 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <CppWinRTEnabled>true</CppWinRTEnabled>
+    <RequiredBundles>$(RequiredBundles);Microsoft.Windows.CppWinRT</RequiredBundles>
+    <MinimalCoreWin>true</MinimalCoreWin>
+    <ProjectGuid>{3dd8fdcd-b703-4b75-826a-2c7e844f903e}</ProjectGuid>
+    <ProjectName>Org.WebRtc</ProjectName>
+    <RootNamespace>Org.WebRtc</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
       <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|ARM">
       <Configuration>Release</Configuration>
       <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\org\webrtc\wrapper\DataChannel.cc" />
-    <ClCompile Include="..\..\..\org\webrtc\wrapper\GlobalObserver.cc" />
-    <ClCompile Include="..\..\..\org\webrtc\wrapper\Marshalling.cc" />
-    <ClCompile Include="..\..\..\org\webrtc\wrapper\Media.cc" />
-    <ClCompile Include="..\..\..\org\webrtc\wrapper\MediaSourceHelper.cc" />
-    <ClCompile Include="..\..\..\org\webrtc\wrapper\PeerConnectionInterface.cc" />
-    <ClCompile Include="..\..\..\org\webrtc\wrapper\RTMediaStreamSource.cc" />
-    <ClCompile Include="..\..\..\org\webrtc\wrapper\WinUWPDeviceManager.cc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\org\webrtc\wrapper\DataChannel.h" />
-    <ClInclude Include="..\..\..\org\webrtc\wrapper\Delegates.h" />
-    <ClInclude Include="..\..\..\org\webrtc\wrapper\GlobalObserver.h" />
-    <ClInclude Include="..\..\..\org\webrtc\wrapper\Marshalling.h" />
-    <ClInclude Include="..\..\..\org\webrtc\wrapper\Media.h" />
-    <ClInclude Include="..\..\..\org\webrtc\wrapper\MediaSourceHelper.h" />
-    <ClInclude Include="..\..\..\org\webrtc\wrapper\PeerConnectionInterface.h" />
-    <ClInclude Include="..\..\..\org\webrtc\wrapper\RTCStatsReport.h" />
-    <ClInclude Include="..\..\..\org\webrtc\wrapper\RTMediaStreamSource.h" />
-    <ClInclude Include="..\..\..\org\webrtc\wrapper\WinUWPDeviceManager.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WebRtc.Stats.Observer.Universal\WebRtc.Stats.Observer.vcxproj">
-      <Project>{8f6cc751-235c-50c4-5d46-f577a04aadf2}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
-    </ProjectReference>
-  </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <ProjectGuid>{32a4abd8-eb1c-4198-b261-425e6caddbef}</ProjectGuid>
-    <Keyword>WindowsRuntimeComponent</Keyword>
-    <RootNamespace>Org.WebRtc</RootNamespace>
-    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.16299.0</WindowsTargetPlatformMinVersion>
-    <ApplicationType>Windows Store</ApplicationType>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  <PropertyGroup Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <GenerateManifest>false</GenerateManifest>
-    <OutDir>$(SolutionDir)Build\Output\$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <GenerateManifest>false</GenerateManifest>
-    <OutDir>$(SolutionDir)Build\Output\$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <GenerateManifest>false</GenerateManifest>
-    <OutDir>$(SolutionDir)Build\Output\$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <GenerateManifest>false</GenerateManifest>
-    <OutDir>$(SolutionDir)Build\Output\$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <GenerateManifest>false</GenerateManifest>
-    <OutDir>$(SolutionDir)Build\Output\$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
-    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <GenerateManifest>false</GenerateManifest>
-    <OutDir>$(SolutionDir)Build\Output\$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(PlatformTarget)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\wrapper;..\..\..\..\xplatform\webrtc\third_party\wtl\include;..\..\..\..\xplatform\webrtc;..\..\..\..\xplatform\webrtc\third_party\libyuv\include;..\etw;.;..\..\..\..\xplatform\webrtc\third_party\jsoncpp\overrides\include;..\..\..\..\xplatform\webrtc\third_party\jsoncpp\source\include;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\winrt;$(VSInstallDir)\VC\atlmfc\include;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/MP /we4389 /Zc:sizedDealloc- /Zc:threadSafeInit- /bigobj %(AdditionalOptions)</AdditionalOptions>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <CompileAsWinRT>true</CompileAsWinRT>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4091;4127;4351;4355;4503;4589;4611;4100;4121;4244;4505;4510;4512;4610;4838;4995;4996;4311;4312;4302;4456;4457;4458;4459;4702;4373;4389;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
-      <MinimalRebuild>false</MinimalRebuild>
-      <Optimization>Disabled</Optimization>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_DEBUG;V8_DEPRECATION_WARNINGS;CLD_VERSION=2;NOMINMAX;WIN32;_WIN32_WINNT=0x0A00;WINVER=0x0A00;_WINDOWS;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_SECURE_ATL;_HAS_EXCEPTIONS=0;_WINSOCK_DEPRECATED_NO_WARNINGS;CHROMIUM_BUILD;CR_CLANG_REVISION=261368-1;USE_AURA=1;USE_DEFAULT_RENDER_THEME=1;USE_LIBJPEG_TURBO=1;ENABLE_WEBRTC=1;ENABLE_MEDIA_ROUTER=1;ENABLE_PEPPER_CDMS;ENABLE_CONFIGURATION_POLICY;ENABLE_NOTIFICATIONS;ENABLE_TOPCHROME_MD=1;FIELDTRIAL_TESTING_ENABLED;NO_TCMALLOC;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;NTDDI_VERSION=0x0A000000;_USING_V110_SDK71_;WINUWP;_HAS_EXCEPTIONS=1;__WINCRYPT_H__;WINAPI_FAMILY=WINAPI_FAMILY_APP;WIN10;ENABLE_TASK_MANAGER=1;ENABLE_EXTENSIONS=1;ENABLE_PDF=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PLUGINS=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_AUTOFILL_DIALOG=1;ENABLE_PRINTING=1;ENABLE_BASIC_PRINTING=1;ENABLE_PRINT_PREVIEW=1;ENABLE_SPELLCHECK=1;ENABLE_CAPTIVE_PORTAL_DETECTION=1;ENABLE_APP_LIST=1;ENABLE_SETTINGS_APP=1;ENABLE_SUPERVISED_USERS=1;ENABLE_MDNS=1;ENABLE_SERVICE_DISCOVERY=1;V8_USE_EXTERNAL_STARTUP_DATA;FULL_SAFE_BROWSING;SAFE_BROWSING_CSD;SAFE_BROWSING_DB_LOCAL;EXPAT_RELATIVE_PATH;WEBRTC_WIN;WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE;_WINRT_DLL;USE_LIBPCI=1;USE_OPENSSL=1;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;DYNAMIC_ANNOTATIONS_ENABLED=1;WTF_USE_DYNAMIC_ANNOTATIONS=1;WEBRTC_FEATURE_END_TO_END_DELAY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <WarningLevel>Level4</WarningLevel>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj /Zc:__cplusplus</AdditionalOptions>
+      <DisableSpecificWarnings>28204;4634;4635</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WINUWP;NOMINMAX;_WINRT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</TreatWarningAsError>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</TreatWarningAsError>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</TreatWarningAsError>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</RuntimeTypeInfo>
+      <GenerateXMLDocumentationFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</GenerateXMLDocumentationFiles>
+      <GenerateXMLDocumentationFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateXMLDocumentationFiles>
+      <GenerateXMLDocumentationFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateXMLDocumentationFiles>
     </ClCompile>
-    <Lib>
-      <AdditionalOptions>/ignore:4221 /IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <TargetMachine>MachineX86</TargetMachine>
-    </Lib>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;dxguid.lib;WindowsApp.lib;kernel32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;user32.lib;uuid.lib;odbc32.lib;odbccp32.lib;credui.lib;netapi32.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib						;crypt32.lib;iphlpapi.lib;secur32.lib;third_party\boringssl\boringssl.lib;third_party\boringssl\boringssl_asm.lib;third_party\jsoncpp\jsoncpp.lib;third_party\libjpeg_turbo\libjpeg.lib;third_party\libjpeg_turbo\simd.lib;third_party\libjpeg_turbo\simd_asm.lib;third_party\libsrtp\libsrtp.lib;third_party\libvpx\libvpx.lib;third_party\libvpx\libvpx_intrinsics_avx.lib;third_party\libvpx\libvpx_intrinsics_avx2.lib;third_party\libvpx\libvpx_intrinsics_mmx.lib;third_party\libvpx\libvpx_intrinsics_sse2.lib;third_party\libvpx\libvpx_intrinsics_ssse3.lib;third_party\libvpx\libvpx_intrinsics_sse4_1.lib;third_party\libvpx\libvpx_yasm.lib;third_party\libyuv\libyuv_internal.lib;third_party\openmax_dl\dl\dl.lib;third_party\opus\opus.lib;third_party\protobuf\protobuf_lite.lib;third_party\usrsctp\usrsctp.lib;third_party\winuwp_compat\winuwp_compat.lib;third_party\winuwp_h264\winuwp_h264.lib;webrtc\webrtc_common.lib;webrtc\api\libjingle_peerconnection_api.lib;webrtc\api\video_frame_api.lib;webrtc\api\audio_codecs\audio_codecs_api.lib;webrtc\api\audio_codecs\builtin_audio_decoder_factory.lib;webrtc\api\audio_codecs\builtin_audio_encoder_factory.lib;webrtc\api\audio_codecs\g711\audio_decoder_g711.lib;webrtc\api\audio_codecs\g711\audio_encoder_g711.lib;webrtc\api\audio_codecs\g722\audio_decoder_g722.lib;webrtc\api\audio_codecs\g722\audio_encoder_g722.lib;webrtc\api\audio_codecs\ilbc\audio_decoder_ilbc.lib;webrtc\api\audio_codecs\ilbc\audio_encoder_ilbc.lib;webrtc\api\audio_codecs\isac\audio_decoder_isac_float.lib;webrtc\api\audio_codecs\isac\audio_encoder_isac_float.lib;webrtc\api\audio_codecs\L16\audio_decoder_L16.lib;webrtc\api\audio_codecs\L16\audio_encoder_L16.lib;webrtc\api\audio_codecs\opus\audio_decoder_opus.lib;webrtc\api\audio_codecs\opus\audio_encoder_opus_config.lib;webrtc\api\video_codecs\video_codecs_api.lib;webrtc\audio\audio.lib;webrtc\audio\utility\audio_frame_operations.lib;webrtc\call\call.lib;webrtc\call\call_interfaces.lib;webrtc\call\rtp_receiver.lib;webrtc\call\rtp_sender.lib;webrtc\call\video_stream_api.lib;webrtc\common_audio\common_audio.lib;webrtc\common_audio\common_audio_c.lib;webrtc\common_audio\common_audio_cc.lib;webrtc\common_audio\common_audio_sse2.lib;webrtc\common_video\common_video.lib;webrtc\logging\rtc_event_log_impl.lib;webrtc\logging\rtc_event_log_proto.lib;webrtc\media\rtc_audio_video.lib;webrtc\media\rtc_data.lib;webrtc\media\rtc_h264_profile_id.lib;webrtc\media\rtc_media_base.lib;webrtc\modules\audio_coding\ana_config_proto.lib;webrtc\modules\audio_coding\ana_debug_dump_proto.lib;webrtc\modules\audio_coding\audio_coding.lib;webrtc\modules\audio_coding\audio_format_conversion.lib;webrtc\modules\audio_coding\audio_network_adaptor.lib;webrtc\modules\audio_coding\cng.lib;webrtc\modules\audio_coding\g711.lib;webrtc\modules\audio_coding\g711_c.lib;webrtc\modules\audio_coding\g722.lib;webrtc\modules\audio_coding\g722_c.lib;webrtc\modules\audio_coding\ilbc.lib;webrtc\modules\audio_coding\ilbc_c.lib;webrtc\modules\audio_coding\isac.lib;webrtc\modules\audio_coding\isac_c.lib;webrtc\modules\audio_coding\isac_common.lib;webrtc\modules\audio_coding\isac_fix.lib;webrtc\modules\audio_coding\isac_fix_c.lib;webrtc\modules\audio_coding\isac_fix_common.lib;webrtc\modules\audio_coding\legacy_encoded_audio_frame.lib;webrtc\modules\audio_coding\neteq.lib;webrtc\modules\audio_coding\neteq_decoder_enum.lib;webrtc\modules\audio_coding\pcm16b.lib;webrtc\modules\audio_coding\pcm16b_c.lib;webrtc\modules\audio_coding\red.lib;webrtc\modules\audio_coding\rent_a_codec.lib;webrtc\modules\audio_coding\webrtc_opus.lib;webrtc\modules\audio_coding\webrtc_opus_c.lib;webrtc\modules\audio_conference_mixer\audio_conference_mixer.lib;webrtc\modules\audio_device\audio_device.lib;webrtc\modules\audio_mixer\audio_frame_manipulator.lib;webrtc\modules\audio_mixer\audio_mixer_impl.lib;webrtc\modules\audio_processing\aec_dump_interface.lib;webrtc\modules\audio_processing\aec_dump\aec_dump_impl.lib;webrtc\modules\audio_processing\audioproc_debug_proto.lib;webrtc\modules\audio_processing\audio_processing.lib;webrtc\modules\audio_processing\audio_processing_c.lib;webrtc\modules\audio_processing\audio_processing_sse2.lib;webrtc\modules\bitrate_controller\bitrate_controller.lib;webrtc\modules\congestion_controller\congestion_controller.lib;webrtc\modules\media_file\media_file.lib;webrtc\modules\pacing\pacing.lib;webrtc\modules\remote_bitrate_estimator\remote_bitrate_estimator.lib;webrtc\modules\rtp_rtcp\rtp_rtcp.lib;webrtc\modules\utility\utility.lib;webrtc\modules\video_capture\video_capture_internal_impl.lib;webrtc\modules\video_capture\video_capture_module.lib;webrtc\modules\video_coding\video_coding.lib;webrtc\modules\video_coding\video_coding_utility.lib;webrtc\modules\video_coding\webrtc_h264.lib;webrtc\modules\video_coding\webrtc_i420.lib;webrtc\modules\video_coding\webrtc_vp8.lib;webrtc\modules\video_coding\webrtc_vp9.lib;webrtc\modules\video_processing\video_processing.lib;webrtc\modules\video_processing\video_processing_sse2.lib;webrtc\p2p\libstunprober.lib;webrtc\p2p\rtc_p2p.lib;webrtc\pc\create_pc_factory.lib;webrtc\pc\peerconnection.lib;webrtc\pc\rtc_pc_base.lib;webrtc\rtc_base\rtc_base.lib;webrtc\rtc_base\rtc_base_approved.lib;webrtc\rtc_base\rtc_json.lib;webrtc\rtc_base\rtc_numerics.lib;webrtc\rtc_base\rtc_task_queue_impl.lib;webrtc\rtc_base\sequenced_task_checker.lib;webrtc\rtc_base\weak_ptr.lib;webrtc\stats\rtc_stats.lib;webrtc\system_wrappers\field_trial_default.lib;webrtc\system_wrappers\metrics_default.lib;webrtc\system_wrappers\system_wrappers.lib;webrtc\video\video.lib;webrtc\voice_engine\audio_coder.lib;webrtc\voice_engine\audio_level.lib;webrtc\voice_engine\file_player.lib;webrtc\voice_engine\file_recorder.lib;webrtc\voice_engine\voice_engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/WINMD /maxilksize:0x7ff00000 /safeseh /dynamicbase /ignore:4199 /ignore:4221 /nxcompat /largeaddressaware %(AdditionalOptions)</AdditionalOptions>
-      <FixedBaseAddress>false</FixedBaseAddress>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <LinkAsWinRT>true</LinkAsWinRT>
-      <MapFileName>$(OutDir)$(TargetName).map</MapFileName>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Console</SubSystem>
-      <TargetMachine>MachineX86</TargetMachine>
-      <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\out\winuwp_10_$(PlatformTarget)_$(Configuration)\obj</AdditionalLibraryDirectories>
+      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <ModuleDefinitionFile>Org_WebRtc.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">webrtc.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">webrtc.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">webrtc.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">/defaultlib:vccorlib /defaultlib:msvcrt %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/defaultlib:vccorlib /defaultlib:msvcrt %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/defaultlib:vccorlib /defaultlib:msvcrt %(AdditionalOptions)</AdditionalOptions>
     </Link>
-    <ProjectReference>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
+    <CustomBuildStep>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+      </Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd</Command>
+    </PostBuildEvent>
+    <Midl>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl</AdditionalIncludeDirectories>
+    </Midl>
+    <Midl>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl</AdditionalIncludeDirectories>
+    </Midl>
+    <Midl>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl</AdditionalIncludeDirectories>
+    </Midl>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\wrapper;..\..\..\..\xplatform\webrtc\third_party\wtl\include;..\..\..\..\xplatform\webrtc;..\..\..\..\xplatform\webrtc\third_party\libyuv\include;..\etw;.;..\..\..\..\xplatform\webrtc\third_party\jsoncpp\overrides\include;..\..\..\..\xplatform\webrtc\third_party\jsoncpp\source\include;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\winrt;$(VSInstallDir)\VC\atlmfc\include;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/MP /we4389 /Zc:sizedDealloc- /Zc:threadSafeInit- /d2Zi+ /Zc:inline /Oy- /Gw %(AdditionalOptions)</AdditionalOptions>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <CompileAsWinRT>true</CompileAsWinRT>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4091;4127;4351;4355;4503;4589;4611;4100;4121;4244;4505;4510;4512;4610;4838;4995;4996;4311;4312;4302;4456;4457;4458;4459;4702;4373;4389;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <MinimalRebuild>false</MinimalRebuild>
-      <OmitFramePointers>false</OmitFramePointers>
-      <Optimization>MaxSpeed</Optimization>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>NDEBUG;NVALGRIND;V8_DEPRECATION_WARNINGS;CLD_VERSION=2;NOMINMAX;WIN32;_WIN32_WINNT=0x0A00;WINVER=0x0A00;_WINDOWS;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_SECURE_ATL;_HAS_EXCEPTIONS=0;_WINSOCK_DEPRECATED_NO_WARNINGS;CHROMIUM_BUILD;CR_CLANG_REVISION=261368-1;USE_AURA=1;USE_DEFAULT_RENDER_THEME=1;USE_LIBJPEG_TURBO=1;ENABLE_WEBRTC=1;ENABLE_MEDIA_ROUTER=1;ENABLE_PEPPER_CDMS;ENABLE_CONFIGURATION_POLICY;ENABLE_NOTIFICATIONS;ENABLE_TOPCHROME_MD=1;FIELDTRIAL_TESTING_ENABLED;NO_TCMALLOC;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;NTDDI_VERSION=0x0A000000;_USING_V110_SDK71_;WINUWP;_HAS_EXCEPTIONS=1;__WINCRYPT_H__;WINAPI_FAMILY=WINAPI_FAMILY_APP;WIN10;ENABLE_TASK_MANAGER=1;ENABLE_EXTENSIONS=1;ENABLE_PDF=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PLUGINS=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_AUTOFILL_DIALOG=1;ENABLE_PRINTING=1;ENABLE_BASIC_PRINTING=1;ENABLE_PRINT_PREVIEW=1;ENABLE_SPELLCHECK=1;ENABLE_CAPTIVE_PORTAL_DETECTION=1;ENABLE_APP_LIST=1;ENABLE_SETTINGS_APP=1;ENABLE_SUPERVISED_USERS=1;ENABLE_MDNS=1;ENABLE_SERVICE_DISCOVERY=1;V8_USE_EXTERNAL_STARTUP_DATA;FULL_SAFE_BROWSING;SAFE_BROWSING_CSD;SAFE_BROWSING_DB_LOCAL;EXPAT_RELATIVE_PATH;WEBRTC_WIN;WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE;_WINRT_DLL;USE_LIBPCI=1;USE_OPENSSL=1;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;DYNAMIC_ANNOTATIONS_ENABLED=0;WEBRTC_FEATURE_END_TO_END_DELAY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <StringPooling>true</StringPooling>
-      <TreatWarningAsError>true</TreatWarningAsError>
-      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WINUWP;NOMINMAX;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</TreatWarningAsError>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</TreatWarningAsError>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</TreatWarningAsError>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</RuntimeTypeInfo>
+      <GenerateXMLDocumentationFiles Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</GenerateXMLDocumentationFiles>
+      <GenerateXMLDocumentationFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateXMLDocumentationFiles>
+      <GenerateXMLDocumentationFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateXMLDocumentationFiles>
     </ClCompile>
-    <Lib>
-      <AdditionalOptions>/ignore:4221 /IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <TargetMachine>MachineX86</TargetMachine>
-    </Lib>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;dxguid.lib;WindowsApp.lib;kernel32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;user32.lib;uuid.lib;odbc32.lib;odbccp32.lib;credui.lib;netapi32.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;crypt32.lib;iphlpapi.lib;secur32.lib;third_party\boringssl\boringssl.lib;third_party\boringssl\boringssl_asm.lib;third_party\jsoncpp\jsoncpp.lib;third_party\libjpeg_turbo\libjpeg.lib;third_party\libjpeg_turbo\simd.lib;third_party\libjpeg_turbo\simd_asm.lib;third_party\libsrtp\libsrtp.lib;third_party\libvpx\libvpx.lib;third_party\libvpx\libvpx_intrinsics_avx.lib;third_party\libvpx\libvpx_intrinsics_avx2.lib;third_party\libvpx\libvpx_intrinsics_mmx.lib;third_party\libvpx\libvpx_intrinsics_sse2.lib;third_party\libvpx\libvpx_intrinsics_ssse3.lib;third_party\libvpx\libvpx_intrinsics_sse4_1.lib;third_party\libvpx\libvpx_yasm.lib;third_party\libyuv\libyuv_internal.lib;third_party\openmax_dl\dl\dl.lib;third_party\opus\opus.lib;third_party\protobuf\protobuf_lite.lib;third_party\usrsctp\usrsctp.lib;third_party\winuwp_compat\winuwp_compat.lib;third_party\winuwp_h264\winuwp_h264.lib;webrtc\webrtc_common.lib;webrtc\api\libjingle_peerconnection_api.lib;webrtc\api\video_frame_api.lib;webrtc\api\audio_codecs\audio_codecs_api.lib;webrtc\api\audio_codecs\builtin_audio_decoder_factory.lib;webrtc\api\audio_codecs\builtin_audio_encoder_factory.lib;webrtc\api\audio_codecs\g711\audio_decoder_g711.lib;webrtc\api\audio_codecs\g711\audio_encoder_g711.lib;webrtc\api\audio_codecs\g722\audio_decoder_g722.lib;webrtc\api\audio_codecs\g722\audio_encoder_g722.lib;webrtc\api\audio_codecs\ilbc\audio_decoder_ilbc.lib;webrtc\api\audio_codecs\ilbc\audio_encoder_ilbc.lib;webrtc\api\audio_codecs\isac\audio_decoder_isac_float.lib;webrtc\api\audio_codecs\isac\audio_encoder_isac_float.lib;webrtc\api\audio_codecs\L16\audio_decoder_L16.lib;webrtc\api\audio_codecs\L16\audio_encoder_L16.lib;webrtc\api\audio_codecs\opus\audio_decoder_opus.lib;webrtc\api\audio_codecs\opus\audio_encoder_opus_config.lib;webrtc\api\video_codecs\video_codecs_api.lib;webrtc\audio\audio.lib;webrtc\audio\utility\audio_frame_operations.lib;webrtc\call\call.lib;webrtc\call\call_interfaces.lib;webrtc\call\rtp_receiver.lib;webrtc\call\rtp_sender.lib;webrtc\call\video_stream_api.lib;webrtc\common_audio\common_audio.lib;webrtc\common_audio\common_audio_c.lib;webrtc\common_audio\common_audio_cc.lib;webrtc\common_audio\common_audio_sse2.lib;webrtc\common_video\common_video.lib;webrtc\logging\rtc_event_log_impl.lib;webrtc\logging\rtc_event_log_proto.lib;webrtc\media\rtc_audio_video.lib;webrtc\media\rtc_data.lib;webrtc\media\rtc_h264_profile_id.lib;webrtc\media\rtc_media_base.lib;webrtc\modules\audio_coding\ana_config_proto.lib;webrtc\modules\audio_coding\ana_debug_dump_proto.lib;webrtc\modules\audio_coding\audio_coding.lib;webrtc\modules\audio_coding\audio_format_conversion.lib;webrtc\modules\audio_coding\audio_network_adaptor.lib;webrtc\modules\audio_coding\cng.lib;webrtc\modules\audio_coding\g711.lib;webrtc\modules\audio_coding\g711_c.lib;webrtc\modules\audio_coding\g722.lib;webrtc\modules\audio_coding\g722_c.lib;webrtc\modules\audio_coding\ilbc.lib;webrtc\modules\audio_coding\ilbc_c.lib;webrtc\modules\audio_coding\isac.lib;webrtc\modules\audio_coding\isac_c.lib;webrtc\modules\audio_coding\isac_common.lib;webrtc\modules\audio_coding\isac_fix.lib;webrtc\modules\audio_coding\isac_fix_c.lib;webrtc\modules\audio_coding\isac_fix_common.lib;webrtc\modules\audio_coding\legacy_encoded_audio_frame.lib;webrtc\modules\audio_coding\neteq.lib;webrtc\modules\audio_coding\neteq_decoder_enum.lib;webrtc\modules\audio_coding\pcm16b.lib;webrtc\modules\audio_coding\pcm16b_c.lib;webrtc\modules\audio_coding\red.lib;webrtc\modules\audio_coding\rent_a_codec.lib;webrtc\modules\audio_coding\webrtc_opus.lib;webrtc\modules\audio_coding\webrtc_opus_c.lib;webrtc\modules\audio_conference_mixer\audio_conference_mixer.lib;webrtc\modules\audio_device\audio_device.lib;webrtc\modules\audio_mixer\audio_frame_manipulator.lib;webrtc\modules\audio_mixer\audio_mixer_impl.lib;webrtc\modules\audio_processing\aec_dump_interface.lib;webrtc\modules\audio_processing\aec_dump\aec_dump_impl.lib;webrtc\modules\audio_processing\audioproc_debug_proto.lib;webrtc\modules\audio_processing\audio_processing.lib;webrtc\modules\audio_processing\audio_processing_c.lib;webrtc\modules\audio_processing\audio_processing_sse2.lib;webrtc\modules\bitrate_controller\bitrate_controller.lib;webrtc\modules\congestion_controller\congestion_controller.lib;webrtc\modules\media_file\media_file.lib;webrtc\modules\pacing\pacing.lib;webrtc\modules\remote_bitrate_estimator\remote_bitrate_estimator.lib;webrtc\modules\rtp_rtcp\rtp_rtcp.lib;webrtc\modules\utility\utility.lib;webrtc\modules\video_capture\video_capture_internal_impl.lib;webrtc\modules\video_capture\video_capture_module.lib;webrtc\modules\video_coding\video_coding.lib;webrtc\modules\video_coding\video_coding_utility.lib;webrtc\modules\video_coding\webrtc_h264.lib;webrtc\modules\video_coding\webrtc_i420.lib;webrtc\modules\video_coding\webrtc_vp8.lib;webrtc\modules\video_coding\webrtc_vp9.lib;webrtc\modules\video_processing\video_processing.lib;webrtc\modules\video_processing\video_processing_sse2.lib;webrtc\p2p\libstunprober.lib;webrtc\p2p\rtc_p2p.lib;webrtc\pc\create_pc_factory.lib;webrtc\pc\peerconnection.lib;webrtc\pc\rtc_pc_base.lib;webrtc\rtc_base\rtc_base.lib;webrtc\rtc_base\rtc_base_approved.lib;webrtc\rtc_base\rtc_json.lib;webrtc\rtc_base\rtc_numerics.lib;webrtc\rtc_base\rtc_task_queue_impl.lib;webrtc\rtc_base\sequenced_task_checker.lib;webrtc\rtc_base\weak_ptr.lib;webrtc\stats\rtc_stats.lib;webrtc\system_wrappers\field_trial_default.lib;webrtc\system_wrappers\metrics_default.lib;webrtc\system_wrappers\system_wrappers.lib;webrtc\video\video.lib;webrtc\voice_engine\audio_coder.lib;webrtc\voice_engine\audio_level.lib;webrtc\voice_engine\file_player.lib;webrtc\voice_engine\file_recorder.lib;webrtc\voice_engine\voice_engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/WINMD /maxilksize:0x7ff00000 /safeseh /dynamicbase /ignore:4199 /ignore:4221 /nxcompat /largeaddressaware %(AdditionalOptions)</AdditionalOptions>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <FixedBaseAddress>false</FixedBaseAddress>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
-      <LinkAsWinRT>true</LinkAsWinRT>
-      <MapFileName>$(OutDir)$(TargetName).map</MapFileName>
-      <OptimizeReferences>true</OptimizeReferences>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <Profile>true</Profile>
-      <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SubSystem>Console</SubSystem>
-      <TargetMachine>MachineX86</TargetMachine>
-      <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\out\winuwp_10_$(PlatformTarget)_$(Configuration)\obj</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">webrtc.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">/defaultlib:vccorlibd /defaultlib:msvcrtd %(AdditionalOptions)</AdditionalOptions>
     </Link>
-    <ProjectReference>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
+    <Link>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">webrtc.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/defaultlib:vccorlibd /defaultlib:msvcrtd %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <Link>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">webrtc.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/defaultlib:vccorlibd /defaultlib:msvcrtd %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <Midl>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl</AdditionalIncludeDirectories>
+    </Midl>
+    <Midl>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl</AdditionalIncludeDirectories>
+    </Midl>
+    <Midl>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl</AdditionalIncludeDirectories>
+    </Midl>
+    <CustomBuildStep>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+      </Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\wrapper;..\..\..\..\xplatform\webrtc\build_win10_arm\$(Configuration)\obj\global_intermediate;..\..\..\..\xplatform\webrtc\third_party\wtl\include;..\..\..\..\xplatform\webrtc;..\..\..\..\xplatform\webrtc\third_party\libyuv\include;..\etw;.;..\..\..\..\xplatform\webrtc\third_party\jsoncpp\overrides\include;..\..\..\..\xplatform\webrtc\third_party\jsoncpp\source\include;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\winrt;$(VSInstallDir)\VC\atlmfc\include;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/MP /we4389 /Zc:sizedDealloc- /Zc:threadSafeInit- /bigobj %(AdditionalOptions)</AdditionalOptions>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <CompileAsWinRT>true</CompileAsWinRT>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4091;4127;4351;4355;4503;4589;4611;4100;4121;4244;4505;4510;4512;4610;4838;4995;4996;4311;4312;4302;4456;4457;4458;4459;4702;4373;4389;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
-      <MinimalRebuild>false</MinimalRebuild>
-      <Optimization>Disabled</Optimization>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>V8_DEPRECATION_WARNINGS;CLD_VERSION=2;NOMINMAX;WIN32;_WIN32_WINNT=0x0A00;WINVER=0x0A00;_WINDOWS;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_SECURE_ATL;_HAS_EXCEPTIONS=0;_WINSOCK_DEPRECATED_NO_WARNINGS;CHROMIUM_BUILD;CR_CLANG_REVISION=261368-1;USE_AURA=1;USE_DEFAULT_RENDER_THEME=1;USE_LIBJPEG_TURBO=1;ENABLE_WEBRTC=1;ENABLE_MEDIA_ROUTER=1;ENABLE_PEPPER_CDMS;ENABLE_CONFIGURATION_POLICY;ENABLE_NOTIFICATIONS;ENABLE_TOPCHROME_MD=1;FIELDTRIAL_TESTING_ENABLED;NO_TCMALLOC;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;NTDDI_VERSION=0x0A000000;_USING_V110_SDK71_;WINUWP;_HAS_EXCEPTIONS=1;__WINCRYPT_H__;WIN10;ENABLE_TASK_MANAGER=1;ENABLE_EXTENSIONS=1;ENABLE_PDF=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PLUGINS=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_AUTOFILL_DIALOG=1;ENABLE_PRINTING=1;ENABLE_BASIC_PRINTING=1;ENABLE_PRINT_PREVIEW=1;ENABLE_SPELLCHECK=1;ENABLE_CAPTIVE_PORTAL_DETECTION=1;ENABLE_APP_LIST=1;ENABLE_SETTINGS_APP=1;ENABLE_SUPERVISED_USERS=1;ENABLE_MDNS=1;ENABLE_SERVICE_DISCOVERY=1;V8_USE_EXTERNAL_STARTUP_DATA;FULL_SAFE_BROWSING;SAFE_BROWSING_CSD;SAFE_BROWSING_DB_LOCAL;EXPAT_RELATIVE_PATH;WEBRTC_WIN;WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE;USE_LIBPCI=1;USE_OPENSSL=1;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS																;_WINRT_DLL;DYNAMIC_ANNOTATIONS_ENABLED=1;WTF_USE_DYNAMIC_ANNOTATIONS=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <TreatWarningAsError>true</TreatWarningAsError>
-      <WarningLevel>Level4</WarningLevel>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioOptions.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioTrackSource.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\Constraint.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\cppwinrt_Helpers.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\EventQueue.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\EventQueueMaker.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaConstraints.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaElement.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaElementMaker.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaSource.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaStreamTrack.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaTrackSource.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MessageEvent.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MillisecondIntervalRange.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCAnswerOptions.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCAudioHandlerStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCAudioReceiverStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCAudioSenderStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCBitrateParameters.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCCertificate.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCCertificateStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCCodecStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCConfiguration.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDataChannel.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDataChannelEvent.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDataChannelInit.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDataChannelStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDtlsFingerprint.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDtmfSender.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDtmfToneChangeEvent.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCError.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCIceCandidate.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCIceCandidateInit.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCIceCandidatePairStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCIceCandidateStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCIceServer.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCInboundRtpStreamStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCKeyParams.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCMediaHandlerStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCMediaStreamStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCOAuthCredential.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCOfferAnswerOptions.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCOfferOptions.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCOutboundRtpStreamStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCPeerConnection.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCPeerConnectionIceErrorEvent.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCPeerConnectionIceEvent.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCPeerConnectionStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCReceivedRtpStreamStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRemoteInboundRtpStreamStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRemoteOutboundRtpStreamStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRSAParams.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtcpFeedback.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtcpParameters.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpCapabilities.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpCodecCapability.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpCodecParameters.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpCodingParameters.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpContributingSource.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpContributingSourceStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpDecodingParameters.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpEncodingParameters.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpFecParameters.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpHeaderExtensionCapability.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpHeaderExtensionParameters.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpParameters.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpReceiveParameters.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpReceiver.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpRtxParameters.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpSender.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpSendParameters.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpStreamStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpSynchronizationSource.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpTransceiver.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpTransceiverInit.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCSenderAudioTrackAttachmentStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCSenderVideoTrackAttachmentStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCSentRtpStreamStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCSessionDescription.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCSessionDescriptionInit.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCStatsProvider.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCStatsReport.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCStatsTypeSet.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCTrackEvent.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCTransportStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCVideoHandlerStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCVideoReceiverStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCVideoSenderStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\types.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturer.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturerInputSize.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoDeviceInfo.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFormat.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoTrackSource.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoTrackSourceStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcLib.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueue.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueueMaker.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaElement.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaElementMaker.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaSource.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\VideoDeviceInfo.h" />
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioOptions.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioTrackSource.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\Constraint.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\cppwinrt_Helpers.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\cppwinrt_Helpers2.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\cppwinrt_Helpers3.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\cppwinrt_Helpers4.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\cppwinrt_Helpers5.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\cppwinrt_Helpers6.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\EventQueue.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\EventQueueMaker.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaConstraints.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaElement.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaElementMaker.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaSource.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaStreamTrack.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaTrackSource.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MessageEvent.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MillisecondIntervalRange.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCAnswerOptions.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCAudioHandlerStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCAudioReceiverStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCAudioSenderStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCBitrateParameters.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCCertificate.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCCertificateStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCCodecStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCConfiguration.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDataChannel.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDataChannelEvent.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDataChannelInit.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDataChannelStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDtlsFingerprint.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDtmfSender.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCDtmfToneChangeEvent.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCError.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCIceCandidate.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCIceCandidateInit.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCIceCandidatePairStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCIceCandidateStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCIceServer.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCInboundRtpStreamStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCKeyParams.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCMediaHandlerStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCMediaStreamStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCOAuthCredential.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCOfferAnswerOptions.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCOfferOptions.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCOutboundRtpStreamStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCPeerConnection.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCPeerConnectionIceErrorEvent.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCPeerConnectionIceEvent.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCPeerConnectionStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCReceivedRtpStreamStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRemoteInboundRtpStreamStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRemoteOutboundRtpStreamStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRSAParams.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtcpFeedback.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtcpParameters.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpCapabilities.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpCodecCapability.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpCodecParameters.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpCodingParameters.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpContributingSource.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpContributingSourceStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpDecodingParameters.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpEncodingParameters.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpFecParameters.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpHeaderExtensionCapability.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpHeaderExtensionParameters.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpParameters.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpReceiveParameters.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpReceiver.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpRtxParameters.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpSender.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpSendParameters.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpStreamStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpSynchronizationSource.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpTransceiver.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCRtpTransceiverInit.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCSenderAudioTrackAttachmentStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCSenderVideoTrackAttachmentStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCSentRtpStreamStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCSessionDescription.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCSessionDescriptionInit.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCStatsProvider.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCStatsReport.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCStatsTypeSet.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCTrackEvent.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCTransportStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCVideoHandlerStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCVideoReceiverStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\RTCVideoSenderStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturer.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturerInputSize.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoDeviceInfo.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFormat.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoTrackSource.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoTrackSourceStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcLib.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\cppwinrt_Helpers_Throwers.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueue.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <Lib>
-      <AdditionalOptions>/ignore:4221 /IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-    </Lib>
-    <Link>
-      <AdditionalDependencies>ws2_32.lib;dxguid.lib;WindowsApp.lib;kernel32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;user32.lib;uuid.lib;odbc32.lib;odbccp32.lib;credui.lib;netapi32.lib;webrtc.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib						;crypt32.lib;iphlpapi.lib;secur32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/WINMD ../../../../xplatform/webrtc/build_win10_arm/webrtc/$(Configuration)/obj/opus/celt_pitch_xcorr_arm.obj ../../../../xplatform/webrtc/build_win10_arm/webrtc/$(Configuration)/obj/global_intermediate/third_party/libvpx_new/*.obj ../../../../xplatform/webrtc/third_party/libyuv/source/*.obj ../../../../xplatform/webrtc/build_win10_arm/webrtc/$(Configuration)/obj/openmax_dl_armv7/*.obj ../../../../xplatform/webrtc/build_win10_arm/webrtc/$(Configuration)/obj/openmax_dl_neon/*.obj ../../../../xplatform/webrtc/build_win10_arm/webrtc/$(Configuration)/obj/common_audio/spl_sqrt_floor_arm.obj ../../../../xplatform/webrtc/build_win10_arm/webrtc/$(Configuration)/obj/common_audio/filter_ar_fast_q12_armv7.obj ../../../../xplatform/webrtc/build_win10_arm/webrtc/$(Configuration)/obj/common_audio/complex_bit_reverse_arm.obj /maxilksize:0x7ff00000 %(AdditionalOptions)</AdditionalOptions>
-      <FixedBaseAddress>false</FixedBaseAddress>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <LinkAsWinRT>true</LinkAsWinRT>
-      <MapFileName>$(OutDir)$(TargetName).map</MapFileName>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SubSystem>Console</SubSystem>
-      <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\out\winuwp_10_$(PlatformTarget)_$(Configuration)\obj</AdditionalLibraryDirectories>
-    </Link>
-    <ProjectReference>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\wrapper;..\..\..\..\xplatform\webrtc\build_win10_arm\$(Configuration)\obj\global_intermediate;..\..\..\..\xplatform\webrtc\third_party\wtl\include;..\..\..\..\xplatform\webrtc;..\..\..\..\xplatform\webrtc\third_party\libyuv\include;..\etw;.;..\..\..\..\xplatform\webrtc\third_party\jsoncpp\overrides\include;..\..\..\..\xplatform\webrtc\third_party\jsoncpp\source\include;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\winrt;$(VSInstallDir)\VC\atlmfc\include;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/MP /we4389 /Zc:sizedDealloc- /Zc:threadSafeInit- /d2Zi+ /Zc:inline /Oy- /Gw %(AdditionalOptions)</AdditionalOptions>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <CompileAsWinRT>true</CompileAsWinRT>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4091;4127;4351;4355;4503;4589;4611;4100;4121;4244;4505;4510;4512;4610;4838;4995;4996;4311;4312;4302;4456;4457;4458;4459;4702;4373;4389;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <MinimalRebuild>false</MinimalRebuild>
-      <OmitFramePointers>false</OmitFramePointers>
-      <Optimization>MaxSpeed</Optimization>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>V8_DEPRECATION_WARNINGS;CLD_VERSION=2;NOMINMAX;WIN32;_WIN32_WINNT=0x0A00;WINVER=0x0A00;_WINDOWS;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_SECURE_ATL;_HAS_EXCEPTIONS=0;_WINSOCK_DEPRECATED_NO_WARNINGS;CHROMIUM_BUILD;CR_CLANG_REVISION=261368-1;USE_AURA=1;USE_DEFAULT_RENDER_THEME=1;USE_LIBJPEG_TURBO=1;ENABLE_WEBRTC=1;ENABLE_MEDIA_ROUTER=1;ENABLE_PEPPER_CDMS;ENABLE_CONFIGURATION_POLICY;ENABLE_NOTIFICATIONS;ENABLE_TOPCHROME_MD=1;FIELDTRIAL_TESTING_ENABLED;NO_TCMALLOC;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;NTDDI_VERSION=0x0A000000;_USING_V110_SDK71_;WINUWP;_HAS_EXCEPTIONS=1;__WINCRYPT_H__;WINAPI_FAMILY=WINAPI_FAMILY_APP;WIN10;ENABLE_TASK_MANAGER=1;ENABLE_EXTENSIONS=1;ENABLE_PDF=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PLUGINS=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_AUTOFILL_DIALOG=1;ENABLE_PRINTING=1;ENABLE_BASIC_PRINTING=1;ENABLE_PRINT_PREVIEW=1;ENABLE_SPELLCHECK=1;ENABLE_CAPTIVE_PORTAL_DETECTION=1;ENABLE_APP_LIST=1;ENABLE_SETTINGS_APP=1;ENABLE_SUPERVISED_USERS=1;ENABLE_MDNS=1;ENABLE_SERVICE_DISCOVERY=1;V8_USE_EXTERNAL_STARTUP_DATA;FULL_SAFE_BROWSING;SAFE_BROWSING_CSD;SAFE_BROWSING_DB_LOCAL;EXPAT_RELATIVE_PATH;WEBRTC_WIN;WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE;_WINRT_DLL;USE_LIBPCI=1;USE_OPENSSL=1;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;NDEBUG;NVALGRIND;DYNAMIC_ANNOTATIONS_ENABLED=0;WINUWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <StringPooling>true</StringPooling>
-      <TreatWarningAsError>true</TreatWarningAsError>
-      <WarningLevel>Level4</WarningLevel>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueueMaker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <Lib>
-      <AdditionalOptions>/ignore:4221 /IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-    </Lib>
-    <Link>
-      <AdditionalDependencies>ws2_32.lib;dxguid.lib;WindowsApp.lib;kernel32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;user32.lib;uuid.lib;odbc32.lib;odbccp32.lib;credui.lib;netapi32.lib;webrtc.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib						;crypt32.lib;iphlpapi.lib;secur32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/WINMD /maxilksize:0x7ff00000 %(AdditionalOptions)</AdditionalOptions>
-      <FixedBaseAddress>false</FixedBaseAddress>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <FixedBaseAddress>false</FixedBaseAddress>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
-      <LinkAsWinRT>true</LinkAsWinRT>
-      <MapFileName>$(OutDir)$(TargetName).map</MapFileName>
-      <OptimizeReferences>true</OptimizeReferences>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <Profile>true</Profile>
-      <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SubSystem>Console</SubSystem>
-      <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\out\winuwp_10_$(PlatformTarget)_$(Configuration)\obj</AdditionalLibraryDirectories>
-    </Link>
-    <ProjectReference>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\wrapper;..\..\..\..\xplatform\webrtc\third_party\wtl\include;..\..\..\..\xplatform\webrtc;..\..\..\..\xplatform\webrtc\third_party\libyuv\include;..\etw;.;..\..\..\..\xplatform\webrtc\third_party\jsoncpp\overrides\include;..\..\..\..\xplatform\webrtc\third_party\jsoncpp\source\include;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\winrt;$(VSInstallDir)\VC\atlmfc\include;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/MP /we4389 /Zc:sizedDealloc- /Zc:threadSafeInit- /bigobj %(AdditionalOptions)</AdditionalOptions>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <CompileAsWinRT>true</CompileAsWinRT>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4091;4127;4351;4355;4503;4589;4611;4100;4121;4244;4505;4510;4512;4610;4838;4995;4996;4311;4312;4302;4456;4457;4458;4459;4702;4373;4389;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
-      <MinimalRebuild>false</MinimalRebuild>
-      <Optimization>Disabled</Optimization>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_DEBUG;V8_DEPRECATION_WARNINGS;CLD_VERSION=2;NOMINMAX;WIN32;_WIN32_WINNT=0x0A00;WINVER=0x0A00;_WINDOWS;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_SECURE_ATL;_HAS_EXCEPTIONS=0;_WINSOCK_DEPRECATED_NO_WARNINGS;CHROMIUM_BUILD;CR_CLANG_REVISION=261368-1;USE_AURA=1;USE_DEFAULT_RENDER_THEME=1;USE_LIBJPEG_TURBO=1;ENABLE_WEBRTC=1;ENABLE_MEDIA_ROUTER=1;ENABLE_PEPPER_CDMS;ENABLE_CONFIGURATION_POLICY;ENABLE_NOTIFICATIONS;ENABLE_TOPCHROME_MD=1;FIELDTRIAL_TESTING_ENABLED;NO_TCMALLOC;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;NTDDI_VERSION=0x0A000000;_USING_V110_SDK71_;WINUWP;_HAS_EXCEPTIONS=1;__WINCRYPT_H__;WINAPI_FAMILY=WINAPI_FAMILY_APP;WIN10;ENABLE_TASK_MANAGER=1;ENABLE_EXTENSIONS=1;ENABLE_PDF=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PLUGINS=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_AUTOFILL_DIALOG=1;ENABLE_PRINTING=1;ENABLE_BASIC_PRINTING=1;ENABLE_PRINT_PREVIEW=1;ENABLE_SPELLCHECK=1;ENABLE_CAPTIVE_PORTAL_DETECTION=1;ENABLE_APP_LIST=1;ENABLE_SETTINGS_APP=1;ENABLE_SUPERVISED_USERS=1;ENABLE_MDNS=1;ENABLE_SERVICE_DISCOVERY=1;V8_USE_EXTERNAL_STARTUP_DATA;FULL_SAFE_BROWSING;SAFE_BROWSING_CSD;SAFE_BROWSING_DB_LOCAL;EXPAT_RELATIVE_PATH;WEBRTC_WIN;WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE;_WINRT_DLL;USE_LIBPCI=1;USE_OPENSSL=1;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;DYNAMIC_ANNOTATIONS_ENABLED=1;WTF_USE_DYNAMIC_ANNOTATIONS=1;WEBRTC_FEATURE_END_TO_END_DELAY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <TreatWarningAsError>true</TreatWarningAsError>
-      <WarningLevel>Level4</WarningLevel>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaElement.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <Lib>
-      <AdditionalLibraryDirectories>C:/Program Files (x86)/Windows Kits/10/Lib/10.0.10586.0/um/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalOptions>/ignore:4221 /IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <TargetMachine>MachineX64</TargetMachine>
-    </Lib>
-    <Link>
-      <AdditionalDependencies>mfuuid.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;dxguid.lib;WindowsApp.lib;kernel32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;user32.lib;uuid.lib;odbc32.lib;odbccp32.lib;credui.lib;netapi32.lib;crypt32.lib;iphlpapi.lib;secur32.lib;third_party\boringssl\boringssl.lib;third_party\boringssl\boringssl_asm.lib;third_party\jsoncpp\jsoncpp.lib;third_party\libjpeg_turbo\libjpeg.lib;third_party\libjpeg_turbo\simd.lib;third_party\libjpeg_turbo\simd_asm.lib;third_party\libsrtp\libsrtp.lib;third_party\libvpx\libvpx.lib;third_party\libvpx\libvpx_intrinsics_avx.lib;third_party\libvpx\libvpx_intrinsics_avx2.lib;third_party\libvpx\libvpx_intrinsics_mmx.lib;third_party\libvpx\libvpx_intrinsics_sse2.lib;third_party\libvpx\libvpx_intrinsics_ssse3.lib;third_party\libvpx\libvpx_intrinsics_sse4_1.lib;third_party\libvpx\libvpx_yasm.lib;third_party\libyuv\libyuv_internal.lib;third_party\openmax_dl\dl\dl.lib;third_party\opus\opus.lib;third_party\protobuf\protobuf_lite.lib;third_party\usrsctp\usrsctp.lib;third_party\winuwp_compat\winuwp_compat.lib;third_party\winuwp_h264\winuwp_h264.lib;webrtc\webrtc_common.lib;webrtc\api\libjingle_peerconnection_api.lib;webrtc\api\video_frame_api.lib;webrtc\api\audio_codecs\audio_codecs_api.lib;webrtc\api\audio_codecs\builtin_audio_decoder_factory.lib;webrtc\api\audio_codecs\builtin_audio_encoder_factory.lib;webrtc\api\audio_codecs\g711\audio_decoder_g711.lib;webrtc\api\audio_codecs\g711\audio_encoder_g711.lib;webrtc\api\audio_codecs\g722\audio_decoder_g722.lib;webrtc\api\audio_codecs\g722\audio_encoder_g722.lib;webrtc\api\audio_codecs\ilbc\audio_decoder_ilbc.lib;webrtc\api\audio_codecs\ilbc\audio_encoder_ilbc.lib;webrtc\api\audio_codecs\isac\audio_decoder_isac_float.lib;webrtc\api\audio_codecs\isac\audio_encoder_isac_float.lib;webrtc\api\audio_codecs\L16\audio_decoder_L16.lib;webrtc\api\audio_codecs\L16\audio_encoder_L16.lib;webrtc\api\audio_codecs\opus\audio_decoder_opus.lib;webrtc\api\audio_codecs\opus\audio_encoder_opus_config.lib;webrtc\api\video_codecs\video_codecs_api.lib;webrtc\audio\audio.lib;webrtc\audio\utility\audio_frame_operations.lib;webrtc\call\call.lib;webrtc\call\call_interfaces.lib;webrtc\call\rtp_receiver.lib;webrtc\call\rtp_sender.lib;webrtc\call\video_stream_api.lib;webrtc\common_audio\common_audio.lib;webrtc\common_audio\common_audio_c.lib;webrtc\common_audio\common_audio_cc.lib;webrtc\common_audio\common_audio_sse2.lib;webrtc\common_video\common_video.lib;webrtc\logging\rtc_event_log_impl.lib;webrtc\logging\rtc_event_log_proto.lib;webrtc\media\rtc_audio_video.lib;webrtc\media\rtc_data.lib;webrtc\media\rtc_h264_profile_id.lib;webrtc\media\rtc_media_base.lib;webrtc\modules\audio_coding\ana_config_proto.lib;webrtc\modules\audio_coding\ana_debug_dump_proto.lib;webrtc\modules\audio_coding\audio_coding.lib;webrtc\modules\audio_coding\audio_format_conversion.lib;webrtc\modules\audio_coding\audio_network_adaptor.lib;webrtc\modules\audio_coding\cng.lib;webrtc\modules\audio_coding\g711.lib;webrtc\modules\audio_coding\g711_c.lib;webrtc\modules\audio_coding\g722.lib;webrtc\modules\audio_coding\g722_c.lib;webrtc\modules\audio_coding\ilbc.lib;webrtc\modules\audio_coding\ilbc_c.lib;webrtc\modules\audio_coding\isac.lib;webrtc\modules\audio_coding\isac_c.lib;webrtc\modules\audio_coding\isac_common.lib;webrtc\modules\audio_coding\isac_fix.lib;webrtc\modules\audio_coding\isac_fix_c.lib;webrtc\modules\audio_coding\isac_fix_common.lib;webrtc\modules\audio_coding\legacy_encoded_audio_frame.lib;webrtc\modules\audio_coding\neteq.lib;webrtc\modules\audio_coding\neteq_decoder_enum.lib;webrtc\modules\audio_coding\pcm16b.lib;webrtc\modules\audio_coding\pcm16b_c.lib;webrtc\modules\audio_coding\red.lib;webrtc\modules\audio_coding\rent_a_codec.lib;webrtc\modules\audio_coding\webrtc_opus.lib;webrtc\modules\audio_coding\webrtc_opus_c.lib;webrtc\modules\audio_conference_mixer\audio_conference_mixer.lib;webrtc\modules\audio_device\audio_device.lib;webrtc\modules\audio_mixer\audio_frame_manipulator.lib;webrtc\modules\audio_mixer\audio_mixer_impl.lib;webrtc\modules\audio_processing\aec_dump_interface.lib;webrtc\modules\audio_processing\aec_dump\aec_dump_impl.lib;webrtc\modules\audio_processing\audioproc_debug_proto.lib;webrtc\modules\audio_processing\audio_processing.lib;webrtc\modules\audio_processing\audio_processing_c.lib;webrtc\modules\audio_processing\audio_processing_sse2.lib;webrtc\modules\bitrate_controller\bitrate_controller.lib;webrtc\modules\congestion_controller\congestion_controller.lib;webrtc\modules\media_file\media_file.lib;webrtc\modules\pacing\pacing.lib;webrtc\modules\remote_bitrate_estimator\remote_bitrate_estimator.lib;webrtc\modules\rtp_rtcp\rtp_rtcp.lib;webrtc\modules\utility\utility.lib;webrtc\modules\video_capture\video_capture_internal_impl.lib;webrtc\modules\video_capture\video_capture_module.lib;webrtc\modules\video_coding\video_coding.lib;webrtc\modules\video_coding\video_coding_utility.lib;webrtc\modules\video_coding\webrtc_h264.lib;webrtc\modules\video_coding\webrtc_i420.lib;webrtc\modules\video_coding\webrtc_vp8.lib;webrtc\modules\video_coding\webrtc_vp9.lib;webrtc\modules\video_processing\video_processing.lib;webrtc\modules\video_processing\video_processing_sse2.lib;webrtc\p2p\libstunprober.lib;webrtc\p2p\rtc_p2p.lib;webrtc\pc\create_pc_factory.lib;webrtc\pc\peerconnection.lib;webrtc\pc\rtc_pc_base.lib;webrtc\rtc_base\rtc_base.lib;webrtc\rtc_base\rtc_base_approved.lib;webrtc\rtc_base\rtc_json.lib;webrtc\rtc_base\rtc_numerics.lib;webrtc\rtc_base\rtc_task_queue_impl.lib;webrtc\rtc_base\sequenced_task_checker.lib;webrtc\rtc_base\weak_ptr.lib;webrtc\stats\rtc_stats.lib;webrtc\system_wrappers\field_trial_default.lib;webrtc\system_wrappers\metrics_default.lib;webrtc\system_wrappers\system_wrappers.lib;webrtc\video\video.lib;webrtc\voice_engine\audio_coder.lib;webrtc\voice_engine\audio_level.lib;webrtc\voice_engine\file_player.lib;webrtc\voice_engine\file_recorder.lib;webrtc\voice_engine\voice_engine.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:/Program Files (x86)/Windows Kits/10/Lib/10.0.10586.0/um/x64;$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\$(Configuration)\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalOptions>/WINMD /maxilksize:0x7ff00000 /dynamicbase /ignore:4199 /ignore:4221 /nxcompat %(AdditionalOptions)</AdditionalOptions>
-      <FixedBaseAddress>false</FixedBaseAddress>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <IgnoreSpecificDefaultLibraries>olepro32.lib</IgnoreSpecificDefaultLibraries>
-      <LinkAsWinRT>true</LinkAsWinRT>
-      <MapFileName>$(OutDir)$(TargetName).map</MapFileName>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SubSystem>Console</SubSystem>
-      <TargetMachine>MachineX64</TargetMachine>
-      <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\out\winuwp_10_$(PlatformTarget)_$(Configuration)\obj</AdditionalLibraryDirectories>
-    </Link>
-    <ProjectReference>
-      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
-    </ProjectReference>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\wrapper;..\..\..\..\xplatform\webrtc\third_party\wtl\include;..\..\..\..\xplatform\webrtc;..\..\..\..\xplatform\webrtc\third_party\libyuv\include;..\etw;.;..\..\..\..\xplatform\webrtc\third_party\jsoncpp\overrides\include;..\..\..\..\xplatform\webrtc\third_party\jsoncpp\source\include;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10586.0\winrt;$(VSInstallDir)\VC\atlmfc\include;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/MP /we4389 /Zc:sizedDealloc- /Zc:threadSafeInit- /d2Zi+ /Zc:inline /Oy- /Gw %(AdditionalOptions)</AdditionalOptions>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <CompileAsWinRT>true</CompileAsWinRT>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4091;4127;4351;4355;4503;4589;4611;4100;4121;4244;4505;4510;4512;4610;4838;4995;4996;4311;4312;4302;4456;4457;4458;4459;4702;4373;4389;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <MinimalRebuild>false</MinimalRebuild>
-      <OmitFramePointers>false</OmitFramePointers>
-      <Optimization>MaxSpeed</Optimization>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>NDEBUG;NVALGRIND;V8_DEPRECATION_WARNINGS;CLD_VERSION=2;NOMINMAX;WIN32;_WIN32_WINNT=0x0A00;WINVER=0x0A00;_WINDOWS;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_SECURE_ATL;_HAS_EXCEPTIONS=0;_WINSOCK_DEPRECATED_NO_WARNINGS;CHROMIUM_BUILD;CR_CLANG_REVISION=261368-1;USE_AURA=1;USE_DEFAULT_RENDER_THEME=1;USE_LIBJPEG_TURBO=1;ENABLE_WEBRTC=1;ENABLE_MEDIA_ROUTER=1;ENABLE_PEPPER_CDMS;ENABLE_CONFIGURATION_POLICY;ENABLE_NOTIFICATIONS;ENABLE_TOPCHROME_MD=1;FIELDTRIAL_TESTING_ENABLED;NO_TCMALLOC;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;NTDDI_VERSION=0x0A000000;_USING_V110_SDK71_;WINUWP;_HAS_EXCEPTIONS=1;__WINCRYPT_H__;WINAPI_FAMILY=WINAPI_FAMILY_APP;WIN10;ENABLE_TASK_MANAGER=1;ENABLE_EXTENSIONS=1;ENABLE_PDF=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PLUGINS=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_AUTOFILL_DIALOG=1;ENABLE_PRINTING=1;ENABLE_BASIC_PRINTING=1;ENABLE_PRINT_PREVIEW=1;ENABLE_SPELLCHECK=1;ENABLE_CAPTIVE_PORTAL_DETECTION=1;ENABLE_APP_LIST=1;ENABLE_SETTINGS_APP=1;ENABLE_SUPERVISED_USERS=1;ENABLE_MDNS=1;ENABLE_SERVICE_DISCOVERY=1;V8_USE_EXTERNAL_STARTUP_DATA;FULL_SAFE_BROWSING;SAFE_BROWSING_CSD;SAFE_BROWSING_DB_LOCAL;EXPAT_RELATIVE_PATH;WEBRTC_WIN;WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE;_WINRT_DLL;USE_LIBPCI=1;USE_OPENSSL=1;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;DYNAMIC_ANNOTATIONS_ENABLED=0;WEBRTC_FEATURE_END_TO_END_DELAY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <StringPooling>true</StringPooling>
-      <TreatWarningAsError>true</TreatWarningAsError>
-      <WarningLevel>Level4</WarningLevel>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaElementMaker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <Lib>
-      <AdditionalLibraryDirectories>C:/Program Files (x86)/Windows Kits/10/Lib/10.0.10586.0/um/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalOptions>/ignore:4221 /IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <TargetMachine>MachineX64</TargetMachine>
-    </Lib>
-    <Link>
-      <AdditionalDependencies>ws2_32.lib;dxguid.lib;WindowsApp.lib;kernel32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;user32.lib;uuid.lib;odbc32.lib;odbccp32.lib;credui.lib;netapi32.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;crypt32.lib;iphlpapi.lib;secur32.lib;third_party\boringssl\boringssl.lib;third_party\boringssl\boringssl_asm.lib;third_party\jsoncpp\jsoncpp.lib;third_party\libjpeg_turbo\libjpeg.lib;third_party\libjpeg_turbo\simd.lib;third_party\libjpeg_turbo\simd_asm.lib;third_party\libsrtp\libsrtp.lib;third_party\libvpx\libvpx.lib;third_party\libvpx\libvpx_intrinsics_avx.lib;third_party\libvpx\libvpx_intrinsics_avx2.lib;third_party\libvpx\libvpx_intrinsics_mmx.lib;third_party\libvpx\libvpx_intrinsics_sse2.lib;third_party\libvpx\libvpx_intrinsics_ssse3.lib;third_party\libvpx\libvpx_intrinsics_sse4_1.lib;third_party\libvpx\libvpx_yasm.lib;third_party\libyuv\libyuv_internal.lib;third_party\openmax_dl\dl\dl.lib;third_party\opus\opus.lib;third_party\protobuf\protobuf_lite.lib;third_party\usrsctp\usrsctp.lib;third_party\winuwp_compat\winuwp_compat.lib;third_party\winuwp_h264\winuwp_h264.lib;webrtc\webrtc_common.lib;webrtc\api\libjingle_peerconnection_api.lib;webrtc\api\video_frame_api.lib;webrtc\api\audio_codecs\audio_codecs_api.lib;webrtc\api\audio_codecs\builtin_audio_decoder_factory.lib;webrtc\api\audio_codecs\builtin_audio_encoder_factory.lib;webrtc\api\audio_codecs\g711\audio_decoder_g711.lib;webrtc\api\audio_codecs\g711\audio_encoder_g711.lib;webrtc\api\audio_codecs\g722\audio_decoder_g722.lib;webrtc\api\audio_codecs\g722\audio_encoder_g722.lib;webrtc\api\audio_codecs\ilbc\audio_decoder_ilbc.lib;webrtc\api\audio_codecs\ilbc\audio_encoder_ilbc.lib;webrtc\api\audio_codecs\isac\audio_decoder_isac_float.lib;webrtc\api\audio_codecs\isac\audio_encoder_isac_float.lib;webrtc\api\audio_codecs\L16\audio_decoder_L16.lib;webrtc\api\audio_codecs\L16\audio_encoder_L16.lib;webrtc\api\audio_codecs\opus\audio_decoder_opus.lib;webrtc\api\audio_codecs\opus\audio_encoder_opus_config.lib;webrtc\api\video_codecs\video_codecs_api.lib;webrtc\audio\audio.lib;webrtc\audio\utility\audio_frame_operations.lib;webrtc\call\call.lib;webrtc\call\call_interfaces.lib;webrtc\call\rtp_receiver.lib;webrtc\call\rtp_sender.lib;webrtc\call\video_stream_api.lib;webrtc\common_audio\common_audio.lib;webrtc\common_audio\common_audio_c.lib;webrtc\common_audio\common_audio_cc.lib;webrtc\common_audio\common_audio_sse2.lib;webrtc\common_video\common_video.lib;webrtc\logging\rtc_event_log_impl.lib;webrtc\logging\rtc_event_log_proto.lib;webrtc\media\rtc_audio_video.lib;webrtc\media\rtc_data.lib;webrtc\media\rtc_h264_profile_id.lib;webrtc\media\rtc_media_base.lib;webrtc\modules\audio_coding\ana_config_proto.lib;webrtc\modules\audio_coding\ana_debug_dump_proto.lib;webrtc\modules\audio_coding\audio_coding.lib;webrtc\modules\audio_coding\audio_format_conversion.lib;webrtc\modules\audio_coding\audio_network_adaptor.lib;webrtc\modules\audio_coding\cng.lib;webrtc\modules\audio_coding\g711.lib;webrtc\modules\audio_coding\g711_c.lib;webrtc\modules\audio_coding\g722.lib;webrtc\modules\audio_coding\g722_c.lib;webrtc\modules\audio_coding\ilbc.lib;webrtc\modules\audio_coding\ilbc_c.lib;webrtc\modules\audio_coding\isac.lib;webrtc\modules\audio_coding\isac_c.lib;webrtc\modules\audio_coding\isac_common.lib;webrtc\modules\audio_coding\isac_fix.lib;webrtc\modules\audio_coding\isac_fix_c.lib;webrtc\modules\audio_coding\isac_fix_common.lib;webrtc\modules\audio_coding\legacy_encoded_audio_frame.lib;webrtc\modules\audio_coding\neteq.lib;webrtc\modules\audio_coding\neteq_decoder_enum.lib;webrtc\modules\audio_coding\pcm16b.lib;webrtc\modules\audio_coding\pcm16b_c.lib;webrtc\modules\audio_coding\red.lib;webrtc\modules\audio_coding\rent_a_codec.lib;webrtc\modules\audio_coding\webrtc_opus.lib;webrtc\modules\audio_coding\webrtc_opus_c.lib;webrtc\modules\audio_conference_mixer\audio_conference_mixer.lib;webrtc\modules\audio_device\audio_device.lib;webrtc\modules\audio_mixer\audio_frame_manipulator.lib;webrtc\modules\audio_mixer\audio_mixer_impl.lib;webrtc\modules\audio_processing\aec_dump_interface.lib;webrtc\modules\audio_processing\aec_dump\aec_dump_impl.lib;webrtc\modules\audio_processing\audioproc_debug_proto.lib;webrtc\modules\audio_processing\audio_processing.lib;webrtc\modules\audio_processing\audio_processing_c.lib;webrtc\modules\audio_processing\audio_processing_sse2.lib;webrtc\modules\bitrate_controller\bitrate_controller.lib;webrtc\modules\congestion_controller\congestion_controller.lib;webrtc\modules\media_file\media_file.lib;webrtc\modules\pacing\pacing.lib;webrtc\modules\remote_bitrate_estimator\remote_bitrate_estimator.lib;webrtc\modules\rtp_rtcp\rtp_rtcp.lib;webrtc\modules\utility\utility.lib;webrtc\modules\video_capture\video_capture_internal_impl.lib;webrtc\modules\video_capture\video_capture_module.lib;webrtc\modules\video_coding\video_coding.lib;webrtc\modules\video_coding\video_coding_utility.lib;webrtc\modules\video_coding\webrtc_h264.lib;webrtc\modules\video_coding\webrtc_i420.lib;webrtc\modules\video_coding\webrtc_vp8.lib;webrtc\modules\video_coding\webrtc_vp9.lib;webrtc\modules\video_processing\video_processing.lib;webrtc\modules\video_processing\video_processing_sse2.lib;webrtc\p2p\libstunprober.lib;webrtc\p2p\rtc_p2p.lib;webrtc\pc\create_pc_factory.lib;webrtc\pc\peerconnection.lib;webrtc\pc\rtc_pc_base.lib;webrtc\rtc_base\rtc_base.lib;webrtc\rtc_base\rtc_base_approved.lib;webrtc\rtc_base\rtc_json.lib;webrtc\rtc_base\rtc_numerics.lib;webrtc\rtc_base\rtc_task_queue_impl.lib;webrtc\rtc_base\sequenced_task_checker.lib;webrtc\rtc_base\weak_ptr.lib;webrtc\stats\rtc_stats.lib;webrtc\system_wrappers\field_trial_default.lib;webrtc\system_wrappers\metrics_default.lib;webrtc\system_wrappers\system_wrappers.lib;webrtc\video\video.lib;webrtc\voice_engine\audio_coder.lib;webrtc\voice_engine\audio_level.lib;webrtc\voice_engine\file_player.lib;webrtc\voice_engine\file_recorder.lib;webrtc\voice_engine\voice_engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:/Program Files (x86)/Windows Kits/10/Lib/10.0.10586.0/um/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalOptions>/WINMD /maxilksize:0x7ff00000 /dynamicbase /ignore:4199 /ignore:4221 /nxcompat %(AdditionalOptions)</AdditionalOptions>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <FixedBaseAddress>false</FixedBaseAddress>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
-      <LinkAsWinRT>true</LinkAsWinRT>
-      <MapFileName>$(OutDir)$(TargetName).map</MapFileName>
-      <OptimizeReferences>true</OptimizeReferences>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <Profile>true</Profile>
-      <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SubSystem>Console</SubSystem>
-      <TargetMachine>MachineX64</TargetMachine>
-      <WindowsMetadataFile>$(OutDir)Org.WebRtc.winmd</WindowsMetadataFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\out\winuwp_10_$(PlatformTarget)_$(Configuration)\obj</AdditionalLibraryDirectories>
-    </Link>
-    <ProjectReference>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaSource.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\VideoDeviceInfo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Generated Files\module.g.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\output.idl" />
+    <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.EventQueue.idl" />
+    <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.EventQueueMaker.idl" />
+    <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.MediaElement.idl" />
+    <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.MediaElementMaker.idl" />
+    <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.MediaSource.idl" />
+    <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.VideoDeviceInfo.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.EventQueue.idl.template">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.EventQueueMaker.idl.template">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.MediaElement.idl.template">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.MediaElementMaker.idl.template">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.MediaSource.idl.template">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.VideoDeviceInfo.idl.template">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Org_WebRtc.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt">
+      <DeploymentContent>false</DeploymentContent>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Org.WebRtc.WrapperGlue.Universal\Org.WebRtc.WrapperGlue.vcxproj">
+      <Project>{76cc41b9-4027-4330-a139-0cfa7aa34768}</Project>
     </ProjectReference>
-  </ItemDefinitionGroup>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
-  <ImportGroup Label="ExtensionTargets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
 </Project>

@@ -12,6 +12,6 @@
 #define THIRD_PARTY_H264_WINUWP_UTILS_UTILS_H_
 
 //#define ON_SUCCEEDED(act) SUCCEEDED(hr) && SUCCEEDED(hr = act)
-#define ON_SUCCEEDED(act) if (SUCCEEDED(hr)) { hr = act; if (FAILED(hr)) { LOG(LS_WARNING) << "ERROR:" << #act; } }
+#define ON_SUCCEEDED(act) if (SUCCEEDED(hr)) { hr = act; if (FAILED(hr)) { RTC_LOG(LS_WARNING) << "ERROR:" << #act; } }
 
 #endif  // THIRD_PARTY_H264_WINUWP_UTILS_UTILS_H_

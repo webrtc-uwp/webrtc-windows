@@ -27,11 +27,11 @@
 #include "H264StreamSink.h"
 #include "H264MediaSink.h"
 #include "../Utils/Utils.h"
-#include "webrtc/modules/video_coding/include/video_codec_interface.h"
-#include "webrtc/rtc_base/timeutils.h"
+#include "modules/video_coding/include/video_codec_interface.h"
+#include "rtc_base/timeutils.h"
 #include "libyuv/convert.h"
-#include "webrtc/rtc_base/logging.h"
-#include "webrtc/rtc_base/win32.h"
+#include "rtc_base/logging.h"
+#include "rtc_base/win32.h"
 
 
 #pragma comment(lib, "mfreadwrite")
@@ -40,6 +40,9 @@
 
 namespace webrtc {
 
+// QP scaling thresholds.
+static const int kLowH264QpThreshold = 24;
+static const int kHighH264QpThreshold = 37;
 //////////////////////////////////////////
 // H264 WinUWP Encoder Implementation
 //////////////////////////////////////////
@@ -238,7 +241,7 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
         currentWidth_ = frameBuffer->width();
         currentHeight_ = frameBuffer->height();
         InitEncoderWithSettings(&codec_);
-        LOG(LS_WARNING) << "Resolution changed to: " << frameBuffer->width() << "x" << frameBuffer->height();
+        RTC_LOG(LS_WARNING) << "Resolution changed to: " << frameBuffer->width() << "x" << frameBuffer->height();
       }
     }
 
@@ -301,7 +304,7 @@ int WinUWPH264EncoderImpl::Encode(
   if (frame_types != nullptr) {
     for (auto frameType : *frame_types) {
       if (frameType == kVideoFrameKey) {
-        LOG(LS_INFO) << "Key frame requested in H264 encoder.";
+        RTC_LOG(LS_INFO) << "Key frame requested in H264 encoder.";
         ComPtr<IMFSinkWriterEncoderConfig> encoderConfig;
         sinkWriter_.As(&encoderConfig);
         ComPtr<IMFAttributes> encoderAttributes;
@@ -356,7 +359,7 @@ void WinUWPH264EncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
       return;
     }
     if (curLength == 0) {
-      LOG(LS_WARNING) << "Got empty sample.";
+      RTC_LOG(LS_WARNING) << "Got empty sample.";
       buffer->Unlock();
       return;
     }
@@ -478,7 +481,7 @@ int WinUWPH264EncoderImpl::SetChannelParameters(
 
 int WinUWPH264EncoderImpl::SetRates(
   uint32_t new_bitrate_kbit, uint32_t new_framerate) {
-  LOG(LS_INFO) << "WinUWPH264EncoderImpl::SetRates("
+  RTC_LOG(LS_INFO) << "WinUWPH264EncoderImpl::SetRates("
     << new_bitrate_kbit << "kbit " << new_framerate << "fps)";
 
   // This may happen.  Ignore it.
@@ -511,7 +514,7 @@ int WinUWPH264EncoderImpl::SetRates(
 
   if (bitrateUpdated || fpsUpdated) {
     if ((rtc::TimeMillis() - lastTimeSettingsChanged_) < 15000) {
-      LOG(LS_INFO) << "Last time settings changed was too soon, skipping this SetRates().\n";
+      RTC_LOG(LS_INFO) << "Last time settings changed was too soon, skipping this SetRates().\n";
       return WEBRTC_VIDEO_CODEC_OK;
     }
 
@@ -528,7 +531,7 @@ int WinUWPH264EncoderImpl::SetRates(
 }
 
 VideoEncoder::ScalingSettings WinUWPH264EncoderImpl::GetScalingSettings() const {
-  return ScalingSettings(true);
+  return ScalingSettings(kLowH264QpThreshold, kHighH264QpThreshold);
 }
 
 const char* WinUWPH264EncoderImpl::ImplementationName() const {
