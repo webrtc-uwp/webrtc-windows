@@ -321,12 +321,12 @@ namespace Org {
 							Windows::UI::Core::CoreDispatcherPriority::Normal,
 							ref new Windows::UI::Core::DispatchedHandler([this] {
 							_channel->OnClose();
-							delete this;
+							//delete this;
 						}));
 					}
 					else {
 						_channel->OnClose();
-						delete this;
+						//delete this;
 					}
 					break;
 				}
