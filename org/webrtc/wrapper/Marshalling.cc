@@ -388,9 +388,7 @@ namespace Org {
 				{ RTCStatsValueName::StatsValueNameTypingNoiseState,
 					webrtc::StatsReport::kStatsValueNameTypingNoiseState },
 				{ RTCStatsValueName::StatsValueNameWritable,
-					webrtc::StatsReport::kStatsValueNameWritable },
-				{ RTCStatsValueName::StatsValueNameCurrentEndToEndDelayMs,
-					webrtc::StatsReport::kStatsValueNameCurrentEndToEndDelayMs }
+					webrtc::StatsReport::kStatsValueNameWritable }
 			DEFINE_MARSHALLED_ENUM_END(StatsValueName)
 
 			std::string FromCx(String^ inObj) {

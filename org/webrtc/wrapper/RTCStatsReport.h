@@ -143,7 +143,6 @@ namespace Org {
 			StatsValueNameTypingNoiseState,
 			StatsValueNameViewLimitedResolution,
 			StatsValueNameWritable,
-			StatsValueNameCurrentEndToEndDelayMs,
 		};
 
 		public enum class RTCStatsType {
