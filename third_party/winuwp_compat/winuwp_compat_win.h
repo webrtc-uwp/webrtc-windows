@@ -326,7 +326,7 @@ inline HANDLE CreateFile(
   return CreateFileW(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
 #else
   return CreateFileA(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
-#endif UNICODE
+#endif /* UNICODE */
 }
 
 /* ------------------------------------------------------------------------- */
