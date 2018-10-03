@@ -48,16 +48,7 @@ static const int kHighH264QpThreshold = 37;
 //////////////////////////////////////////
 
 WinUWPH264EncoderImpl::WinUWPH264EncoderImpl()
-  : firstFrame_(true)
-  , startTime_(0)
-  , framePendingCount_(0)
-  , frameCount_(0)
-  , lastFrameDropped_(false)
-  , currentWidth_(0)
-  , currentHeight_(0)
-  , currentBitrateBps_(0)
-  , currentFps_(0)
-  , lastTimestampHns_(0) {
+{
 }
 
 WinUWPH264EncoderImpl::~WinUWPH264EncoderImpl() {
@@ -441,7 +432,7 @@ void WinUWPH264EncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
 
       CachedFrameAttributes frameAttributes;
       if (_sampleAttributeQueue.pop(sampleTimestamp, frameAttributes)) {
-        encodedImage._timeStamp = frameAttributes.timestamp;
+        encodedImage.SetTimestamp(frameAttributes.timestamp);
         encodedImage.ntp_time_ms_ = frameAttributes.ntpTime;
         encodedImage.capture_time_ms_ = frameAttributes.captureRenderTime;
         encodedImage._encodedWidth = frameAttributes.frameWidth;

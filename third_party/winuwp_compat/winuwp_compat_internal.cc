@@ -62,6 +62,8 @@ namespace WinUWP
     buffer_ = freeBuffer_;
   }
 
+#ifdef __cplusplus_winrt
+
   //---------------------------------------------------------------------------
   StringConvertToUTF8::StringConvertToUTF8(Platform::String ^str)
   {
@@ -79,6 +81,8 @@ namespace WinUWP
     length_ = static_cast<decltype(length_)>(len8);
     buffer_ = freeBuffer_;
   }
+
+  #endif // __cplusplus_winrt
 
   //---------------------------------------------------------------------------
   StringConvertToUTF8::~StringConvertToUTF8()
@@ -137,6 +141,8 @@ namespace WinUWP
     buffer_ = freeBuffer_;
   }
 
+#ifdef __cplusplus_winrt
+
   //---------------------------------------------------------------------------
   StringConvertToUTF16::StringConvertToUTF16(Platform::String ^str)
   {
@@ -151,6 +157,8 @@ namespace WinUWP
     length_ = static_cast<decltype(length_)>(count);
     buffer_ = freeBuffer_;
   }
+
+#endif // __cplusplus_winrt
 
   //---------------------------------------------------------------------------
   StringConvertToUTF16::~StringConvertToUTF16()
@@ -187,6 +195,8 @@ namespace WinUWP
   //---------------------------------------------------------------------------
   //---------------------------------------------------------------------------
   //---------------------------------------------------------------------------
+
+#ifdef __cplusplus_winrt
 
   //---------------------------------------------------------------------------
   StringConvertToPlatformString::StringConvertToPlatformString(const char *str)
@@ -312,6 +322,8 @@ namespace WinUWP
     free(argv_);
     argv_ = NULL;
   }
+
+#endif // __cplusplus_winrt
 
   //---------------------------------------------------------------------------
   //---------------------------------------------------------------------------

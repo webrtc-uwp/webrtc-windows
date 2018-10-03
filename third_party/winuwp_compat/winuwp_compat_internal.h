@@ -34,7 +34,9 @@ namespace WinUWP
   struct StringConvertToUTF8
   {
     StringConvertToUTF8(const wchar_t *str);
+#ifdef __cplusplus_winrt
     StringConvertToUTF8(Platform::String ^str);
+#endif // __cplusplus_winrt
     ~StringConvertToUTF8();
 
     const char *result() const;
@@ -50,7 +52,9 @@ namespace WinUWP
   struct StringConvertToUTF16
   {
     StringConvertToUTF16(const char *str);
+#ifdef __cplusplus_winrt
     StringConvertToUTF16(Platform::String ^str);
+#endif // __cplusplus_winrt
     ~StringConvertToUTF16();
 
     const wchar_t *result() const;
@@ -62,6 +66,8 @@ namespace WinUWP
     const wchar_t *buffer_ {};
     size_t length_ {};
   };
+
+#ifdef __cplusplus_winrt
 
   struct StringConvertToPlatformString
   {
@@ -102,6 +108,8 @@ namespace WinUWP
     int argc_ {};
     char_type **argv_ {};
   };
+
+#endif //__cplusplus_winrt
 
   struct Environment
   {

@@ -410,10 +410,10 @@ BOOL H264StreamSink::ValidStateMatrix
   [State::State_Count][StreamOperation::Op_Count] = {
     // States:    Operations:
     //            SetType Start Stop Sample
-    /* NotSet */  TRUE, FALSE, FALSE, FALSE,
-    /* Ready */   TRUE,  TRUE,  TRUE, FALSE,
-    /* Start */   TRUE,  TRUE,  TRUE,  TRUE,
-    /* Stop */    TRUE,  TRUE,  TRUE, FALSE,
+    /* NotSet */  {TRUE, FALSE, FALSE, FALSE},
+    /* Ready */   {TRUE,  TRUE,  TRUE, FALSE},
+    /* Start */   {TRUE,  TRUE,  TRUE,  TRUE},
+    /* Stop */    {TRUE,  TRUE,  TRUE, FALSE}
 };
 
 HRESULT H264StreamSink::ValidateOperation(StreamOperation op) {
@@ -505,18 +505,20 @@ HRESULT H264StreamSink::OnDispatchWorkItem(IMFAsyncResult *pAsyncResult) {
         }
         break;
 
-      case OpPlaceMarker:
-        {
+      case OpPlaceMarker: {
           PROPVARIANT propVariant;
           PropVariantInit(&propVariant);
           if (SUCCEEDED(pOp->GetPropVariant(&propVariant))) {
             hr = QueueEvent(MEStreamSinkMarker, GUID_NULL, S_OK, &propVariant);
           }
-      } break;
+          break;
+        }
 
       case OpSetMediaType:
         hr = QueueEvent(MEStreamSinkFormatChanged, GUID_NULL, S_OK, nullptr);
         break;
+
+      case Op_Count: break;
       }
     }
   }

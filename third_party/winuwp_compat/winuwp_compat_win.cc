@@ -40,6 +40,16 @@
 #include <string.h>
 #include <wchar.h>
 
+#ifndef __cplusplus_winrt
+#include <bcrypt.h>
+
+#define UWP_COMPAT_NT_INFORMATION(xStatus) \
+  (((xStatus) >= 0x40000000) && ((xStatus) <= 0x7FFFFFFF))
+
+#define UWP_COMPAT_NT_SUCCESS(xStatus) \
+  ((((xStatus) >= 0) && ((xStatus) <= 0x3FFFFFFF)) || UWP_COMPAT_NT_INFORMATION(xStatus))
+
+#endif // __cplusplus_winrt
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -52,6 +62,7 @@ static BOOLEAN winuwpInternalRtlGenRandom(
   ULONG RandomBufferLength
 )
 {
+#ifdef __cplusplus_winrt
   typedef BYTE uint8_t;
   if (!RandomBuffer) return FALSE;
 
@@ -61,6 +72,11 @@ static BOOLEAN winuwpInternalRtlGenRandom(
   auto array = ref new Platform::Array<uint8_t>(RandomBufferLength);
   Windows::Security::Cryptography::CryptographicBuffer::CopyToByteArray(buffer, &array);
   memcpy_s(RandomBuffer, RandomBufferLength, array->Data, RandomBufferLength);
+#else
+  auto status = BCryptGenRandom(NULL, (PUCHAR)RandomBuffer, RandomBufferLength, BCRYPT_USE_SYSTEM_PREFERRED_RNG);
+  if (!UWP_COMPAT_NT_SUCCESS(status))
+    return FALSE;
+#endif // __cplusplus_winrt
   return TRUE;
 }
 
@@ -203,6 +219,8 @@ static int winuwpInternalGetTimeFormatA(
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
+#ifdef __cplusplus_winrt
+
 //-----------------------------------------------------------------------------
 static int winuwpInternalMessageBoxPlatformString(
   HWND    hWnd,
@@ -309,6 +327,8 @@ static int winuwpInternalMessageBoxW(
   return winuwpInternalMessageBoxPlatformString(hWnd, content.result(), title.result(), uType);
 }
 
+#endif // __cplusplus_winrt
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -370,67 +390,6 @@ static HANDLE winuwpInternalCreateFileA(
 {
   return winuwpInternalCreateFileW(WinUWP::StringConvertToUTF16(lpFileName).result(), dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
 }
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------
-static DWORD winuwpInternalGetTempPathW(
-  DWORD  nBufferLength,
-  LPWSTR lpBuffer
-)
-{
-#ifdef WIN10
-  return GetTempPathW(nBufferLength, lpBuffer);
-#else /* WIN10 */
-  auto current = Windows::Storage::ApplicationData::Current;
-  if (!current) return 0;
-
-  auto localFolder = current->TemporaryFolder;
-  if (!localFolder) return 0;
-
-  auto folder = localFolder->Path;
-  if (!folder) return 0;
-
-  WinUWP::StringConvertToUTF16 str(folder);
-  if (static_cast<size_t>(nBufferLength) < str.length()) return static_cast<DWORD>(str.length()+1);
-
-  str.result(lpBuffer, static_cast<size_t>(nBufferLength));
-  return static_cast<DWORD>(str.length());
-#endif /* WIN10 */
-}
-
-//-----------------------------------------------------------------------------
-static DWORD winuwpInternalGetTempPathA(
-  DWORD  nBufferLength,
-  LPSTR lpBuffer
-)
-{
-  auto sizeNeeded = winuwpInternalGetTempPathW(0, NULL);
-  if (0 == sizeNeeded) return 0;
-
-  auto tempBuffer = (wchar_t *)malloc((sizeNeeded + 1) * sizeof(wchar_t));
-  memset(tempBuffer, 0, (sizeNeeded + 1) * sizeof(wchar_t));
-
-  auto recheckSize = winuwpInternalGetTempPathW(sizeNeeded, tempBuffer);
-  if (sizeNeeded != recheckSize) {
-    free(tempBuffer);
-    tempBuffer = NULL;
-    return 0;
-  }
-
-  WinUWP::StringConvertToUTF8 conv(static_cast<const wchar_t *>(tempBuffer));
-  free(tempBuffer);
-  tempBuffer = NULL;
-
-  if ((NULL == lpBuffer) || (conv.length() > nBufferLength)) return static_cast<DWORD>(conv.length()+1);
-
-  conv.result(lpBuffer, static_cast<size_t>(nBufferLength));
-  return static_cast<DWORD>(conv.length());
-}
-
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -671,34 +630,6 @@ static HMODULE winuwpInternalGetModuleHandleA(
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------------
-static HANDLE winuwpInternalCreateEventW(
-  LPSECURITY_ATTRIBUTES lpEventAttributes,
-  BOOL                  bManualReset,
-  BOOL                  bInitialState,
-  LPCWSTR               lpName
-)
-{
-  return CreateEventEx(lpEventAttributes, lpName, (bManualReset ? CREATE_EVENT_MANUAL_RESET : 0) | (bInitialState ? CREATE_EVENT_INITIAL_SET : 0), EVENT_ALL_ACCESS);
-}
-
-//-----------------------------------------------------------------------------
-static HANDLE winuwpInternalCreateEventA(
-  LPSECURITY_ATTRIBUTES lpEventAttributes,
-  BOOL                  bManualReset,
-  BOOL                  bInitialState,
-  LPCSTR                lpName
-)
-{
-  return winuwpInternalCreateEventW(lpEventAttributes, bManualReset, bInitialState, WinUWP::StringConvertToUTF16(lpName).result());
-}
-
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-
 #ifdef __cplusplus
   extern "C" {
 #endif /* __cplusplus */
@@ -785,6 +716,8 @@ int winuwpGetTimeFormatA(
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
+#ifdef __cplusplus_winrt
+
 //-----------------------------------------------------------------------------
 int winuwpMessageBoxW(
   HWND    hWnd,
@@ -806,6 +739,9 @@ int winuwpMessageBoxA(
 {
   return winuwpInternalMessageBoxA(hWnd,lpText,lpCaption, uType);
 }
+
+#endif // __cplusplus_winrt
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -838,29 +774,6 @@ HANDLE winuwpCreateFileA(
 )
 {
   return winuwpInternalCreateFileA(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
-}
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------
-DWORD winuwpGetTempPathW(
-  DWORD  nBufferLength,
-  LPWSTR lpBuffer
-)
-{
-  return winuwpInternalGetTempPathW(nBufferLength, lpBuffer);
-}
-
-//-----------------------------------------------------------------------------
-DWORD winuwpGetTempPathA(
-  DWORD  nBufferLength,
-  LPSTR lpBuffer
-)
-{
-  return winuwpInternalGetTempPathA(nBufferLength, lpBuffer);
 }
 
 //-----------------------------------------------------------------------------
@@ -941,36 +854,6 @@ LPSTR* winuwpCommandLineToArgvA(
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-DWORD winuwpWaitForSingleObject(
-  HANDLE hHandle,
-  DWORD  dwMilliseconds
-)
-{
-  return WaitForSingleObjectEx(hHandle, dwMilliseconds, FALSE);
-}
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------
-DWORD winuwpWaitForMultipleObjects(
-  DWORD  nCount,
-  const HANDLE *lpHandles,
-  BOOL   bWaitAll,
-  DWORD  dwMilliseconds
-)
-{
-  return WaitForMultipleObjectsEx(nCount, lpHandles, bWaitAll, dwMilliseconds, FALSE);
-}
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------
 HMODULE winuwpGetModuleHandleW(
   LPCWSTR lpModuleName
 )
@@ -984,46 +867,6 @@ HMODULE winuwpGetModuleHandleA(
 )
 {
   return winuwpInternalGetModuleHandleA(lpModuleName);
-}
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------
-void winuwpInitializeCriticalSection(
-  LPCRITICAL_SECTION lpCriticalSection
-)
-{
-  InitializeCriticalSectionEx(lpCriticalSection, 0, 0);
-}
-
-//-----------------------------------------------------------------------------
-HANDLE winuwpCreateEventW(
-  LPSECURITY_ATTRIBUTES lpEventAttributes,
-  BOOL                  bManualReset,
-  BOOL                  bInitialState,
-  LPCWSTR               lpName
-)
-{
-  return winuwpInternalCreateEventW(lpEventAttributes, bManualReset, bInitialState, lpName);
-}
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------
-HANDLE winuwpCreateEventA(
-  LPSECURITY_ATTRIBUTES lpEventAttributes,
-  BOOL                  bManualReset,
-  BOOL                  bInitialState,
-  LPCSTR               lpName
-)
-{
-  return winuwpInternalCreateEventA(lpEventAttributes, bManualReset, bInitialState, lpName);
 }
 
 

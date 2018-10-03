@@ -35,7 +35,7 @@ class NativeHandleBuffer : public VideoFrameBuffer {
     width_(width),
     height_(height) { }
 
-  virtual Type type() const {
+  Type type() const override {
     return Type::kNative;
   }
 
@@ -66,7 +66,6 @@ class WinUWPH264DecoderImpl : public VideoDecoder {
 
   int Decode(const EncodedImage& input_image,
     bool missing_frames,
-    const RTPFragmentationHeader* fragmentation,
     const CodecSpecificInfo* codec_specific_info,
     int64_t /*render_time_ms*/) override;
 

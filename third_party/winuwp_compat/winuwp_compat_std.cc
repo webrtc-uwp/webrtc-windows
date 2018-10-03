@@ -30,6 +30,8 @@
 
 #include <Windows.h>
 
+#ifdef __cplusplus_winrt
+
 static char *winuwpInternalGetCwd(char *buf, size_t size)
 {
   auto current = Windows::Storage::ApplicationData::Current;
@@ -44,6 +46,10 @@ static char *winuwpInternalGetCwd(char *buf, size_t size)
   WinUWP::StringConvertToUTF8 str(folder);
   return str.result(buf, size);
 }
+
+#endif // __cplusplus_winrt
+
+#if !defined(NTDDI_WIN10_RS4) || (WDK_NTDDI_VERSION < NTDDI_WIN10_RS4)
 
 static char *winuwpInternalGetEnvA(const char *envstring)
 {
@@ -78,14 +84,21 @@ static int winuwpInternalPutEnvW(const wchar_t *envstring)
   return winuwpInternalPutEnvA(str.result());
 }
 
+#endif // !defined(NTDDI_WIN10_RS4) || (WDK_NTDDI_VERSION < NTDDI_WIN10_RS4)
+
 #ifdef __cplusplus
   extern "C" {
 #endif /* __cplusplus */
+
+#ifdef __cplusplus_winrt
 
 char *winuwpGetCwd(char *buf, size_t size)
 {
   return winuwpInternalGetCwd(buf, size);
 }
+
+#endif // __cplusplus_winrt
+
 
 #if !defined(NTDDI_WIN10_RS4) || (WDK_NTDDI_VERSION < NTDDI_WIN10_RS4)
 char *winuwpGetEnv(const char *varname)

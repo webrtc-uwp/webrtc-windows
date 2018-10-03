@@ -100,6 +100,11 @@ typedef unsigned char BYTE;
 typedef int BOOL;
 typedef BYTE BOOLEAN;
 typedef char CHAR;
+
+#ifndef _NATIVE_WCHAR_T_DEFINED
+typedef unsigned short wchar_t;
+#endif //_NATIVE_WCHAR_T_DEFINED
+
 typedef wchar_t WCHAR;
 typedef unsigned long ULONG;
 typedef unsigned int UINT;
@@ -245,6 +250,8 @@ inline int GetTimeFormat(
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 
+#ifdef __cplusplus_winrt
+
 #ifdef MessageBox
 #undef MessageBox
 #endif /* MessageBox */
@@ -279,6 +286,8 @@ inline int MessageBox(
   return MessageBoxA(hWnd, lpText, lpCaption, uType);
 #endif /* UNICODE */
 }
+
+#endif // __cplusplus_winrt
 
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -326,41 +335,6 @@ inline HANDLE CreateFile(
   return CreateFileW(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
 #else
   return CreateFileA(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
-#endif /* UNICODE */
-}
-
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-
-#ifdef GetTempPath
-#undef GetTempPath
-#endif /* GetTempPath */
-
-#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-#define GetTempPathA(xBufferLength,xBuffer) winuwpGetTempPathA(xBufferLength,xBuffer)
-#define GetTempPathW(xBufferLength,xBuffer) winuwpGetTempPathW(xBufferLength,xBuffer)
-#endif
-DWORD winuwpGetTempPathW(
-  DWORD  nBufferLength,
-  LPWSTR lpBuffer
-);
-
-DWORD winuwpGetTempPathA(
-  DWORD  nBufferLength,
-  LPSTR lpBuffer
-);
-
-inline DWORD GetTempPath(
-  DWORD  nBufferLength,
-  LPTSTR lpBuffer
-)
-{
-#ifdef UNICODE
-  return winuwpGetTempPathW(nBufferLength, lpBuffer);
-#else
-  return winuwpGetTempPathA(nBufferLength, lpBuffer);
 #endif /* UNICODE */
 }
 
@@ -503,131 +477,6 @@ inline HMODULE GetModuleHandle(
   return winuwpGetModuleHandleA(lpModuleName);
 #endif /* UNICODE */
 }
-
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-
-#ifndef WIN10
-
-#ifdef InitializeCriticalSection
-#undef InitializeCriticalSection
-#endif /* InitializeCriticalSection */
-
-void winuwpInitializeCriticalSection(
-  LPCRITICAL_SECTION lpCriticalSection
-);
-
-inline void InitializeCriticalSection(
-  LPCRITICAL_SECTION lpCriticalSection
-)
-{
-  winuwpInitializeCriticalSection(lpCriticalSection);
-}
-
-#endif /* WIN10 */
-
-
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-
-#ifndef WIN10
-
-#ifdef CreateEvent
-#undef CreateEvent
-#endif /* CreateEvent */
-
-#define CreateEventW(xEventAttributes,xManualReset,xInitialState,xName) winuwpCreateEventW(xEventAttributes,xManualReset,xInitialState,xName)
-#define CreateEventA(xEventAttributes,xManualReset,xInitialState,xName) winuwpCreateEventA(xEventAttributes,xManualReset,xInitialState,xName)
-
-HANDLE winuwpCreateEventW(
-  LPSECURITY_ATTRIBUTES lpEventAttributes,
-  BOOL                  bManualReset,
-  BOOL                  bInitialState,
-  LPCWSTR               lpName
-);
-
-HANDLE winuwpCreateEventA(
-  LPSECURITY_ATTRIBUTES lpEventAttributes,
-  BOOL                  bManualReset,
-  BOOL                  bInitialState,
-  LPCSTR               lpName
-);
-
-inline HANDLE CreateEvent(
-  LPSECURITY_ATTRIBUTES lpEventAttributes,
-  BOOL                  bManualReset,
-  BOOL                  bInitialState,
-  LPCTSTR               lpName
-)
-{
-#ifdef UNICODE
-  return winuwpCreateEventW(lpEventAttributes, bManualReset, bInitialState, lpName);
-#else
-  return winuwpCreateEventA(lpEventAttributes, bManualReset, bInitialState, lpName);
-#endif /* UNICODE */
-}
-
-#endif /* ndef WIN10 */
-
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-
-#ifndef WIN10
-
-#ifdef WaitForSingleObject
-#undef WaitForSingleObject
-#endif /* WaitForSingleObject */
-
-DWORD winuwpWaitForSingleObject(
-  HANDLE hHandle,
-  DWORD  dwMilliseconds
-);
-
-inline DWORD WaitForSingleObject(
-  HANDLE hHandle,
-  DWORD  dwMilliseconds
-)
-{
-  return winuwpWaitForSingleObject(hHandle, dwMilliseconds);
-}
-
-#endif /* WIN10 */
-
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-
-#ifndef WIN10
-
-#ifdef WaitForMultipleObjects
-#undef WaitForMultipleObjects
-#endif /* WaitForMultipleObjects */
-
-DWORD winuwpWaitForMultipleObjects(
-  DWORD  nCount,
-  const HANDLE *lpHandles,
-  BOOL   bWaitAll,
-  DWORD  dwMilliseconds
-);
-
-inline DWORD WaitForMultipleObjects(
-  DWORD  nCount,
-  const HANDLE *lpHandles,
-  BOOL   bWaitAll,
-  DWORD  dwMilliseconds
-)
-{
-  return winuwpWaitForMultipleObjects(nCount, lpHandles, bWaitAll, dwMilliseconds);
-}
-
-#endif /* WIN10 */
 
 
 #ifdef __cplusplus

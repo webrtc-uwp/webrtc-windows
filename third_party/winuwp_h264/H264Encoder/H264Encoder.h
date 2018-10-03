@@ -61,25 +61,25 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
  private:
   rtc::CriticalSection crit_;
   rtc::CriticalSection callbackCrit_;
-  bool inited_;
-  const CodecSpecificInfo* codecSpecificInfo_;
+  bool inited_ {};
+  const CodecSpecificInfo* codecSpecificInfo_ {};
   ComPtr<IMFSinkWriter> sinkWriter_;
   ComPtr<IMFAttributes> sinkWriterCreationAttributes_;
   ComPtr<IMFAttributes> sinkWriterEncoderAttributes_;
   ComPtr<H264MediaSink> mediaSink_;
-  EncodedImageCallback* encodedCompleteCallback_;
-  DWORD streamIndex_;
-  LONGLONG startTime_;
-  LONGLONG lastTimestampHns_;
-  bool firstFrame_;
-  int framePendingCount_;
-  DWORD frameCount_;
-  bool lastFrameDropped_;
-  UINT32 currentWidth_;
-  UINT32 currentHeight_;
-  UINT32 currentBitrateBps_;
-  UINT32 currentFps_;
-	int64_t lastTimeSettingsChanged_;
+  EncodedImageCallback* encodedCompleteCallback_ {};
+  DWORD streamIndex_ {};
+  LONGLONG startTime_ {};
+  LONGLONG lastTimestampHns_ {};
+  bool firstFrame_ {true};
+  int framePendingCount_ {};
+  DWORD frameCount_ {};
+  bool lastFrameDropped_ {};
+  UINT32 currentWidth_ {};
+  UINT32 currentHeight_ {};
+  UINT32 currentBitrateBps_ {};
+  UINT32 currentFps_ {};
+  int64_t lastTimeSettingsChanged_ {};
 
   struct CachedFrameAttributes {
     uint32_t timestamp;
