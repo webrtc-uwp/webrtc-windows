@@ -189,7 +189,8 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
   ComPtr<IMFAttributes> sampleAttributes;
   ON_SUCCEEDED(sample.As(&sampleAttributes));
 
-  rtc::scoped_refptr<PlanarYuvBuffer> frameBuffer = static_cast<PlanarYuvBuffer*>(frame.video_frame_buffer().get());
+  rtc::scoped_refptr<I420BufferInterface> frameBuffer =
+      static_cast<I420BufferInterface*>(frame.video_frame_buffer().get());
 
   if (SUCCEEDED(hr)) {
     auto totalSize = frameBuffer->StrideY() * frameBuffer->height() +
