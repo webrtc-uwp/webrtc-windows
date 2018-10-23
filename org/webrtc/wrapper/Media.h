@@ -580,7 +580,7 @@ namespace Org {
 			/// when receiving media change event notifications.
 			/// </param>
 			/// <returns>A media source.</returns>
-			IMediaSource^ CreateMediaStreamSource(MediaVideoTrack^ track, String^ type, String^ id);
+			Platform::IntPtr CreateMediaStreamSource(MediaVideoTrack^ track, String^ type, String^ id);
 
 			/// <summary>
 			/// Adds Video Track and Media Element piar structure to keep a reference
