@@ -168,13 +168,13 @@ static int winuwpInternalGetTimeFormatA(
 {
  WinUWP::StringConvertToUTF16 format(lpFormat);
 
-  auto sizeNeeded = winuwpGetDateFormatW(Locale, dwFlags, lpTime, format.result(), NULL, 0);
+  auto sizeNeeded = winuwpGetTimeFormatW(Locale, dwFlags, lpTime, format.result(), NULL, 0);
   if (0 == sizeNeeded) return 0;
 
   wchar_t *buffer = (wchar_t *)malloc(sizeof(wchar_t)*(sizeNeeded+1));
   memset(buffer, 0, sizeof(wchar_t)*(sizeNeeded+1));
 
-  auto recheckSize = winuwpGetDateFormatW(Locale, dwFlags, lpTime, format.result(), buffer, sizeNeeded+1);
+  auto recheckSize = winuwpGetTimeFormatW(Locale, dwFlags, lpTime, format.result(), buffer, sizeNeeded+1);
   if (0 == recheckSize) {
     free(buffer);
     return 0;
