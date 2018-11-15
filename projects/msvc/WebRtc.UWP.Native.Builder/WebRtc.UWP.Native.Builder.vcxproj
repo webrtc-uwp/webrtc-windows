@@ -142,7 +142,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call bin\prepare.bat -logLevel 4 -platform winuwp -cpu $(PlatformTarget) -config $(Configuration) -target webrtc &amp;&amp; call bin\buildWebRTC.bat $(Configuration) winuwp $(PlatformTarget) webrtc &amp;&amp; popd</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p winuwp --cpus $(PlatformTarget) -c $(Configuration)</Command>
       <Message>Building native Webrtc lib</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -159,7 +159,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call bin\prepare.bat -logLevel 4 -platform winuwp -cpu $(PlatformTarget) -config $(Configuration) -target webrtc &amp;&amp; call bin\buildWebRTC.bat $(Configuration) winuwp $(PlatformTarget) webrtc &amp;&amp; popd</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p winuwp --cpus $(PlatformTarget) -c $(Configuration)</Command>
       <Message>Building native Webrtc lib</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -176,7 +176,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call bin\prepare.bat -logLevel 4 -platform winuwp -cpu $(PlatformTarget) -config $(Configuration) -target webrtc &amp;&amp; call bin\buildWebRTC.bat $(Configuration) winuwp $(PlatformTarget) webrtc &amp;&amp; popd</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p winuwp --cpus $(PlatformTarget) -c $(Configuration)</Command>
       <Message>Building native Webrtc lib</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -197,7 +197,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call bin\prepare.bat -logLevel 4 -platform winuwp -cpu $(PlatformTarget) -config $(Configuration) -target webrtc &amp;&amp; call bin\buildWebRTC.bat $(Configuration) winuwp $(PlatformTarget) webrtc &amp;&amp; popd</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p winuwp --cpus $(PlatformTarget) -c $(Configuration)</Command>
       <Message>Building native Webrtc lib</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -218,7 +218,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call bin\prepare.bat -logLevel 4 -platform winuwp -cpu $(PlatformTarget) -config $(Configuration) -target webrtc &amp;&amp; call bin\buildWebRTC.bat $(Configuration) winuwp $(PlatformTarget) webrtc &amp;&amp; popd</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p winuwp --cpus $(PlatformTarget) -c $(Configuration)</Command>
       <Message>Building native Webrtc lib</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -239,7 +239,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call bin\prepare.bat -logLevel 4 -platform winuwp -cpu $(PlatformTarget) -config $(Configuration) -target webrtc &amp;&amp; call bin\buildWebRTC.bat $(Configuration) winuwp $(PlatformTarget) webrtc &amp;&amp; popd</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p winuwp --cpus $(PlatformTarget) -c $(Configuration)</Command>
       <Message>Building native Webrtc lib</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
