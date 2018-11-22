@@ -246,4 +246,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="Clean">
+    <Exec Command="python $(ProjectDir)..\..\..\..\..\scripts\run.py -a clean -t webrtc -p winuwp --cpus $(PlatformTarget) -c $(Configuration) --noColor"/>
+  </Target>
 </Project>
