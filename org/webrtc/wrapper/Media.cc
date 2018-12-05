@@ -400,17 +400,20 @@ namespace Org {
 		// 8chars to the end to generate a unique string)
 
 		Media::VideoFrameSink::VideoFrameSink(MediaElement^ mediaElement, String^ id) :
+			_firstFrameReceived(false),
 			_mediaElement(mediaElement),
 			_id(id) { }
 
 		void Media::VideoFrameSink::OnFrame(const webrtc::VideoFrame& frame) {
-			if (_mediaSource == nullptr) {
+			if (!_firstFrameReceived) {
+				_firstFrameReceived = true;
 				if (frame.video_frame_buffer()->ToI420() != nullptr)
 					_frameType = Internal::FrameTypeI420;
 				else
 					_frameType = Internal::FrameTypeH264;
 
 				auto handler = ref new DispatchedHandler([this]() {
+					std::unique_lock<std::mutex> lock(_mutex);
 					_mediaSource = Internal::RTMediaStreamSource::CreateMediaSource(nullptr, _frameType, _id);
 					_mediaElement->SetMediaStreamSource(_mediaSource->GetMediaStreamSource());
 				});
@@ -420,13 +423,26 @@ namespace Org {
 				if (windowDispatcher != nullptr) {
 					auto dispatcher_action = windowDispatcher->RunAsync(
 						CoreDispatcherPriority::Normal, handler);
-					Concurrency::create_task(dispatcher_action).wait();
+					Concurrency::create_task(dispatcher_action);
 				}
 				else {
 					handler->Invoke();
 				}
 			}
-			_mediaSource->RenderFrame(&frame);
+
+			{
+				std::unique_lock<std::mutex> lock(_mutex);
+				if (_mediaSource) {
+					while (!_receivedFrames.empty()) {
+						_mediaSource->RenderFrame(&_receivedFrames.front());
+						_receivedFrames.pop();
+					}
+					_mediaSource->RenderFrame(&frame);
+				}
+				else {
+					_receivedFrames.push(frame);
+				}
+			}
 		}
 
 		Media::Media() :

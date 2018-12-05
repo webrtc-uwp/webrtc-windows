@@ -535,10 +535,13 @@ namespace Org {
 				VideoFrameSink(MediaElement^ mediaElement, String^ id);
 				virtual void OnFrame(const webrtc::VideoFrame& frame) override;
 			private:
+				std::mutex _mutex;
+				bool _firstFrameReceived;
 				Internal::VideoFrameType _frameType;
 				MediaElement^ _mediaElement;
 				String^ _id;
 				Internal::RTMediaStreamSource^ _mediaSource;
+				std::queue<webrtc::VideoFrame> _receivedFrames;
 			};
 
 			struct VideoTrackMediaElementPair {
