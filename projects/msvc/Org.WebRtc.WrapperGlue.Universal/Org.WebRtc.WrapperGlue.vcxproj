@@ -254,6 +254,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_AudioDeviceWasapi.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_IAudioDeviceWasapi.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_IVideoCapturer.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_IVideoCaptureMediaSink.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_VideoCapturer.h" />
@@ -461,6 +463,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_AudioDeviceWasapi.cc" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_VideoCapturer.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_VideoCaptureMediaSink.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioOptions.cpp" />
