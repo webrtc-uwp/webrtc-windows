@@ -577,7 +577,7 @@ namespace Org {
 			return asyncOp;
 		}
 
-		IMediaSource^ Media::CreateMediaStreamSource(MediaVideoTrack^ track, String^ type, String^ id) {
+		Platform::IntPtr Media::CreateMediaStreamSource(MediaVideoTrack^ track, String^ type, String^ id) {
 			Internal::VideoFrameType frameType;
 			if (_wcsicmp(type->Data(), L"i420") == 0)
 				frameType = Internal::VideoFrameType::FrameTypeI420;
@@ -585,10 +585,11 @@ namespace Org {
 				frameType = Internal::VideoFrameType::FrameTypeH264;
 			else
 				return nullptr;
-			return globals::RunOnGlobalThread<MediaStreamSource^>([track, frameType, id]()->MediaStreamSource^ {
+			return globals::RunOnGlobalThread<void*>([track, frameType, id]()->void* {
 				Internal::RTMediaStreamSource^ mediaSource =
 					Internal::RTMediaStreamSource::CreateMediaSource(track, frameType, id);
-				return mediaSource->GetMediaStreamSource();
+				ComPtr<IInspectable> inspectable = reinterpret_cast<IInspectable*>(mediaSource->GetMediaStreamSource());
+				return inspectable.Detach();
 			});
 		}
 
