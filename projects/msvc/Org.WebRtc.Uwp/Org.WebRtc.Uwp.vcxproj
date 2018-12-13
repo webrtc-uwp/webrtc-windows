@@ -64,8 +64,8 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.16299.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
     <ApplicationType>Windows Store</ApplicationType>
     <ProjectName>Org.WebRtc.Uwp</ProjectName>
   </PropertyGroup>
@@ -208,6 +208,23 @@
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+    <PostBuildEvent>
+      <Command>
+SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -256,6 +273,23 @@
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+    <PostBuildEvent>
+      <Command>
+SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
@@ -297,6 +331,23 @@
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+    <PostBuildEvent>
+      <Command>
+SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
@@ -345,6 +396,23 @@
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+    <PostBuildEvent>
+      <Command>
+SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -391,6 +459,23 @@
     <ProjectReference>
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
+    <PostBuildEvent>
+      <Command>
+SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -441,6 +526,23 @@
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+    <PostBuildEvent>
+      <Command>
+SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />

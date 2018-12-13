@@ -32,6 +32,11 @@ namespace Org {
 		public delegate void EncodedVideoSourceDelegate(
 			uint32, uint32, const Platform::Array<uint8>^);
 
+		/// <summary>
+		/// Delegate for receiving video frames from MFSampleVideoSource.
+		/// </summary>
+		public delegate void MFSampleVideoSourceDelegate(uint64 samplePointer);
+
 		// ------------------
 		ref class RTCPeerConnectionIceEvent;
 		/// <summary>
