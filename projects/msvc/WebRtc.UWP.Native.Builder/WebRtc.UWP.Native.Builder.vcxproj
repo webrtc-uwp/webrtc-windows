@@ -248,5 +248,6 @@
   </ImportGroup>
   <Target Name="Clean">
     <Exec Command="python $(ProjectDir)..\..\..\..\..\scripts\run.py -a clean -t webrtc -p winuwp --cpus $(PlatformTarget) -c $(Configuration) --noColor"/>
+    <RemoveDir Directories="$(OutDir)"/>
   </Target>
 </Project>
