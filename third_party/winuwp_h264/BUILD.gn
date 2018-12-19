@@ -29,4 +29,11 @@ static_library("winuwp_h264") {
     "//system_wrappers:system_wrappers",
   ]
 
+  #Added because of warning C4467: usage of ATL attributes is deprecated.
+  #Problem is usage of uuid attribute for IAsyncStreamSinkOperation in H264StreamSink.h file. 
+  #It is planned to be modified, so this is temporrary fix. 
+  if (target_os == "winuwp") {
+    cflags = [ "/wd4467" ]
+    cflags_cc = [ "/wd4467" ]
+  }
 }
