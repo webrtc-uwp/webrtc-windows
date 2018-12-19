@@ -315,12 +315,11 @@ namespace Org {
 #endif
 
 					return frameTime;
-					}
-				else {
+				} else {
 					// Non-encoded samples seem to work best with a zero timestamp.
 					return 0;
 				}
-				}
+			}
 
 			void MediaSourceHelper::CheckForAttributeChanges(webrtc::VideoFrame* frame, SampleData* data) {
 
