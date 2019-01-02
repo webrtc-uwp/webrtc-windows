@@ -52,6 +52,24 @@ namespace Org {
 		};
 
 		/// <summary>
+		/// Delegate used to notify an update of the decibel full scale from the microphone.
+		/// </summary>
+		public delegate void DecibelFullScaleComputedEventHandler(double decibel);
+
+		/// <summary>
+		/// Class used to get decibel full scale change events from microphone.
+		/// </summary>
+		public ref class DecibelFullScaleHelper sealed {
+		public:
+			/// <summary>
+			/// Event fires when the decibel fullscale changes.
+			/// </summary>
+			static event DecibelFullScaleComputedEventHandler^ DecibelFullScaleComputed;
+		internal:
+			static void FireEvent(double decibel);
+		};
+
+		/// <summary>
 		/// Class used to get frame size change events from renderer.
 		/// </summary>
 		public ref class ResolutionHelper sealed {

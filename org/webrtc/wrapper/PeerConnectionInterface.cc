@@ -35,6 +35,8 @@
 #include "api/audio_codecs/builtin_audio_decoder_factory.h"
 #include "api/audio_codecs/builtin_audio_encoder_factory.h"
 
+#include "webrtc/modules/audio_device/win/audio_device_wasapi_win.h"
+
 using Org::WebRtc::Internal::FromCx;
 using Org::WebRtc::Internal::ToCx;
 using Platform::Collections::Vector;
@@ -650,6 +652,8 @@ namespace Org {
 			Org::WebRtc::WebRTC::StopTracing();
 		}
 
+		webrtc::AudioDeviceWindowsWasapi* WebRTC::m_NativeAudioDevice = nullptr;		
+
 		void WebRTC::Initialize(Windows::UI::Core::CoreDispatcher^ dispatcher) {
 			if (globals::isInitialized)
 				return;
@@ -685,7 +689,39 @@ namespace Org {
 
 				rtc::tracing::SetupInternalTracer();
 			});
+			m_NativeAudioDevice = webrtc::AudioInterfaceActivator::m_AudioDevice;
+			const size_t getDecibelFullScalePeriod = 25; // 250 ms
+			m_NativeAudioDevice->RegisterGetDecibelFullScaleCallback(WebRTC::DecibellFullScaleCallBack, getDecibelFullScalePeriod);
 			globals::isInitialized = true;
+		}
+
+		void WebRTC::SetAudioManualAudioRecordingControl(bool manualControl) {
+			if (globals::isInitialized && m_NativeAudioDevice) {
+				m_NativeAudioDevice->SetManualRecordingControl(manualControl);
+			}
+		}
+
+		void WebRTC::StartAudioRecordingManual() {
+			if (globals::isInitialized && globals::gWorkerThread && m_NativeAudioDevice) {
+				globals::gWorkerThread->Invoke<void, std::function<void()>>(RTC_FROM_HERE, [] () {
+					m_NativeAudioDevice->InitRecording();
+					m_NativeAudioDevice->StartRecordingManual();
+				});
+			}
+		}
+
+		void WebRTC::StopAudioRecordingManual() {
+			if (globals::isInitialized && globals::gWorkerThread && m_NativeAudioDevice) {
+				globals::gWorkerThread->Invoke<void, std::function<void()>>(RTC_FROM_HERE, []() {
+					m_NativeAudioDevice->StopRecordingManual();
+				});
+			}
+		}
+
+		void WebRTC::DecibellFullScaleCallBack(double decibel) {
+			Concurrency::create_async([decibel] {
+				Org::WebRtc::DecibelFullScaleHelper::FireEvent(decibel);
+			});
 		}
 
 		bool WebRTC::IsTracing() {
