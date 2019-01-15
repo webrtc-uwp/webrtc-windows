@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -155,7 +155,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;_HAS_EXCEPTIONS=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -176,7 +176,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -197,7 +197,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;_HAS_EXCEPTIONS=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -218,7 +218,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -239,7 +239,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;_HAS_EXCEPTIONS=0;NDEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
