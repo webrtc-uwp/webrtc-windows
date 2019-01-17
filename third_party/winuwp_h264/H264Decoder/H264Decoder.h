@@ -17,7 +17,7 @@
 #include <mferror.h>
 #include <wrl.h>
 #include "../Utils/SampleAttributeQueue.h"
-#include "api/video_codecs/video_decoder.h"
+#include "modules/video_coding/codecs/h264/include/h264.h"
 #include "rtc_base/criticalsection.h"
 
 #pragma comment(lib, "mfreadwrite")
@@ -56,13 +56,13 @@ class NativeHandleBuffer : public VideoFrameBuffer {
   const int height_;
 };
 
-class WinUWPH264DecoderImpl : public VideoDecoder {
+class WinUWPH264DecoderImpl : public H264Decoder {
  public:
   WinUWPH264DecoderImpl();
 
   virtual ~WinUWPH264DecoderImpl();
 
-  int InitDecode(const VideoCodec* inst, int number_of_cores) override;
+  int InitDecode(const VideoCodec* codec_settings, int number_of_cores) override;
 
   int Decode(const EncodedImage& input_image,
     bool missing_frames,

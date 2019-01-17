@@ -7,6 +7,7 @@
 // be found in the AUTHORS file in the root of the source tree.
 
 #include "RTMediaStreamSource.h"
+#include "Media.h"
 #include <mfapi.h>
 #include <ppltasks.h>
 #include <mfidl.h>
@@ -27,6 +28,9 @@ using Windows::Media::MediaProperties::VideoEncodingProperties;
 using Windows::Media::MediaProperties::MediaEncodingSubtypes;
 using Windows::System::Threading::TimerElapsedHandler;
 using Windows::System::Threading::ThreadPoolTimer;
+
+#define INITIAL_FRAME_RATE			30
+#define INITIAL_SKIPPED_TIME		3000
 
 namespace Org {
 	namespace WebRtc {
@@ -105,13 +109,16 @@ namespace Org {
 		namespace Internal {
 
 			RTMediaStreamSource^ RTMediaStreamSource::CreateMediaSource(
-				VideoFrameType frameType, String^ id) {
+				MediaVideoTrack^ track, VideoFrameType frameType, String^ id) {
 
 				auto streamState = ref new RTMediaStreamSource(frameType);
 				streamState->_id = id;
 				streamState->_idUtf8 = rtc::ToUtf8(streamState->_id->Data());
 				streamState->_rtcRenderer = std::unique_ptr<RTCRenderer>(
 					new RTCRenderer(streamState));
+				streamState->_videoTrack = track;
+				if (streamState->_videoTrack != nullptr)
+					streamState->_videoTrack->SetRenderer(streamState->_rtcRenderer.get());
 				VideoEncodingProperties^ videoProperties;
 				if (frameType == FrameTypeH264) {
 					videoProperties = VideoEncodingProperties::CreateH264();
@@ -129,14 +136,14 @@ namespace Org {
 				// this is needed since the UI element might request sample before webrtc has
 				// incoming frame ready(ex.: remote stream), in this case, this initial value
 				// will make sure we will at least create a small dummy frame.
-				streamState->_videoDesc->EncodingProperties->Width = 720;
-				streamState->_videoDesc->EncodingProperties->Height = 1280;
+				streamState->_videoDesc->EncodingProperties->Width = 1280;
+				streamState->_videoDesc->EncodingProperties->Height = 720;
 
 				Org::WebRtc::ResolutionHelper::FireEvent(id,
 					streamState->_videoDesc->EncodingProperties->Width,
 					streamState->_videoDesc->EncodingProperties->Height);
 
-				streamState->_videoDesc->EncodingProperties->FrameRate->Numerator = 30;
+				streamState->_videoDesc->EncodingProperties->FrameRate->Numerator = INITIAL_FRAME_RATE;
 				streamState->_videoDesc->EncodingProperties->FrameRate->Denominator = 1;
 				auto streamSource = ref new MediaStreamSource(streamState->_videoDesc);
 
@@ -216,12 +223,18 @@ namespace Org {
 				auto frameCopy = new webrtc::VideoFrame(
 					frame->video_frame_buffer(), frame->rotation(),
 					0);
+
+				frameCopy->set_ntp_time_ms(frame->ntp_time_ms());
+				frameCopy->set_timestamp(frame->timestamp());
+				frameCopy->set_timestamp_us(frame->timestamp_us());
+
 				ProcessReceivedFrame(frameCopy);
 			}
 
 			RTMediaStreamSource::RTMediaStreamSource(VideoFrameType frameType) :
 				_frameSentThisTime(false),
-				_frameBeingQueued(0) {
+				_frameBeingQueued(0),
+				_videoSourceStarted(false) {
 				RTC_LOG(LS_INFO) << "RTMediaStreamSource::RTMediaStreamSource";
 
 				// Create the helper with the callback functions.
@@ -233,6 +246,8 @@ namespace Org {
 					[this](int fps) {
 					return FpsCallback(fps);
 				}));
+
+				_startTick = GetTickCount64();
 			}
 
 			RTMediaStreamSource::~RTMediaStreamSource() {
@@ -271,12 +286,15 @@ namespace Org {
 					Sleep(1);
 				}
 
-				{
-					rtc::CritScope lock(&_critSect);
-					if (_rtcRenderer != nullptr) {
-						_rtcRenderer.reset();
-					}
+				if (_videoTrack != nullptr) {
+					if (_rtcRenderer != nullptr)
+						_videoTrack->UnsetRenderer(_rtcRenderer.get());
+					_videoTrack = nullptr;
 				}
+				if (_rtcRenderer != nullptr) {
+					_rtcRenderer.reset();
+				}
+
 				RTC_LOG(LS_INFO) << "RTMediaStreamSource::Teardown() done ID=" << _idUtf8;
 			}
 
@@ -304,6 +322,10 @@ namespace Org {
 						frame->video_frame_buffer(), frame->rotation(),
 						0);
 
+					frameCopy->set_ntp_time_ms(frame->ntp_time_ms());
+					frameCopy->set_timestamp(frame->timestamp());
+					frameCopy->set_timestamp_us(frame->timestamp_us());
+
 					stream->ProcessReceivedFrame(frameCopy);
 				}
 			}
@@ -324,6 +346,7 @@ namespace Org {
 
 			void RTMediaStreamSource::ReplyToSampleRequest() {
 				auto sampleData = _helper->DequeueFrame();
+
 				if (sampleData == nullptr) {
 					return;
 				}
@@ -348,6 +371,7 @@ namespace Org {
 						L" W=" + props->Width +
 						L" H=" + props->Height + L"\r\n")->Data());
 				}
+
 
 				Microsoft::WRL::ComPtr<IMFMediaStreamSourceSampleRequest> spRequest;
 				HRESULT hr = reinterpret_cast<IInspectable*>(_request)->QueryInterface(
@@ -445,6 +469,7 @@ namespace Org {
 						return;
 					}
 					else {
+
 						// Save the request and referral for when a sample comes in.
 						if (_deferral != nullptr) {
 							RTC_LOG(LS_ERROR) << "Got deferral when another hasn't completed.";
