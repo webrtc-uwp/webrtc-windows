@@ -145,6 +145,21 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>webrtc.lib;dxguid.lib;MinCore.lib;Mmdevapi.lib;MFuuid.lib;MFReadWrite.lib;Mfplat.lib;uuid.lib;ole32.lib;avrt.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -164,6 +179,21 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>webrtc.lib;dxguid.lib;MinCore.lib;Mmdevapi.lib;MFuuid.lib;MFReadWrite.lib;Mfplat.lib;uuid.lib;ole32.lib;avrt.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
@@ -183,6 +213,21 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>webrtc.lib;dxguid.lib;MinCore.lib;Mmdevapi.lib;MFuuid.lib;MFReadWrite.lib;Mfplat.lib;uuid.lib;ole32.lib;avrt.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
@@ -202,6 +247,21 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>webrtc.lib;dxguid.lib;MinCore.lib;Mmdevapi.lib;MFuuid.lib;MFReadWrite.lib;Mfplat.lib;uuid.lib;ole32.lib;avrt.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -221,6 +281,21 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>webrtc.lib;dxguid.lib;MinCore.lib;Mmdevapi.lib;MFuuid.lib;MFReadWrite.lib;Mfplat.lib;uuid.lib;ole32.lib;avrt.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -240,6 +315,21 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>webrtc.lib;dxguid.lib;MinCore.lib;Mmdevapi.lib;MFuuid.lib;MFReadWrite.lib;Mfplat.lib;uuid.lib;ole32.lib;avrt.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\cx_Helpers.h" />

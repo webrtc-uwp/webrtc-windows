@@ -140,13 +140,55 @@
       </Command>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd
+
+SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd
+
+SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd
+
+SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
     </PostBuildEvent>
     <Midl>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl</AdditionalIncludeDirectories>
@@ -211,13 +253,55 @@
       </Command>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd
+
+SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd
+
+SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">copy $(TargetDir)Merged\$(AssemblyName).winmd $(TargetDir)$(AssemblyName).winmd
+
+SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
