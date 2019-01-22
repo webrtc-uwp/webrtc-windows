@@ -1,16 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{61AB7485-B7E2-4D1F-8A38-BCB027FC1C10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PeerCC", "PeerCC", "{82F36D17-1986-4A2A-B71F-94B852778141}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerConnectionClient.WebRtc", "..\..\..\common\windows\samples\PeerCC\Client\PeerConnectionClient.WebRtc.csproj", "{A2EA7350-EE59-42C5-9323-C942B058B217}"
-	ProjectSection(ProjectDependencies) = postProject
-		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF} = {32A4ABD8-EB1C-4198-B261-425E6CADDBEF}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{B75554FF-2598-4F34-B11F-027282FB26CD}"
 EndProject
@@ -34,6 +31,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Org.WebRtc.Uwp", "..\projec
 	ProjectSection(ProjectDependencies) = postProject
 		{08C8FB57-A433-44AD-AE99-4AF554F02BED} = {08C8FB57-A433-44AD-AE99-4AF554F02BED}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerConnectionClientCore", "..\..\..\common\windows\samples\PeerCC\ClientCore\PeerConnectionClientCore.csproj", "{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +110,18 @@ Global
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Release|x64.Build.0 = Release|x64
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Release|x86.ActiveCfg = Release|Win32
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF}.Release|x86.Build.0 = Release|Win32
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Debug|ARM.ActiveCfg = Debug|ARM
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Debug|ARM.Build.0 = Debug|ARM
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Debug|x64.ActiveCfg = Debug|x64
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Debug|x64.Build.0 = Debug|x64
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Debug|x86.ActiveCfg = Debug|x86
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Debug|x86.Build.0 = Debug|x86
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Release|ARM.ActiveCfg = Release|ARM
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Release|ARM.Build.0 = Release|ARM
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Release|x64.ActiveCfg = Release|x64
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Release|x64.Build.0 = Release|x64
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Release|x86.ActiveCfg = Release|x86
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,6 +137,7 @@ Global
 		{08C8FB57-A433-44AD-AE99-4AF554F02BED} = {F3CEBBE9-B35F-40D1-B62E-5FA923D9456C}
 		{83E751BE-CB7D-FD8C-0C9D-22BF30FFF3CB} = {F01290E5-AA5F-4AB6-938F-674BEDC720F4}
 		{32A4ABD8-EB1C-4198-B261-425E6CADDBEF} = {507EFBC7-5B0B-4ACB-A67A-7F24A2340A86}
+		{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1} = {B75554FF-2598-4F34-B11F-027282FB26CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {36335805-B335-4845-8EEB-77E32101A75D}
