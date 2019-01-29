@@ -631,6 +631,18 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_IAudioDeviceWasapi.h">
       <Filter>wrapper</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events_win.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events.jman.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioOptions.cpp">
@@ -942,5 +954,22 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_AudioDeviceWasapi.cc">
       <Filter>wrapper</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc.cpp">
+      <Filter>wrapper</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events.json">
+      <Filter>wrapper</Filter>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events_win_etw.man">
+      <Filter>wrapper</Filter>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events_win_etw.wprp">
+      <Filter>wrapper</Filter>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events.jman">
+      <Filter>wrapper</Filter>
+    </None>
   </ItemGroup>
 </Project>
