@@ -105,7 +105,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call bin\prepare.bat -logLevel 4 -platform win32 -cpu $(PlatformTarget) -config $(Configuration) -target webrtc &amp;&amp; call bin\buildWebRTC.bat $(Configuration) win32 $(PlatformTarget) peerconnection_server &amp;&amp; popd</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -u peercc_server -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -116,7 +116,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call bin\prepare.bat -logLevel 4 -platform win32 -cpu $(PlatformTarget) -config $(Configuration) -target webrtc &amp;&amp; call bin\buildWebRTC.bat $(Configuration) win32 $(PlatformTarget) peerconnection_server &amp;&amp; popd</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -u peercc_server -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
@@ -127,7 +127,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call bin\prepare.bat -logLevel 4 -platform win32 -cpu $(PlatformTarget) -config $(Configuration) -target webrtc &amp;&amp; call bin\buildWebRTC.bat $(Configuration) win32 $(PlatformTarget) peerconnection_server &amp;&amp; popd</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -u peercc_server -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,7 +144,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call bin\prepare.bat -logLevel 4 -platform win32 -cpu $(PlatformTarget) -config $(Configuration) -target webrtc &amp;&amp; call bin\buildWebRTC.bat $(Configuration) win32 $(PlatformTarget) peerconnection_server &amp;&amp; popd</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -u peercc_server -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
@@ -161,7 +161,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call bin\prepare.bat -logLevel 4 -platform win32 -cpu $(PlatformTarget) -config $(Configuration) -target webrtc &amp;&amp; call bin\buildWebRTC.bat $(Configuration) win32 $(PlatformTarget) peerconnection_server &amp;&amp; popd</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -u peercc_server -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -178,7 +178,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>pushd "$(ProjectDir)..\..\..\..\..\" &amp;&amp; call bin\prepare.bat -logLevel 4 -platform win32 -cpu $(PlatformTarget) -config $(Configuration) -target webrtc &amp;&amp; call bin\buildWebRTC.bat $(Configuration) win32 $(PlatformTarget) peerconnection_server &amp;&amp; popd</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -u peercc_server -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
