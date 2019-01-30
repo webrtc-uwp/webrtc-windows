@@ -164,7 +164,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\abseil-cpp;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -185,7 +185,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\abseil-cpp;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;_HAS_EXCEPTIONS=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -206,7 +206,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\abseil-cpp;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -227,7 +227,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\abseil-cpp;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;_HAS_EXCEPTIONS=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -248,7 +248,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\abseil-cpp;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -269,7 +269,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\abseil-cpp;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;_HAS_EXCEPTIONS=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -283,6 +283,16 @@
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <ClCompile>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;_HAS_EXCEPTIONS=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <ClCompile>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;USE_BUILTIN_SW_CODECS;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_AudioDeviceWasapi.h" />
@@ -387,6 +397,7 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_VideoTrackSourceStats.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_WebRtcLib.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\types.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioOptions.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioTrackSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_Constraint.h" />
@@ -490,6 +501,9 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcLib.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_IMediaStreamSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_MediaStreamSource.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events.jman.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events_win.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\types.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -497,6 +511,7 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_AudioDeviceWasapi.cc" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_VideoCapturer.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_VideoCaptureMediaSink.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioOptions.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioTrackSource.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_Constraint.cpp" />
@@ -597,6 +612,48 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoTrackSourceStats.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcLib.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_MediaStreamSource.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events.jman">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events.json">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events_win_etw.man">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events_win_etw.wprp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
