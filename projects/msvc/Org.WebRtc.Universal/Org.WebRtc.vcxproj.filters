@@ -683,6 +683,7 @@
     <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.VideoDeviceInfo.idl.template">
       <Filter>wrapper\generated\msidl</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
