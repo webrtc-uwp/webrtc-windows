@@ -14,7 +14,7 @@
 #include "third_party/winuwp_h264/H264Decoder/H264Decoder.h"
 #include "media/engine/webrtcvideoencoderfactory.h"
 #include "media/engine/webrtcvideodecoderfactory.h"
-
+#include "rtc_base/logging.h"
 
 namespace webrtc {
 
@@ -59,6 +59,33 @@ namespace webrtc {
     webrtc::VideoDecoder* decoder) {
     decoder->Release();
     delete decoder;
+  }
+
+  std::vector<SdpVideoFormat> WinUWPH264EncoderFactoryNew::GetSupportedFormats()
+    const {
+    std::vector<SdpVideoFormat> formats = { SdpVideoFormat("H264") };
+    return formats;
+  }
+
+  VideoEncoderFactory::CodecInfo WinUWPH264EncoderFactoryNew::QueryVideoEncoder(
+    const SdpVideoFormat& format) const {
+    CodecInfo info;
+    //not sure about this. mf does support hw MFTs but doesn't really tell us
+    //when using sink writer. it's more of a "silent sw fallback if hw not available" thing
+    info.is_hardware_accelerated = false;
+    info.has_internal_source = false;
+    return info;
+  }
+
+  std::unique_ptr<VideoEncoder> WinUWPH264EncoderFactoryNew::CreateVideoEncoder(
+    const SdpVideoFormat& format) {
+    if (cricket::CodecNamesEq(format.name, cricket::kH264CodecName)) {
+      return std::make_unique<WinUWPH264EncoderImpl>();
+    }
+
+    RTC_LOG(LS_ERROR) << "Trying to create encoder of unsupported format "
+                    << format.name;
+    return nullptr;
   }
 
 }  // namespace webrtc
