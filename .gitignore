@@ -269,3 +269,4 @@ projects/msvc/Org.WebRtc.Universal/Generated Files/
 
 # Prepare scripts
 userdef.py
+nuget.exe
