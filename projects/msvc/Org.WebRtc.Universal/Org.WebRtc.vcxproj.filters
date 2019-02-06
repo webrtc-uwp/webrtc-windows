@@ -327,6 +327,12 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\VideoDeviceInfo.cpp">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaSample.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaSample.cpp">
+      <Filter>wrapper\override\cppwinrt</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -639,6 +645,12 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\VideoDeviceInfo.h">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaSample.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaSample.h">
+      <Filter>wrapper\override\cppwinrt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\output.idl">
@@ -662,6 +674,9 @@
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.VideoDeviceInfo.idl">
       <Filter>wrapper\override\msidl</Filter>
     </Midl>
+    <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.MediaSample.idl">
+      <Filter>wrapper\override\msidl</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <None Include="Org_WebRtc.def" />
@@ -681,6 +696,9 @@
       <Filter>wrapper\generated\msidl</Filter>
     </None>
     <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.VideoDeviceInfo.idl.template">
+      <Filter>wrapper\generated\msidl</Filter>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.MediaSample.idl.template">
       <Filter>wrapper\generated\msidl</Filter>
     </None>
     <None Include="packages.config" />
