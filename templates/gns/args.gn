@@ -6,3 +6,4 @@ target_cpu="-target_cpu-"
 is_debug=-is_debug-
 use_rtti=true
 is_clang=-is_clang-
+rtc_include_tests=-is_include_tests-
