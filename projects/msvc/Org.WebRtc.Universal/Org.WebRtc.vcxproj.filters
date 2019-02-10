@@ -333,6 +333,9 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaSample.cpp">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcLibConfiguration.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -650,6 +653,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaSample.h">
       <Filter>wrapper\override\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcLibConfiguration.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -333,6 +333,9 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaSample.cpp">
       <Filter>wrapper\override\cx</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_WebRtcLibConfiguration.cpp">
+      <Filter>wrapper\generated\cx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\cx_Helpers.h">
@@ -649,6 +652,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaSample.h">
       <Filter>wrapper\override\cx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_WebRtcLibConfiguration.h">
+      <Filter>wrapper\generated\cx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
