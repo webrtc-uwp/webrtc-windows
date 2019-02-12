@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\solutions\packages\Microsoft.Windows.CppWinRT.1.0.190109.2\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\..\..\solutions\packages\Microsoft.Windows.CppWinRT.1.0.190109.2\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
@@ -135,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -156,7 +155,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;_HAS_EXCEPTIONS=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -177,7 +176,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -198,7 +197,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;_HAS_EXCEPTIONS=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -219,7 +218,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -240,7 +239,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_WIN;WINUWP;NOMINMAX;_UNICODE;UNICODE;_HAS_EXCEPTIONS=0;NDEBUG%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
@@ -255,13 +254,21 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_IVideoCapturer.h" />
-    <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_IVideoCaptureMediaSink.h" />
-    <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_MRCAudioEffectDefinition.h" />
-    <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_MRCEffectTemplate.h" />
-    <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_MRCVideoEffectDefinition.h" />
-    <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_VideoCapturer.h" />
-    <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_VideoCaptureMediaSink.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcLibConfiguration.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_IVideoCapturer.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_IVideoCaptureMediaSink.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_MRCAudioEffectDefinition.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_MRCEffectTemplate.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_MRCVideoEffectDefinition.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_VideoCapturer.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_VideoCaptureMediaSink.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_EventQueue.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_EventQueueMaker.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_MediaElement.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_MediaElementMaker.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_MediaSample.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_MediaSource.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_VideoDeviceInfo.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioOptions.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioTrackSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_Constraint.h" />
@@ -270,6 +277,7 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_MediaConstraints.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_MediaElement.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_MediaElementMaker.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_MediaSample.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_MediaSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_MediaStreamTrack.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_MediaTrackSource.h" />
@@ -368,6 +376,7 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaConstraints.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaElement.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaElementMaker.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaSample.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaSourceHelper_cx.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaStreamSource_cx.h" />
@@ -465,10 +474,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_MRCAudioEffectDefinition.cc" />
-    <ClCompile Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_MRCVideoEffectDefinition.cc" />
-    <ClCompile Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_VideoCapturer.cpp" />
-    <ClCompile Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_webrtc_VideoCaptureMediaSink.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcLibConfiguration.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_MRCAudioEffectDefinition.cc" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_MRCVideoEffectDefinition.cc" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_VideoCapturer.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_VideoCaptureMediaSink.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioOptions.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioTrackSource.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_Constraint.cpp" />
@@ -479,6 +489,7 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaConstraints.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaElement.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaElementMaker.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaSample.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaSource.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaSourceHelper_cx.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaStreamSource_cx.cpp" />
@@ -570,18 +581,6 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcLib.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_MediaStreamSource.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\..\solutions\packages\Microsoft.Windows.CppWinRT.1.0.190109.2\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\..\..\solutions\packages\Microsoft.Windows.CppWinRT.1.0.190109.2\build\native\Microsoft.Windows.CppWinRT.targets')" />
-  </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\solutions\packages\Microsoft.Windows.CppWinRT.1.0.190109.2\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\solutions\packages\Microsoft.Windows.CppWinRT.1.0.190109.2\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('..\..\..\solutions\packages\Microsoft.Windows.CppWinRT.1.0.190109.2\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\solutions\packages\Microsoft.Windows.CppWinRT.1.0.190109.2\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-  </Target>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>
