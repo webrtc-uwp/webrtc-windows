@@ -1,4 +1,4 @@
-// Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
+﻿// Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
 //
 // Use of this source code is governed by a BSD-style license
 // that can be found in the LICENSE file in the root of the source
@@ -51,7 +51,7 @@ namespace Org {
 				, _fpsCallback(fpsCallback)
 				, _frameType(frameType)
 				, _isFirstFrame(true)
-				, _futureOffsetMs(45)
+				, _futureOffsetMs(0)
 				, _lastSampleTime(0)
 				, _lastSize({ 0, 0 })
 				, _lastRotation(-1)
@@ -77,11 +77,13 @@ namespace Org {
 					if (frame->video_frame_buffer()->ToI420() == nullptr) {
 						// For H264 we keep all frames since they are encoded.
 						_frames.push_back(frame);
-					} else {
+					}
+					else {
 						// Delete the frame, it's not the expected codec
 						delete frame;
 					}
-				} else {
+				}
+				else {
 					// Check it is not H.264 frame, the codec might have been switched within the call, in this case just ignore frames
 					if (frame->video_frame_buffer()->ToI420() != nullptr) {
 						// For I420 frame, keep only the latest.
@@ -90,7 +92,8 @@ namespace Org {
 						}
 						_frames.clear();
 						_frames.push_back(frame);
-					} else {
+					}
+					else {
 						// Delete the frame, it's not the expected codec
 						delete frame;
 					}
@@ -104,38 +107,31 @@ namespace Org {
 					return nullptr;
 				}
 
+				int64_t frameTimestamp;
+
 				std::unique_ptr<SampleData> data;
 				if (_frameType == FrameTypeH264) {
-					data = DequeueH264Frame();
-				} else {
-					data = DequeueI420Frame();
+					data = DequeueH264Frame(frameTimestamp);
+				}
+				else {
+					data = DequeueI420Frame(frameTimestamp);
 				}
 
-				if (_frameType == FrameTypeI420) {
-					// Set the timestamp property
-					if (_isFirstFrame) {
-						_isFirstFrame = false;
-						Org::WebRtc::FirstFrameRenderHelper::FireEvent(
-							rtc::TimeMillis() * rtc::kNumMillisecsPerSec);
-						LONGLONG frameTime = GetNextSampleTimeHns(data->renderTime, _frameType == FrameTypeH264);
-						data->sample->SetSampleTime(frameTime);
-					}
-					else {
-						LONGLONG frameTime = GetNextSampleTimeHns(data->renderTime, _frameType == FrameTypeH264);
-
-						data->sample->SetSampleTime(frameTime);
-
-						// Set the duration property
-						if (_frameType == FrameTypeH264) {
-							data->sample->SetSampleDuration(frameTime - _lastSampleTime);
-						}
-						else {
-							LONGLONG duration = (LONGLONG)((1.0 / 30) * 1000 * 1000 * 10);
-							data->sample->SetSampleDuration(duration);
-						}
-						_lastSampleTime = frameTime;
-					}
+				if (_isFirstFrame) {
+					_isFirstFrame = false;
+					Org::WebRtc::FirstFrameRenderHelper::FireEvent(
+						frameTimestamp * rtc::kNumMillisecsPerSec);
+					_startTime = frameTimestamp;
+					lastTimestampHns_ = 0;
 				}
+
+				auto timestampHns = (frameTimestamp - _startTime) * 1000 * 10;
+				data->sample->SetSampleTime(timestampHns);
+
+				auto durationHns = timestampHns - lastTimestampHns_;
+				data->sample->SetSampleDuration(durationHns);
+
+				lastTimestampHns_ = timestampHns;
 
 				UpdateFrameRate();
 
@@ -149,7 +145,7 @@ namespace Org {
 
 			// === Private functions below ===
 
-			std::unique_ptr<SampleData> MediaSourceHelper::DequeueH264Frame() {
+			std::unique_ptr<SampleData> MediaSourceHelper::DequeueH264Frame(int64_t &frameTimestamp) {
 
 				if (_frames.size() > 15)
 					DropFramesToIDR(_frames);
@@ -177,17 +173,21 @@ namespace Org {
 					}
 				}
 
+				frameTimestamp = frame->render_time_ms();
+
 				CheckForAttributeChanges(frame.get(), data.get());
 				return data;
 			}
 
-			std::unique_ptr<SampleData> MediaSourceHelper::DequeueI420Frame() {
+			std::unique_ptr<SampleData> MediaSourceHelper::DequeueI420Frame(int64_t &frameTimestamp) {
 				std::unique_ptr<webrtc::VideoFrame> frame(_frames.front());
 				_frames.pop_front();
 
 				std::unique_ptr<SampleData> data(new SampleData);
 
 				if (FAILED(_mkSample(frame.get(), &data->sample))) {
+					data.release();
+
 					return nullptr;
 				}
 
@@ -195,6 +195,8 @@ namespace Org {
 				data->sample.As(&sampleAttributes);
 				sampleAttributes->SetUINT32(MFSampleExtension_CleanPoint, TRUE);
 				sampleAttributes->SetUINT32(MFSampleExtension_Discontinuity, TRUE);
+
+				frameTimestamp = rtc::TimeMillis();
 
 				CheckForAttributeChanges(frame.get(), data.get());
 				return data;
@@ -226,7 +228,8 @@ namespace Org {
 					int prefixLengthFound = 0;
 					if (ptr[0] == 0x00 && ptr[1] == 0x00 && ptr[2] == 0x00 && ptr[3] == 0x01) {
 						prefixLengthFound = 4;
-					} else if (ptr[0] == 0x00 && ptr[1] == 0x00 && ptr[2] == 0x01) {
+					}
+					else if (ptr[0] == 0x00 && ptr[1] == 0x00 && ptr[2] == 0x01) {
 						prefixLengthFound = 3;
 					}
 
@@ -298,7 +301,7 @@ namespace Org {
 						_startTickTime = rtc::TimeMillis();
 						return 0;
 					}
-					LONGLONG frameTime = ((rtc::TimeMillis() - _startTickTime) + _futureOffsetMs) * 1000 * 10;
+					LONGLONG frameTime = ((rtc::TimeMillis() - _startTickTime)) * 10000000;
 #else
 					if (_startTime == 0) {
 
@@ -347,14 +350,15 @@ namespace Org {
 				int64_t now = rtc::TimeMillis();
 				if ((now - _lastTimeFPSCalculated) > 1000) {
 					_fpsCallback(_frameCounter);
+
 					_frameCounter = 0;
 					_lastTimeFPSCalculated = now;
 				}
 			}
+			}
 		}
-	}
-}  // namespace Org.WebRtc.Internal
+	}  // namespace Org.WebRtc.Internal
 
 void Org::WebRtc::FirstFrameRenderHelper::FireEvent(double timestamp) {
-		FirstFrameRendered(timestamp);
+	FirstFrameRendered(timestamp);
 }

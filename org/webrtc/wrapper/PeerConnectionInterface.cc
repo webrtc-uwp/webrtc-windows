@@ -106,7 +106,7 @@ namespace Org {
 			// Default resolution. If no preferred video capture format is specified,
 			// this is the resolution we will use.
 			cricket::VideoFormat gPreferredVideoCaptureFormat = cricket::VideoFormat(640, 480,
-				cricket::VideoFormat::FpsToInterval(30), cricket::FOURCC_ANY);
+				cricket::VideoFormat::FpsToInterval(30), cricket::FOURCC_ANY, false);
 		}  // namespace globals
 
 		RTCIceCandidate::RTCIceCandidate() {
@@ -747,13 +747,13 @@ namespace Org {
 		IVector<CodecInfo^>^ WebRTC::GetAudioCodecs() {
 			auto ret = ref new Vector<CodecInfo^>();
 			globals::RunOnGlobalThread<void>([ret] {
-				ret->Append(ref new CodecInfo(111, 48000, "opus"));
-				ret->Append(ref new CodecInfo(103, 16000, "ISAC"));
-				ret->Append(ref new CodecInfo(104, 32000, "ISAC"));
-				ret->Append(ref new CodecInfo(9, 8000, "G722"));
-				ret->Append(ref new CodecInfo(102, 8000, "ILBC"));
-				ret->Append(ref new CodecInfo(0, 8000, "PCMU"));
-				ret->Append(ref new CodecInfo(8, 8000, "PCMA"));
+				ret->Append(ref new CodecInfo(48000, "opus"));
+				ret->Append(ref new CodecInfo(16000, "ISAC"));
+				ret->Append(ref new CodecInfo(32000, "ISAC"));
+				ret->Append(ref new CodecInfo(8000, "G722"));
+				ret->Append(ref new CodecInfo(8000, "ILBC"));
+				ret->Append(ref new CodecInfo(8000, "PCMU"));
+				ret->Append(ref new CodecInfo(8000, "PCMA"));
 			});
 			return ret;
 		}
@@ -761,9 +761,9 @@ namespace Org {
 		IVector<CodecInfo^>^ WebRTC::GetVideoCodecs() {
 			auto ret = ref new Vector<CodecInfo^>();
 			globals::RunOnGlobalThread<void>([ret] {
-				ret->Append(ref new CodecInfo(96, 90000, "VP8"));
-				ret->Append(ref new CodecInfo(98, 90000, "VP9"));
-				ret->Append(ref new CodecInfo(125, 90000, "H264"));
+				ret->Append(ref new CodecInfo(90000, "VP8"));
+				ret->Append(ref new CodecInfo(90000, "VP9"));
+				ret->Append(ref new CodecInfo(90000, "H264"));
 			});
 			return ret;
 		}
@@ -789,11 +789,12 @@ namespace Org {
 		}
 
 		void WebRTC::SetPreferredVideoCaptureFormat(int frameWidth,
-			int frameHeight, int fps) {
+			int frameHeight, int fps, bool mrcEnabled) {
 			globals::gPreferredVideoCaptureFormat.interval =
 				cricket::VideoFormat::FpsToInterval(fps);
 			globals::gPreferredVideoCaptureFormat.width = frameWidth;
 			globals::gPreferredVideoCaptureFormat.height = frameHeight;
+			globals::gPreferredVideoCaptureFormat.mrcEnabled = mrcEnabled;
 		}
 	}
 }  // namespace Org.WebRtc
