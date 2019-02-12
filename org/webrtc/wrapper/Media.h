@@ -34,7 +34,6 @@ using Windows::UI::Xaml::Controls::MediaElement;
 
 namespace Org {
 	namespace WebRtc {
-
 		/// <summary>
 		/// An IMediaStreamTrack object represents media of a single type that
 		/// originates from one media source, e.g. video produced by a web camera.
@@ -240,11 +239,12 @@ namespace Org {
 			/// <param name="pixelAspect">Sets the shape of a pixel. Some codecs, such as H.264, support
 			/// non-square pixels. Codecs that support only square pixes, such as VPx, will force a 1:1 ratio.</param>
 			CaptureCapability(unsigned int width, unsigned int height,
-				unsigned int fps,
+				unsigned int fps, bool mrcEnabled,
 				Windows::Media::MediaProperties::MediaRatio^ pixelAspect) {
 				_width = width;
 				_height = height;
 				_fps = fps;
+				_mrcEnabled = mrcEnabled;
 				_pixelAspectRatio = pixelAspect;
 				wchar_t resolutionDesc[64];
 				swprintf_s(resolutionDesc, 64, L"%u x %u",
@@ -279,6 +279,14 @@ namespace Org {
 			property unsigned int FrameRate {
 				unsigned int get() {
 					return _fps;
+				}
+			}
+			/// <summary>
+			/// Gets a flag about Mixed Reality Capture status on HoloLens device.
+			/// </summary>
+			property bool MrcEnabled {
+				bool get() {
+					return _mrcEnabled;
 				}
 			}
 			/// <summary>
@@ -321,6 +329,7 @@ namespace Org {
 			unsigned int _width;
 			unsigned int _height;
 			unsigned int _fps;
+			bool _mrcEnabled;
 			Windows::Media::MediaProperties::MediaRatio^ _pixelAspectRatio;
 			String^ _resolutionDescription;
 			String^ _fpsDescription;
@@ -390,7 +399,7 @@ namespace Org {
 		};
 
 		/// <summary>
-		/// Allows defining constraints to exclude media types from a
+		/// Allows defining constraints to exclude media types from a media stream.
 		/// <see cref="MediaStream"/>.
 		/// </summary>
 		public ref class RTCMediaStreamConstraints sealed {
@@ -477,6 +486,37 @@ namespace Org {
 			MediaVideoTrack^ _track;
 		};
 
+		ref class MFSampleVideoSource;
+
+		/// <summary>
+		/// Video stream of MFSample objects sent for local video source.
+		/// </summary>
+		class MFSampleVideoStream : public webrtc::videocapturemodule::AppStateObserver {
+		public:
+			MFSampleVideoStream(MFSampleVideoSource^ videoSource);
+			void VideoFrameReceived(void* pSample) override;
+		private:
+			MFSampleVideoSource^ _videoSource;
+		};
+
+		/// <summary>
+		/// Source of local video samples sent as pointer to MFSample.
+		/// Used to obtain camera spatial positioning details in VR scenarios.
+		/// </summary>
+		public ref class MFSampleVideoSource sealed {
+		internal:
+			MFSampleVideoSource();
+			void MFSampleVideoFrame(void* pSample);
+		public:
+			/// <summary>
+			/// MF sample has been received.
+			/// </summary>
+			event MFSampleVideoSourceDelegate^ OnMFSampleVideoFrame;
+			virtual ~MFSampleVideoSource();
+		private:
+			std::unique_ptr<MFSampleVideoStream> _videoStream;
+		};
+
 		/// <summary>
 		/// Defines methods for accessing local media devices, like microphones
 		/// and video cameras, and creating multimedia streams.
@@ -493,10 +533,13 @@ namespace Org {
 				VideoFrameSink(MediaElement^ mediaElement, String^ id);
 				virtual void OnFrame(const webrtc::VideoFrame& frame) override;
 			private:
+				std::mutex _mutex;
+				bool _firstFrameReceived;
 				Internal::VideoFrameType _frameType;
 				MediaElement^ _mediaElement;
 				String^ _id;
 				Internal::RTMediaStreamSource^ _mediaSource;
+				std::queue<webrtc::VideoFrame> _receivedFrames;
 			};
 
 			struct VideoTrackMediaElementPair {
@@ -538,7 +581,7 @@ namespace Org {
 			/// when receiving media change event notifications.
 			/// </param>
 			/// <returns>A media source.</returns>
-			IMediaSource^ CreateMediaStreamSource(String^ id);
+			Platform::IntPtr CreateMediaStreamSource(MediaVideoTrack^ track, String^ type, String^ id);
 
 			/// <summary>
 			/// Adds Video Track and Media Element piar structure to keep a reference
@@ -574,6 +617,14 @@ namespace Org {
 			/// from</param>
 			/// <returns>Encoded video source.</returns>
 			EncodedVideoSource^ CreateEncodedVideoSource(MediaVideoTrack^ track);
+
+			/// <summary>
+			/// Creates an <see cref="MFSampleVideoSource"/>. The source object is used
+			/// to receive Media Foundation samples from local video capturing device
+			/// as uint64 pointer values.
+			/// </summary>
+			/// <returns>Encoded video source.</returns>
+			MFSampleVideoSource^ CreateMFSampleVideoSource();
 
 			/// <summary>
 			/// Retrieves system devices that can be used for video capturing (webcams).
@@ -626,6 +677,8 @@ namespace Org {
 
 			DeviceWatcher^ _videoCaptureWatcher;
 			bool _videoCaptureDeviceChanged;
+			bool _audioEffectAdded;
+			bool _videoEffectAdded;
 		};
 	}
 }  // namespace Org.WebRtc

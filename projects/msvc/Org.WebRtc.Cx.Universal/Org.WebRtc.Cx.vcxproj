@@ -145,6 +145,21 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>webrtc.lib;dxguid.lib;MinCore.lib;Mmdevapi.lib;MFuuid.lib;MFReadWrite.lib;Mfplat.lib;uuid.lib;ole32.lib;avrt.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -164,6 +179,21 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>webrtc.lib;dxguid.lib;MinCore.lib;Mmdevapi.lib;MFuuid.lib;MFReadWrite.lib;Mfplat.lib;uuid.lib;ole32.lib;avrt.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
@@ -183,6 +213,21 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>webrtc.lib;dxguid.lib;MinCore.lib;Mmdevapi.lib;MFuuid.lib;MFReadWrite.lib;Mfplat.lib;uuid.lib;ole32.lib;avrt.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
@@ -202,6 +247,21 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>webrtc.lib;dxguid.lib;MinCore.lib;Mmdevapi.lib;MFuuid.lib;MFReadWrite.lib;Mfplat.lib;uuid.lib;ole32.lib;avrt.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -221,6 +281,21 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>webrtc.lib;dxguid.lib;MinCore.lib;Mmdevapi.lib;MFuuid.lib;MFReadWrite.lib;Mfplat.lib;uuid.lib;ole32.lib;avrt.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -240,6 +315,21 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc\WEBRTC_BUILD\webrtc\$(Configuration)\winuwp_$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>webrtc.lib;dxguid.lib;MinCore.lib;Mmdevapi.lib;MFuuid.lib;MFReadWrite.lib;Mfplat.lib;uuid.lib;ole32.lib;avrt.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>SETLOCAL
+      set TARGET_PLUGIN_PATH_2=$(ProjectDir)..\..\..\..\..\common\windows\samples\PeerCC\ClientUnity\Assets\
+
+      echo Target Plugin Path is %TARGET_PLUGIN_PATH_2%
+
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA"
+      mkdir "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)"
+
+      copy /Y "$(TargetDir)$(TargetFileName)" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetFileName)"
+      copy /Y "$(TargetDir)$(TargetName).winmd" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).winmd"
+      copy /Y "$(TargetDir)$(TargetName).pdb" "%TARGET_PLUGIN_PATH_2%Plugins\WSA\$(PlatformShortName)\$(TargetName).pdb"
+ENDLOCAL</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\cx_Helpers.h" />
@@ -251,6 +341,7 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaConstraints.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaElement.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaElementMaker.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaSample.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaStreamTrack.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaTrackSource.h" />
@@ -338,11 +429,13 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoTrackSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoTrackSourceStats.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_WebRtcLib.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_WebRtcLibConfiguration.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\types.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_EventQueue.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_EventQueueMaker.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaElement.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaElementMaker.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaSample.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_VideoDeviceInfo.h" />
   </ItemGroup>
@@ -356,6 +449,7 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaConstraints.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaElement.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaElementMaker.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaSample.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaSource.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaStreamTrack.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_MediaTrackSource.cpp" />
@@ -443,6 +537,7 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoTrackSource.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_VideoTrackSourceStats.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_WebRtcLib.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cx\Org_WebRtc_WebRtcLibConfiguration.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\cx_Helpers_Throwers.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_EventQueue.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -469,6 +564,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaElementMaker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cx\Org_WebRtc_MediaSample.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
