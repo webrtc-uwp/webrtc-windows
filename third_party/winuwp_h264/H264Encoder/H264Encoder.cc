@@ -32,7 +32,6 @@
 #include "libyuv/convert.h"
 #include "rtc_base/logging.h"
 #include "rtc_base/win32.h"
-#include "typedefs.h"
 
 
 #pragma comment(lib, "mfreadwrite")
