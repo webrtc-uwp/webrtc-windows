@@ -670,6 +670,12 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\override\org_webRtc_VideoDeviceInfo.h">
       <Filter>wrapper\override</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_WebRtcLibConfiguration.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_MediaSample.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\impl_org_webRtc_AudioTrackSource.cpp">
@@ -1000,6 +1006,9 @@
   <ItemGroup>
     <None Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\Org.WebRtc.Glue.events.json">
       <Filter>wrapper</Filter>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\output.json">
+      <Filter>wrapper\generated</Filter>
     </None>
   </ItemGroup>
 </Project>
