@@ -365,6 +365,11 @@ ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioBuffer.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioBufferConfiguration.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioBufferEvent.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioData.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioFrame.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioOptions.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioTrackSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\Constraint.h" />
@@ -460,10 +465,14 @@ ENDLOCAL</Command>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturerInputSize.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoDeviceInfo.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFormat.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoOptions.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoTrackSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoTrackSourceStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcFactory.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcFactoryConfiguration.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcLib.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcLibConfiguration.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\AudioData.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueue.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueueMaker.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaElement.h" />
@@ -474,6 +483,11 @@ ENDLOCAL</Command>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioBuffer.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioBufferConfiguration.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioBufferEvent.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioData.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioFrame.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioOptions.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioTrackSource.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\Constraint.cpp" />
@@ -573,11 +587,24 @@ ENDLOCAL</Command>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturerInputSize.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoDeviceInfo.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFormat.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoOptions.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoTrackSource.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoTrackSourceStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcFactory.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcFactoryConfiguration.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcLib.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcLibConfiguration.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\cppwinrt_Helpers_Throwers.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\AudioData.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueue.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -653,6 +680,7 @@ ENDLOCAL</Command>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\output.idl" />
+    <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.AudioData.idl" />
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.EventQueue.idl" />
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.EventQueueMaker.idl" />
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.MediaElement.idl" />
@@ -662,6 +690,16 @@ ENDLOCAL</Command>
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.VideoDeviceInfo.idl" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.AudioData.idl.template">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
     <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.EventQueue.idl.template">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

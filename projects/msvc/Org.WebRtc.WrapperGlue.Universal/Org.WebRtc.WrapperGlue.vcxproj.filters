@@ -13,6 +13,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioData.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_EventQueueMaker.h">
       <Filter>wrapper\generated</Filter>
     </ClInclude>
@@ -277,16 +280,40 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_VideoFormat.h">
       <Filter>wrapper\generated</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_VideoOptions.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_VideoTrackSource.h">
       <Filter>wrapper\generated</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_VideoTrackSourceStats.h">
       <Filter>wrapper\generated</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_WebRtcFactory.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_WebRtcFactoryConfiguration.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_WebRtcLib.h">
       <Filter>wrapper\generated</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\types.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioBuffer.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioBufferConfiguration.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioBufferEvent.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioData.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioFrame.h">
       <Filter>wrapper\generated</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioOptions.h">
@@ -300,6 +327,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_EventQueue.h">
       <Filter>wrapper\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioBuffer.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioBufferConfiguration.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioBufferEvent.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioData.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioFrame.h">
+      <Filter>wrapper</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioOptions.h">
       <Filter>wrapper</Filter>
@@ -598,16 +640,28 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoFormat.h">
       <Filter>wrapper</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoOptions.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoTrackSource.h">
       <Filter>wrapper</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoTrackSourceStats.h">
       <Filter>wrapper</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcFactory.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcFactoryConfiguration.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcLib.h">
       <Filter>wrapper</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcLibConfiguration.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_AudioData.h">
       <Filter>wrapper</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_AudioDeviceWasapi.h">
@@ -649,6 +703,9 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc.h">
       <Filter>wrapper</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_AudioData.h">
+      <Filter>wrapper\override</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_EventQueue.h">
       <Filter>wrapper\override</Filter>
     </ClInclude>
@@ -678,6 +735,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioData.cpp">
+      <Filter>wrapper</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioTrackSource.cpp">
       <Filter>wrapper</Filter>
     </ClCompile>
@@ -966,10 +1026,19 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoFormat.cpp">
       <Filter>wrapper</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoOptions.cpp">
+      <Filter>wrapper</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoTrackSource.cpp">
       <Filter>wrapper</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoTrackSourceStats.cpp">
+      <Filter>wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcFactory.cpp">
+      <Filter>wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcFactoryConfiguration.cpp">
       <Filter>wrapper</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcLib.cpp">
@@ -988,6 +1057,18 @@
       <Filter>wrapper</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc.cpp">
+      <Filter>wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioBuffer.cpp">
+      <Filter>wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioBufferConfiguration.cpp">
+      <Filter>wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioBufferEvent.cpp">
+      <Filter>wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioFrame.cpp">
       <Filter>wrapper</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioOptions.cpp">

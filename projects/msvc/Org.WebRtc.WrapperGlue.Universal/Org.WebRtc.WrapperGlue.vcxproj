@@ -296,6 +296,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioBuffer.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioBufferConfiguration.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioBufferEvent.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioData.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioFrame.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioOptions.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioTrackSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_Constraint.h" />
@@ -395,8 +400,11 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoCapturerInputSize.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoDeviceInfo.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoFormat.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoOptions.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoTrackSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoTrackSourceStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcFactory.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcFactoryConfiguration.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcLib.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcLibConfiguration.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_AudioDeviceWasapi.h" />
@@ -409,7 +417,8 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_MRCEffectTemplate.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_MRCVideoEffectDefinition.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_VideoCaptureMediaSink.h" />
-    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_VideoCapturer.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_VideoOptions.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_AudioData.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_EventQueue.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_EventQueueMaker.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_MediaElement.h" />
@@ -418,6 +427,11 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_MediaSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_VideoDeviceInfo.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\types.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioBuffer.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioBufferConfiguration.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioBufferEvent.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioData.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioFrame.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioOptions.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioTrackSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_Constraint.h" />
@@ -511,8 +525,11 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_VideoCapturerInputSize.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_VideoDeviceInfo.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_VideoFormat.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_VideoOptions.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_VideoTrackSource.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_VideoTrackSourceStats.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_WebRtcFactory.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_WebRtcFactoryConfiguration.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_WebRtcLib.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_WebRtcLibConfiguration.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\types.h" />
@@ -520,6 +537,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioBuffer.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioBufferConfiguration.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioBufferEvent.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioData.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioFrame.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioOptions.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioTrackSource.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_Constraint.cpp" />
@@ -617,8 +639,11 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoCapturerInputSize.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoDeviceInfo.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoFormat.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoOptions.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoTrackSource.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_VideoTrackSourceStats.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcFactory.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcFactoryConfiguration.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcLib.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_WebRtcLibConfiguration.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_AudioDeviceWasapi.cpp" />

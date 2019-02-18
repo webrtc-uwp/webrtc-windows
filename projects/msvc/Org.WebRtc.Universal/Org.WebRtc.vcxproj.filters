@@ -3,6 +3,21 @@
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Generated Files\module.g.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioBuffer.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioBufferConfiguration.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioBufferEvent.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioData.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioFrame.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioOptions.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
@@ -297,16 +312,28 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFormat.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoOptions.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoTrackSource.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoTrackSourceStats.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcFactory.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcFactoryConfiguration.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcLib.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\cppwinrt_Helpers_Throwers.cpp">
+      <Filter>wrapper\override\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\AudioData.cpp">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueue.cpp">
@@ -339,6 +366,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioBuffer.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioBufferConfiguration.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioBufferEvent.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioData.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioFrame.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioOptions.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
@@ -621,14 +663,26 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFormat.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoOptions.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoTrackSource.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoTrackSourceStats.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcFactory.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcFactoryConfiguration.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcLib.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\AudioData.h">
+      <Filter>wrapper\override\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueue.h">
       <Filter>wrapper\override\cppwinrt</Filter>
@@ -662,6 +716,9 @@
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\output.idl">
       <Filter>wrapper\generated\msidl</Filter>
     </Midl>
+    <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.AudioData.idl">
+      <Filter>wrapper\override\msidl</Filter>
+    </Midl>
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.EventQueue.idl">
       <Filter>wrapper\override\msidl</Filter>
     </Midl>
@@ -686,6 +743,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Org_WebRtc.def" />
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.AudioData.idl.template">
+      <Filter>wrapper\generated\msidl</Filter>
+    </None>
     <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.EventQueue.idl.template">
       <Filter>wrapper\generated\msidl</Filter>
     </None>
