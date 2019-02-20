@@ -55,17 +55,40 @@ WinUWPH264EncoderImpl::~WinUWPH264EncoderImpl() {
   Release();
 }
 
-int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* inst,
+int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* codec_settings,
   int /*number_of_cores*/,
   size_t /*maxPayloadSize */) {
-  currentWidth_ = inst->width;
-  currentHeight_ = inst->height;
-  currentBitrateBps_ = inst->targetBitrate > 0 ? inst->targetBitrate * 1024 : currentWidth_ * currentHeight_ * 2.0;
-  currentFps_ = inst->maxFramerate;
-  return InitEncoderWithSettings(inst);
+
+  if (!codec_settings || codec_settings->codecType != kVideoCodecH264) {
+	  RTC_LOG(LS_ERROR) << "H264 UWP Encoder not registered as H264 codec";
+	  return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
+  }
+  if (codec_settings->maxFramerate == 0) {
+	  RTC_LOG(LS_ERROR) << "H264 UWP Encoder has no framerate defined";
+	  return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
+  }
+  if (codec_settings->width < 1 || codec_settings->height < 1) {
+	  RTC_LOG(LS_ERROR) << "H264 UWP Encoder has no valid frame size defined";
+	  return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
+  }
+
+  width_ = codec_settings->width;
+  height_ = codec_settings->height;
+  target_bps_ = codec_settings->targetBitrate > 0 ? codec_settings->targetBitrate * 1000 : width_ * height_ * 2.0;
+  max_frame_rate_ = codec_settings->maxFramerate;
+  mode_ = codec_settings->mode;
+  frame_dropping_on_ = codec_settings->H264().frameDroppingOn;
+  key_frame_interval_ = codec_settings->H264().keyFrameInterval;
+  // Codec_settings uses kbits/second; encoder uses bits/second.
+  max_bitrate_ = codec_settings->maxBitrate * 1000;
+  if (target_bps_ == 0)
+	  target_bps_ = codec_settings->startBitrate * 1000;
+  else
+	  target_bps_ = codec_settings->targetBitrate * 1000;
+  return InitEncoderWithSettings(codec_settings);
 }
 
-int WinUWPH264EncoderImpl::InitEncoderWithSettings(const VideoCodec* inst) {
+int WinUWPH264EncoderImpl::InitEncoderWithSettings(const VideoCodec* codec_settings) {
   HRESULT hr = S_OK;
 
   rtc::CritScope lock(&crit_);
@@ -84,13 +107,13 @@ int WinUWPH264EncoderImpl::InitEncoderWithSettings(const VideoCodec* inst) {
   // Weight*Height*2 kbit represents a good balance between video quality and
   // the bandwidth that a 620 Windows phone can handle.
   ON_SUCCEEDED(mediaTypeOut->SetUINT32(
-    MF_MT_AVG_BITRATE, currentBitrateBps_));
+    MF_MT_AVG_BITRATE, target_bps_));
   ON_SUCCEEDED(mediaTypeOut->SetUINT32(
     MF_MT_INTERLACE_MODE, MFVideoInterlace_Progressive));
   ON_SUCCEEDED(MFSetAttributeSize(mediaTypeOut.Get(),
-    MF_MT_FRAME_SIZE, currentWidth_, currentHeight_));
+    MF_MT_FRAME_SIZE, width_, height_));
   ON_SUCCEEDED(MFSetAttributeRatio(mediaTypeOut.Get(),
-    MF_MT_FRAME_RATE, currentFps_, 1));
+    MF_MT_FRAME_RATE, max_frame_rate_, 1));
 
   // input media type (nv12)
   ComPtr<IMFMediaType> mediaTypeIn;
@@ -101,9 +124,9 @@ int WinUWPH264EncoderImpl::InitEncoderWithSettings(const VideoCodec* inst) {
     MF_MT_INTERLACE_MODE, MFVideoInterlace_Progressive));
   ON_SUCCEEDED(mediaTypeIn->SetUINT32(MF_MT_ALL_SAMPLES_INDEPENDENT, TRUE));
   ON_SUCCEEDED(MFSetAttributeSize(mediaTypeIn.Get(),
-    MF_MT_FRAME_SIZE, currentWidth_, currentHeight_));
+    MF_MT_FRAME_SIZE, width_, height_));
   ON_SUCCEEDED(MFSetAttributeRatio(mediaTypeIn.Get(),
-    MF_MT_FRAME_RATE, currentFps_, 1));
+    MF_MT_FRAME_RATE, max_frame_rate_, 1));
 
   // Create the media sink
   ON_SUCCEEDED(Microsoft::WRL::MakeAndInitialize<H264MediaSink>(&mediaSink_));
@@ -133,7 +156,7 @@ int WinUWPH264EncoderImpl::InitEncoderWithSettings(const VideoCodec* inst) {
 
   ON_SUCCEEDED(sinkWriter_->BeginWriting());
 
-  codec_ = *inst;
+  codec_ = *codec_settings;
 
   if (SUCCEEDED(hr)) {
     inited_ = true;
@@ -222,7 +245,7 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
     }
 
     {
-      if (frameBuffer->width() != (int)currentWidth_ || frameBuffer->height() != (int)currentHeight_) {
+      if (frameBuffer->width() != (int)width_ || frameBuffer->height() != (int)height_) {
         EncodedImageCallback* tempCallback = encodedCompleteCallback_;
         Release();
         {
@@ -230,8 +253,8 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
           encodedCompleteCallback_ = tempCallback;
         }
 
-        currentWidth_ = frameBuffer->width();
-        currentHeight_ = frameBuffer->height();
+        width_ = frameBuffer->width();
+        height_ = frameBuffer->height();
         InitEncoderWithSettings(&codec_);
         RTC_LOG(LS_WARNING) << "Resolution changed to: " << frameBuffer->width() << "x" << frameBuffer->height();
       }
@@ -445,20 +468,13 @@ void WinUWPH264EncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
         return;
       }
 
-
-      if (encodedCompleteCallback_ != nullptr) {
-        CodecSpecificInfo codecSpecificInfo;
-        if (codecSpecificInfo_ != nullptr) {
-          codecSpecificInfo = *codecSpecificInfo_;
-        }
-        else {
-          codecSpecificInfo.codecType = webrtc::kVideoCodecH264;
-          codecSpecificInfo.codecSpecific.H264.packetization_mode =
-            H264PacketizationMode::NonInterleaved;
-          encodedCompleteCallback_->OnEncodedImage(
-            encodedImage, &codecSpecificInfo, &fragmentationHeader);
-        }
-      }
+	  if (encodedCompleteCallback_ != nullptr) {
+		CodecSpecificInfo codecSpecificInfo;
+		codecSpecificInfo.codecType = webrtc::kVideoCodecH264;
+		codecSpecificInfo.codecSpecific.H264.packetization_mode = H264PacketizationMode::NonInterleaved;
+		encodedCompleteCallback_->OnEncodedImage(
+		  encodedImage, &codecSpecificInfo, &fragmentationHeader);
+	  }
     }
   }
 }
@@ -490,16 +506,16 @@ int WinUWPH264EncoderImpl::SetRates(
   bool fpsUpdated = false;
 
 #ifdef DYNAMIC_BITRATE
-  if (currentBitrateBps_ != (new_bitrate_kbit * 1024)) {
-    currentBitrateBps_ = new_bitrate_kbit * 1024;
+  if (target_bps_ != (new_bitrate_kbit * 1000)) {
+    target_bps_ = new_bitrate_kbit * 1000;
     bitrateUpdated = true;
   }
 #endif
 
 #ifdef DYNAMIC_FPS
   // Fps changes seems to be expensive, make it granular to several frames per second.
-  if (currentFps_ != new_framerate && std::abs((int)currentFps_ - (int)new_framerate) > 5) {
-    currentFps_ = new_framerate;
+  if (max_frame_rate_ != new_framerate && std::abs((int)max_frame_rate_ - (int)new_framerate) > 5) {
+    max_frame_rate_ = new_framerate;
     fpsUpdated = true;
   }
 #endif

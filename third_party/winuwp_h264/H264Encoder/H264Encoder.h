@@ -56,7 +56,7 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
 
  private:
   ComPtr<IMFSample> FromVideoFrame(const VideoFrame& frame);
-  int InitEncoderWithSettings(const VideoCodec* inst);
+  int InitEncoderWithSettings(const VideoCodec* codec_settings);
 
  private:
   rtc::CriticalSection crit_;
@@ -79,6 +79,17 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
   UINT32 currentHeight_ {};
   UINT32 currentBitrateBps_ {};
   UINT32 currentFps_ {};
+  UINT32 max_bitrate_;
+
+  UINT32 width_;
+  UINT32 height_;
+  UINT32 max_frame_rate_;
+  UINT32 target_bps_;
+  VideoCodecMode mode_;  
+  // H.264 specifc parameters
+  bool frame_dropping_on_;
+  int key_frame_interval_;
+
   int64_t lastTimeSettingsChanged_ {};
 
   struct CachedFrameAttributes {

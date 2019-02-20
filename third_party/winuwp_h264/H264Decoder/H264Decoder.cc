@@ -48,7 +48,7 @@ WinUWPH264DecoderImpl::~WinUWPH264DecoderImpl() {
   Release();
 }
 
-int WinUWPH264DecoderImpl::InitDecode(const VideoCodec* inst,
+int WinUWPH264DecoderImpl::InitDecode(const VideoCodec* codec_settings,
   int number_of_cores) {
   RTC_LOG(LS_INFO) << "WinUWPH264DecoderImpl::InitDecode()\n";
   // Nothing to do here, decoder acts as a passthrough

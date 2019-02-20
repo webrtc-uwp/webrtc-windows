@@ -21,8 +21,6 @@
 #include "pc/channelmanager.h"
 #include "media/base/mediaengine.h"
 #include "api/test/fakeconstraints.h"
-#include "modules/video_capture/windows/device_info_winuwp.h"
-#include "modules/video_capture/windows/video_capture_winuwp.h"
 #include "rtc_base/criticalsection.h"
 #include "common_video/video_common_winuwp.h"
 #include "third_party/winuwp_h264/H264Decoder/H264Decoder.h"
@@ -30,6 +28,7 @@
 using Platform::Collections::Vector;
 using Org::WebRtc::Internal::ToCx;
 using Org::WebRtc::Internal::FromCx;
+using Windows::Media::IMediaExtension;
 using Windows::Media::Capture::MediaStreamType;
 using Windows::Devices::Enumeration::DeviceClass;
 using Windows::Devices::Enumeration::DeviceInformation;
@@ -365,6 +364,32 @@ namespace Org {
 		EncodedVideoSource::~EncodedVideoSource() {
 			_track->UnsetRenderer(_videoStream.get());
 		}
+		
+		// = MFSampleVideoStream =============================================================
+
+		MFSampleVideoStream::MFSampleVideoStream(MFSampleVideoSource^ videoSource) :
+			_videoSource(videoSource) {
+		}
+
+		void MFSampleVideoStream::VideoFrameReceived(void* pSample) {
+			IMFSample* mfSample = static_cast<IMFSample*>(pSample);
+			_videoSource->MFSampleVideoFrame(mfSample);
+		}
+
+		// = MFSampleVideoSource =============================================================
+
+		MFSampleVideoSource::MFSampleVideoSource() :
+			_videoStream(new MFSampleVideoStream(this)) {
+			webrtc::videocapturemodule::AppStateDispatcher::Instance()->AddObserver(_videoStream.get());
+		}
+
+		void MFSampleVideoSource::MFSampleVideoFrame(void* pSample) {
+			OnMFSampleVideoFrame(reinterpret_cast<uint64>(pSample));
+		}
+
+		MFSampleVideoSource::~MFSampleVideoSource() {
+			webrtc::videocapturemodule::AppStateDispatcher::Instance()->RemoveObserver(_videoStream.get());
+		}
 
 		// = Media ===================================================================
 
@@ -375,18 +400,21 @@ namespace Org {
 		// 8chars to the end to generate a unique string)
 
 		Media::VideoFrameSink::VideoFrameSink(MediaElement^ mediaElement, String^ id) :
+			_firstFrameReceived(false),
 			_mediaElement(mediaElement),
 			_id(id) { }
 
 		void Media::VideoFrameSink::OnFrame(const webrtc::VideoFrame& frame) {
-			if (_mediaSource == nullptr) {
+			if (!_firstFrameReceived) {
+				_firstFrameReceived = true;
 				if (frame.video_frame_buffer()->ToI420() != nullptr)
 					_frameType = Internal::FrameTypeI420;
 				else
 					_frameType = Internal::FrameTypeH264;
 
 				auto handler = ref new DispatchedHandler([this]() {
-					_mediaSource = Internal::RTMediaStreamSource::CreateMediaSource(_frameType, _id);
+					std::unique_lock<std::mutex> lock(_mutex);
+					_mediaSource = Internal::RTMediaStreamSource::CreateMediaSource(nullptr, _frameType, _id);
 					_mediaElement->SetMediaStreamSource(_mediaSource->GetMediaStreamSource());
 				});
 
@@ -395,13 +423,26 @@ namespace Org {
 				if (windowDispatcher != nullptr) {
 					auto dispatcher_action = windowDispatcher->RunAsync(
 						CoreDispatcherPriority::Normal, handler);
-					Concurrency::create_task(dispatcher_action).wait();
+					Concurrency::create_task(dispatcher_action);
 				}
 				else {
 					handler->Invoke();
 				}
 			}
-			_mediaSource->RenderFrame(&frame);
+
+			{
+				std::unique_lock<std::mutex> lock(_mutex);
+				if (_mediaSource) {
+					while (!_receivedFrames.empty()) {
+						_mediaSource->RenderFrame(&_receivedFrames.front());
+						_receivedFrames.pop();
+					}
+					_mediaSource->RenderFrame(&frame);
+				}
+				else {
+					_receivedFrames.push(frame);
+				}
+			}
 		}
 
 		Media::Media() :
@@ -498,7 +539,7 @@ namespace Org {
 								}
 							}
 						}
-						if (videoCaptureDevice != nullptr) {
+						if (videoCaptureDevice != nullptr) {							
 							videoCapturer = _dev_manager->CreateVideoCapturer(
 								*videoCaptureDevice);
 						}
@@ -515,6 +556,7 @@ namespace Org {
 							constraints.SetMandatory(webrtc::MediaConstraintsInterface::kMaxWidth, globals::gPreferredVideoCaptureFormat.width);
 							constraints.SetMandatory(webrtc::MediaConstraintsInterface::kMaxHeight, globals::gPreferredVideoCaptureFormat.height);
 							constraints.SetMandatoryMaxFrameRate(cricket::VideoFormat::IntervalToFps(globals::gPreferredVideoCaptureFormat.interval));
+							constraints.SetMandatory(webrtc::MediaConstraintsInterface::kEnableMrc, globals::gPreferredVideoCaptureFormat.mrcEnabled);
 
 							RTC_LOG(LS_INFO) << "Creating video track.";
 							rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track(
@@ -535,11 +577,19 @@ namespace Org {
 			return asyncOp;
 		}
 
-		IMediaSource^ Media::CreateMediaStreamSource(String^ id) {
-			return globals::RunOnGlobalThread<MediaStreamSource^>([id]()->MediaStreamSource^ {
+		Platform::IntPtr Media::CreateMediaStreamSource(MediaVideoTrack^ track, String^ type, String^ id) {
+			Internal::VideoFrameType frameType;
+			if (_wcsicmp(type->Data(), L"i420") == 0)
+				frameType = Internal::VideoFrameType::FrameTypeI420;
+			else if (_wcsicmp(type->Data(), L"h264") == 0)
+				frameType = Internal::VideoFrameType::FrameTypeH264;
+			else
+				return nullptr;
+			return globals::RunOnGlobalThread<void*>([track, frameType, id]()->void* {
 				Internal::RTMediaStreamSource^ mediaSource =
-					Internal::RTMediaStreamSource::CreateMediaSource(Internal::VideoFrameType::FrameTypeH264, id);
-				return mediaSource->GetMediaStreamSource();
+					Internal::RTMediaStreamSource::CreateMediaSource(track, frameType, id);
+				ComPtr<IInspectable> inspectable = reinterpret_cast<IInspectable*>(mediaSource->GetMediaStreamSource());
+				return inspectable.Detach();
 			});
 		}
 
@@ -584,6 +634,10 @@ namespace Org {
 
 		EncodedVideoSource^ Media::CreateEncodedVideoSource(MediaVideoTrack^ track) {
 			return ref new EncodedVideoSource(track);
+		}
+
+		MFSampleVideoSource^ Media::CreateMFSampleVideoSource() {
+			return ref new MFSampleVideoSource();
 		}
 
 		IVector<MediaDevice^>^ Media::GetVideoCaptureDevices() {
@@ -671,6 +725,7 @@ namespace Org {
 				if (mediaCapture == nullptr) {
 					return nullptr;
 				}
+
 				auto streamProperties =
 					mediaCapture->VideoDeviceController->GetAvailableMediaStreamProperties(
 						MediaStreamType::VideoRecord);
@@ -694,7 +749,7 @@ namespace Org {
 					}
 					auto cap = ref new CaptureCapability(videoProp->Width, videoProp->Height,
 						videoProp->FrameRate->Numerator / videoProp->FrameRate->Denominator,
-						videoProp->PixelAspectRatio);
+						false, videoProp->PixelAspectRatio);
 					if (descSet.find(cap->FullDescription->Data()) == descSet.end()) {
 						ret->Append(cap);
 						descSet.insert(cap->FullDescription->Data());
