@@ -319,6 +319,12 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioOptions.h">
       <Filter>wrapper\generated</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioProcessingInitializeEvent.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioProcessingRuntimeSettingEvent.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioTrackSource.h">
       <Filter>wrapper\generated</Filter>
     </ClInclude>
@@ -341,6 +347,12 @@
       <Filter>wrapper</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioFrame.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioProcessingInitializeEvent.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioProcessingRuntimeSettingEvent.h">
       <Filter>wrapper</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioOptions.h">
@@ -1072,6 +1084,12 @@
       <Filter>wrapper</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioOptions.cpp">
+      <Filter>wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioProcessingInitializeEvent.cpp">
+      <Filter>wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioProcessingRuntimeSettingEvent.cpp">
       <Filter>wrapper</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_webrtc_MRCVideoEffectDefinition.cpp">

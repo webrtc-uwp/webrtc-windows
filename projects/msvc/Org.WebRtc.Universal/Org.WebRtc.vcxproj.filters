@@ -21,6 +21,12 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioOptions.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioProcessingInitializeEvent.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioProcessingRuntimeSettingEvent.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioTrackSource.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
@@ -382,6 +388,12 @@
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioOptions.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioProcessingInitializeEvent.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioProcessingRuntimeSettingEvent.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioTrackSource.h">
