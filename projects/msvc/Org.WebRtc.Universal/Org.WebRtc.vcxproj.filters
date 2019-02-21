@@ -51,6 +51,9 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\cppwinrt_Helpers6.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\cppwinrt_Helpers7.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\EventQueue.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
