@@ -315,6 +315,9 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturerInputSize.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoData.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoDeviceInfo.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
@@ -345,9 +348,6 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\AudioData.cpp">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueue.cpp">
-      <Filter>wrapper\override\cppwinrt</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueueMaker.cpp">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClCompile>
@@ -363,6 +363,9 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\VideoDeviceInfo.cpp">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\VideoData.cpp">
+      <Filter>wrapper\override\cppwinrt</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaSample.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
@@ -370,6 +373,21 @@
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcLibConfiguration.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFrameBuffer.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFrameBufferEvent.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFrameNativeBuffer.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFramePlanarYuvaBuffer.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFramePlanarYuvBuffer.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
   </ItemGroup>
@@ -666,10 +684,13 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\types.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturer.h">
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFormat.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturerInputSize.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoData.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoDeviceInfo.h">
@@ -699,9 +720,6 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\AudioData.h">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueue.h">
-      <Filter>wrapper\override\cppwinrt</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueueMaker.h">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClInclude>
@@ -717,6 +735,9 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\VideoDeviceInfo.h">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\VideoData.h">
+      <Filter>wrapper\override\cppwinrt</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaSample.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
@@ -726,15 +747,28 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\WebRtcLibConfiguration.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturer.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFrameBuffer.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFrameBufferEvent.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFrameNativeBuffer.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFramePlanarYuvaBuffer.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFramePlanarYuvBuffer.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\output.idl">
       <Filter>wrapper\generated\msidl</Filter>
     </Midl>
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.AudioData.idl">
-      <Filter>wrapper\override\msidl</Filter>
-    </Midl>
-    <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.EventQueue.idl">
       <Filter>wrapper\override\msidl</Filter>
     </Midl>
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.EventQueueMaker.idl">
@@ -755,13 +789,13 @@
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.MediaSample.idl">
       <Filter>wrapper\override\msidl</Filter>
     </Midl>
+    <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.VideoData.idl">
+      <Filter>wrapper\override\msidl</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <None Include="Org_WebRtc.def" />
     <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.AudioData.idl.template">
-      <Filter>wrapper\generated\msidl</Filter>
-    </None>
-    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.EventQueue.idl.template">
       <Filter>wrapper\generated\msidl</Filter>
     </None>
     <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.EventQueueMaker.idl.template">
@@ -780,6 +814,9 @@
       <Filter>wrapper\generated\msidl</Filter>
     </None>
     <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.MediaSample.idl.template">
+      <Filter>wrapper\generated\msidl</Filter>
+    </None>
+    <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\msidl\Org.WebRtc.VideoData.idl.template">
       <Filter>wrapper\generated\msidl</Filter>
     </None>
     <None Include="packages.config" />

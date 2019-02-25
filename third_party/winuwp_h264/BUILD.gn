@@ -6,6 +6,7 @@ static_library("winuwp_h264") {
   sources = [
     "winuwp_h264_factory.cc",
     "winuwp_h264_factory.h",
+    "native_handle_buffer.h",
     "Utils/Utils.h",
     "Utils/Async.h",
     "Utils/CritSec.h",
