@@ -28,34 +28,6 @@ using Microsoft::WRL::ComPtr;
 
 namespace webrtc {
 
-class NativeHandleBuffer : public VideoFrameBuffer {
- public:
-  NativeHandleBuffer(void* native_handle, int width, int height)
-    : native_handle_(native_handle),
-    width_(width),
-    height_(height) { }
-
-  Type type() const override {
-    return Type::kNative;
-  }
-
-  int width() const override {
-    return width_;
-  }
-  int height() const override {
-    return height_;
-  }
-
-  void* native_handle() const {
-    return native_handle_;
-  }
-
- protected:
-  void* native_handle_;
-  const int width_;
-  const int height_;
-};
-
 class WinUWPH264DecoderImpl : public H264Decoder {
  public:
   WinUWPH264DecoderImpl();

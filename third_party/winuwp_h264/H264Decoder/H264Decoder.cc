@@ -27,6 +27,8 @@
 #include "common_video/include/video_frame_buffer.h"
 #include "modules/video_coding/include/video_codec_interface.h"
 
+#include "../native_handle_buffer.h"
+
 #pragma comment(lib, "mfreadwrite")
 #pragma comment(lib, "mfplat")
 #pragma comment(lib, "mfuuid.lib")
@@ -97,6 +99,8 @@ public:
   rtc::scoped_refptr<I420BufferInterface> ToI420() override {
     return nullptr;
   }
+
+  virtual cricket::FourCC fourCC() const { return cricket::FourCC::FOURCC_H264; }
 
 private:
   ComPtr<IMFSample> _sample;
