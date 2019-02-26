@@ -40,7 +40,6 @@
 #include <string.h>
 #include <wchar.h>
 
-#ifndef __cplusplus_winrt
 #include <bcrypt.h>
 
 #define UWP_COMPAT_NT_INFORMATION(xStatus) \
@@ -48,8 +47,6 @@
 
 #define UWP_COMPAT_NT_SUCCESS(xStatus) \
   ((((xStatus) >= 0) && ((xStatus) <= 0x3FFFFFFF)) || UWP_COMPAT_NT_INFORMATION(xStatus))
-
-#endif // __cplusplus_winrt
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -62,21 +59,9 @@ static BOOLEAN winuwpInternalRtlGenRandom(
   ULONG RandomBufferLength
 )
 {
-#ifdef __cplusplus_winrt
-  typedef BYTE uint8_t;
-  if (!RandomBuffer) return FALSE;
-
-  auto buffer = Windows::Security::Cryptography::CryptographicBuffer::GenerateRandom(RandomBufferLength);
-  if (!buffer) return FALSE;
-
-  auto array = ref new Platform::Array<uint8_t>(RandomBufferLength);
-  Windows::Security::Cryptography::CryptographicBuffer::CopyToByteArray(buffer, &array);
-  memcpy_s(RandomBuffer, RandomBufferLength, array->Data, RandomBufferLength);
-#else
   auto status = BCryptGenRandom(NULL, (PUCHAR)RandomBuffer, RandomBufferLength, BCRYPT_USE_SYSTEM_PREFERRED_RNG);
   if (!UWP_COMPAT_NT_SUCCESS(status))
     return FALSE;
-#endif // __cplusplus_winrt
   return TRUE;
 }
 
@@ -212,123 +197,6 @@ static int winuwpInternalGetTimeFormatA(
 
   return static_cast<int>(conv.length()+1);
 }
-
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-
-#ifdef __cplusplus_winrt
-
-//-----------------------------------------------------------------------------
-static int winuwpInternalMessageBoxPlatformString(
-  HWND    hWnd,
-  Platform::String ^content,
-  Platform::String ^title,
-  UINT    uType
-)
-{
-  struct Button
-  {
-    Button(
-           size_t &index,
-           Windows::UI::Popups::MessageDialog ^dialog,
-           int resultValue,
-           const char *name,
-           bool showIt,
-           bool defaultCommand = false
-           )
-    {
-      if (!showIt) return;
-
-      index_ = index;
-
-      WinUWP::StringConvertToPlatformString str(name);
-      command_ = ref new Windows::UI::Popups::UICommand(str.result());
-      dialog->Commands->Append(command_);
-      if (defaultCommand) dialog->DefaultCommandIndex = static_cast<unsigned int>(index_);
-
-      ++index;
-    }
-
-    void clicked(Windows::UI::Popups::IUICommand ^command, int &result) const { if (command_ == command) result = result_; }
-
-    size_t index_ {};
-    int result_ {};
-    Windows::UI::Popups::IUICommand ^command_ {};
-  };
-
-  size_t index {};
-
-  Windows::UI::Popups::MessageDialog ^dialog = (nullptr == title ? ref new Windows::UI::Popups::MessageDialog(content) : ref new Windows::UI::Popups::MessageDialog(content, title));
-
-#define BUTTON_DISPLAY(xType) (((MB_ABORTRETRYIGNORE|MB_CANCELTRYCONTINUE|MB_HELP|MB_OK|MB_OKCANCEL|MB_RETRYCANCEL|MB_YESNO|MB_YESNOCANCEL) & uType) == uType)
-#define DEFAULT_BUTTON(xType, xDefValue) (BUTTON_DISPLAY(xType) && (((MB_DEFBUTTON1|MB_DEFBUTTON2|MB_DEFBUTTON3|MB_DEFBUTTON4) & uType) == xDefValue))
-
-  Button helpButton(index, dialog, WM_HELP, "Helper", BUTTON_DISPLAY(MB_HELP));
-  Button abortButton(index, dialog, IDABORT, "Abort", BUTTON_DISPLAY(MB_ABORTRETRYIGNORE), DEFAULT_BUTTON(MB_ABORTRETRYIGNORE, MB_DEFBUTTON1));
-  Button retryButton(index, dialog, IDRETRY, "Retry", BUTTON_DISPLAY(MB_ABORTRETRYIGNORE) || BUTTON_DISPLAY(MB_RETRYCANCEL), DEFAULT_BUTTON(MB_ABORTRETRYIGNORE, MB_DEFBUTTON2) || DEFAULT_BUTTON(MB_RETRYCANCEL, MB_DEFBUTTON1));
-  Button ingoreButton(index, dialog, IDIGNORE, "Ignore", BUTTON_DISPLAY(MB_ABORTRETRYIGNORE), DEFAULT_BUTTON(MB_ABORTRETRYIGNORE, MB_DEFBUTTON3));
-  Button okButton(index, dialog, IDOK, "Ok", BUTTON_DISPLAY(MB_OK) || BUTTON_DISPLAY(MB_OKCANCEL), DEFAULT_BUTTON(MB_OK, MB_DEFBUTTON1) || DEFAULT_BUTTON(MB_OKCANCEL, MB_DEFBUTTON1));
-  Button yesButton(index, dialog, IDYES, "Yes", BUTTON_DISPLAY(MB_YESNO), DEFAULT_BUTTON(MB_YESNO, MB_DEFBUTTON1));
-  Button noButton(index, dialog, IDNO, "No", BUTTON_DISPLAY(MB_YESNO), DEFAULT_BUTTON(MB_YESNO, MB_DEFBUTTON2));
-  Button cancelButton(index, dialog, IDCANCEL, "Cancel",
-    BUTTON_DISPLAY(MB_CANCELTRYCONTINUE) || BUTTON_DISPLAY(MB_RETRYCANCEL) || BUTTON_DISPLAY(MB_YESNOCANCEL),
-    DEFAULT_BUTTON(MB_CANCELTRYCONTINUE, MB_DEFBUTTON1) || DEFAULT_BUTTON(MB_RETRYCANCEL, MB_DEFBUTTON2) || DEFAULT_BUTTON(MB_YESNOCANCEL, MB_DEFBUTTON3));
-  Button tryAgainButton(index, dialog, IDTRYAGAIN, "Try Again", BUTTON_DISPLAY(MB_CANCELTRYCONTINUE), DEFAULT_BUTTON(MB_CANCELTRYCONTINUE, MB_DEFBUTTON2));
-  Button continueButton(index, dialog, IDCONTINUE, "Continue", BUTTON_DISPLAY(MB_CANCELTRYCONTINUE), DEFAULT_BUTTON(MB_CANCELTRYCONTINUE, MB_DEFBUTTON3));
-
-  auto asyncOperation = dialog->ShowAsync();
-
-  int result { IDOK };
-
-  concurrency::create_task(asyncOperation).then([](concurrency::task<Windows::UI::Popups::IUICommand^> task) {}).wait();
-
-  Windows::UI::Popups::IUICommand ^clicked = asyncOperation->GetResults();
-
-  helpButton.clicked(clicked, result);
-  abortButton.clicked(clicked, result);
-  retryButton.clicked(clicked, result);
-  ingoreButton.clicked(clicked, result);
-  okButton.clicked(clicked, result);
-  yesButton.clicked(clicked, result);
-  noButton.clicked(clicked, result);
-  cancelButton.clicked(clicked, result);
-  tryAgainButton.clicked(clicked, result);
-  continueButton.clicked(clicked, result);
-
-  return result;
-}
-
-//-----------------------------------------------------------------------------
-static int winuwpInternalMessageBoxA(
-  HWND    hWnd,
-  LPCSTR lpText,
-  LPCSTR lpCaption,
-  UINT    uType
-)
-{
-  WinUWP::StringConvertToPlatformString title(lpCaption);
-  WinUWP::StringConvertToPlatformString content(lpText);
-  return winuwpInternalMessageBoxPlatformString(hWnd, content.result(), title.result(), uType);
-}
-
-//-----------------------------------------------------------------------------
-static int winuwpInternalMessageBoxW(
-  HWND    hWnd,
-  LPCWSTR lpText,
-  LPCWSTR lpCaption,
-  UINT    uType
-)
-{
-  WinUWP::StringConvertToPlatformString title(lpCaption);
-  WinUWP::StringConvertToPlatformString content(lpText);
-  return winuwpInternalMessageBoxPlatformString(hWnd, content.result(), title.result(), uType);
-}
-
-#endif // __cplusplus_winrt
-
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -710,38 +578,6 @@ int winuwpGetTimeFormatA(
 {
   return winuwpInternalGetTimeFormatA(Locale,dwFlags,lpTime,lpFormat,lpTimeStr,cchTime);
 }
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-
-#ifdef __cplusplus_winrt
-
-//-----------------------------------------------------------------------------
-int winuwpMessageBoxW(
-  HWND    hWnd,
-  LPCWSTR lpText,
-  LPCWSTR lpCaption,
-  UINT    uType
-)
-{
-  return winuwpInternalMessageBoxW(hWnd, lpText, lpCaption, uType);
-}
-
-//-----------------------------------------------------------------------------
-int winuwpMessageBoxA(
-  HWND    hWnd,
-  LPCSTR lpText,
-  LPCSTR lpCaption,
-  UINT    uType
-)
-{
-  return winuwpInternalMessageBoxA(hWnd,lpText,lpCaption, uType);
-}
-
-#endif // __cplusplus_winrt
-
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
