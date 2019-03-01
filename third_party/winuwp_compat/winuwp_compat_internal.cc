@@ -62,28 +62,6 @@ namespace WinUWP
     buffer_ = freeBuffer_;
   }
 
-#ifdef __cplusplus_winrt
-
-  //---------------------------------------------------------------------------
-  StringConvertToUTF8::StringConvertToUTF8(Platform::String ^str)
-  {
-    if (!str) return;
-
-    auto count = str->Length();
-    auto len8 = WideCharToMultiByte(CP_UTF8, 0, str->Data(), count, NULL, 0, NULL, NULL);
-
-    if (len8 < 1) return;
-    freeBuffer_ = (char *)malloc((len8 + 1) * sizeof(char)); // callee must free
-    memset(freeBuffer_, 0, (len8 + 1) * sizeof(char));
-
-    auto result = WideCharToMultiByte(CP_UTF8, 0, str->Data(), count, freeBuffer_, len8, NULL, NULL);
-    if (0 == result) return;
-    length_ = static_cast<decltype(length_)>(len8);
-    buffer_ = freeBuffer_;
-  }
-
-  #endif // __cplusplus_winrt
-
   //---------------------------------------------------------------------------
   StringConvertToUTF8::~StringConvertToUTF8()
   {
@@ -141,25 +119,6 @@ namespace WinUWP
     buffer_ = freeBuffer_;
   }
 
-#ifdef __cplusplus_winrt
-
-  //---------------------------------------------------------------------------
-  StringConvertToUTF16::StringConvertToUTF16(Platform::String ^str)
-  {
-    if (!str) return;
-    if (!str->Data()) return;
-
-    auto count = str->Length();
-    freeBuffer_ = (wchar_t *)malloc((count + 1) * sizeof(wchar_t));
-    memset(freeBuffer_, 0, (count + 1) * sizeof(wchar_t));
-
-    memcpy(freeBuffer_, str->Data(), count * sizeof(wchar_t));
-    length_ = static_cast<decltype(length_)>(count);
-    buffer_ = freeBuffer_;
-  }
-
-#endif // __cplusplus_winrt
-
   //---------------------------------------------------------------------------
   StringConvertToUTF16::~StringConvertToUTF16()
   {
@@ -190,140 +149,6 @@ namespace WinUWP
     }
     return buffer;
   }
-
-  //---------------------------------------------------------------------------
-  //---------------------------------------------------------------------------
-  //---------------------------------------------------------------------------
-  //---------------------------------------------------------------------------
-
-#ifdef __cplusplus_winrt
-
-  //---------------------------------------------------------------------------
-  StringConvertToPlatformString::StringConvertToPlatformString(const char *str)
-  {
-    if (NULL == str) return;
-
-    StringConvertToUTF16 wstr(str);
-    auto result = wstr.result();
-    if (!result) return;
-
-    buffer_ = ref new Platform::String(result);
-  }
-
-  //---------------------------------------------------------------------------
-  StringConvertToPlatformString::StringConvertToPlatformString(const wchar_t *str)
-  {
-    if (NULL == str) return;
-    buffer_ = ref new Platform::String(str);
-  }
-
-  //---------------------------------------------------------------------------
-  StringConvertToPlatformString::~StringConvertToPlatformString()
-  {
-  }
-
-  //---------------------------------------------------------------------------
-  Platform::String ^StringConvertToPlatformString::result() const
-  {
-    return buffer_;
-  }
-
-  //---------------------------------------------------------------------------
-  //---------------------------------------------------------------------------
-  //---------------------------------------------------------------------------
-  //---------------------------------------------------------------------------
-
-  //---------------------------------------------------------------------------
-  MainConvertToUTF8::MainConvertToUTF8(Platform::Array<Platform::String^>^ args)
-  {
-    if (!args) return;
-
-    size_t length = static_cast<decltype(length)>(args->Length);
-
-    argv_ = (char_type **)malloc((length+1)*sizeof(char_type *));
-    memset(argv_, 0, (length+1)*sizeof(char_type *));
-
-    for (decltype(length) iter = 0; iter < length; ++iter) {
-      auto value = args->get(static_cast<unsigned int>(iter));
-      if (!value) continue;
-      auto data = value->Data();
-      if (!data) continue;
-
-      StringConvertToUTF8 conv(value);
-      auto result = conv.result();
-      if (!result) continue;
-
-      auto slen = conv.length();
-      argv_[iter] = (char_type *)malloc((slen+1)*sizeof(char_type));
-      memset(argv_[iter], 0, (slen+1)*sizeof(char_type));
-
-      memcpy(argv_[iter], result, slen);
-    }
-  }
-
-  //---------------------------------------------------------------------------
-  MainConvertToUTF8::~MainConvertToUTF8()
-  {
-    if (NULL == argv_) return;
-
-    for (int iter = 0; iter < argc_; ++iter) {
-      if (NULL == argv_[iter]) continue;
-      free(argv_[iter]);
-      argv_[iter] = NULL;
-    }
-    free(argv_);
-    argv_ = NULL;
-  }
-
-
-  //---------------------------------------------------------------------------
-  //---------------------------------------------------------------------------
-  //---------------------------------------------------------------------------
-  //---------------------------------------------------------------------------
-
-  //---------------------------------------------------------------------------
-  MainConvertToUTF16::MainConvertToUTF16(Platform::Array<Platform::String^>^ args)
-  {
-    if (!args) return;
-
-    size_t length = static_cast<decltype(length)>(args->Length);
-
-    argv_ = (char_type **)malloc((length+1)*sizeof(char_type *));
-    memset(argv_, 0, (length+1)*sizeof(char_type *));
-
-    for (decltype(length) iter = 0; iter < length; ++iter) {
-      auto value = args->get(static_cast<unsigned int>(iter));
-      if (!value) continue;
-      auto data = value->Data();
-      if (!data) continue;
-
-      StringConvertToUTF16 conv(value);
-      auto result = conv.result();
-      if (!result) continue;
-
-      auto slen = conv.length();
-      argv_[iter] = (char_type *)malloc((slen+1)*sizeof(char_type));
-      memset(argv_[iter], 0, (slen+1)*sizeof(char_type));
-
-      memcpy(argv_[iter], result, slen);
-    }
-  }
-
-  //---------------------------------------------------------------------------
-  MainConvertToUTF16::~MainConvertToUTF16()
-  {
-    if (NULL == argv_) return;
-
-    for (int iter = 0; iter < argc_; ++iter) {
-      if (NULL == argv_[iter]) continue;
-      free(argv_[iter]);
-      argv_[iter] = NULL;
-    }
-    free(argv_);
-    argv_ = NULL;
-  }
-
-#endif // __cplusplus_winrt
 
   //---------------------------------------------------------------------------
   //---------------------------------------------------------------------------

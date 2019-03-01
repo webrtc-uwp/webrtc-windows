@@ -34,9 +34,6 @@ namespace WinUWP
   struct StringConvertToUTF8
   {
     StringConvertToUTF8(const wchar_t *str);
-#ifdef __cplusplus_winrt
-    StringConvertToUTF8(Platform::String ^str);
-#endif // __cplusplus_winrt
     ~StringConvertToUTF8();
 
     const char *result() const;
@@ -52,9 +49,6 @@ namespace WinUWP
   struct StringConvertToUTF16
   {
     StringConvertToUTF16(const char *str);
-#ifdef __cplusplus_winrt
-    StringConvertToUTF16(Platform::String ^str);
-#endif // __cplusplus_winrt
     ~StringConvertToUTF16();
 
     const wchar_t *result() const;
@@ -66,50 +60,6 @@ namespace WinUWP
     const wchar_t *buffer_ {};
     size_t length_ {};
   };
-
-#ifdef __cplusplus_winrt
-
-  struct StringConvertToPlatformString
-  {
-    StringConvertToPlatformString(const char *str);
-    StringConvertToPlatformString(const wchar_t *str);
-    ~StringConvertToPlatformString();
-
-    Platform::String ^result() const;
-
-  protected:
-    Platform::String ^buffer_;
-  };
-
-  struct MainConvertToUTF8
-  {
-    typedef char char_type;
-    MainConvertToUTF8(Platform::Array<Platform::String^>^ args);
-    ~MainConvertToUTF8();
-
-    int argc() const { return argc_; }
-    char_type **argv() const { return argv_; }
-
-  protected:
-    int argc_ {};
-    char_type **argv_ {};
-  };
-
-  struct MainConvertToUTF16
-  {
-    typedef wchar_t char_type;
-    MainConvertToUTF16(Platform::Array<Platform::String^>^ args);
-    ~MainConvertToUTF16();
-
-    int argc() const { return argc_; }
-    char_type **argv() const { return argv_; }
-
-  protected:
-    int argc_ {};
-    char_type **argv_ {};
-  };
-
-#endif //__cplusplus_winrt
 
   struct Environment
   {

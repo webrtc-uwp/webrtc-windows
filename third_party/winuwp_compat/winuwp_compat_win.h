@@ -250,50 +250,6 @@ inline int GetTimeFormat(
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 
-#ifdef __cplusplus_winrt
-
-#ifdef MessageBox
-#undef MessageBox
-#endif /* MessageBox */
-
-#define MessageBoxW(xWnd,xText,xCaption,xType) winuwpMessageBoxW(xWnd,xText,xCaption,xType)
-#define MessageBoxA(xWnd,xText,xCaption,xType) winuwpMessageBoxA(xWnd,xText,xCaption,xType)
-
-int winuwpMessageBoxW(
-  HWND    hWnd,
-  LPCWSTR lpText,
-  LPCWSTR lpCaption,
-  UINT    uType
-);
-
-int winuwpMessageBoxA(
-  HWND    hWnd,
-  LPCSTR lpText,
-  LPCSTR lpCaption,
-  UINT    uType
-);
-
-inline int MessageBox(
-  HWND    hWnd,
-  LPCTSTR lpText,
-  LPCTSTR lpCaption,
-  UINT    uType
-)
-{
-#ifdef UNICODE
-  return MessageBoxW(hWnd, lpText, lpCaption, uType);
-#else
-  return MessageBoxA(hWnd, lpText, lpCaption, uType);
-#endif /* UNICODE */
-}
-
-#endif // __cplusplus_winrt
-
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-
 #ifdef CreateFile
 #undef CreateFile
 #endif /* CreateFile */
