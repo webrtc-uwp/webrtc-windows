@@ -63,7 +63,15 @@ namespace webrtc {
 
   std::vector<SdpVideoFormat> WinUWPH264EncoderFactoryNew::GetSupportedFormats()
     const {
-    std::vector<SdpVideoFormat> formats = { SdpVideoFormat("H264") };
+    std::vector<SdpVideoFormat> formats = { 
+      SdpVideoFormat(cricket::kH264CodecName, 
+      {
+        //copy-pasted from h264.cc.
+        //specifies the h264 profile, in this case baseline. If we omit this, firefox 65
+        //rejects the video offer, so we send it like the built-in codec does.
+        {cricket::kH264FmtpProfileLevelId, "42100b"} 
+      }) 
+    };
     return formats;
   }
 
