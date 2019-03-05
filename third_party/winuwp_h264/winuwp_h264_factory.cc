@@ -66,10 +66,16 @@ namespace webrtc {
     std::vector<SdpVideoFormat> formats = { 
       SdpVideoFormat(cricket::kH264CodecName, 
       {
-        //copy-pasted from h264.cc.
-        //specifies the h264 profile, in this case baseline. If we omit this, firefox 65
-        //rejects the video offer, so we send it like the built-in codec does.
-        {cricket::kH264FmtpProfileLevelId, "42100b"} 
+        //copy-pasted from h264.cc
+        {cricket::kH264FmtpProfileLevelId, "42100b"},
+        {cricket::kH264FmtpLevelAsymmetryAllowed, "1"},
+        {cricket::kH264FmtpPacketizationMode, "0"}
+      }),
+      SdpVideoFormat(cricket::kH264CodecName, 
+      {
+        {cricket::kH264FmtpProfileLevelId, "42100b"},
+        {cricket::kH264FmtpLevelAsymmetryAllowed, "1"},
+        {cricket::kH264FmtpPacketizationMode, "1"}
       }) 
     };
     return formats;
