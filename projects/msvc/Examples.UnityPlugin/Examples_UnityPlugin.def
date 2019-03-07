@@ -1,0 +1,19 @@
+﻿EXPORTS
+	CreatePeerConnection
+	ClosePeerConnection
+	AddStream
+	AddDataChannel
+	CreateOffer
+	CreateAnswer
+	SendDataViaDataChannel
+	SetAudioControl
+	SetRemoteDescription
+	AddIceCandidate
+	RegisterOnLocalI420FrameReady
+	RegisterOnRemoteI420FrameReady
+	RegisterOnLocalDataChannelReady
+	RegisterOnDataFromDataChannelReady
+	RegisterOnFailure
+	RegisterOnAudioBusReady
+	RegisterOnLocalSdpReadytoSend
+	RegisterOnIceCandiateReadytoSend
