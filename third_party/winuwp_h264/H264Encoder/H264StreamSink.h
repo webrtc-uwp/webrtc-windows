@@ -42,6 +42,7 @@ enum StreamOperation {
 
 class H264MediaSink;
 
+#pragma warning(disable : 4467)
 [uuid("4b35435f-44ae-44a0-9ba0-b84f9f4a9c19")]
 class IAsyncStreamSinkOperation : public IUnknown {
  public:

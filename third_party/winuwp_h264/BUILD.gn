@@ -29,4 +29,7 @@ static_library("winuwp_h264") {
     "//system_wrappers:system_wrappers",
   ]
 
+  if (is_win) {
+    libs = ["runtimeobject.lib"]
+  }
 }
