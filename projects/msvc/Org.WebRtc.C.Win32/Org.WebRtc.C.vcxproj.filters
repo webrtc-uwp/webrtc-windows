@@ -740,6 +740,9 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\c\c_org_webRtc_VideoData.cpp">
       <Filter>wrapper\override\c</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\c\c_helper_throwers.cpp">
+      <Filter>wrapper\override\c</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="wrapper">
