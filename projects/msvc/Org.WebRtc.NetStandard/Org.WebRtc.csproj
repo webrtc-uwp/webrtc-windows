@@ -120,6 +120,14 @@
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_WebRtcFactoryConfiguration.cs" Link="wrapper\generated\dotnet\net_org_webRtc_WebRtcFactoryConfiguration.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_WebRtcLib.cs" Link="wrapper\generated\dotnet\net_org_webRtc_WebRtcLib.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_WebRtcLibConfiguration.cs" Link="wrapper\generated\dotnet\net_org_webRtc_WebRtcLibConfiguration.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_apis.cs" Link="wrapper\override\dotnet\net_override_apis.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_AudioData.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_AudioData.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_EventQueueMaker.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_EventQueueMaker.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_MediaElementMaker.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_MediaElementMaker.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_MediaSample.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_MediaSample.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_MediaSource.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_MediaSource.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_VideoData.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_VideoData.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_VideoDeviceInfo.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_VideoDeviceInfo.cs" />
   </ItemGroup>
 
   <ItemGroup>

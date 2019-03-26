@@ -267,7 +267,6 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\Org.WebRtc.Glue.events_win.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_AudioData.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_EventQueueMaker.h" />
-    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_MediaElement.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_MediaElementMaker.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_MediaSample.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\org_webRtc_MediaSource.h" />

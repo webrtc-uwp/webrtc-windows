@@ -296,7 +296,6 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\c\types.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\c\c_org_webRtc_AudioData.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\c\c_org_webRtc_EventQueueMaker.h" />
-    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\c\c_org_webRtc_MediaElement.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\c\c_org_webRtc_MediaElementMaker.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\c\c_org_webRtc_MediaSample.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\c\c_org_webRtc_MediaSource.h" />
@@ -427,12 +426,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\c\c_org_webRtc_EventQueueMaker.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\c\c_org_webRtc_MediaElement.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

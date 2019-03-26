@@ -351,9 +351,6 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueueMaker.cpp">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaElement.cpp">
-      <Filter>wrapper\override\cppwinrt</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaElementMaker.cpp">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClCompile>
@@ -723,9 +720,6 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\EventQueueMaker.h">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaElement.h">
-      <Filter>wrapper\override\cppwinrt</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt\MediaElementMaker.h">
       <Filter>wrapper\override\cppwinrt</Filter>
     </ClInclude>
@@ -772,9 +766,6 @@
       <Filter>wrapper\override\msidl</Filter>
     </Midl>
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.EventQueueMaker.idl">
-      <Filter>wrapper\override\msidl</Filter>
-    </Midl>
-    <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.MediaElement.idl">
       <Filter>wrapper\override\msidl</Filter>
     </Midl>
     <Midl Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\msidl\Org.WebRtc.MediaElementMaker.idl">
