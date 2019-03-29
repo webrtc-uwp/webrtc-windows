@@ -8,7 +8,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Org.WebRtc.WrapperGlue", ".
 		{A87281D7-B483-4526-8943-5C40D8E00AA7} = {A87281D7-B483-4526-8943-5C40D8E00AA7}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Org.WebRtc.WrapperC", "..\projects\msvc\Org.WebRtc.C.Win32\Org.WebRtc.C.vcxproj", "{1C8AC697-1C78-497A-9893-EE037B236C79}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Org.WebRtc.WrapperC", "..\projects\msvc\Org.WebRtc.WrapperC.Win32\Org.WebRtc.WrapperC.vcxproj", "{1C8AC697-1C78-497A-9893-EE037B236C79}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8AC9B3E6-0A18-492C-BABE-D142A6204E59} = {8AC9B3E6-0A18-492C-BABE-D142A6204E59}
 	EndProjectSection
