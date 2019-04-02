@@ -19,23 +19,7 @@
 
 namespace webrtc {
 
-class WinUWPH264EncoderFactory : public cricket::WebRtcVideoEncoderFactory {
- public:
-  WinUWPH264EncoderFactory();
-
-  webrtc::VideoEncoder* CreateVideoEncoder(const cricket::VideoCodec& codec)
-    override;
-
-  const std::vector<cricket::VideoCodec>& supported_codecs()
-    const override;
-
-  void DestroyVideoEncoder(webrtc::VideoEncoder* encoder) override;
-
- private:
-  std::vector<cricket::VideoCodec> codecList_;
-};
-
-class WinUWPH264EncoderFactoryNew : public VideoEncoderFactory {
+class WinUWPH264EncoderFactory : public VideoEncoderFactory {
  public:
   std::vector<SdpVideoFormat> GetSupportedFormats() const override;
 

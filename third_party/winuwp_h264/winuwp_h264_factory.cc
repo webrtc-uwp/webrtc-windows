@@ -18,34 +18,6 @@
 
 namespace webrtc {
 
-  WinUWPH264EncoderFactory::WinUWPH264EncoderFactory() {
-    codecList_ =
-      std::vector<cricket::VideoCodec> {
-        cricket::VideoCodec("H264")
-    };
-  }
-
-  webrtc::VideoEncoder* WinUWPH264EncoderFactory::CreateVideoEncoder(
-    const cricket::VideoCodec& codec) {
-    if (codec.name == "H264") {
-      return new WinUWPH264EncoderImpl();
-    } else {
-      return nullptr;
-    }
-  }
-
-  const std::vector<cricket::VideoCodec>&
-    WinUWPH264EncoderFactory::supported_codecs() const {
-    return codecList_;
-  }
-
-  void WinUWPH264EncoderFactory::DestroyVideoEncoder(
-    webrtc::VideoEncoder* encoder) {
-      encoder->Release();
-      delete encoder;
-  }
-
-
   webrtc::VideoDecoder* WinUWPH264DecoderFactory::CreateVideoDecoder(
     webrtc::VideoCodecType type) {
     if (type == kVideoCodecH264) {
@@ -61,7 +33,7 @@ namespace webrtc {
     delete decoder;
   }
 
-  std::vector<SdpVideoFormat> WinUWPH264EncoderFactoryNew::GetSupportedFormats()
+  std::vector<SdpVideoFormat> WinUWPH264EncoderFactory::GetSupportedFormats()
     const {
     std::vector<SdpVideoFormat> formats = { 
       SdpVideoFormat(cricket::kH264CodecName, 
@@ -81,17 +53,16 @@ namespace webrtc {
     return formats;
   }
 
-  VideoEncoderFactory::CodecInfo WinUWPH264EncoderFactoryNew::QueryVideoEncoder(
+  VideoEncoderFactory::CodecInfo WinUWPH264EncoderFactory::QueryVideoEncoder(
     const SdpVideoFormat& format) const {
     CodecInfo info;
-    //not sure about this. mf does support hw MFTs but doesn't really tell us
-    //when using sink writer. it's more of a "silent sw fallback if hw not available" thing
-    info.is_hardware_accelerated = false;
+    info.is_hardware_accelerated = true;
     info.has_internal_source = false;
+    
     return info;
   }
 
-  std::unique_ptr<VideoEncoder> WinUWPH264EncoderFactoryNew::CreateVideoEncoder(
+  std::unique_ptr<VideoEncoder> WinUWPH264EncoderFactory::CreateVideoEncoder(
     const SdpVideoFormat& format) {
     if (cricket::CodecNamesEq(format.name, cricket::kH264CodecName)) {
       return std::make_unique<WinUWPH264EncoderImpl>();
