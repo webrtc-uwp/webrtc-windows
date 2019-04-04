@@ -38,10 +38,10 @@ namespace webrtc {
 //////////////////////////////////////////
 
 WinUWPH264DecoderImpl::WinUWPH264DecoderImpl()
-    : width_(absl::nullopt),
+    : buffer_pool_(false, 300), /* max_number_of_buffers*/ 
+      width_(absl::nullopt),
       height_(absl::nullopt),
-      decode_complete_callback_(nullptr),
-      buffer_pool_(false, 300) /* max_number_of_buffers*/ {}
+      decode_complete_callback_(nullptr){}
 
 WinUWPH264DecoderImpl::~WinUWPH264DecoderImpl() {
   OutputDebugString(L"WinUWPH264DecoderImpl::~WinUWPH264DecoderImpl()\n");
