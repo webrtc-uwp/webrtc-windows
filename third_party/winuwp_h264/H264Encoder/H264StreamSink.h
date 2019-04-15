@@ -42,8 +42,8 @@ enum StreamOperation {
 
 class H264MediaSink;
 
-[uuid("4b35435f-44ae-44a0-9ba0-b84f9f4a9c19")]
-class IAsyncStreamSinkOperation : public IUnknown {
+class DECLSPEC_UUID("4b35435f-44ae-44a0-9ba0-b84f9f4a9c19")
+  IAsyncStreamSinkOperation : public IUnknown {
  public:
   STDMETHOD(GetOp)(StreamOperation* op) PURE;
   STDMETHOD(GetPropVariant)(PROPVARIANT* propVariant) PURE;
