@@ -66,7 +66,10 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\CustomVideoCapturer.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\CustomVideoCapturerAttachmentEvent.cpp">
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\CustomVideoCapturerFactory.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\CustomVideoCapturerCreateEvent.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\CustomVideoCapturerParameters.cpp">
@@ -501,7 +504,10 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\CustomVideoCapturer.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\CustomVideoCapturerAttachmentEvent.h">
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\CustomVideoCapturerFactory.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\CustomVideoCapturerCreateEvent.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\CustomVideoCapturerParameters.h">
