@@ -136,12 +136,12 @@
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>$(SolutionDir)Build\Output\Net\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>$(SolutionDir)Build\Output\Net\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutputPath>
   </PropertyGroup>
 </Project>
