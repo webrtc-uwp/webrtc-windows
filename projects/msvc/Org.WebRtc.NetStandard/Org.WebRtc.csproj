@@ -17,6 +17,22 @@
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_AudioProcessingRuntimeSettingEvent.cs" Link="wrapper\generated\dotnet\net_org_webRtc_AudioProcessingRuntimeSettingEvent.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_AudioTrackSource.cs" Link="wrapper\generated\dotnet\net_org_webRtc_AudioTrackSource.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_Constraint.cs" Link="wrapper\generated\dotnet\net_org_webRtc_Constraint.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioDevice.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomAudioDevice.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioDeviceParameters.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomAudioDeviceParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioDeviceRequestStateEvent.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomAudioDeviceRequestStateEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioDeviceRequestStereoEvent.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomAudioDeviceRequestStereoEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioDeviceSelectEvent.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomAudioDeviceSelectEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioMixerRequestMuteEvent.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomAudioMixerRequestMuteEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioMixerRequestSettingsEvent.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomAudioMixerRequestSettingsEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioMixerRequestStateEvent.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomAudioMixerRequestStateEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioMixerRequestVolumeEvent.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomAudioMixerRequestVolumeEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioPlayoutDeviceInfo.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomAudioPlayoutDeviceInfo.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioRecordingDeviceInfo.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomAudioRecordingDeviceInfo.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturer.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturer.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturerCreateEvent.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturerCreateEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturerFactory.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturerFactory.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturerParameters.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturerParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturerStartEvent.cs" Link="wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturerStartEvent.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_EventQueue.cs" Link="wrapper\generated\dotnet\net_org_webRtc_EventQueue.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_EventQueueMaker.cs" Link="wrapper\generated\dotnet\net_org_webRtc_EventQueueMaker.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MediaConstraints.cs" Link="wrapper\generated\dotnet\net_org_webRtc_MediaConstraints.cs" />
@@ -131,7 +147,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wrapper\generated\dotnet\" />
     <Folder Include="wrapper\override\dotnet\" />
   </ItemGroup>
 
