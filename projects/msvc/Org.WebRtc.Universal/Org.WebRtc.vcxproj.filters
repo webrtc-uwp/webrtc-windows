@@ -363,6 +363,9 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturer.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturerCreationParameters.cpp">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturerInputSize.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
@@ -841,6 +844,9 @@
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturer.h">
+      <Filter>wrapper\generated\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturerCreationParameters.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFrameBuffer.h">

@@ -485,6 +485,7 @@ ENDLOCAL</Command>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFramePlanarYuvBuffer.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFramePlanarYuvaBuffer.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturer.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturerCreationParameters.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturerInputSize.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoData.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoDeviceInfo.h" />
@@ -632,6 +633,7 @@ ENDLOCAL</Command>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFramePlanarYuvBuffer.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFramePlanarYuvaBuffer.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturer.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturerCreationParameters.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoCapturerInputSize.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoData.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoDeviceInfo.cpp" />
