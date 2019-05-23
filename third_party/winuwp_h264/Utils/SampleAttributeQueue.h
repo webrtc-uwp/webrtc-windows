@@ -15,7 +15,7 @@
 #include <queue>
 #include <utility>
 #include <memory>
-#include "rtc_base/criticalsection.h"
+#include "rtc_base/critical_section.h"
 
 // A sorted queue with certain properties which makes it
 // good for mapping attributes to frames and samples.

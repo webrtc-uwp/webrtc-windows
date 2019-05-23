@@ -20,7 +20,7 @@
 #include "api/video_codecs/video_decoder.h"
 #include "common_video/include/i420_buffer_pool.h"
 #include "modules/video_coding/codecs/h264/include/h264.h"
-#include "rtc_base/criticalsection.h"
+#include "rtc_base/critical_section.h"
 
 #pragma comment(lib, "mfreadwrite")
 #pragma comment(lib, "mfplat")

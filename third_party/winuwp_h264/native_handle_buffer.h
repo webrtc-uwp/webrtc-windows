@@ -12,7 +12,7 @@
 #define THIRD_PARTY_H264_WINUWP_NATIVE_FRAME_H_
 
 #include "api/video/video_frame_buffer.h"
-#include "media/base/videocommon.h"
+#include "media/base/video_common.h"
 
 namespace webrtc {
 

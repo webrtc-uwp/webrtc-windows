@@ -20,7 +20,7 @@
 #include "IH264EncodingCallback.h"
 #include "../Utils/SampleAttributeQueue.h"
 #include "api/video_codecs/video_encoder.h"
-#include "rtc_base/criticalsection.h"
+#include "rtc_base/critical_section.h"
 #include "modules/video_coding/utility/quality_scaler.h"
 #include "common_video/h264/h264_bitstream_parser.h"
 
