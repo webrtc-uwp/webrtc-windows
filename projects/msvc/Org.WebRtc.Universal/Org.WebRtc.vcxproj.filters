@@ -30,9 +30,6 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioTrackSource.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\Constraint.cpp">
-      <Filter>wrapper\generated\cppwinrt</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\cppwinrt_Helpers.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
@@ -58,9 +55,6 @@
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\EventQueueMaker.cpp">
-      <Filter>wrapper\generated\cppwinrt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaConstraints.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaElement.cpp">
@@ -417,9 +411,6 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\AudioTrackSource.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\Constraint.h">
-      <Filter>wrapper\generated\cppwinrt</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\cppwinrt_Helpers.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
@@ -427,9 +418,6 @@
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\EventQueueMaker.h">
-      <Filter>wrapper\generated\cppwinrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaConstraints.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaElement.h">

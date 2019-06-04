@@ -19,9 +19,6 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_EventQueueMaker.h">
       <Filter>wrapper\generated</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_MediaConstraints.h">
-      <Filter>wrapper\generated</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_MediaElement.h">
       <Filter>wrapper\generated</Filter>
     </ClInclude>
@@ -331,9 +328,6 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_AudioTrackSource.h">
       <Filter>wrapper\generated</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_Constraint.h">
-      <Filter>wrapper\generated</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_EventQueue.h">
       <Filter>wrapper\generated</Filter>
     </ClInclude>
@@ -364,9 +358,6 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioTrackSource.h">
       <Filter>wrapper</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_Constraint.h">
-      <Filter>wrapper</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_enums.h">
       <Filter>wrapper</Filter>
     </ClInclude>
@@ -377,9 +368,6 @@
       <Filter>wrapper</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_helpers.h">
-      <Filter>wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaConstraints.h">
       <Filter>wrapper</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaElement.h">
@@ -777,9 +765,6 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_AudioTrackSource.cpp">
       <Filter>wrapper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_Constraint.cpp">
-      <Filter>wrapper</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_enums.cpp">
       <Filter>wrapper</Filter>
     </ClCompile>
@@ -790,9 +775,6 @@
       <Filter>wrapper</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_helpers.cpp">
-      <Filter>wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaConstraints.cpp">
       <Filter>wrapper</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaElement.cpp">
