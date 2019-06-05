@@ -12,8 +12,8 @@
 #define THIRD_PARTY_H264_WINUWP_H264_WINUWP_FACTORY_H_
 
 #include <vector>
-#include "media/engine/webrtcvideoencoderfactory.h"
-#include "media/engine/webrtcvideodecoderfactory.h"
+#include "media/engine/webrtc_video_encoder_factory.h"
+#include "media/engine/webrtc_video_decoder_factory.h"
 #include "media/base/codec.h"
 
 namespace webrtc {
