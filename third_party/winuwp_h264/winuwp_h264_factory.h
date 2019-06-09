@@ -12,34 +12,36 @@
 #define THIRD_PARTY_H264_WINUWP_H264_WINUWP_FACTORY_H_
 
 #include <vector>
-#include "media/engine/webrtc_video_encoder_factory.h"
-#include "media/engine/webrtc_video_decoder_factory.h"
+#include "api/video_codecs/video_encoder_factory.h"
+#include "api/video_codecs/video_decoder_factory.h"
 #include "media/base/codec.h"
 
 namespace webrtc {
 
-class WinUWPH264EncoderFactory : public cricket::WebRtcVideoEncoderFactory {
+class WinUWPH264EncoderFactory : public webrtc::VideoEncoderFactory {
  public:
   WinUWPH264EncoderFactory();
 
-  webrtc::VideoEncoder* CreateVideoEncoder(const cricket::VideoCodec& codec)
-    override;
+  std::vector<SdpVideoFormat> GetSupportedFormats() const override;
 
-  const std::vector<cricket::VideoCodec>& supported_codecs()
-    const override;
+  CodecInfo QueryVideoEncoder(const SdpVideoFormat& format) const override;
 
-  void DestroyVideoEncoder(webrtc::VideoEncoder* encoder) override;
+  std::unique_ptr<VideoEncoder> CreateVideoEncoder(
+    const SdpVideoFormat& format) override;
 
  private:
   std::vector<cricket::VideoCodec> codecList_;
 };
 
-class WinUWPH264DecoderFactory : public cricket::WebRtcVideoDecoderFactory {
-  webrtc::VideoDecoder* CreateVideoDecoder(webrtc::VideoCodecType type)
-    override;
+class WinUWPH264DecoderFactory : public webrtc::VideoDecoderFactory {
 
-  void DestroyVideoDecoder(webrtc::VideoDecoder* decoder) override;
+  virtual std::vector<SdpVideoFormat> GetSupportedFormats() const override;
+
+  // Creates a VideoDecoder for the specified format.
+  virtual std::unique_ptr<VideoDecoder> CreateVideoDecoder(
+    const SdpVideoFormat& format) override;
 };
+
 }  // namespace webrtc
 
 #endif  // THIRD_PARTY_H264_WINUWP_H264_WINUWP_FACTORY_H_
