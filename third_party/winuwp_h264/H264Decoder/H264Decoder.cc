@@ -375,9 +375,11 @@ HRESULT WinUWPH264DecoderImpl::EnqueueFrame(const EncodedImage& input_image,
                                             bool missing_frames) {
   HRESULT hr = S_OK;
 
+  size_t size = input_image.size() > input_image.capacity() ? input_image.size() : input_image.capacity();
+
   // Create a MF buffer from our data
   ComPtr<IMFMediaBuffer> in_buffer;
-  ON_SUCCEEDED(MFCreateMemoryBuffer(input_image._length, &in_buffer));
+  ON_SUCCEEDED(MFCreateMemoryBuffer(size, &in_buffer));
   if (FAILED(hr)) {
     RTC_LOG(LS_ERROR)
         << "Decode failure: input image memory buffer creation failed.";
@@ -390,13 +392,13 @@ HRESULT WinUWPH264DecoderImpl::EnqueueFrame(const EncodedImage& input_image,
   if (FAILED(hr))
     return hr;
 
-  memcpy(data, input_image._buffer, input_image._length);
+  memcpy(data, input_image.data(), input_image.size());
 
   ON_SUCCEEDED(in_buffer->Unlock());
   if (FAILED(hr))
     return hr;
 
-  ON_SUCCEEDED(in_buffer->SetCurrentLength(input_image._length));
+  ON_SUCCEEDED(in_buffer->SetCurrentLength(input_image.size()));
   if (FAILED(hr))
     return hr;
 
@@ -445,7 +447,7 @@ HRESULT WinUWPH264DecoderImpl::EnqueueFrame(const EncodedImage& input_image,
         << "Decode warning: failed to set image attributes for frame.";
     hr = S_OK;
   } else {
-    if (input_image._frameType == kVideoFrameKey &&
+    if (input_image._frameType == VideoFrameType::kVideoFrameKey &&
         input_image._completeFrame) {
       ON_SUCCEEDED(sample_attrs->SetUINT32(MFSampleExtension_CleanPoint, TRUE));
       hr = S_OK;
@@ -477,13 +479,13 @@ int WinUWPH264DecoderImpl::Decode(const EncodedImage& input_image,
     return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
   }
 
-  if (input_image._buffer == NULL && input_image._length > 0) {
+  if (input_image.data() == NULL && input_image.size() > 0) {
     return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
   }
 
   // Discard until keyframe.
   if (require_keyframe_) {
-    if (input_image._frameType != kVideoFrameKey ||
+    if (input_image._frameType != VideoFrameType::kVideoFrameKey ||
         !input_image._completeFrame) {
       return WEBRTC_VIDEO_CODEC_ERROR;
     } else {
@@ -498,7 +500,7 @@ int WinUWPH264DecoderImpl::Decode(const EncodedImage& input_image,
     // new frames.
     hr = decoder_->ProcessMessage(MFT_MESSAGE_COMMAND_FLUSH, NULL);
 
-    if (input_image._frameType == kVideoFrameKey) {
+    if (input_image._frameType == VideoFrameType::kVideoFrameKey) {
       ON_SUCCEEDED(EnqueueFrame(input_image, missing_frames));
     } else {
       require_keyframe_ = true;

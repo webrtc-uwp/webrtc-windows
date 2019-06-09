@@ -12,8 +12,6 @@
 #include "third_party/winuwp_h264/winuwp_h264_factory.h"
 #include "third_party/winuwp_h264/H264Encoder/H264Encoder.h"
 #include "third_party/winuwp_h264/H264Decoder/H264Decoder.h"
-#include "media/engine/webrtcvideoencoderfactory.h"
-#include "media/engine/webrtcvideodecoderfactory.h"
 
 
 namespace webrtc {
@@ -25,6 +23,23 @@ namespace webrtc {
     };
   }
 
+  std::vector<SdpVideoFormat> WinUWPH264EncoderFactory::GetSupportedFormats() const
+  {
+    return {};
+  }
+
+  CodecInfo QueryVideoEncoder(const SdpVideoFormat& format) const
+  {
+    return {};
+  }
+
+  std::unique_ptr<VideoEncoder> CreateVideoEncoder(
+    const SdpVideoFormat& format)
+  {
+    return {};
+  }
+
+#if 0
   webrtc::VideoEncoder* WinUWPH264EncoderFactory::CreateVideoEncoder(
     const cricket::VideoCodec& codec) {
     if (codec.name == "H264") {
@@ -45,21 +60,36 @@ namespace webrtc {
       delete encoder;
   }
 
+#endif //0  
+
 
   webrtc::VideoDecoder* WinUWPH264DecoderFactory::CreateVideoDecoder(
     webrtc::VideoCodecType type) {
     if (type == kVideoCodecH264) {
       return new WinUWPH264DecoderImpl();
-    } else {
-      return nullptr;
     }
+    return nullptr;
   }
 
+  std::vector<SdpVideoFormat> WinUWPH264DecoderFactory::GetSupportedFormats() const
+  {
+    return {};
+  }
+
+  // Creates a VideoDecoder for the specified format.
+  std::unique_ptr<VideoDecoder> WinUWPH264DecoderFactory::CreateVideoDecoder(
+    const SdpVideoFormat& format)
+  {
+    return {};
+  }
+
+#if 0
   void WinUWPH264DecoderFactory::DestroyVideoDecoder(
     webrtc::VideoDecoder* decoder) {
     decoder->Release();
     delete decoder;
   }
+#endif //0
 
 }  // namespace webrtc
 

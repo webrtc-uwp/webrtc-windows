@@ -43,13 +43,11 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
     int number_of_cores, size_t max_payload_size) override;
   int RegisterEncodeCompleteCallback(EncodedImageCallback* callback) override;
   int Release() override;
-  int Encode(const VideoFrame& input_image,
-    const CodecSpecificInfo* codec_specific_info,
-    const std::vector<FrameType>* frame_types) override;
-  int SetChannelParameters(uint32_t packet_loss, int64_t rtt) override;
-  int SetRates(uint32_t new_bitrate_kbit, uint32_t frame_rate) override;
-  ScalingSettings GetScalingSettings() const override;
-  const char* ImplementationName() const override;
+  int32_t Encode(const VideoFrame& frame,
+                 const std::vector<VideoFrameType>* frame_types) override;
+  int32_t SetRateAllocation(const VideoBitrateAllocation& allocation,
+                                    uint32_t framerate) override;
+  void SetRates(const RateControlParameters& parameters) override;
 
   // === IH264EncodingCallback overrides ===
   void OnH264Encoded(ComPtr<IMFSample> sample) override;

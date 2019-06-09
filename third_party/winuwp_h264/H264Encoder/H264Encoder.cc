@@ -306,8 +306,7 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
 
 int WinUWPH264EncoderImpl::Encode(
   const VideoFrame& frame,
-  const CodecSpecificInfo* codec_specific_info,
-  const std::vector<FrameType>* frame_types) {
+  const std::vector<VideoFrameType>* frame_types) {
   {
       rtc::CritScope lock(&crit_);
       if (!inited_) {
@@ -318,7 +317,7 @@ int WinUWPH264EncoderImpl::Encode(
 
   if (frame_types != nullptr) {
     for (auto frameType : *frame_types) {
-      if (frameType == kVideoFrameKey) {
+      if (frameType == VideoFrameType::kVideoFrameKey) {
         RTC_LOG(LS_INFO) << "Key frame requested in H264 encoder.";
         ComPtr<IMFSinkWriterEncoderConfig> encoderConfig;
         sinkWriter_.As(&encoderConfig);
@@ -397,7 +396,7 @@ void WinUWPH264EncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
         MFSampleExtension_CleanPoint, &cleanPoint);
       if (SUCCEEDED(hr) && cleanPoint) {
         encodedImage._completeFrame = true;
-        encodedImage._frameType = kVideoFrameKey;
+        encodedImage._frameType = VideoFrameType::kVideoFrameKey;
       }
     }
 
@@ -419,7 +418,7 @@ void WinUWPH264EncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
       // MFSampleExtension_CleanPoint wasn't set on the sample.
       if (prefixLengthFound > 0 && (ptr[prefixLengthFound] & 0x1f) == 0x05) {
         encodedImage._completeFrame = true;
-        encodedImage._frameType = kVideoFrameKey;
+        encodedImage._frameType = VideoFrameType::kVideoFrameKey;
       }
 
       if (prefixLengthFound > 0) {
@@ -479,6 +478,17 @@ void WinUWPH264EncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
   }
 }
 
+int32_t WinUWPH264EncoderImpl::SetRateAllocation(const VideoBitrateAllocation& allocation,
+                                                 uint32_t framerate)
+{
+  return {};
+}
+
+void WinUWPH264EncoderImpl::SetRates(const RateControlParameters& parameters)
+{
+}
+
+#if 0
 int WinUWPH264EncoderImpl::SetChannelParameters(
   uint32_t packetLoss, int64_t rtt) {
   return WEBRTC_VIDEO_CODEC_OK;
@@ -545,5 +555,7 @@ VideoEncoder::ScalingSettings WinUWPH264EncoderImpl::GetScalingSettings() const 
 const char* WinUWPH264EncoderImpl::ImplementationName() const {
   return "H264_MediaFoundation";
 }
+
+#endif //0
 
 }  // namespace webrtc
