@@ -37,9 +37,12 @@ class WinUWPH264DecoderFactory : public webrtc::VideoDecoderFactory {
 
   std::vector<SdpVideoFormat> GetSupportedFormats() const override;
 
-  // Creates a VideoDecoder for the specified format.
   std::unique_ptr<VideoDecoder> CreateVideoDecoder(
-    const SdpVideoFormat& format) override;
+      const SdpVideoFormat& format) override;
+
+  std::unique_ptr<VideoDecoder> LegacyCreateVideoDecoder(
+      const SdpVideoFormat& format,
+      const std::string& receive_stream_id) override;
 };
 
 }  // namespace webrtc

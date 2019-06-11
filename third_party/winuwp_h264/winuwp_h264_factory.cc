@@ -28,7 +28,8 @@ namespace webrtc {
     return {};
   }
 
-  CodecInfo QueryVideoEncoder(const SdpVideoFormat& format) const
+  VideoEncoderFactory::CodecInfo WinUWPH264EncoderFactory::QueryVideoEncoder(
+    const SdpVideoFormat& format) const
   {
     return {};
   }
@@ -36,39 +37,7 @@ namespace webrtc {
   std::unique_ptr<VideoEncoder> CreateVideoEncoder(
     const SdpVideoFormat& format)
   {
-    return {};
-  }
-
-#if 0
-  webrtc::VideoEncoder* WinUWPH264EncoderFactory::CreateVideoEncoder(
-    const cricket::VideoCodec& codec) {
-    if (codec.name == "H264") {
-      return new WinUWPH264EncoderImpl();
-    } else {
-      return nullptr;
-    }
-  }
-
-  const std::vector<cricket::VideoCodec>&
-    WinUWPH264EncoderFactory::supported_codecs() const {
-    return codecList_;
-  }
-
-  void WinUWPH264EncoderFactory::DestroyVideoEncoder(
-    webrtc::VideoEncoder* encoder) {
-      encoder->Release();
-      delete encoder;
-  }
-
-#endif //0  
-
-
-  webrtc::VideoDecoder* WinUWPH264DecoderFactory::CreateVideoDecoder(
-    webrtc::VideoCodecType type) {
-    if (type == kVideoCodecH264) {
-      return new WinUWPH264DecoderImpl();
-    }
-    return nullptr;
+    return std::unique_ptr<VideoEncoder>(new WinUWPH264EncoderImpl());
   }
 
   std::vector<SdpVideoFormat> WinUWPH264DecoderFactory::GetSupportedFormats() const
@@ -76,20 +45,17 @@ namespace webrtc {
     return {};
   }
 
-  // Creates a VideoDecoder for the specified format.
   std::unique_ptr<VideoDecoder> WinUWPH264DecoderFactory::CreateVideoDecoder(
     const SdpVideoFormat& format)
   {
+    return std::unique_ptr<VideoDecoder>(new WinUWPH264DecoderImpl());
+  }
+
+  std::unique_ptr<VideoDecoder>
+  WinUWPH264DecoderFactory::LegacyCreateVideoDecoder(
+      const SdpVideoFormat& format,
+      const std::string& receive_stream_id) {
     return {};
   }
-
-#if 0
-  void WinUWPH264DecoderFactory::DestroyVideoDecoder(
-    webrtc::VideoDecoder* decoder) {
-    decoder->Release();
-    delete decoder;
-  }
-#endif //0
-
 }  // namespace webrtc
 

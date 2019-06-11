@@ -74,17 +74,13 @@ int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* codec_settings,
 
   width_ = codec_settings->width;
   height_ = codec_settings->height;
-  target_bps_ = codec_settings->targetBitrate > 0 ? codec_settings->targetBitrate * 1000 : width_ * height_ * 2.0;
+  target_bps_ = codec_settings->maxBitrate > 0 ? codec_settings->maxBitrate * 1000 : width_ * height_ * 2.0;
   max_frame_rate_ = codec_settings->maxFramerate;
   mode_ = codec_settings->mode;
   frame_dropping_on_ = codec_settings->H264().frameDroppingOn;
   key_frame_interval_ = codec_settings->H264().keyFrameInterval;
   // Codec_settings uses kbits/second; encoder uses bits/second.
   max_bitrate_ = codec_settings->maxBitrate * 1000;
-  if (target_bps_ == 0)
-	  target_bps_ = codec_settings->startBitrate * 1000;
-  else
-	  target_bps_ = codec_settings->targetBitrate * 1000;
   return InitEncoderWithSettings(codec_settings);
 }
 
@@ -331,8 +327,6 @@ int WinUWPH264EncoderImpl::Encode(
   }
 
   HRESULT hr = S_OK;
-
-  codecSpecificInfo_ = codec_specific_info;
 
   ComPtr<IMFSample> sample;
   {
