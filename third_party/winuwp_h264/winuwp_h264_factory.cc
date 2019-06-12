@@ -34,7 +34,7 @@ namespace webrtc {
     return {};
   }
 
-  std::unique_ptr<VideoEncoder> CreateVideoEncoder(
+  std::unique_ptr<VideoEncoder> WinUWPH264EncoderFactory::CreateVideoEncoder(
     const SdpVideoFormat& format)
   {
     return std::unique_ptr<VideoEncoder>(new WinUWPH264EncoderImpl());

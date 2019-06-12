@@ -41,8 +41,8 @@
 namespace webrtc {
 
 // QP scaling thresholds.
-static const int kLowH264QpThreshold = 24;
-static const int kHighH264QpThreshold = 37;
+//static const int kLowH264QpThreshold = 24;
+//static const int kHighH264QpThreshold = 37;
 //////////////////////////////////////////
 // H264 WinUWP Encoder Implementation
 //////////////////////////////////////////
