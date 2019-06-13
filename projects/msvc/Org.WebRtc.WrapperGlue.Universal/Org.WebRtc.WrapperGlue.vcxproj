@@ -299,6 +299,11 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\abseil-cpp;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
@@ -314,6 +319,11 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\xplatform\webrtc;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\libyuv\include;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\abseil-cpp;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj /Zc:__cplusplus /await %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
