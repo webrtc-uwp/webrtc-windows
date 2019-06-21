@@ -28,9 +28,6 @@ class WinUWPH264EncoderFactory : public webrtc::VideoEncoderFactory {
 
   std::unique_ptr<VideoEncoder> CreateVideoEncoder(
     const SdpVideoFormat& format) override;
-
- private:
-  std::vector<cricket::VideoCodec> codecList_;
 };
 
 class WinUWPH264DecoderFactory : public webrtc::VideoDecoderFactory {
@@ -39,10 +36,6 @@ class WinUWPH264DecoderFactory : public webrtc::VideoDecoderFactory {
 
   std::unique_ptr<VideoDecoder> CreateVideoDecoder(
       const SdpVideoFormat& format) override;
-
-  std::unique_ptr<VideoDecoder> LegacyCreateVideoDecoder(
-      const SdpVideoFormat& format,
-      const std::string& receive_stream_id) override;
 };
 
 }  // namespace webrtc
