@@ -44,8 +44,7 @@ namespace {
     supported_codecs.push_back(SdpVideoFormat(cricket::kVp8CodecName));
     for (const webrtc::SdpVideoFormat& format : webrtc::SupportedVP9Codecs())
       supported_codecs.push_back(format);
-    for (const webrtc::SdpVideoFormat& format : webrtc::SupportedH264Codecs())
-      supported_codecs.push_back(format);
+    supported_codecs.push_back(SdpVideoFormat(cricket::kH264CodecName));
     return supported_codecs;
   }
 
@@ -78,8 +77,7 @@ namespace {
     formats.push_back(SdpVideoFormat(cricket::kVp8CodecName));
     for (const SdpVideoFormat& format : SupportedVP9Codecs())
       formats.push_back(format);
-    for (const SdpVideoFormat& h264_format : SupportedH264Codecs())
-      formats.push_back(h264_format);
+    formats.push_back(SdpVideoFormat(cricket::kH264CodecName));
     return formats;
   }
 
