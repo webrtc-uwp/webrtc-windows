@@ -112,7 +112,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor --noWrapper</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor --noWrapper --cpp17</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -129,7 +129,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor --noWrapper</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor --noWrapper --cpp17</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -150,7 +150,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor --noWrapper</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor --noWrapper --cpp17</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -171,7 +171,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor --noWrapper</Command>
+      <Command>call python "$(ProjectDir)..\..\..\..\..\scripts\run.py" -a prepare build -t webrtc -p win --cpus $(PlatformTarget) -c $(Configuration) --noColor --noWrapper --cpp17</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
