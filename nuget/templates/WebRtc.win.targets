@@ -5,13 +5,13 @@
    <WebRtc-Platform Condition="'$(Platform)' != 'Win32'">$(Platform)</WebRtc-Platform>
  </PropertyGroup>
  <ItemGroup Condition="'$(WebRtc-Platform)' == 'AnyCPU'">
-   <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win10-x64\native\libOrg.webrtc.dll">
+   <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win10-x64\native\libOrg.WebRtc.WrapperC.dll">
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    <Link>x64\libOrg.webrtc.dll</Link>
+    <Link>x64\libOrg.WebRtc.WrapperC.dll</Link>
    </Content>
-   <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win10-x86\native\libOrg.webrtc.dll">
+   <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win10-x86\native\libOrg.WebRtc.WrapperC.dll">
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    <Link>x86\libOrg.webrtc.dll</Link>
+    <Link>x86\libOrg.WebRtc.WrapperC.dll</Link>
    </Content>
  </ItemGroup>
 </Project>
