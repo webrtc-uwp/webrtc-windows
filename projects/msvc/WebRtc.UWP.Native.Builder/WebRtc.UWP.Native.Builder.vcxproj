@@ -44,7 +44,7 @@
     <ProjectGuid>{08C8FB57-A433-44AD-AE99-4AF554F02BED}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>WebRtc.UWP.Native.Builder</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
