@@ -1,0 +1,160 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Org.WebRtc</AssemblyName>
+    <RootNamespace>Org.WebRtc</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_enums.cs" Link="wrapper\dotnet\net_enums.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_internal_apis.cs" Link="wrapper\dotnet\net_internal_apis.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_AudioBuffer.cs" Link="wrapper\dotnet\net_org_webRtc_AudioBuffer.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_AudioBufferConfiguration.cs" Link="wrapper\dotnet\net_org_webRtc_AudioBufferConfiguration.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_AudioBufferEvent.cs" Link="wrapper\dotnet\net_org_webRtc_AudioBufferEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_AudioData.cs" Link="wrapper\dotnet\net_org_webRtc_AudioData.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_AudioFrame.cs" Link="wrapper\dotnet\net_org_webRtc_AudioFrame.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_AudioOptions.cs" Link="wrapper\dotnet\net_org_webRtc_AudioOptions.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_AudioProcessingInitializeEvent.cs" Link="wrapper\dotnet\net_org_webRtc_AudioProcessingInitializeEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_AudioProcessingRuntimeSettingEvent.cs" Link="wrapper\dotnet\net_org_webRtc_AudioProcessingRuntimeSettingEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_AudioTrackSource.cs" Link="wrapper\dotnet\net_org_webRtc_AudioTrackSource.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioDevice.cs" Link="wrapper\dotnet\net_org_webRtc_CustomAudioDevice.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioDeviceParameters.cs" Link="wrapper\dotnet\net_org_webRtc_CustomAudioDeviceParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioDeviceRequestStateEvent.cs" Link="wrapper\dotnet\net_org_webRtc_CustomAudioDeviceRequestStateEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioDeviceRequestStereoEvent.cs" Link="wrapper\dotnet\net_org_webRtc_CustomAudioDeviceRequestStereoEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioDeviceSelectEvent.cs" Link="wrapper\dotnet\net_org_webRtc_CustomAudioDeviceSelectEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioMixerRequestMuteEvent.cs" Link="wrapper\dotnet\net_org_webRtc_CustomAudioMixerRequestMuteEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioMixerRequestSettingsEvent.cs" Link="wrapper\dotnet\net_org_webRtc_CustomAudioMixerRequestSettingsEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioMixerRequestStateEvent.cs" Link="wrapper\dotnet\net_org_webRtc_CustomAudioMixerRequestStateEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioMixerRequestVolumeEvent.cs" Link="wrapper\dotnet\net_org_webRtc_CustomAudioMixerRequestVolumeEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioPlayoutDeviceInfo.cs" Link="wrapper\dotnet\net_org_webRtc_CustomAudioPlayoutDeviceInfo.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomAudioRecordingDeviceInfo.cs" Link="wrapper\dotnet\net_org_webRtc_CustomAudioRecordingDeviceInfo.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturer.cs" Link="wrapper\dotnet\net_org_webRtc_CustomVideoCapturer.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturerCreateEvent.cs" Link="wrapper\dotnet\net_org_webRtc_CustomVideoCapturerCreateEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturerFactory.cs" Link="wrapper\dotnet\net_org_webRtc_CustomVideoCapturerFactory.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_CustomVideoCapturerParameters.cs" Link="wrapper\dotnet\net_org_webRtc_CustomVideoCapturerParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_EventQueue.cs" Link="wrapper\dotnet\net_org_webRtc_EventQueue.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_EventQueueMaker.cs" Link="wrapper\dotnet\net_org_webRtc_EventQueueMaker.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MediaElement.cs" Link="wrapper\dotnet\net_org_webRtc_MediaElement.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MediaElementMaker.cs" Link="wrapper\dotnet\net_org_webRtc_MediaElementMaker.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MediaSample.cs" Link="wrapper\dotnet\net_org_webRtc_MediaSample.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MediaSource.cs" Link="wrapper\dotnet\net_org_webRtc_MediaSource.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MediaStreamTrack.cs" Link="wrapper\dotnet\net_org_webRtc_MediaStreamTrack.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MediaTrackSource.cs" Link="wrapper\dotnet\net_org_webRtc_MediaTrackSource.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MessageEvent.cs" Link="wrapper\dotnet\net_org_webRtc_MessageEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MillisecondIntervalRange.cs" Link="wrapper\dotnet\net_org_webRtc_MillisecondIntervalRange.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCAnswerOptions.cs" Link="wrapper\dotnet\net_org_webRtc_RTCAnswerOptions.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCAudioHandlerStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCAudioHandlerStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCAudioReceiverStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCAudioReceiverStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCAudioSenderStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCAudioSenderStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCBitrateParameters.cs" Link="wrapper\dotnet\net_org_webRtc_RTCBitrateParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCCertificate.cs" Link="wrapper\dotnet\net_org_webRtc_RTCCertificate.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCCertificateStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCCertificateStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCCodecStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCCodecStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCConfiguration.cs" Link="wrapper\dotnet\net_org_webRtc_RTCConfiguration.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCDataChannel.cs" Link="wrapper\dotnet\net_org_webRtc_RTCDataChannel.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCDataChannelEvent.cs" Link="wrapper\dotnet\net_org_webRtc_RTCDataChannelEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCDataChannelInit.cs" Link="wrapper\dotnet\net_org_webRtc_RTCDataChannelInit.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCDataChannelStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCDataChannelStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCDtlsFingerprint.cs" Link="wrapper\dotnet\net_org_webRtc_RTCDtlsFingerprint.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCDtmfSender.cs" Link="wrapper\dotnet\net_org_webRtc_RTCDtmfSender.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCDtmfToneChangeEvent.cs" Link="wrapper\dotnet\net_org_webRtc_RTCDtmfToneChangeEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCError.cs" Link="wrapper\dotnet\net_org_webRtc_RTCError.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCIceCandidate.cs" Link="wrapper\dotnet\net_org_webRtc_RTCIceCandidate.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCIceCandidateInit.cs" Link="wrapper\dotnet\net_org_webRtc_RTCIceCandidateInit.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCIceCandidatePairStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCIceCandidatePairStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCIceCandidateStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCIceCandidateStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCIceServer.cs" Link="wrapper\dotnet\net_org_webRtc_RTCIceServer.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCInboundRtpStreamStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCInboundRtpStreamStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCKeyParams.cs" Link="wrapper\dotnet\net_org_webRtc_RTCKeyParams.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCMediaHandlerStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCMediaHandlerStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCMediaStreamStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCMediaStreamStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCOAuthCredential.cs" Link="wrapper\dotnet\net_org_webRtc_RTCOAuthCredential.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCOfferAnswerOptions.cs" Link="wrapper\dotnet\net_org_webRtc_RTCOfferAnswerOptions.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCOfferOptions.cs" Link="wrapper\dotnet\net_org_webRtc_RTCOfferOptions.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCOutboundRtpStreamStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCOutboundRtpStreamStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCPeerConnection.cs" Link="wrapper\dotnet\net_org_webRtc_RTCPeerConnection.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCPeerConnectionIceErrorEvent.cs" Link="wrapper\dotnet\net_org_webRtc_RTCPeerConnectionIceErrorEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCPeerConnectionIceEvent.cs" Link="wrapper\dotnet\net_org_webRtc_RTCPeerConnectionIceEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCPeerConnectionStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCPeerConnectionStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCReceivedRtpStreamStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCReceivedRtpStreamStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRemoteInboundRtpStreamStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRemoteInboundRtpStreamStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRemoteOutboundRtpStreamStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRemoteOutboundRtpStreamStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRSAParams.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRSAParams.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtcpFeedback.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtcpFeedback.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtcpParameters.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtcpParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpCapabilities.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpCapabilities.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpCodecCapability.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpCodecCapability.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpCodecParameters.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpCodecParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpCodingParameters.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpCodingParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpContributingSource.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpContributingSource.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpContributingSourceStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpContributingSourceStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpDecodingParameters.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpDecodingParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpEncodingParameters.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpEncodingParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpFecParameters.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpFecParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpHeaderExtensionCapability.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpHeaderExtensionCapability.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpHeaderExtensionParameters.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpHeaderExtensionParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpParameters.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpReceiveParameters.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpReceiveParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpReceiver.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpReceiver.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpRtxParameters.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpRtxParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpSender.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpSender.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpSendParameters.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpSendParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpStreamStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpStreamStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpSynchronizationSource.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpSynchronizationSource.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpTransceiver.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpTransceiver.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCRtpTransceiverInit.cs" Link="wrapper\dotnet\net_org_webRtc_RTCRtpTransceiverInit.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCSenderAudioTrackAttachmentStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCSenderAudioTrackAttachmentStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCSenderVideoTrackAttachmentStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCSenderVideoTrackAttachmentStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCSentRtpStreamStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCSentRtpStreamStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCSessionDescription.cs" Link="wrapper\dotnet\net_org_webRtc_RTCSessionDescription.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCSessionDescriptionInit.cs" Link="wrapper\dotnet\net_org_webRtc_RTCSessionDescriptionInit.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCStatsProvider.cs" Link="wrapper\dotnet\net_org_webRtc_RTCStatsProvider.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCStatsReport.cs" Link="wrapper\dotnet\net_org_webRtc_RTCStatsReport.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCStatsTypeSet.cs" Link="wrapper\dotnet\net_org_webRtc_RTCStatsTypeSet.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCTrackEvent.cs" Link="wrapper\dotnet\net_org_webRtc_RTCTrackEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCTransportStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCTransportStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCVideoHandlerStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCVideoHandlerStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCVideoReceiverStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCVideoReceiverStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCVideoSenderStats.cs" Link="wrapper\dotnet\net_org_webRtc_RTCVideoSenderStats.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoCapturer.cs" Link="wrapper\dotnet\net_org_webRtc_VideoCapturer.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoCapturerCreationParameters.cs" Link="wrapper\dotnet\net_org_webRtc_VideoCapturerCreationParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoCapturerInputSize.cs" Link="wrapper\dotnet\net_org_webRtc_VideoCapturerInputSize.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoData.cs" Link="wrapper\dotnet\net_org_webRtc_VideoData.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoDeviceInfo.cs" Link="wrapper\dotnet\net_org_webRtc_VideoDeviceInfo.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoFormat.cs" Link="wrapper\dotnet\net_org_webRtc_VideoFormat.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoFrameBuffer.cs" Link="wrapper\dotnet\net_org_webRtc_VideoFrameBuffer.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoFrameBufferEvent.cs" Link="wrapper\dotnet\net_org_webRtc_VideoFrameBufferEvent.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoFrameNativeBuffer.cs" Link="wrapper\dotnet\net_org_webRtc_VideoFrameNativeBuffer.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoFramePlanarYuvaBuffer.cs" Link="wrapper\dotnet\net_org_webRtc_VideoFramePlanarYuvaBuffer.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoFramePlanarYuvBuffer.cs" Link="wrapper\dotnet\net_org_webRtc_VideoFramePlanarYuvBuffer.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_WebRtcFactory.cs" Link="wrapper\dotnet\net_org_webRtc_WebRtcFactory.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_WebRtcFactoryConfiguration.cs" Link="wrapper\dotnet\net_org_webRtc_WebRtcFactoryConfiguration.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_WebRtcLib.cs" Link="wrapper\dotnet\net_org_webRtc_WebRtcLib.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_WebRtcLibConfiguration.cs" Link="wrapper\dotnet\net_org_webRtc_WebRtcLibConfiguration.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_apis.cs" Link="wrapper\override\dotnet\net_override_apis.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_AudioData.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_AudioData.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_EventQueueMaker.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_EventQueueMaker.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_MediaElementMaker.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_MediaElementMaker.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_MediaSample.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_MediaSample.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_MediaSource.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_MediaSource.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_VideoData.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_VideoData.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\dotnet\net_override_org_webRtc_VideoDeviceInfo.cs" Link="wrapper\override\dotnet\net_override_org_webRtc_VideoDeviceInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wrapper\dotnet\" />
+    <Folder Include="wrapper\override\dotnet\" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>$(SolutionDir)Build\Output\Net\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>$(SolutionDir)Build\Output\Net\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutputPath>
+  </PropertyGroup>
+</Project>

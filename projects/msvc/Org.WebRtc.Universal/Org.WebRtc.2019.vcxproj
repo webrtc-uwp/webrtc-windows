@@ -53,7 +53,7 @@
   </ItemGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -815,7 +815,7 @@ ENDLOCAL</Command>
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Org.WebRtc.WrapperGlue.Universal\Org.WebRtc.WrapperGlue.vcxproj">
+    <ProjectReference Include="..\Org.WebRtc.WrapperGlue.Universal\Org.WebRtc.WrapperGlue.2019.vcxproj">
       <Project>{76cc41b9-4027-4330-a139-0cfa7aa34768}</Project>
     </ProjectReference>
   </ItemGroup>
