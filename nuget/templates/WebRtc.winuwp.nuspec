@@ -2,12 +2,13 @@
 <package >
   <metadata minClientVersion="2.5">
     <id>WebRtc</id>
-    <version></version>		<title>WebRtc Library</title>
+    <version></version>		
+    <title>WebRtc Library</title>
     <license type="file">LICENSE.txt</license>
     <authors>Optical Tone</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>WebRtc Library is a secure, fast and highly performant developer toolkit enabling real-time voice calling, video chat and data functionality (file transfer etc.) for mobile, desktop and web</description>		
-    <summary>Built as a productionn ready reference to the Object RTC specification (originally designed in the W3C WebRtc Community Group), WebRtc Lib is a secure, fast and highly performant developer toolkit enabling real-time voice calling, video chat and data functionality (file transfer etc.) for mobile, desktop and web. If you are integrating real-time voice, video or data into your mobile or web app and want WebRtc and WebRTC compatibility, WebRtc Lib is the solution for you.</summary>
+    <summary>Built as a production ready reference to the Object RTC specification (originally designed in the W3C WebRtc Community Group), WebRtc Lib is a secure, fast and highly performant developer toolkit enabling real-time voice calling, video chat and data functionality (file transfer etc.) for mobile, desktop and web. If you are integrating real-time voice, video or data into your mobile or web app and want WebRtc and WebRTC compatibility, WebRtc Lib is the solution for you.</summary>
   </metadata>
   <files>
     <file src="./libraries/LICENSE.txt" target="" />
