@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{61AB7485-B7E2-4D1F-8A38-BCB027FC1C10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PeerCC", "PeerCC", "{82F36D17-1986-4A2A-B71F-94B852778141}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerConnectionClient.WebRtc", "..\..\..\common\windows\samples\PeerCC\Client\PeerConnectionClient.WebRtc.2019.csproj", "{A2EA7350-EE59-42C5-9323-C942B058B217}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerConnectionClient.WebRtc.2019", "..\..\..\common\windows\samples\PeerCC\Client\PeerConnectionClient.WebRtc.2019.csproj", "{A2EA7350-EE59-42C5-9323-C942B058B217}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{B75554FF-2598-4F34-B11F-027282FB26CD}"
 EndProject
@@ -33,9 +33,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Org.WebRtc", "..\projects\m
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PeerConnectionServer.Utility", "..\projects\msvc\PeerConnectionServer.Utility\PeerConnectionServer.Utility.2019.vcxproj", "{0919F2A5-9CB1-48B0-B080-EAC6AF4EB024}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerConnectionClientCore", "..\..\..\common\windows\samples\PeerCC\ClientCore\PeerConnectionClientCore.2019.csproj", "{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerConnectionClientCore.2019", "..\..\..\common\windows\samples\PeerCC\ClientCore\PeerConnectionClientCore.2019.csproj", "{217FAA3A-8FC1-4663-BA00-2F842B3FF4E1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FC4BC853-ED03-404C-AE51-D52D8BCDF134} = {FC4BC853-ED03-404C-AE51-D52D8BCDF134}
+	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Org.WebRtc.Callstats", "..\..\..\common\windows\samples\PeerCC\Org.WebRtc.Callstats\Org.WebRtc.Callstats.2019.csproj", "{FC4BC853-ED03-404C-AE51-D52D8BCDF134}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Org.WebRtc.Callstats.2019", "..\..\..\common\windows\samples\PeerCC\Org.WebRtc.Callstats\Org.WebRtc.Callstats.2019.csproj", "{FC4BC853-ED03-404C-AE51-D52D8BCDF134}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
