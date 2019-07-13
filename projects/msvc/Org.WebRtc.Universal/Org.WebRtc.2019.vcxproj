@@ -76,36 +76,36 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <OutDir>$(SolutionDir)Build\Output\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <OutDir>$(SolutionDir)Build\Output\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <OutDir>$(SolutionDir)Build\Output\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <OutDir>$(SolutionDir)Build\Output\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <OutDir>$(SolutionDir)Build\Output\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <OutDir>$(SolutionDir)Build\Output\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <OutDir>$(SolutionDir)Build\Output\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <OutDir>$(SolutionDir)Build\Output\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediate\$(MSBuildProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <OutDir>$(SolutionDir)Build\Output\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)Build\Intermediate\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
