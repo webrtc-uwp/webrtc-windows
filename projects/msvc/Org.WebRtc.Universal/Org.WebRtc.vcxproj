@@ -107,7 +107,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>%(AdditionalOptions) /bigobj /Zc:__cplusplus</AdditionalOptions>
-      <DisableSpecificWarnings>28204;4634;4635;4826</DisableSpecificWarnings>
+      <DisableSpecificWarnings>28204;4634;4635</DisableSpecificWarnings>
       <PreprocessorDefinitions>WINUWP;NOMINMAX;_HAS_EXCEPTIONS=0;_WINRT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl\zsLib-eventing;$(ProjectDir)..\..\..\..\xplatform\webrtc\third_party\idl;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt;$(ProjectDir)..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\cppwinrt;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
