@@ -319,6 +319,7 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\c\c_org_webRtc_WebRtcLib.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\c\c_org_webRtc_WebRtcLibConfiguration.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\c\types.h" />
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_VideoCapturerCreationParameters.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\c\c_org_webRtc_AudioData.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\c\c_org_webRtc_EventQueueMaker.h" />
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\override\c\c_org_webRtc_MediaElementMaker.h" />
@@ -443,6 +444,7 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\c\c_org_webRtc_RTCVideoReceiverStats.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\c\c_org_webRtc_RTCVideoSenderStats.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\c\c_org_webRtc_VideoCapturer.cpp" />
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\c\c_org_webRtc_VideoCapturerCreationParameters.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\c\c_org_webRtc_VideoCapturerInputSize.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\c\c_org_webRtc_VideoData.cpp" />
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\c\c_org_webRtc_VideoDeviceInfo.cpp" />

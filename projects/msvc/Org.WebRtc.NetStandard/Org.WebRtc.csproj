@@ -120,7 +120,8 @@
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCVideoReceiverStats.cs" Link="wrapper\generated\dotnet\net_org_webRtc_RTCVideoReceiverStats.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_RTCVideoSenderStats.cs" Link="wrapper\generated\dotnet\net_org_webRtc_RTCVideoSenderStats.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoCapturer.cs" Link="wrapper\generated\dotnet\net_org_webRtc_VideoCapturer.cs" />
-    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoCapturerInputSize.cs" Link="wrapper\generated\dotnet\net_org_webRtc_VideoCapturerInputSize.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoCapturerCreationParameters.cs" Link="wrapper\generated\dotnet\net_org_webRtc_VideoCapturerCreationParameters.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoCapturerInputSize.cs" Link="wrapper\generated\dotnet\net_org_webRtc_VideoCapturerInputSize.cs" />    
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoData.cs" Link="wrapper\generated\dotnet\net_org_webRtc_VideoData.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoDeviceInfo.cs" Link="wrapper\generated\dotnet\net_org_webRtc_VideoDeviceInfo.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_VideoFormat.cs" Link="wrapper\generated\dotnet\net_org_webRtc_VideoFormat.cs" />
