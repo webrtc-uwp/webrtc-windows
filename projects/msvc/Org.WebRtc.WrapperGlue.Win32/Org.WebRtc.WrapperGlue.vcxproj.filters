@@ -829,6 +829,12 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_CustomAudioDeviceParameters.h">
       <Filter>wrapper</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\org_webRtc_MediaStream.h">
+      <Filter>wrapper\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaStream.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\output.json">
@@ -1263,6 +1269,9 @@
       <Filter>wrapper</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_CustomAudioDeviceParameters.cpp">
+      <Filter>wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\impl_org_webRtc_MediaStream.cpp">
       <Filter>wrapper</Filter>
     </ClCompile>
   </ItemGroup>

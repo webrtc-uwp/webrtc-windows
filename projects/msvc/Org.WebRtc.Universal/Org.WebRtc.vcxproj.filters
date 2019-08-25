@@ -441,7 +441,7 @@
     <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFramePlanarYuvBuffer.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\generated\cppwinrt\MediaStream.cpp">
+    <ClCompile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaStream.cpp">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClCompile>
   </ItemGroup>
@@ -867,7 +867,7 @@
     <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\VideoFramePlanarYuvBuffer.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\xplatform\webrtc-apis\windows\wrapper\generated\cppwinrt\MediaStream.h">
+    <ClInclude Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\cppwinrt\MediaStream.h">
       <Filter>wrapper\generated\cppwinrt</Filter>
     </ClInclude>
   </ItemGroup>

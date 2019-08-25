@@ -40,6 +40,7 @@
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MediaElementMaker.cs" Link="wrapper\generated\dotnet\net_org_webRtc_MediaElementMaker.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MediaSample.cs" Link="wrapper\generated\dotnet\net_org_webRtc_MediaSample.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MediaSource.cs" Link="wrapper\generated\dotnet\net_org_webRtc_MediaSource.cs" />
+    <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MediaStream.cs" Link="wrapper\generated\dotnet\net_org_webRtc_MediaStream.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MediaStreamTrack.cs" Link="wrapper\generated\dotnet\net_org_webRtc_MediaStreamTrack.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MediaTrackSource.cs" Link="wrapper\generated\dotnet\net_org_webRtc_MediaTrackSource.cs" />
     <Compile Include="..\..\..\..\xplatform\webrtc\sdk\windows\wrapper\generated\dotnet\net_org_webRtc_MessageEvent.cs" Link="wrapper\generated\dotnet\net_org_webRtc_MessageEvent.cs" />
