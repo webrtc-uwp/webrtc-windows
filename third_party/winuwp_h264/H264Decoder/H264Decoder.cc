@@ -38,10 +38,12 @@ namespace webrtc {
 //////////////////////////////////////////
 
 WinUWPH264DecoderImpl::WinUWPH264DecoderImpl()
-    : buffer_pool_(false, 300), /* max_number_of_buffers*/ 
-      width_(absl::nullopt),
-      height_(absl::nullopt),
-      decode_complete_callback_(nullptr){}
+    : buffer_pool_(false, 300), /* max_number_of_buffers*/
+      input_width_(absl::nullopt),
+      input_height_(absl::nullopt),
+      output_width_(absl::nullopt),
+      output_height_(absl::nullopt),
+      decode_complete_callback_(nullptr) {}
 
 WinUWPH264DecoderImpl::~WinUWPH264DecoderImpl() {
   OutputDebugString(L"WinUWPH264DecoderImpl::~WinUWPH264DecoderImpl()\n");
@@ -107,12 +109,12 @@ int WinUWPH264DecoderImpl::InitDecode(const VideoCodec* codec_settings,
                                       int number_of_cores) {
   RTC_LOG(LS_INFO) << "WinUWPH264DecoderImpl::InitDecode()\n";
 
-  width_ = codec_settings->width > 0
-               ? absl::optional<UINT32>(codec_settings->width)
-               : absl::nullopt;
-  height_ = codec_settings->height > 0
-                ? absl::optional<UINT32>(codec_settings->height)
-                : absl::nullopt;
+  input_width_ = codec_settings->width > 0
+                     ? absl::optional<uint32_t>(codec_settings->width)
+                     : absl::nullopt;
+  input_height_ = codec_settings->height > 0
+                      ? absl::optional<uint32_t>(codec_settings->height)
+                      : absl::nullopt;
 
   HRESULT hr = S_OK;
   ON_SUCCEEDED(CoInitializeEx(0, COINIT_APARTMENTTHREADED));
@@ -153,7 +155,7 @@ int WinUWPH264DecoderImpl::InitDecode(const VideoCodec* codec_settings,
 
   ComPtr<IMFMediaType> input_media;
   ON_SUCCEEDED(CreateInputMediaType(
-      input_media.GetAddressOf(), width_, height_,
+      input_media.GetAddressOf(), input_width_, input_height_,
       codec_settings->maxFramerate > 0
           ? absl::optional<UINT32>(codec_settings->maxFramerate)
           : absl::nullopt));
@@ -282,10 +284,10 @@ HRESULT WinUWPH264DecoderImpl::FlushFrames(uint32_t rtp_timestamp,
       return hr;
     }
 
-    uint32_t width, height;
-    if (width_.has_value() && height_.has_value()) {
-      width = width_.value();
-      height = height_.value();
+    uint32_t output_width, output_height;
+    if (output_width_.has_value() && output_height_.has_value()) {
+      output_width = output_width_.value();
+      output_height = output_height_.value();
     } else {
       // Query the size from MF output media type
       ComPtr<IMFMediaType> output_type;
@@ -293,7 +295,7 @@ HRESULT WinUWPH264DecoderImpl::FlushFrames(uint32_t rtp_timestamp,
           decoder_->GetOutputCurrentType(0, output_type.GetAddressOf()));
 
       ON_SUCCEEDED(MFGetAttributeSize(output_type.Get(), MF_MT_FRAME_SIZE,
-                                      &width, &height));
+                                      &output_width, &output_height));
       if (FAILED(hr)) {
         RTC_LOG(LS_ERROR) << "Decode failure: could not read image dimensions "
                              "from Media Foundation, so the video frame buffer "
@@ -302,13 +304,19 @@ HRESULT WinUWPH264DecoderImpl::FlushFrames(uint32_t rtp_timestamp,
       }
 
       // Update members to avoid querying unnecessarily
-      width_.emplace(width);
-      height_.emplace(height);
+      output_width_.emplace(output_width);
+      output_height_.emplace(output_height);
     }
 
+    // Create an output buffer that has the same size as the input frame, even
+    // if the decoder produced a decoded frame of different size due to e.g.
+    // padding. This prevents returning some uninitialized data.
+    RTC_CHECK(input_width_.has_value());
+    RTC_CHECK(input_height_.has_value());
+    const int input_width = input_width_.value();
+    const int input_height = input_height_.value();
     rtc::scoped_refptr<I420Buffer> buffer =
-        buffer_pool_.CreateBuffer(width, height);
-
+        buffer_pool_.CreateBuffer(input_width, input_height);
     if (!buffer.get()) {
       // Pool has too many pending frames.
       RTC_LOG(LS_WARNING) << "Decode warning: too many frames. Dropping frame.";
@@ -331,14 +339,21 @@ HRESULT WinUWPH264DecoderImpl::FlushFrames(uint32_t rtp_timestamp,
         return hr;
       }
 
+      // Avoid buffer overflow by ensuring that data is read from inside the
+      // bounds of the decoded buffer, but also that no more than the input
+      // frame size is returned in case the decoder padded the width or height.
+      const int width = std::min<int>(output_width, input_width);
+      const int height = std::min<int>(output_height, input_height);
+
       // Convert NV12 to I420. Y and UV sections have same stride in NV12
       // (width). The size of the Y section is the size of the frame, since Y
       // luminance values are 8-bits each.
-      libyuv::NV12ToI420(src_data, width, src_data + (width * height), width,
-                         buffer->MutableDataY(), buffer->StrideY(),
-                         buffer->MutableDataU(), buffer->StrideU(),
-                         buffer->MutableDataV(), buffer->StrideV(), width,
-                         height);
+      const uint8_t* src_uv = src_data + (output_width * output_height);
+      const int src_stride_uv = output_width;
+      libyuv::NV12ToI420(
+          src_data, output_width, src_uv, src_stride_uv, buffer->MutableDataY(),
+          buffer->StrideY(), buffer->MutableDataU(), buffer->StrideU(),
+          buffer->MutableDataV(), buffer->StrideV(), width, height);
 
       ON_SUCCEEDED(src_buffer->Unlock());
       if (FAILED(hr))
@@ -521,11 +536,10 @@ int WinUWPH264DecoderImpl::Decode(const EncodedImage& input_image,
     if (FAILED(hr) || !suitable_type_found)
       return WEBRTC_VIDEO_CODEC_ERROR;
 
-    // Reset width and height in case output media size has changed (though it
-    // seems that would be unexpected, given that the input media would need to
-    // be manually changed too).
-    width_.reset();
-    height_.reset();
+    // Reset width and height in case output media size has changed, for example
+    // if the decoder introduced padding.
+    output_width_.reset();
+    output_height_.reset();
 
     hr = FlushFrames(input_image.Timestamp(), input_image.ntp_time_ms_);
   }
@@ -551,7 +565,7 @@ int WinUWPH264DecoderImpl::Release() {
 
   // Release I420 frame buffer pool
   buffer_pool_.Release();
-  
+
   if (decoder_ != NULL) {
     // Follow shutdown procedure gracefully. On fail, continue anyway.
     ON_SUCCEEDED(decoder_->ProcessMessage(MFT_MESSAGE_NOTIFY_END_OF_STREAM, 0));
