@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -151,7 +152,17 @@
     <OutputPath>$(SolutionDir)Build\Output\Net\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>$(SolutionDir)Build\Output\Net\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutputPath>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>$(SolutionDir)Build\Output\Net\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>$(SolutionDir)Build\Output\Net\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutputPath>
   </PropertyGroup>
