@@ -57,6 +57,7 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
  private:
   ComPtr<IMFSample> FromVideoFrame(const VideoFrame& frame);
   int InitEncoderWithSettings(const VideoCodec* codec_settings);
+  int ReleaseWriter();
 
  private:
   rtc::CriticalSection crit_;

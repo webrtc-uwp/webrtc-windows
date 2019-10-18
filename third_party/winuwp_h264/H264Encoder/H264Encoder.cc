@@ -95,15 +95,18 @@ int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* codec_settings,
     target_bps_ = width_ * height_ * 2;
   }
 
-  return InitEncoderWithSettings(codec_settings);
+  HRESULT hr = S_OK;
+  ON_SUCCEEDED(MFStartup(MF_VERSION));
+
+  ON_SUCCEEDED(InitEncoderWithSettings(codec_settings));
+
+  return hr;
 }
 
 int WinUWPH264EncoderImpl::InitEncoderWithSettings(const VideoCodec* codec_settings) {
   HRESULT hr = S_OK;
 
   rtc::CritScope lock(&crit_);
-
-  ON_SUCCEEDED(MFStartup(MF_VERSION));
 
   // output media type (h264)
   ComPtr<IMFMediaType> mediaTypeOut;
@@ -182,7 +185,7 @@ int WinUWPH264EncoderImpl::RegisterEncodeCompleteCallback(
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
-int WinUWPH264EncoderImpl::Release() {
+int WinUWPH264EncoderImpl::ReleaseWriter() {
   // Use a temporary sink variable to prevent lock inversion
   // between the shutdown call and OnH264Encoded() callback.
   ComPtr<H264MediaSink> tmpMediaSink;
@@ -209,6 +212,13 @@ int WinUWPH264EncoderImpl::Release() {
   if (tmpMediaSink != nullptr) {
     tmpMediaSink->Shutdown();
   }
+  return WEBRTC_VIDEO_CODEC_OK;
+}
+
+int WinUWPH264EncoderImpl::Release() {
+  ReleaseWriter();
+  HRESULT hr = S_OK;
+  ON_SUCCEEDED(MFShutdown());
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
@@ -255,7 +265,7 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
     {
       if (frameBuffer->width() != (int)width_ || frameBuffer->height() != (int)height_) {
         EncodedImageCallback* tempCallback = encodedCompleteCallback_;
-        Release();
+        ReleaseWriter();
         {
           rtc::CritScope lock(&callbackCrit_);
           encodedCompleteCallback_ = tempCallback;
@@ -535,7 +545,7 @@ int WinUWPH264EncoderImpl::SetRates(
     }
 
     EncodedImageCallback* tempCallback = encodedCompleteCallback_;
-    Release();
+    ReleaseWriter();
     {
       rtc::CritScope lock(&callbackCrit_);
       encodedCompleteCallback_ = tempCallback;
