@@ -283,7 +283,7 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
       startTime_ = frame.timestamp();
     }
 
-    auto timestampHns = ((frame.timestamp() - startTime_) / 90) * 1000 * 10;
+    auto timestampHns = GetFrameTimestampHns(frame);
     ON_SUCCEEDED(sample->SetSampleTime(timestampHns));
 
     if (SUCCEEDED(hr)) {
@@ -322,6 +322,10 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
   return sample;
 }
 
+LONGLONG WinUWPH264EncoderImpl::GetFrameTimestampHns(const VideoFrame& frame) const {
+  return ((frame.timestamp() - startTime_) / 90) * 1000 * 10;
+}
+
 int WinUWPH264EncoderImpl::Encode(
   const VideoFrame& frame,
   const CodecSpecificInfo* codec_specific_info,
@@ -356,10 +360,19 @@ int WinUWPH264EncoderImpl::Encode(
   ComPtr<IMFSample> sample;
   {
     rtc::CritScope lock(&crit_);
-    if (_sampleAttributeQueue.size() > 2) {
-      return WEBRTC_VIDEO_CODEC_OK;
+    // Only encode the frame if the encoder pipeline is not full.
+    if (_sampleAttributeQueue.size() <= 2) {
+      sample = FromVideoFrame(frame);
     }
-    sample = FromVideoFrame(frame);
+  }
+
+  if (!sample) {
+    // Drop the frame. Send a tick to keep the encoder going.
+    lastFrameDropped_ = true;
+    auto timestampHns = GetFrameTimestampHns(frame);
+    ON_SUCCEEDED(sinkWriter_->SendStreamTick(streamIndex_, timestampHns));
+    lastTimestampHns_ = timestampHns;
+    return WEBRTC_VIDEO_CODEC_OK;
   }
 
   ON_SUCCEEDED(sinkWriter_->WriteSample(streamIndex_, sample.Get()));
