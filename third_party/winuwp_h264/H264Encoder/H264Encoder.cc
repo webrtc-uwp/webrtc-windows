@@ -98,12 +98,12 @@ int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* codec_settings,
   HRESULT hr = S_OK;
   ON_SUCCEEDED(MFStartup(MF_VERSION));
 
-  ON_SUCCEEDED(InitEncoderWithSettings(codec_settings));
+  ON_SUCCEEDED(InitEncoderWithSettings());
 
   return hr;
 }
 
-int WinUWPH264EncoderImpl::InitEncoderWithSettings(const VideoCodec* codec_settings) {
+int WinUWPH264EncoderImpl::InitEncoderWithSettings() {
   HRESULT hr = S_OK;
 
   rtc::CritScope lock(&crit_);
@@ -143,31 +143,29 @@ int WinUWPH264EncoderImpl::InitEncoderWithSettings(const VideoCodec* codec_setti
   ON_SUCCEEDED(Microsoft::WRL::MakeAndInitialize<H264MediaSink>(&mediaSink_));
 
   // SinkWriter creation attributes
-  ON_SUCCEEDED(MFCreateAttributes(&sinkWriterCreationAttributes_, 1));
-  ON_SUCCEEDED(sinkWriterCreationAttributes_->SetUINT32(
+  ComPtr<IMFAttributes> sinkWriterCreationAttributes;
+  ON_SUCCEEDED(MFCreateAttributes(&sinkWriterCreationAttributes, 1));
+  ON_SUCCEEDED(sinkWriterCreationAttributes->SetUINT32(
     MF_READWRITE_ENABLE_HARDWARE_TRANSFORMS, TRUE));
-  ON_SUCCEEDED(sinkWriterCreationAttributes_->SetUINT32(
+  ON_SUCCEEDED(sinkWriterCreationAttributes->SetUINT32(
     MF_SINK_WRITER_DISABLE_THROTTLING, TRUE));
-  ON_SUCCEEDED(sinkWriterCreationAttributes_->SetUINT32(
+  ON_SUCCEEDED(sinkWriterCreationAttributes->SetUINT32(
     MF_LOW_LATENCY, TRUE));
 
   // Create the sink writer
   ON_SUCCEEDED(MFCreateSinkWriterFromMediaSink(mediaSink_.Get(),
-    sinkWriterCreationAttributes_.Get(), &sinkWriter_));
+    sinkWriterCreationAttributes.Get(), &sinkWriter_));
 
   // Add the h264 output stream to the writer
   ON_SUCCEEDED(sinkWriter_->AddStream(mediaTypeOut.Get(), &streamIndex_));
 
   // SinkWriter encoder properties
-  ON_SUCCEEDED(MFCreateAttributes(&sinkWriterEncoderAttributes_, 1));
   ON_SUCCEEDED(sinkWriter_->SetInputMediaType(streamIndex_, mediaTypeIn.Get(), nullptr));
 
   // Register this as the callback for encoded samples.
   ON_SUCCEEDED(mediaSink_->RegisterEncodingCallback(this));
 
   ON_SUCCEEDED(sinkWriter_->BeginWriting());
-
-  codec_ = *codec_settings;
 
   if (SUCCEEDED(hr)) {
     inited_ = true;
@@ -196,8 +194,6 @@ int WinUWPH264EncoderImpl::ReleaseWriter() {
     if (mediaSink_ != nullptr) {
       tmpMediaSink = mediaSink_;
     }
-    sinkWriterCreationAttributes_.Reset();
-    sinkWriterEncoderAttributes_.Reset();
     mediaSink_.Reset();
     startTime_ = 0;
     lastTimestampHns_ = 0;
@@ -273,7 +269,7 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
 
         width_ = frameBuffer->width();
         height_ = frameBuffer->height();
-        InitEncoderWithSettings(&codec_);
+        InitEncoderWithSettings();
         RTC_LOG(LS_WARNING) << "Resolution changed to: " << frameBuffer->width() << "x" << frameBuffer->height();
       }
     }
@@ -563,7 +559,7 @@ int WinUWPH264EncoderImpl::SetRates(
       rtc::CritScope lock(&callbackCrit_);
       encodedCompleteCallback_ = tempCallback;
     }
-    InitEncoderWithSettings(&codec_);
+    InitEncoderWithSettings();
   }
 
   return WEBRTC_VIDEO_CODEC_OK;

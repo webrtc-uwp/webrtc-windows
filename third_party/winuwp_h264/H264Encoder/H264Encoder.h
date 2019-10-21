@@ -56,7 +56,7 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
 
  private:
   ComPtr<IMFSample> FromVideoFrame(const VideoFrame& frame);
-  int InitEncoderWithSettings(const VideoCodec* codec_settings);
+  int InitEncoderWithSettings();
   int ReleaseWriter();
   LONGLONG GetFrameTimestampHns(const VideoFrame& frame) const;
 
@@ -66,8 +66,6 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
   bool inited_ {};
   const CodecSpecificInfo* codecSpecificInfo_ {};
   ComPtr<IMFSinkWriter> sinkWriter_;
-  ComPtr<IMFAttributes> sinkWriterCreationAttributes_;
-  ComPtr<IMFAttributes> sinkWriterEncoderAttributes_;
   ComPtr<H264MediaSink> mediaSink_;
   EncodedImageCallback* encodedCompleteCallback_ {};
   DWORD streamIndex_ {};
@@ -106,8 +104,6 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
   };
   SampleAttributeQueue<CachedFrameAttributes> _sampleAttributeQueue;
 
-  // Caching the codec received in InitEncode().
-  VideoCodec codec_;
 };  // end of WinUWPH264EncoderImpl class
 
 }  // namespace webrtc
