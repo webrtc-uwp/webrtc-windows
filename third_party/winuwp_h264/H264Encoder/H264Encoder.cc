@@ -370,6 +370,17 @@ void WinUWPH264EncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
   HRESULT hr = S_OK;
   ON_SUCCEEDED(sample->GetTotalLength(&totalLength));
 
+  LONGLONG sampleTimestamp = 0;
+  ON_SUCCEEDED(sample->GetSampleTime(&sampleTimestamp));
+
+  // Pop the attributes for this frame. This must be done even if the
+  // frame is discarded later, or the queue will clog.
+  CachedFrameAttributes frameAttributes;
+  if (!_sampleAttributeQueue.pop(sampleTimestamp, frameAttributes)) {
+    // No point in processing a frame that doesn't have correct attributes.
+    return;
+  }
+
   ComPtr<IMFMediaBuffer> buffer;
   hr = sample->GetBufferByIndex(0, &buffer);
 
@@ -452,29 +463,15 @@ void WinUWPH264EncoderImpl::OnH264Encoded(ComPtr<IMFSample> sample) {
         fragmentationHeader.fragmentationOffset[fragIdx - 1];
     }
 
+    encodedImage.SetTimestamp(frameAttributes.timestamp);
+    encodedImage.ntp_time_ms_ = frameAttributes.ntpTime;
+    encodedImage.capture_time_ms_ = frameAttributes.captureRenderTime;
+    encodedImage._encodedWidth = frameAttributes.frameWidth;
+    encodedImage._encodedHeight = frameAttributes.frameHeight;
+
     {
       rtc::CritScope lock(&callbackCrit_);
       --framePendingCount_;
-      if (encodedCompleteCallback_ == nullptr) {
-        return;
-      }
-
-      LONGLONG sampleTimestamp;
-      sample->GetSampleTime(&sampleTimestamp);
-
-      CachedFrameAttributes frameAttributes;
-      if (_sampleAttributeQueue.pop(sampleTimestamp, frameAttributes)) {
-        encodedImage.SetTimestamp(frameAttributes.timestamp);
-        encodedImage.ntp_time_ms_ = frameAttributes.ntpTime;
-        encodedImage.capture_time_ms_ = frameAttributes.captureRenderTime;
-        encodedImage._encodedWidth = frameAttributes.frameWidth;
-        encodedImage._encodedHeight = frameAttributes.frameHeight;
-      }
-      else {
-        // No point in confusing the callback with a frame that doesn't
-        // have correct attributes.
-        return;
-      }
 
 	  if (encodedCompleteCallback_ != nullptr) {
 		CodecSpecificInfo codecSpecificInfo;
