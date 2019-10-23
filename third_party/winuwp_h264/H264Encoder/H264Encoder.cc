@@ -98,12 +98,12 @@ int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* codec_settings,
   HRESULT hr = S_OK;
   ON_SUCCEEDED(MFStartup(MF_VERSION));
 
-  ON_SUCCEEDED(InitEncoderWithSettings());
+  ON_SUCCEEDED(InitWriter());
 
   return hr;
 }
 
-int WinUWPH264EncoderImpl::InitEncoderWithSettings() {
+int WinUWPH264EncoderImpl::InitWriter() {
   HRESULT hr = S_OK;
 
   rtc::CritScope lock(&crit_);
@@ -269,7 +269,7 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
 
         width_ = frameBuffer->width();
         height_ = frameBuffer->height();
-        InitEncoderWithSettings();
+        InitWriter();
         RTC_LOG(LS_WARNING) << "Resolution changed to: " << frameBuffer->width() << "x" << frameBuffer->height();
       }
     }
@@ -318,8 +318,11 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
   return sample;
 }
 
+// Returns the timestamp in hundreds of nanoseconds (Media Foundation unit)
 LONGLONG WinUWPH264EncoderImpl::GetFrameTimestampHns(const VideoFrame& frame) const {
-  return ((frame.timestamp() - startTime_) / 90) * 1000 * 10;
+  // H.264 clock rate is 90kHz (https://tools.ietf.org/html/rfc6184#page-11).
+  // timestamp_100ns = timestamp_90kHz / {90'000 Hz} * {10'000'000 hns/sec}
+  return (frame.timestamp() - startTime_) * 10'000 / 90;
 }
 
 int WinUWPH264EncoderImpl::Encode(
@@ -556,7 +559,7 @@ int WinUWPH264EncoderImpl::SetRates(
       rtc::CritScope lock(&callbackCrit_);
       encodedCompleteCallback_ = tempCallback;
     }
-    InitEncoderWithSettings();
+    InitWriter();
   }
 
   return WEBRTC_VIDEO_CODEC_OK;
