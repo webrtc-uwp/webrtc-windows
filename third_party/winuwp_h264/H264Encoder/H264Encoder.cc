@@ -43,6 +43,11 @@ namespace webrtc {
 // QP scaling thresholds.
 static const int kLowH264QpThreshold = 24;
 static const int kHighH264QpThreshold = 37;
+
+// On some encoders (e.g. Hololens) changing rates is slow and will cause
+// visible stuttering, so we don't want to do it too often.
+static const int kMinIntervalBetweenRateChangesMs = 5000;
+
 //////////////////////////////////////////
 // H264 WinUWP Encoder Implementation
 //////////////////////////////////////////
@@ -95,6 +100,7 @@ int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* codec_settings,
     target_bps_ = width_ * height_ * 2;
   }
 
+  // Configure the encoder.
   HRESULT hr = S_OK;
   ON_SUCCEEDED(MFStartup(MF_VERSION));
 
@@ -169,7 +175,7 @@ int WinUWPH264EncoderImpl::InitWriter() {
 
   if (SUCCEEDED(hr)) {
     inited_ = true;
-    lastTimeSettingsChanged_ = rtc::TimeMillis();
+    last_rate_change_time_rtc_ms = rtc::TimeMillis();
     return WEBRTC_VIDEO_CODEC_OK;
   } else {
     return hr;
@@ -258,22 +264,6 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
         frameBuffer->height());
     }
 
-    {
-      if (frameBuffer->width() != (int)width_ || frameBuffer->height() != (int)height_) {
-        EncodedImageCallback* tempCallback = encodedCompleteCallback_;
-        ReleaseWriter();
-        {
-          rtc::CritScope lock(&callbackCrit_);
-          encodedCompleteCallback_ = tempCallback;
-        }
-
-        width_ = frameBuffer->width();
-        height_ = frameBuffer->height();
-        InitWriter();
-        RTC_LOG(LS_WARNING) << "Resolution changed to: " << frameBuffer->width() << "x" << frameBuffer->height();
-      }
-    }
-
     if (firstFrame_) {
       firstFrame_ = false;
       startTime_ = frame.timestamp();
@@ -329,13 +319,32 @@ int WinUWPH264EncoderImpl::Encode(
   const VideoFrame& frame,
   const CodecSpecificInfo* codec_specific_info,
   const std::vector<FrameType>* frame_types) {
-  {
-      rtc::CritScope lock(&crit_);
-      if (!inited_) {
-      return -1;
-    }
+  if (!inited_) {
+    return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
   }
 
+  {
+    rtc::scoped_refptr<webrtc::VideoFrameBuffer> frame_buffer =
+        frame.video_frame_buffer();
+    int cur_width = frame_buffer->width();
+    int cur_height = frame_buffer->height();
+    int64_t now = rtc::TimeMillis();
+
+    rtc::CritScope lock(&crit_);
+    // Reset the encoder configuration if necessary.
+    bool res_changed = cur_width != (int)width_ || cur_height != (int)height_;
+    bool should_change_rate_now =
+        rate_change_requested_ &&
+        (now - last_rate_change_time_rtc_ms) > kMinIntervalBetweenRateChangesMs;
+    if (res_changed || should_change_rate_now) {
+      int res = ReconfigureSinkWriter(cur_width, cur_height, next_target_bps_,
+                                      next_frame_rate_);
+      if (FAILED(res)) {
+        return res;
+      }
+      rate_change_requested_ = false;
+    }
+  }
 
   if (frame_types != nullptr) {
     for (auto frameType : *frame_types) {
@@ -514,45 +523,70 @@ int WinUWPH264EncoderImpl::SetChannelParameters(
 #define DYNAMIC_FPS
 #define DYNAMIC_BITRATE
 
-int WinUWPH264EncoderImpl::SetRates(
-  uint32_t new_bitrate_kbit, uint32_t new_framerate) {
-  RTC_LOG(LS_INFO) << "WinUWPH264EncoderImpl::SetRates("
-    << new_bitrate_kbit << "kbit " << new_framerate << "fps)";
+int WinUWPH264EncoderImpl::SetRates(uint32_t new_bitrate_kbit,
+                                    uint32_t new_framerate) {
+  if (sinkWriter_ == nullptr) {
+    return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
+  }
+  RTC_LOG(LS_INFO) << "WinUWPH264EncoderImpl::SetRates(" << new_bitrate_kbit
+                   << "kbit " << new_framerate << "fps)";
 
-  // This may happen.  Ignore it.
+  // This may happen. Ignore it.
   if (new_framerate == 0) {
     return WEBRTC_VIDEO_CODEC_OK;
   }
 
+  int64_t now = rtc::TimeMillis();
   rtc::CritScope lock(&crit_);
-  if (sinkWriter_ == nullptr) {
-    return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
+  int64_t time_to_wait_before_rate_change =
+      kMinIntervalBetweenRateChangesMs - (now - last_rate_change_time_rtc_ms);
+  if (time_to_wait_before_rate_change > 0) {
+    // Delay rate update until the interval has passed.
+    RTC_LOG(LS_INFO) << "Postponing this SetRates() in "
+                     << time_to_wait_before_rate_change << " ms.\n";
+    next_target_bps_ = new_bitrate_kbit * 1000;
+    next_frame_rate_ = new_framerate;
+    rate_change_requested_ = true;
+    return WEBRTC_VIDEO_CODEC_OK;
   }
+  // Update the configuration.
+  return ReconfigureSinkWriter(width_, height_, new_bitrate_kbit * 1000,
+                               new_framerate);
+}
 
+int WinUWPH264EncoderImpl::ReconfigureSinkWriter(UINT32 new_width,
+                                                 UINT32 new_height,
+                                                 UINT32 new_target_bps,
+                                                 UINT32 new_frame_rate) {
+  // NOTE: must be called under crit_ lock.
+  RTC_LOG(LS_INFO) << "WinUWPH264EncoderImpl::ResetSinkWriter() " << new_width
+                   << "x" << new_height << "@" << new_frame_rate << " "
+                   << new_target_bps / 1000 << "kbps";
+  bool resUpdated = false;
   bool bitrateUpdated = false;
   bool fpsUpdated = false;
 
+  if (width_ != new_width || height_ != new_height) {
+    resUpdated = true;
+    width_ = new_width;
+    height_ = new_height;
+  }
+
 #ifdef DYNAMIC_BITRATE
-  if (target_bps_ != (new_bitrate_kbit * 1000)) {
-    target_bps_ = new_bitrate_kbit * 1000;
+  if (std::abs((int)target_bps_ - (int)new_target_bps) > target_bps_ * 0.05) {
     bitrateUpdated = true;
+    target_bps_ = new_target_bps;
   }
 #endif
 
 #ifdef DYNAMIC_FPS
-  // Fps changes seems to be expensive, make it granular to several frames per second.
-  if (frame_rate_ != new_framerate && std::abs((int)frame_rate_ - (int)new_framerate) > 5) {
-    frame_rate_ = new_framerate;
+  if (std::abs((int)frame_rate_ - (int)new_frame_rate) > frame_rate_ * 0.05) {
     fpsUpdated = true;
+    frame_rate_ = new_frame_rate;
   }
 #endif
 
-  if (bitrateUpdated || fpsUpdated) {
-    if ((rtc::TimeMillis() - lastTimeSettingsChanged_) < 15000) {
-      RTC_LOG(LS_INFO) << "Last time settings changed was too soon, skipping this SetRates().\n";
-      return WEBRTC_VIDEO_CODEC_OK;
-    }
-
+  if (resUpdated || bitrateUpdated || fpsUpdated) {
     EncodedImageCallback* tempCallback = encodedCompleteCallback_;
     ReleaseWriter();
     {
@@ -560,6 +594,8 @@ int WinUWPH264EncoderImpl::SetRates(
       encodedCompleteCallback_ = tempCallback;
     }
     InitWriter();
+
+    last_rate_change_time_rtc_ms = rtc::TimeMillis();
   }
 
   return WEBRTC_VIDEO_CODEC_OK;
