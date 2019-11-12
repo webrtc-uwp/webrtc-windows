@@ -59,6 +59,10 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
   int InitWriter();
   int ReleaseWriter();
   LONGLONG GetFrameTimestampHns(const VideoFrame& frame) const;
+  int ReconfigureSinkWriter(UINT32 new_width,
+                            UINT32 new_height,
+                            UINT32 new_target_bps,
+                            UINT32 new_frame_rate);
 
  private:
   rtc::CriticalSection crit_;
@@ -93,7 +97,12 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
   bool frame_dropping_on_;
   int key_frame_interval_;
 
-  int64_t lastTimeSettingsChanged_ {};
+  int64_t last_rate_change_time_rtc_ms {};
+  bool rate_change_requested_ {};
+
+  // Values to use as soon as the min interval between rate changes has passed
+  UINT32 next_frame_rate_;
+  UINT32 next_target_bps_;
 
   struct CachedFrameAttributes {
     uint32_t timestamp;
