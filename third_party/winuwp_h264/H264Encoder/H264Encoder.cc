@@ -46,7 +46,12 @@ static const int kHighH264QpThreshold = 37;
 
 // On some encoders (e.g. Hololens) changing rates is slow and will cause
 // visible stuttering, so we don't want to do it too often.
+// todo(fibann): we are ignoring small variations which means the rates might
+// end up being off the requested value by a small amount in the long term. We
+// should not ignore small variations but possibly use a longer min interval so
+// they are eventually applied.
 static const int kMinIntervalBetweenRateChangesMs = 5000;
+static const float kMinRateVariation = 0.1f;
 
 //////////////////////////////////////////
 // H264 WinUWP Encoder Implementation
@@ -573,14 +578,18 @@ int WinUWPH264EncoderImpl::ReconfigureSinkWriter(UINT32 new_width,
   }
 
 #ifdef DYNAMIC_BITRATE
-  if (std::abs((int)target_bps_ - (int)new_target_bps) > target_bps_ * 0.05) {
+  // Ignore small changes.
+  if (std::abs((int)target_bps_ - (int)new_target_bps) >
+      target_bps_ * kMinRateVariation) {
     bitrateUpdated = true;
     target_bps_ = new_target_bps;
   }
 #endif
 
 #ifdef DYNAMIC_FPS
-  if (std::abs((int)frame_rate_ - (int)new_frame_rate) > frame_rate_ * 0.05) {
+  // Ignore small changes.
+  if (std::abs((int)frame_rate_ - (int)new_frame_rate) >
+      frame_rate_ * kMinRateVariation) {
     fpsUpdated = true;
     frame_rate_ = new_frame_rate;
   }
