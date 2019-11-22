@@ -23,6 +23,7 @@
 #include <sstream>
 #include <vector>
 #include <iomanip>
+#include <windows.graphics.holographic.h>
 
 #include "H264StreamSink.h"
 #include "H264MediaSink.h"
@@ -37,6 +38,13 @@
 #pragma comment(lib, "mfreadwrite")
 #pragma comment(lib, "mfplat")
 #pragma comment(lib, "mfuuid.lib")
+
+// If true, pad frames whose height is not multiple of 16 on Hololens.
+// Otherwise, crop the frames.
+// User code should extern-declare and set this. There seems to be no easy way
+// to pass arbitrary parameters to the encoder so this is the best (easy)
+// option.
+bool webrtc__WinUWPH264EncoderImpl__add_padding = false;
 
 namespace webrtc {
 
@@ -63,6 +71,67 @@ WinUWPH264EncoderImpl::WinUWPH264EncoderImpl()
 
 WinUWPH264EncoderImpl::~WinUWPH264EncoderImpl() {
   Release();
+}
+
+namespace {
+using namespace Microsoft::WRL::Wrappers;
+using namespace Windows::Foundation;
+using namespace ABI::Windows::Graphics::Holographic;
+
+bool CheckIfHololens() {
+  // The best way to check if we are running on Hololens is checking if this is
+  // a x86 Windows device with a transparent holographic display (AR).
+
+
+#if defined(_M_IX86) /* x86 */ && \
+    defined(WINAPI_FAMILY) && \
+    (WINAPI_FAMILY == WINAPI_FAMILY_APP) /* UWP app */ && \
+    defined(_WIN32_WINNT_WIN10) && \
+    _WIN32_WINNT >= _WIN32_WINNT_WIN10 /* Win10 */
+
+#define RETURN_IF_ERROR(...) \
+  if (FAILED(__VA_ARGS__)) { \
+    return false;            \
+  }
+
+  // HolographicSpace.IsAvailable
+  ComPtr<IHolographicSpaceStatics2> holo_space_statics;
+  RETURN_IF_ERROR(GetActivationFactory(
+      HStringReference(
+          RuntimeClass_Windows_Graphics_Holographic_HolographicSpace)
+          .Get(),
+      &holo_space_statics));
+  boolean is_holo_space_available;
+  RETURN_IF_ERROR(
+      holo_space_statics->get_IsAvailable(&is_holo_space_available));
+  if (!is_holo_space_available) {
+	// Not a holographic device.
+    return false;
+  }
+
+  // HolographicDisplay.GetDefault().IsOpaque
+  ComPtr<IHolographicDisplayStatics> holo_display_statics;
+  RETURN_IF_ERROR(GetActivationFactory(
+      HStringReference(
+          RuntimeClass_Windows_Graphics_Holographic_HolographicDisplay)
+          .Get(),
+      &holo_display_statics));
+  ComPtr<IHolographicDisplay> holo_display;
+  RETURN_IF_ERROR(holo_display_statics->GetDefault(&holo_display));
+  boolean is_opaque;
+  RETURN_IF_ERROR(holo_display->get_IsOpaque(&is_opaque));
+  // Hololens if not opaque (otherwise VR).
+  return !is_opaque;
+#undef RETURN_IF_ERROR
+#else
+  return false;
+#endif
+}
+
+bool IsHololens() {
+  static const bool is_hololens = CheckIfHololens();
+  return is_hololens;
+}
 }
 
 int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* codec_settings,
@@ -117,7 +186,20 @@ int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* codec_settings,
 int WinUWPH264EncoderImpl::InitWriter() {
   HRESULT hr = S_OK;
 
+  bool is_hololens = IsHololens();
+
   rtc::CritScope lock(&crit_);
+
+  // The hardware encoder on Hololens 1 produces severe artifacts at low
+  // bitrates when processing frames whose height is not multiple of 16. As a
+  // workaround we pad or crop those resolutions before passing them to the
+  // encoder.
+  encoded_height_ = height_;
+  if (is_hololens) {
+    encoded_height_ = webrtc__WinUWPH264EncoderImpl__add_padding
+                          ? (height_ + 15) & ~15
+                          : height_ & ~15;
+  }
 
   // output media type (h264)
   ComPtr<IMFMediaType> mediaTypeOut;
@@ -133,9 +215,9 @@ int WinUWPH264EncoderImpl::InitWriter() {
   ON_SUCCEEDED(mediaTypeOut->SetUINT32(
     MF_MT_INTERLACE_MODE, MFVideoInterlace_Progressive));
   ON_SUCCEEDED(MFSetAttributeSize(mediaTypeOut.Get(),
-    MF_MT_FRAME_SIZE, width_, height_));
-  ON_SUCCEEDED(MFSetAttributeRatio(mediaTypeOut.Get(),
-    MF_MT_FRAME_RATE, frame_rate_, 1));
+    MF_MT_FRAME_SIZE, width_, encoded_height_));
+  ON_SUCCEEDED(MFSetAttributeRatio(mediaTypeOut.Get(), MF_MT_FRAME_RATE,
+                                   frame_rate_, 1));
 
   // input media type (nv12)
   ComPtr<IMFMediaType> mediaTypeIn;
@@ -145,8 +227,9 @@ int WinUWPH264EncoderImpl::InitWriter() {
   ON_SUCCEEDED(mediaTypeIn->SetUINT32(
     MF_MT_INTERLACE_MODE, MFVideoInterlace_Progressive));
   ON_SUCCEEDED(mediaTypeIn->SetUINT32(MF_MT_ALL_SAMPLES_INDEPENDENT, TRUE));
-  ON_SUCCEEDED(MFSetAttributeSize(mediaTypeIn.Get(),
-    MF_MT_FRAME_SIZE, width_, height_));
+  ON_SUCCEEDED(MFSetAttributeSize(mediaTypeIn.Get(), MF_MT_FRAME_SIZE, width_,
+                                  encoded_height_));
+
   ON_SUCCEEDED(MFSetAttributeRatio(mediaTypeIn.Get(),
     MF_MT_FRAME_RATE, frame_rate_, 1));
 
@@ -240,11 +323,23 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
   rtc::scoped_refptr<I420BufferInterface> frameBuffer =
       static_cast<I420BufferInterface*>(frame.video_frame_buffer().get());
 
-  if (SUCCEEDED(hr)) {
-    auto totalSize = frameBuffer->StrideY() * frameBuffer->height() +
-      frameBuffer->StrideU() * (frameBuffer->height() + 1) / 2 +
-      frameBuffer->StrideV() * (frameBuffer->height() + 1) / 2;
+  assert(frameBuffer->width() == width_);
+  assert(frameBuffer->height() == height_);
 
+  int dst_height_uv = (height_ + 1) / 2;
+  int dst_stride_y = frameBuffer->StrideY();
+  int dst_stride_uv = dst_stride_y;
+
+  auto totalSize = dst_stride_y * encoded_height_ +
+                   dst_stride_uv * encoded_height_ / 2;
+
+  // Will be negative when cropping.
+  int padding_top_y = ((int)encoded_height_- (int)height_) / 2;
+  int padding_bottom_y = (int)encoded_height_ - (int)height_ - padding_top_y;
+  int padding_top_uv = padding_top_y / 2;
+  int padding_bottom_uv = (int)encoded_height_ / 2 - dst_height_uv - padding_top_uv;
+
+  if (SUCCEEDED(hr)) {
     ComPtr<IMFMediaBuffer> mediaBuffer;
     ON_SUCCEEDED(MFCreateMemoryBuffer(totalSize, mediaBuffer.GetAddressOf()));
 
@@ -255,18 +350,48 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
       ON_SUCCEEDED(mediaBuffer->Lock(
         &destBuffer, &cbMaxLength, &cbCurrentLength));
     }
+    const uint8_t* src_y = frameBuffer->DataY();
+    const uint8_t* src_u = frameBuffer->DataU();
+    const uint8_t* src_v = frameBuffer->DataV();
+    int src_height = height_;
 
+    BYTE* dst_y = destBuffer;
+    BYTE* dst_uv = dst_y + dst_stride_y * encoded_height_;
+
+	if (webrtc__WinUWPH264EncoderImpl__add_padding) {
+      // Pad the destination.
+      dst_y += dst_stride_y * padding_top_y;
+      dst_uv += dst_stride_uv * padding_top_uv;
+    } else {
+      // Crop the source.
+      src_y += frameBuffer->StrideY() * -padding_top_y;
+      src_u += frameBuffer->StrideU() * -padding_top_uv;
+      src_v += frameBuffer->StrideV() * -padding_top_uv;
+      src_height = encoded_height_;
+    }
     if (SUCCEEDED(hr)) {
-      BYTE* destUV = destBuffer +
-        (frameBuffer->StrideY() * frameBuffer->height());
-      libyuv::I420ToNV12(
-        frameBuffer->DataY(), frameBuffer->StrideY(),
-        frameBuffer->DataU(), frameBuffer->StrideU(),
-        frameBuffer->DataV(), frameBuffer->StrideV(),
-        destBuffer, frameBuffer->StrideY(),
-        destUV, frameBuffer->StrideY(),
-        frameBuffer->width(),
-        frameBuffer->height());
+      libyuv::I420ToNV12(src_y, frameBuffer->StrideY(), src_u,
+                         frameBuffer->StrideU(), src_v, frameBuffer->StrideV(),
+                         dst_y, dst_stride_y, dst_uv, dst_stride_uv, width_, src_height);
+
+      if (padding_top_y > 0) {
+        libyuv::CopyPlane(dst_y, dst_stride_y,
+                          destBuffer, dst_stride_y,
+                          width_, -padding_top_y);
+        libyuv::CopyPlane(dst_uv, dst_stride_uv,
+                          dst_uv - (dst_stride_uv * padding_top_uv), dst_stride_uv,
+                          width_, -padding_top_uv);
+      }
+      if (padding_bottom_y > 0) {
+        BYTE* dst_end_y = dst_y + (dst_stride_y * height_);
+        BYTE* dst_end_uv = dst_uv + (dst_stride_uv * dst_height_uv);
+        libyuv::CopyPlane(dst_end_y - (dst_stride_y * padding_bottom_y),
+                          dst_stride_y, dst_end_y,
+                          dst_stride_y, width_, -padding_bottom_y);
+        libyuv::CopyPlane(dst_end_uv - (dst_stride_uv * padding_bottom_uv),
+                          dst_stride_uv, dst_end_uv, dst_stride_uv, width_,
+                          -padding_bottom_uv);
+      }
     }
 
     if (firstFrame_) {
@@ -291,12 +416,12 @@ ComPtr<IMFSample> WinUWPH264EncoderImpl::FromVideoFrame(const VideoFrame& frame)
       frameAttributes.ntpTime = frame.ntp_time_ms();
       frameAttributes.captureRenderTime = frame.render_time_ms();
       frameAttributes.frameWidth = frame.width();
-      frameAttributes.frameHeight = frame.height();
+      frameAttributes.frameHeight = encoded_height_;
       _sampleAttributeQueue.push(timestampHns, frameAttributes);
     }
 
-    ON_SUCCEEDED(mediaBuffer->SetCurrentLength(
-      frameBuffer->width() * frameBuffer->height() * 3 / 2));
+    ON_SUCCEEDED(
+        mediaBuffer->SetCurrentLength(totalSize));
 
     if (destBuffer != nullptr) {
       mediaBuffer->Unlock();
