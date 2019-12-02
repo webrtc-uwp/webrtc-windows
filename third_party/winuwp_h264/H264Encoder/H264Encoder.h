@@ -90,7 +90,6 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
 
   UINT32 width_;
   UINT32 height_;
-  UINT32 encoded_height_;
   UINT32 frame_rate_;
   UINT32 target_bps_;
   VideoCodecMode mode_;
