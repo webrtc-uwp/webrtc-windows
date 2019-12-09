@@ -473,13 +473,6 @@ int WinUWPH264EncoderImpl::Encode(
 
   ON_SUCCEEDED(sinkWriter_->WriteSample(streamIndex_, sample.Get()));
 
-  rtc::CritScope lock(&crit_);
-  // Some threads online mention this is useful to do regularly.
-  ++frameCount_;
-  if (frameCount_ % 30 == 0) {
-    ON_SUCCEEDED(sinkWriter_->NotifyEndOfSegment(streamIndex_));
-  }
-
   ++framePendingCount_;
   return WEBRTC_VIDEO_CODEC_OK;
 }
