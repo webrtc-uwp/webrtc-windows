@@ -53,6 +53,9 @@ namespace webrtc {
 static const int kLowH264QpThreshold = 24;
 static const int kHighH264QpThreshold = 37;
 
+static const int kMinH264Qp = 0;
+static const int kMaxH264Qp = 51;
+
 // On some encoders (e.g. Hololens) changing rates is slow and will cause
 // visible stuttering, so we don't want to do it too often.
 // todo(fibann): we are ignoring small variations which means the rates might
@@ -111,6 +114,11 @@ int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* codec_settings,
   // WebRTC only passes the max frame rate so use it as the initial value for
   // the desired frame rate too.
   frame_rate_ = codec_settings->maxFramerate;
+
+  max_qp_ = (codec_settings->qpMax >= kMinH264Qp &&
+             codec_settings->qpMax <= kMaxH264Qp)
+                ? codec_settings->qpMax
+                : -1;
 
   mode_ = codec_settings->mode;
   frame_dropping_on_ = codec_settings->H264().frameDroppingOn;
@@ -197,7 +205,14 @@ int WinUWPH264EncoderImpl::InitWriter() {
   ON_SUCCEEDED(sinkWriter_->AddStream(mediaTypeOut.Get(), &streamIndex_));
 
   // SinkWriter encoder properties
-  ON_SUCCEEDED(sinkWriter_->SetInputMediaType(streamIndex_, mediaTypeIn.Get(), nullptr));
+  ComPtr<IMFAttributes> encodingAttributes;
+  ON_SUCCEEDED(MFCreateAttributes(&encodingAttributes, 1));
+  if (max_qp_ >= 0) {
+    ON_SUCCEEDED(
+        encodingAttributes->SetUINT32(CODECAPI_AVEncVideoMaxQP, max_qp_));
+  }
+  ON_SUCCEEDED(sinkWriter_->SetInputMediaType(streamIndex_, mediaTypeIn.Get(),
+                                              encodingAttributes.Get()));
 
   // Register this as the callback for encoded samples.
   ON_SUCCEEDED(mediaSink_->RegisterEncodingCallback(this));
