@@ -92,6 +92,7 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
   UINT32 height_;
   UINT32 frame_rate_;
   UINT32 target_bps_;
+  UINT32 max_qp_;
   VideoCodecMode mode_;
   // H.264 specifc parameters
   bool frame_dropping_on_;
