@@ -50,11 +50,10 @@ int webrtc__WinUWPH264EncoderImpl__frame_height_round_mode = kFrameHeightNoChang
 namespace webrtc {
 
 // QP scaling thresholds.
-static const int kLowH264QpThreshold = 24;
-static const int kHighH264QpThreshold = 37;
+static constexpr int kLowH264QpThreshold = 24;
+static constexpr int kHighH264QpThreshold = 37;
 
-static const int kMinH264Qp = 0;
-static const int kMaxH264Qp = 51;
+static constexpr unsigned kMaxH264Qp = 51;
 
 // On some encoders (e.g. Hololens) changing rates is slow and will cause
 // visible stuttering, so we don't want to do it too often.
@@ -62,8 +61,8 @@ static const int kMaxH264Qp = 51;
 // end up being off the requested value by a small amount in the long term. We
 // should not ignore small variations but possibly use a longer min interval so
 // they are eventually applied.
-static const int kMinIntervalBetweenRateChangesMs = 5000;
-static const float kMinRateVariation = 0.1f;
+static constexpr int kMinIntervalBetweenRateChangesMs = 5000;
+static constexpr float kMinRateVariation = 0.1f;
 
 //////////////////////////////////////////
 // H264 WinUWP Encoder Implementation
@@ -115,10 +114,7 @@ int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* codec_settings,
   // the desired frame rate too.
   frame_rate_ = codec_settings->maxFramerate;
 
-  max_qp_ = (codec_settings->qpMax >= kMinH264Qp &&
-             codec_settings->qpMax <= kMaxH264Qp)
-                ? codec_settings->qpMax
-                : -1;
+  max_qp_ = std::min(codec_settings->qpMax, kMaxH264Qp);
 
   mode_ = codec_settings->mode;
   frame_dropping_on_ = codec_settings->H264().frameDroppingOn;
@@ -207,7 +203,9 @@ int WinUWPH264EncoderImpl::InitWriter() {
   // SinkWriter encoder properties
   ComPtr<IMFAttributes> encodingAttributes;
   ON_SUCCEEDED(MFCreateAttributes(&encodingAttributes, 1));
-  if (max_qp_ >= 0) {
+
+  // kMaxH264Qp is the default.
+  if (max_qp_ < kMaxH264Qp) {
     ON_SUCCEEDED(
         encodingAttributes->SetUINT32(CODECAPI_AVEncVideoMaxQP, max_qp_));
   }
