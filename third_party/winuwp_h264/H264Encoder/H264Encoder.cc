@@ -206,6 +206,7 @@ int WinUWPH264EncoderImpl::InitWriter() {
 
   // kMaxH264Qp is the default.
   if (max_qp_ < kMaxH264Qp) {
+    RTC_LOG(LS_INFO) << "Set max QP to " << max_qp_;
     ON_SUCCEEDED(
         encodingAttributes->SetUINT32(CODECAPI_AVEncVideoMaxQP, max_qp_));
   }
