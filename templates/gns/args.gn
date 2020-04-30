@@ -8,3 +8,4 @@ use_rtti=true
 is_clang=-is_clang-
 std_cpp17=-std_cpp17-
 rtc_include_tests=-is_include_tests-
+rtc_enable_protobuf=-is_enable_protobuf-
