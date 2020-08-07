@@ -9,3 +9,7 @@ is_clang=-is_clang-
 std_cpp17=-std_cpp17-
 rtc_include_tests=-is_include_tests-
 rtc_enable_protobuf=-is_enable_protobuf-
+
+# Build and link ADM2
+# See https://bugs.chromium.org/p/webrtc/issues/detail?id=11544
+rtc_include_audio_device_module_from_input_and_output=true
