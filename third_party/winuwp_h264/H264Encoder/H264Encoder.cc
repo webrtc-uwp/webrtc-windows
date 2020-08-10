@@ -268,7 +268,10 @@ int WinUWPH264EncoderImpl::InitWriter() {
         CODECAPI_AVEncCommonRateControlMode, mode));
   }
 
-  // Enable CABAC. This will only have effect in profiles that support it.
+  // Ensure CABAC is enabled (default is true, but just in case the
+  // implementation is not compliant). This greatly improves quality (has effect
+  // in Main profile and above).
+  RTC_LOG(LS_INFO) << "Ensure CABAC is enabled";
   ON_SUCCEEDED(encodingAttributes->SetUINT32(CODECAPI_AVEncH264CABACEnable,
                                              VARIANT_TRUE));
 
