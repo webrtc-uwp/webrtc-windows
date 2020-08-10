@@ -20,6 +20,7 @@
 #include <codecapi.h>
 #include <mfreadwrite.h>
 #include <wrl\implements.h>
+
 #include <sstream>
 #include <vector>
 #include <iomanip>
@@ -38,16 +39,17 @@
 #pragma comment(lib, "mfplat")
 #pragma comment(lib, "mfuuid.lib")
 
-// Determines whether to pad or crop frames whose height is not multiple of 16.
-// User code should extern-declare and set this. There seems to be no easy way
-// to pass arbitrary parameters to the encoder so this is the best (easy)
-// option.
-static constexpr int kFrameHeightNoChange = 0;
-static constexpr int kFrameHeightCrop = 1;
-static constexpr int kFrameHeightPad = 2;
-int webrtc__WinUWPH264EncoderImpl__frame_height_round_mode = kFrameHeightNoChange;
-
 namespace webrtc {
+
+std::atomic<WinUWPH264EncoderImpl::FrameHeightRoundMode>
+    WinUWPH264EncoderImpl::global_frame_height_round_mode =
+        WinUWPH264EncoderImpl::FrameHeightRoundMode::kNoChange;
+std::atomic<H264::Profile> WinUWPH264EncoderImpl::global_profile =
+    webrtc::H264::kProfileBaseline;
+std::atomic<WinUWPH264EncoderImpl::RcMode>
+    WinUWPH264EncoderImpl::global_rc_mode = RcMode::kUnset;
+std::atomic<int> WinUWPH264EncoderImpl::global_max_qp = -1;
+std::atomic<int> WinUWPH264EncoderImpl::global_quality = -1;
 
 // QP scaling thresholds.
 static constexpr int kLowH264QpThreshold = 24;
@@ -79,12 +81,12 @@ WinUWPH264EncoderImpl::~WinUWPH264EncoderImpl() {
 namespace {
 
 UINT32 HeightToEncode(UINT32 height) {
-  switch (webrtc__WinUWPH264EncoderImpl__frame_height_round_mode) {
-    case kFrameHeightNoChange:
+  switch (WinUWPH264EncoderImpl::global_frame_height_round_mode) {
+    case WinUWPH264EncoderImpl::FrameHeightRoundMode::kNoChange:
       return height;
-    case kFrameHeightCrop:
+    case WinUWPH264EncoderImpl::FrameHeightRoundMode::kCrop:
       return height & ~15;
-    case kFrameHeightPad:
+    case WinUWPH264EncoderImpl::FrameHeightRoundMode::kPad:
       return (height + 15) & ~15;
   }
 }
@@ -114,8 +116,6 @@ int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* codec_settings,
   // the desired frame rate too.
   frame_rate_ = codec_settings->maxFramerate;
 
-  max_qp_ = std::min(codec_settings->qpMax, kMaxH264Qp);
-
   mode_ = codec_settings->mode;
   frame_dropping_on_ = codec_settings->H264().frameDroppingOn;
   key_frame_interval_ = codec_settings->H264().keyFrameInterval;
@@ -131,6 +131,20 @@ int WinUWPH264EncoderImpl::InitEncode(const VideoCodec* codec_settings,
     // the bandwidth that a 620 Windows phone can handle.
     target_bps_ = width_ * height_ * 2;
   }
+
+  // Initialize the configuration for the track encoded by this object.
+  profile_ = global_profile.load();
+  rc_mode_ = global_rc_mode.load();
+  quality_ = global_quality.load();
+
+  max_qp_ = std::min(codec_settings->qpMax, kMaxH264Qp);
+
+  // Manual value overrides the value passed by WebRTC.
+  int curr_global_max_qp = global_max_qp.load();
+  if (curr_global_max_qp >= 0 && (unsigned)curr_global_max_qp < kMaxH264Qp) {
+    max_qp_ = curr_global_max_qp;
+  }
+
 
   // Configure the encoder.
   HRESULT hr = S_OK;
@@ -153,9 +167,35 @@ int WinUWPH264EncoderImpl::InitWriter() {
   ON_SUCCEEDED(MFCreateMediaType(&mediaTypeOut));
   ON_SUCCEEDED(mediaTypeOut->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Video));
   ON_SUCCEEDED(mediaTypeOut->SetGUID(MF_MT_SUBTYPE, MFVideoFormat_H264));
-  // Lumia 635 and Lumia 1520 Windows phones don't work well
-  // with constrained baseline profile.
-  //ON_SUCCEEDED(mediaTypeOut->SetUINT32(MF_MT_MPEG2_PROFILE, eAVEncH264VProfile_ConstrainedBase));
+
+  eAVEncH264VProfile mf_profile;
+  switch (profile_) {
+    case H264::kProfileConstrainedBaseline:
+      mf_profile = eAVEncH264VProfile_ConstrainedBase;
+      RTC_LOG_F(LS_INFO) << "Using Constrained Baseline profile";
+      break;
+    case H264::kProfileBaseline:
+      mf_profile = eAVEncH264VProfile_Base;
+      RTC_LOG_F(LS_INFO) << "Using Baseline profile";
+      break;
+    case H264::kProfileMain:
+      mf_profile = eAVEncH264VProfile_Main;
+      RTC_LOG_F(LS_INFO) << "Using Main profile";
+      break;
+    case H264::kProfileConstrainedHigh:
+      mf_profile = eAVEncH264VProfile_ConstrainedHigh;
+      RTC_LOG_F(LS_INFO) << "Using Constrained High profile";
+      break;
+    case H264::kProfileHigh:
+      mf_profile = eAVEncH264VProfile_High;
+      RTC_LOG_F(LS_INFO) << "Using High profile";
+      break;
+    default:
+      return WEBRTC_VIDEO_CODEC_ERROR;
+      break;
+  }
+  ON_SUCCEEDED(mediaTypeOut->SetUINT32(MF_MT_MPEG2_PROFILE, mf_profile));
+
 
   ON_SUCCEEDED(mediaTypeOut->SetUINT32(
     MF_MT_AVG_BITRATE, target_bps_));
@@ -204,12 +244,47 @@ int WinUWPH264EncoderImpl::InitWriter() {
   ComPtr<IMFAttributes> encodingAttributes;
   ON_SUCCEEDED(MFCreateAttributes(&encodingAttributes, 1));
 
+  // Set mode explicitly if specified.
+  if (rc_mode_ != RcMode::kUnset) {
+    eAVEncCommonRateControlMode mode;
+    switch (rc_mode_) {
+      case RcMode::kCBR:
+        RTC_LOG_F(LS_INFO) << "Using CBR mode";
+        mode = eAVEncCommonRateControlMode_CBR;
+        break;
+      case RcMode::kVBR:
+        RTC_LOG_F(LS_INFO) << "Using Unconstrained VBR mode";
+        mode = eAVEncCommonRateControlMode_UnconstrainedVBR;
+        break;
+      case RcMode::kQuality:
+        RTC_LOG_F(LS_INFO) << "Using Quality mode";
+        mode = eAVEncCommonRateControlMode_Quality;
+        break;
+      default:
+        RTC_NOTREACHED();
+    }
+
+    ON_SUCCEEDED(encodingAttributes->SetUINT32(
+        CODECAPI_AVEncCommonRateControlMode, mode));
+  }
+
+  // Enable CABAC. This will only have effect in profiles that support it.
+  ON_SUCCEEDED(encodingAttributes->SetUINT32(CODECAPI_AVEncH264CABACEnable,
+                                             VARIANT_TRUE));
+
   // kMaxH264Qp is the default.
   if (max_qp_ < kMaxH264Qp) {
     RTC_LOG(LS_INFO) << "Set max QP to " << max_qp_;
     ON_SUCCEEDED(
         encodingAttributes->SetUINT32(CODECAPI_AVEncVideoMaxQP, max_qp_));
   }
+
+  if (quality_ >= 0 && quality_ <= 100) {
+    RTC_LOG(LS_INFO) << "Set quality to " << quality_;
+    encodingAttributes->SetUINT32(CODECAPI_AVEncCommonQuality,
+                                  quality_);
+  }
+
   ON_SUCCEEDED(sinkWriter_->SetInputMediaType(streamIndex_, mediaTypeIn.Get(),
                                               encodingAttributes.Get()));
 

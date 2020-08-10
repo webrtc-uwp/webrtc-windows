@@ -15,7 +15,10 @@
 #include <mfidl.h>
 #include <Mfreadwrite.h>
 #include <mferror.h>
+
+#include <atomic>
 #include <vector>
+
 #include "H264MediaSink.h"
 #include "IH264EncodingCallback.h"
 #include "../Utils/SampleAttributeQueue.h"
@@ -53,6 +56,47 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
 
   // === IH264EncodingCallback overrides ===
   void OnH264Encoded(ComPtr<IMFSample> sample) override;
+
+ public:
+  // Determines whether to pad or crop frames whose height is not multiple
+  // of 16. User code should extern-declare and set this. There seems to be no
+  // easy way to pass arbitrary parameters to the encoder so this is the best
+  // (easy) option.
+  enum class FrameHeightRoundMode { kNoChange = 0, kCrop = 1, kPad = 2 };
+  static std::atomic<FrameHeightRoundMode> global_frame_height_round_mode;
+
+  // H.264 profile to use for encoding.
+  // Once a value is set, it will be used by any instance of
+  // WinUWPH264EncoderImpl created after that.
+  // Note : by default we should use what's passed by WebRTC on codec
+  // initialization (which seems to be always ConstrainedBaseline), but we use
+  // Baseline to avoid changing behavior compared to earlier versions.
+  static std::atomic<webrtc::H264::Profile> global_profile;
+
+  // Rate control mode. See
+  // https://docs.microsoft.com/en-us/windows/win32/medfound/h-264-video-encoder
+  // for details. If kUnset, the default for the encoder implementation will be
+  // used.
+  // Once a value is set, it will be used by any instance of
+  // WinUWPH264EncoderImpl created after that.
+  enum class RcMode { kUnset = -1, kCBR = 0, kVBR = 1, kQuality = 2 };
+  static std::atomic<RcMode> global_rc_mode;
+
+  // If set to a value between 0 and 51, determines the max QP to use for
+  // encoding.
+  // Once a value is set, it will be used by any instance of
+  // WinUWPH264EncoderImpl created after that.
+  static std::atomic<int> global_max_qp;
+
+  // If set to a value between 0 and 100, determines the target quality value.
+  // The effect of this depends on the encoder and on the rate control mode
+  // chosen. In the Quality RC mode this will be the target for the whole
+  // stream, while in VBR it might be used as a target for individual frames
+  // while the average quality of the stream is determined by the target
+  // bitrate.
+  // Once a value is set, it will be used by any instance of
+  // WinUWPH264EncoderImpl created after that.
+  static std::atomic<int> global_quality;
 
  private:
   ComPtr<IMFSample> FromVideoFrame(const VideoFrame& frame);
@@ -92,7 +136,6 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
   UINT32 height_;
   UINT32 frame_rate_;
   UINT32 target_bps_;
-  UINT32 max_qp_;
   VideoCodecMode mode_;
   // H.264 specifc parameters
   bool frame_dropping_on_;
@@ -114,6 +157,10 @@ class WinUWPH264EncoderImpl : public VideoEncoder, public IH264EncodingCallback 
   };
   SampleAttributeQueue<CachedFrameAttributes> _sampleAttributeQueue;
 
+  H264::Profile profile_;
+  RcMode rc_mode_;
+  int max_qp_;
+  int quality_;
 };  // end of WinUWPH264EncoderImpl class
 
 }  // namespace webrtc
