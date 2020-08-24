@@ -15,23 +15,18 @@
 #include "media/engine/webrtcvideoencoderfactory.h"
 #include "media/engine/webrtcvideodecoderfactory.h"
 #include "media/base/codec.h"
+#include "api/video_codecs/video_encoder_factory.h"
 
 namespace webrtc {
 
-class WinUWPH264EncoderFactory : public cricket::WebRtcVideoEncoderFactory {
+class WinUWPH264EncoderFactory : public VideoEncoderFactory {
  public:
-  WinUWPH264EncoderFactory();
+  std::vector<SdpVideoFormat> GetSupportedFormats() const override;
 
-  webrtc::VideoEncoder* CreateVideoEncoder(const cricket::VideoCodec& codec)
-    override;
+  CodecInfo QueryVideoEncoder(const SdpVideoFormat& format) const override;
 
-  const std::vector<cricket::VideoCodec>& supported_codecs()
-    const override;
-
-  void DestroyVideoEncoder(webrtc::VideoEncoder* encoder) override;
-
- private:
-  std::vector<cricket::VideoCodec> codecList_;
+  std::unique_ptr<VideoEncoder> CreateVideoEncoder(
+      const SdpVideoFormat& format) override;
 };
 
 class WinUWPH264DecoderFactory : public cricket::WebRtcVideoDecoderFactory {
